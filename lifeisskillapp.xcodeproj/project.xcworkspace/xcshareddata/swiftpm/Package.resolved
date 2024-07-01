@@ -1,0 +1,15 @@
+{
+  "originHash" : "8ceeff9dc7d2bbfc0bf99a19f3886169963296b971870190b69f5a3f55b2368b",
+  "pins" : [
+    {
+      "identity" : "ackategories",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AckeeCZ/ACKategories.git",
+      "state" : {
+        "revision" : "336fe80c2d18554308e48b8e7e64e91cd9827dcb",
+        "version" : "6.15.0"
+      }
+    }
+  ],
+  "version" : 3
+}
