@@ -18,19 +18,9 @@ struct HomeView: View {
     
     var contentView: some View {
         VStack {
-            
-            Spacer()
-            
-            VStack {
-                Text("Home screen")
-                
-                Divider()
-                
-                Text("To do")
-                .padding(.top, 20)
-                
-                Divider()
-            }
+            Button(action: viewModel.logout, label: {
+                Text("logout")
+            })
             
         }
     }

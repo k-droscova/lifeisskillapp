@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B59A89ED-3BAE-45C2-A870-9771869C8E87"
+            uuid = "3473F8C7-FCE6-48AD-A78F-E3434236C9CD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "lifeisskillapp/AppFlowCoordinator.swift"
+            filePath = "lifeisskillapp/Services/Network/Network.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "prepareWindow()"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "Network"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E1CD373-9514-477A-955F-29B9697158D0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lifeisskillapp/Services/Network/Network.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "fetch(url:method:headers:body:sensitiveRequestBodyData:sensitiveResponseData:errorObject:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

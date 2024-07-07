@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-import Foundation
 import UIKit
 import ACKategories
 
@@ -30,40 +28,52 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         guard tabBar == nil, appDependencies.userManager.isLoggedIn else { return }
         
         
-        // MARK: Home
-        let homeVC = HomeViewController()
-        let homeNavigationController = UINavigationController(rootViewController: homeVC)
-        homeNavigationController.tabBarItem.title = "Home"
-        homeNavigationController.tabBarItem.image = UIImage(
-            systemName: "home"
-        )
+        Task { @MainActor in
+            
+            
+            // MARK: - HOME
+            
+            let homeVC = HomeViewController()
+            let homeNavigationController = UINavigationController(rootViewController: homeVC)
+            homeNavigationController.tabBarItem.title = "Home"
+            homeNavigationController.tabBarItem.image = UIImage(systemName: "house")
+            
+            let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [homeNavigationController]
+            
+            self.rootViewController = tabBarController
+            
+            self.window?.rootViewController = tabBarController
+            self.window?.makeKeyAndVisible()
+            
+            self.tabBar = tabBarController
+        }
         
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [
-            homeNavigationController
-        ]
-        
-        rootViewController = tabBarController
-        
-        window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
-        
-        self.tabBar = tabBarController
+    
     }
     
     private func showLogin() {
-        let loginController = LoginViewController()
-        rootViewController = loginController
-        window?.rootViewController = loginController
-        window?.makeKeyAndVisible()
+        Task { @MainActor in
+            let loginController = LoginViewController()
+            self.rootViewController = loginController
+            self.window?.rootViewController = loginController
+            self.window?.makeKeyAndVisible()
+        }
     }
     
     private func prepareWindow() {
-        if appDependencies.userManager.isLoggedIn {
-            setupTabBar()
-        } else {
-            stop()
-            showLogin()
+        if !appDependencies.userManager.hasAppId {
+            Task {
+                try await appDependencies.userManager.initializeAppId()
+            }
+        }
+        Task { @MainActor in
+            if appDependencies.userManager.isLoggedIn {
+                self.setupTabBar()
+            } else {
+                self.stop()
+                self.showLogin()
+            }
         }
     }
     

@@ -15,7 +15,7 @@ final class LoginViewController: Base.ViewController {
     
     override init() {
         self.viewModel = LoginViewModel(
-            dependencies: .init(userManager: appDependencies.userManager)
+            dependencies: appDependencies
         )
         super.init()
     }

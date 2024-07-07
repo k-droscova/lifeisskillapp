@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 protocol HomeViewModeling {
-    
+    func logout()
 }
 
 final class HomeViewModel: HomeViewModeling, ObservableObject {
@@ -20,5 +20,9 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     
     init(dependencies: Dependencies) {
         userManager = dependencies.userManager
+    }
+    
+    func logout() {
+        userManager.logout()
     }
 }
