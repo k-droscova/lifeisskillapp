@@ -28,7 +28,6 @@ public final class RegisterAppAPIService: RegisterAppAPIServicing {
     }
     
     func registerApp(baseURL: URL) async throws -> APIResponse<RegisterAppAPIResponse> {
-        loggerService.log(message: "Registering App")
         let endpoint = Endpoint.appId
         let headers = endpoint.headers(token: APIHeader.Authorization)
         return try await network.performRequestWithDataDecoding(
@@ -36,7 +35,7 @@ public final class RegisterAppAPIService: RegisterAppAPIServicing {
             headers: headers,
             sensitiveRequestBodyData: false,
             sensitiveResponseData: false,
-            errorObject: InvalidAPIAuthorizationResponse.self)
+            errorObject: APIResponseError.self)
     }
     
     

@@ -23,7 +23,7 @@ public protocol Networking {
     ///   - sensitiveRequestBodyData: A boolean indicating whether the request body contains sensitive data that should not be logged or exposed in error reports.
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Throws: An error if the request fails.
-    func _performRequest<E: APIResponseError>(
+    func _performRequest<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String: String]?,
@@ -44,7 +44,7 @@ public protocol Networking {
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The decoded response data of type `T`.
     /// - Throws: An error if the request fails or the response data cannot be decoded into the specified type `T`.
-    func _performRequestWithDataDecoding<T: Decodable, E: APIResponseError>(
+    func _performRequestWithDataDecoding<T: Decodable, E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String: String]?,
@@ -66,7 +66,7 @@ public protocol Networking {
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The raw response data.
     /// - Throws: An error if the request fails.
-    func _performRequestWithoutDataDecoding<E: APIResponseError>(
+    func _performRequestWithoutDataDecoding<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String: String]?,
@@ -92,7 +92,7 @@ public extension Networking {
     ///   - sensitiveRequestBodyData: A boolean indicating whether the request body contains sensitive data that should not be logged or exposed in error reports.
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Throws: An error if the request fails.
-    func performRequest<E: APIResponseError>(
+    func performRequest<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod = .GET,
         headers: [String: String]? = nil,
@@ -109,7 +109,7 @@ public extension Networking {
             errorObject: errorObject
         )
     }
-
+    
     /// Performs a network request to the given URL with the provided data and decodes the response data into a specified type `T`.
     ///
     /// - Parameters:
@@ -122,7 +122,7 @@ public extension Networking {
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The decoded response data of type `T`.
     /// - Throws: An error if the request fails or the response data cannot be decoded into the specified type `T`.
-    func performRequestWithDataDecoding<T: Decodable, E: APIResponseError>(
+    func performRequestWithDataDecoding<T: Decodable, E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod = .GET,
         headers: [String: String]? = nil,
@@ -141,7 +141,7 @@ public extension Networking {
             errorObject: errorObject
         )
     }
-
+    
     /// Performs a network request to the given URL with the provided data and returns the raw response data.
     ///
     /// - Parameters:
@@ -154,7 +154,7 @@ public extension Networking {
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The raw response data.
     /// - Throws: An error if the request fails.
-    func performRequestWithoutDataDecoding<E: APIResponseError>(
+    func performRequestWithoutDataDecoding<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String: String]? = nil,
@@ -203,7 +203,7 @@ public final class Network: Networking {
     // MARK: - Public Interface
     
     /// Performs a request without returning any data.
-    public func _performRequest<E: APIResponseError>(
+    public func _performRequest<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String: String]?,
@@ -223,7 +223,7 @@ public final class Network: Networking {
         return
     }
     /// Performs a request and decodes the response into the specified type.
-    public func _performRequestWithDataDecoding<T: Decodable, E: APIResponseError>(
+    public func _performRequestWithDataDecoding<T: Decodable, E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String : String]?,
@@ -269,7 +269,7 @@ public final class Network: Networking {
     }
     
     /// Performs a request and returns the response data without decoding it.
-    public func _performRequestWithoutDataDecoding<E: APIResponseError>(
+    public func _performRequestWithoutDataDecoding<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod,
         headers: [String: String]?,
@@ -316,7 +316,7 @@ extension Network {
     ///   - errorObject: Type of error object conforming to `ResponseError`.
     /// - Returns: A `DataResponse` containing the status code, request, response, and data.
     /// - Throws: `BaseError` if the request fails or the response contains an error.
-    func fetch<E: APIResponseError>(
+    func fetch<E: APIResponseErroring>(
         url: URL,
         method: Network.HTTPMethod = .GET,
         headers: [String: String]? = nil,
@@ -332,9 +332,9 @@ extension Network {
         
         // Do not share sensitive data!
         loggerService.log(message:
-            ""
-            + url.absoluteString + "\n"
-            + request.toString(sensitiveData: sensitiveRequestBodyData)
+                            ""
+                          + url.absoluteString + "\n"
+                          + request.toString(sensitiveData: sensitiveRequestBodyData)
                           
         )
         
@@ -360,27 +360,41 @@ extension Network {
             response: httpResponse,
             data: data
         )
-
+        
         // Do not share sensitive data!
         loggerService.log(message:
-            ""
-            + url.absoluteString + "\n"
-            + dataResponse.toString(sensitiveData: sensitiveResponseData)
+                            ""
+                          + url.absoluteString + "\n"
+                          + dataResponse.toString(sensitiveData: sensitiveResponseData)
                           
         )
         
         let statusResponseType = httpResponse.status?.responseType
         let statusCode = httpResponse.statusCode
         if statusResponseType == .clientError || statusResponseType == .serverError {
-            let errorMessage = "NetworkError: " + String(statusCode) + " - " + url.absoluteString
-            throw BaseError(
-                context: .network,
-                message: errorMessage,
-                code: .statusCode(statusCode),
-                url: url,
-                meta: dataResponse.description(sensitiveData: sensitiveResponseData),
-                logger: loggerService
-            )
+            do {
+                let apiError = try JSONDecoder().decode(errorObject, from: data)
+                throw BaseError(
+                    context: .api,
+                    message: apiError.message,
+                    code: .statusCode(statusCode),
+                    url: url,
+                    meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                    logger: loggerService)
+            } catch let error {
+                if error is DecodingError {
+                    throw BaseError(
+                        context: .api,
+                        message: "Unable to decode message for API Error \(statusCode)",
+                        code: .general(.jsonDecoding),
+                        url: url,
+                        meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                        logger: loggerService
+                    )
+                } else {
+                    throw error
+                }
+            }
         }
         
         return dataResponse

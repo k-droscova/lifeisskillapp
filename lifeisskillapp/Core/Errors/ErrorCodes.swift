@@ -28,7 +28,7 @@ public enum ErrorCodes {
         case invalidRegistration = 412 // status code is 412
         case loggedInOnOtherDevice = 401 // status code is 401
         case invalidPointCode = 470 // status code is 470
-        
+        case `default` = 400
     }
     
     /// General error codes `5xxx`

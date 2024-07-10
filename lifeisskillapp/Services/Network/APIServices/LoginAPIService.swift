@@ -44,7 +44,7 @@ public final class LoginAPIService: LoginAPIServicing {
             body: data,
             sensitiveRequestBodyData: true,
             sensitiveResponseData: true,
-            errorObject: EmptyResponseError.self)
+            errorObject: APIResponseError.self)
     }
     
     func encodeParams(loginCredentials: LoginCredentials) throws -> Data {
