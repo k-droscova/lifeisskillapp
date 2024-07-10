@@ -20,7 +20,8 @@ protocol UserManaging {
     var delegate: UserManagerFlowDelegate? { get set }
     var appId: String? { get }
     var token: String? { get }
-
+    var credentials: LoginCredentials? { get set }
+    
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
     
@@ -31,8 +32,8 @@ protocol UserManaging {
 
 
 final class UserManager: UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing
-    private let dependencies: Dependencies
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage
+    private var dependencies: Dependencies
     // MARK: - Initialization
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
@@ -42,30 +43,37 @@ final class UserManager: UserManaging {
     weak var delegate: UserManagerFlowDelegate?
     
     var appId: String? {
-        get { UserDefaults.standard.appId }
-        set { UserDefaults.standard.set(newValue, forKey: "appId") }
+        get { self.dependencies.userDefaultsStorage.appId }
+        set { self.dependencies.userDefaultsStorage.appId = newValue }
     }
     
     var token: String? {
-        get { UserDefaults.standard.token }
-        set { UserDefaults.standard.set(newValue, forKey: "token") }
+        get { self.dependencies.userDefaultsStorage.token }
+        set { self.dependencies.userDefaultsStorage.token = newValue }
+    }
+    
+    var credentials: LoginCredentials? {
+        get { self.dependencies.userDefaultsStorage.credentials }
+        set { self.dependencies.userDefaultsStorage.credentials = newValue }
     }
     
     var isLoggedIn: Bool {
-        return UserDefaults.standard.credentials != nil
+        return self.dependencies.userDefaultsStorage.credentials != nil
     }
     var hasAppId: Bool {
-        return !UserDefaults.standard.firstOpened
+        return self.dependencies.userDefaultsStorage.appId != nil
     }
     
     // MARK: - Public Interface
     func login(loginCredentials: LoginCredentials) async throws {
         dependencies.logger.log(message: "Login User: " + loginCredentials.username)
         do {
-            let response = try await dependencies.loginAPI.login(loginCredentials: loginCredentials, baseURL: APIUrl.baseNewURL)
-            let token = response.data.token
-            UserDefaults.standard.credentials = loginCredentials
-            print("User token obtained and saved: \(response.data.token)")
+            dependencies.userDefaultsStorage.beginTransaction()
+            let response = try await dependencies.loginAPI.login(loginCredentials: loginCredentials, baseURL: APIUrl.baseURL)
+            let responseToken = response.data.token
+            credentials = loginCredentials
+            token = responseToken
+            dependencies.userDefaultsStorage.commitTransaction()
             delegate?.onLogin()
         } catch {
             throw BaseError(
@@ -76,20 +84,26 @@ final class UserManager: UserManaging {
         }
     }
     func logout() {
-        UserDefaults.standard.removeObject(forKey: "credentials")
+        dependencies.logger.log(message: "Logging out")
+        dependencies.userDefaultsStorage.beginTransaction()
+        credentials = nil
+        token = nil
+        dependencies.userDefaultsStorage.commitTransaction()
         delegate?.onLogout()
     }
     
     func initializeAppId() async throws {
         dependencies.logger.log(message: "Initializing App Id")
         if let appId = appId {
-            print("App ID already exists: \(appId)")
+            dependencies.logger.log(message: "App Id \(appId) exists")
             return
         }
         do {
-            let response = try await dependencies.registerAppAPI.registerApp(baseURL: APIUrl.baseOldURL)
-            appId = response.data.appId
-            print("App ID obtained and saved: \(response.data.appId)")
+            let response = try await dependencies.registerAppAPI.registerApp(baseURL: APIUrl.baseURL)
+            let responseAppId = response.data.appId
+            dependencies.userDefaultsStorage.beginTransaction()
+            appId = responseAppId
+            dependencies.userDefaultsStorage.commitTransaction()
         } catch {
             throw BaseError(
                 context: .system,

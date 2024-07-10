@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+protocol UserStoraging {
+    func beginTransaction()
+    func commitTransaction()
+    func rollbackTransaction()
+}
