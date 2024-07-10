@@ -9,6 +9,7 @@ import Foundation
 
 public enum LogContext: String, Codable {
     case network
+    case api
     case ui
     case database
     case system
