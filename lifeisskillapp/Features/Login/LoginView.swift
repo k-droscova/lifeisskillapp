@@ -11,7 +11,8 @@ struct LoginView: View {
     @State var viewModel: LoginViewModeling
     let defaultUsernameText = "username/email"
     let defaultPasswordText = "password"
-    let buttonText = "login"
+    let loginButtonText = "login"
+    let registerButtonText = "register"
 
     
     var body: some View {
@@ -49,11 +50,25 @@ struct LoginView: View {
             Button(
                 action: viewModel.login,
                 label: {
-                    Text(buttonText.localized)
+                    Text(loginButtonText.localized)
                         .font(.system(size: 24, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 60)
                         .foregroundColor(Color.white)
                         .background(Color.blue)
+                        .cornerRadius(10)
+                }
+            )
+            
+            Spacer()
+            
+            Button(
+                action: viewModel.register,
+                label: {
+                    Text(registerButtonText.localized)
+                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity, maxHeight: 20)
+                        .foregroundColor(Color.red)
+                        .background(Color.white)
                         .cornerRadius(10)
                 }
             )

@@ -10,13 +10,12 @@ import SwiftUI
 
 final class LoginViewController: Base.ViewController {
     let viewModel: LoginViewModeling
-    
+    weak var delegate: LoginFlowDelegate?
+
     // MARK: - Initialization
     
-    override init() {
-        self.viewModel = LoginViewModel(
-            dependencies: appDependencies
-        )
+    init(viewModel: LoginViewModeling) {
+        self.viewModel = viewModel
         super.init()
     }
     

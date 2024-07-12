@@ -12,6 +12,7 @@ import ACKategories
 final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     private weak var window: UIWindow?
     private weak var tabBar: UITabBarController?
+
     
     override func start(in window: UIWindow) {
         self.window = window
@@ -49,20 +50,19 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             self.tabBar = tabBarController
         }
         
-    
+        
     }
     
     private func showLogin() {
-        Task {
-            @MainActor in
-            let loginFC = LoginFlowCoordinator()
-            loginFC.delegate = self
-            addChild(loginFC)
-            let loginVC = loginFC.start()
+        Task { @MainActor in
+            let loginFlowCoordinator = LoginFlowCoordinator()
+            loginFlowCoordinator.delegate = self
+            addChild(loginFlowCoordinator)
+            let loginVC = LoginViewController()
             window?.rootViewController = loginVC
             rootViewController = window?.rootViewController
-            activeChild = loginFC
-            self.window?.makeKeyAndVisible()
+            activeChild = loginFlowCoordinator
+            
         }
     }
     
@@ -92,10 +92,6 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
     }
     
     func onLogout() {
-        Task {
-            [weak self] in
-                self?.childCoordinators.forEach { $0.stop() }
-        }
         prepareWindow()
     }
 }

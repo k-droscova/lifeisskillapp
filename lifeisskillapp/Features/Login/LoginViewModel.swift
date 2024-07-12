@@ -11,29 +11,42 @@ import Observation
 protocol LoginViewModeling {
     var username: String { get set }
     var password: String { get set }
+    var onLoginSuccess: (() -> Void)? { get set }
     func login()
+    func register()
 }
 
 final class LoginViewModel: LoginViewModeling, ObservableObject {
     typealias Dependencies = HasUserManager
     
     private let userManager: UserManaging
+    weak var delegate: LoginFlowDelegate?
     
     @Published var username: String = ""
     @Published var password: String = ""
+    var onLoginSuccess: (() -> Void)?
+
     
-    init(dependencies: Dependencies) {
+    init(dependencies: Dependencies, delegate: LoginFlowDelegate?) {
         userManager = dependencies.userManager
+        self.delegate = delegate
     }
     
     func login() {
         Task {
             do {
                 try await userManager.login(loginCredentials: .init(username: username, password: password))
+                if userManager.isLoggedIn {
+                    onLoginSuccess?()
+                }
             } catch {
                 // Handle the error appropriately on the main thread
                 print("Login failed with error: \(error)")
             }
         }
+    }
+    
+    func register() {
+            delegate?.registerTapped(in: nil)
     }
 }
