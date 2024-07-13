@@ -9,10 +9,10 @@ import SwiftUI
 
 struct LoginView: View {
     @State var viewModel: LoginViewModeling
-    let defaultUsernameText = "username/email"
-    let defaultPasswordText = "password"
-    let loginButtonText = "login"
-    let registerButtonText = "register"
+    let defaultUsernameText = L10n.Login.username
+    let defaultPasswordText = L10n.Login.password
+    let loginButtonText = L10n.Login.login
+    let registerButtonText = L10n.Login.register
 
     
     var body: some View {

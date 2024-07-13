@@ -18,8 +18,12 @@
 		2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */; };
 		2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */; };
 		2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */; };
-		2717AF1D2C42B0DF00A23F06 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF1C2C42B0DF00A23F06 /* Localizable.xcstrings */; };
 		2717AF222C42B11300A23F06 /* InfoPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF212C42B11300A23F06 /* InfoPlist.plist */; };
+		2717AF272C42BC5100A23F06 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF262C42BC5100A23F06 /* swiftgen.yml */; };
+		2717AF2F2C42BF2A00A23F06 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF2D2C42BF2A00A23F06 /* Localizable.strings */; };
+		2717AF412C42CBBE00A23F06 /* Generated_Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */; };
+		2717AF422C42CBBE00A23F06 /* Generated_InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3E2C42CBBE00A23F06 /* Generated_InfoPlist.swift */; };
+		2717AF432C42CBBE00A23F06 /* Generated_Localizable_cs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3F2C42CBBE00A23F06 /* Generated_Localizable_cs.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
 		27274F8A2C3320F3003453E2 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 27274F892C3320F3003453E2 /* Base */; };
@@ -100,9 +104,14 @@
 		2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
 		2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.otf"; sourceTree = "<group>"; };
 		2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
-		2717AF1C2C42B0DF00A23F06 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		2717AF202C42B11300A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/InfoPlist.plist; sourceTree = "<group>"; };
 		2717AF232C42B11800A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = cs; path = cs.lproj/InfoPlist.plist; sourceTree = "<group>"; };
+		2717AF262C42BC5100A23F06 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		2717AF2E2C42BF2A00A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2717AF302C42BF2E00A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated_Assets.swift; sourceTree = "<group>"; };
+		2717AF3E2C42CBBE00A23F06 /* Generated_InfoPlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated_InfoPlist.swift; sourceTree = "<group>"; };
+		2717AF3F2C42CBBE00A23F06 /* Generated_Localizable_cs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated_Localizable_cs.swift; sourceTree = "<group>"; };
 		27274F7A2C3320F2003453E2 /* lifeisskillapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeisskillapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -205,6 +214,43 @@
 				2717AEFD2C42ACCD00A23F06 /* Images.xcassets */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		2717AF312C42C23300A23F06 /* StringResources */ = {
+			isa = PBXGroup;
+			children = (
+				2717AF2D2C42BF2A00A23F06 /* Localizable.strings */,
+			);
+			path = StringResources;
+			sourceTree = "<group>";
+		};
+		2717AF362C42C2B700A23F06 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2717AF372C42C6F300A23F06 /* InfoPlist */,
+				2717AF312C42C23300A23F06 /* StringResources */,
+				2717AED12C42A72600A23F06 /* Fonts */,
+				2717AEE42C42A95C00A23F06 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2717AF372C42C6F300A23F06 /* InfoPlist */ = {
+			isa = PBXGroup;
+			children = (
+				2717AF212C42B11300A23F06 /* InfoPlist.plist */,
+			);
+			path = InfoPlist;
+			sourceTree = "<group>";
+		};
+		2717AF402C42CBBE00A23F06 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */,
+				2717AF3E2C42CBBE00A23F06 /* Generated_InfoPlist.swift */,
+				2717AF3F2C42CBBE00A23F06 /* Generated_Localizable_cs.swift */,
+			);
+			path = Generated;
 			sourceTree = "<group>";
 		};
 		27274F712C3320F2003453E2 = {
@@ -317,10 +363,9 @@
 		27274FB22C3321F0003453E2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2717AEE42C42A95C00A23F06 /* Images */,
-				2717AED12C42A72600A23F06 /* Fonts */,
-				2717AF1C2C42B0DF00A23F06 /* Localizable.xcstrings */,
-				2717AF212C42B11300A23F06 /* InfoPlist.plist */,
+				2717AF402C42CBBE00A23F06 /* Generated */,
+				2717AF362C42C2B700A23F06 /* Resources */,
+				2717AF262C42BC5100A23F06 /* swiftgen.yml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -696,7 +741,8 @@
 				2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */,
 				27274F8A2C3320F3003453E2 /* Base in Resources */,
 				2717AF122C42ADB800A23F06 /* Montserrat-Hairline.otf in Resources */,
-				2717AF1D2C42B0DF00A23F06 /* Localizable.xcstrings in Resources */,
+				2717AF272C42BC5100A23F06 /* swiftgen.yml in Resources */,
+				2717AF2F2C42BF2A00A23F06 /* Localizable.strings in Resources */,
 				2717AF102C42ADB800A23F06 /* Montserrat-Bold.otf in Resources */,
 				2717AF222C42B11300A23F06 /* InfoPlist.plist in Resources */,
 			);
@@ -739,6 +785,7 @@
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				27C619972C3AB5D50067498F /* Theme.swift in Sources */,
+				2717AF412C42CBBE00A23F06 /* Generated_Assets.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */,
@@ -756,6 +803,8 @@
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
 				275457232C3332BF00F3B55A /* HomeView.swift in Sources */,
+				2717AF422C42CBBE00A23F06 /* Generated_InfoPlist.swift in Sources */,
+				2717AF432C42CBBE00A23F06 /* Generated_Localizable_cs.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */,
 				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,
@@ -810,6 +859,15 @@
 				2717AF232C42B11800A23F06 /* cs */,
 			);
 			name = InfoPlist.plist;
+			sourceTree = "<group>";
+		};
+		2717AF2D2C42BF2A00A23F06 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2717AF2E2C42BF2A00A23F06 /* en */,
+				2717AF302C42BF2E00A23F06 /* cs */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		27274F882C3320F3003453E2 /* LaunchScreen.storyboard */ = {
