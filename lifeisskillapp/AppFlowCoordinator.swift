@@ -67,6 +67,10 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     }
     
     private func prepareWindow() {
+        Task {
+            [weak self] in
+                self?.childCoordinators.forEach { $0.stop() }
+        }
         if !appDependencies.userManager.hasAppId {
             Task {
                 try await appDependencies.userManager.initializeAppId()
@@ -92,10 +96,6 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
     }
     
     func onLogout() {
-        Task {
-            [weak self] in
-                self?.childCoordinators.forEach { $0.stop() }
-        }
         prepareWindow()
     }
 }
