@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   InfoPlist.plist
+   lifeisskillapp
+
+   Created by Karolína Droscová on 13.07.2024.
+   Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
+-->
+<plist version="1.0">
+   <dict>
+      <key>NSCameraUsageDescription</key>
+      <string>K načítání bodu pomocí QR kódu je potřeba použít kameru.</string>
+      <key>NSLocationWhenInUseUsageDescription</key>
+      <string>Potřebujeme znát tvojí polohu. Bez polohy nemůžeš používat mapu ani načítat body.</string>
+   </dict>
+</plist>
