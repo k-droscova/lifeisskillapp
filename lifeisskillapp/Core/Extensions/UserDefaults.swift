@@ -65,19 +65,20 @@ extension UserDefaults {
     /// Stores or retrieves the user's location.
     ///
     /// - Returns: An optional `CLLocation` object representing the user's location.
-    var userLocation: CLLocation? {
-        get {
-            guard let data = object(forKey: Keys.clLocation.rawValue) as? [String: Double] else { return nil }
-            return CLLocation(latitude: data["lat"] ?? 0.0, longitude: data["lon"] ?? 0.0)
-        }
-        set {
-            if let location = newValue {
-                let latitude = Double(location.coordinate.latitude)
-                let longitude = Double(location.coordinate.longitude)
-                set(["lat": latitude, "lon": longitude], forKey: Keys.clLocation.rawValue)
+    var location: CLLocation? {
+            get {
+                guard let data = object(forKey: Keys.clLocation.rawValue) as? Data else { return nil }
+                return try? NSKeyedUnarchiver.unarchivedObject(ofClass: CLLocation.self, from: data)
+            }
+            set {
+                if let location = newValue {
+                    let data = try? NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
+                    set(data, forKey: Keys.clLocation.rawValue)
+                } else {
+                    removeObject(forKey: Keys.clLocation.rawValue)
+                }
             }
         }
-    }
 
     /// Stores or retrieves the API key.
     ///

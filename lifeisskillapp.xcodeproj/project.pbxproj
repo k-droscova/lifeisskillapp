@@ -18,7 +18,7 @@
 		2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */; };
 		2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */; };
 		2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */; };
-		2717AF222C42B11300A23F06 /* InfoPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF212C42B11300A23F06 /* InfoPlist.plist */; };
+		2717AF222C42B11300A23F06 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF212C42B11300A23F06 /* Info.plist */; };
 		2717AF272C42BC5100A23F06 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF262C42BC5100A23F06 /* swiftgen.yml */; };
 		2717AF2F2C42BF2A00A23F06 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF2D2C42BF2A00A23F06 /* Localizable.strings */; };
 		2717AF412C42CBBE00A23F06 /* Generated_Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */; };
@@ -104,8 +104,8 @@
 		2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
 		2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.otf"; sourceTree = "<group>"; };
 		2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
-		2717AF202C42B11300A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/InfoPlist.plist; sourceTree = "<group>"; };
-		2717AF232C42B11800A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = cs; path = cs.lproj/InfoPlist.plist; sourceTree = "<group>"; };
+		2717AF202C42B11300A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
+		2717AF232C42B11800A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = cs; path = cs.lproj/Info.plist; sourceTree = "<group>"; };
 		2717AF262C42BC5100A23F06 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		2717AF2E2C42BF2A00A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2717AF302C42BF2E00A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -238,7 +238,7 @@
 		2717AF372C42C6F300A23F06 /* InfoPlist */ = {
 			isa = PBXGroup;
 			children = (
-				2717AF212C42B11300A23F06 /* InfoPlist.plist */,
+				2717AF212C42B11300A23F06 /* Info.plist */,
 			);
 			path = InfoPlist;
 			sourceTree = "<group>";
@@ -744,7 +744,7 @@
 				2717AF272C42BC5100A23F06 /* swiftgen.yml in Resources */,
 				2717AF2F2C42BF2A00A23F06 /* Localizable.strings in Resources */,
 				2717AF102C42ADB800A23F06 /* Montserrat-Bold.otf in Resources */,
-				2717AF222C42B11300A23F06 /* InfoPlist.plist in Resources */,
+				2717AF222C42B11300A23F06 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,14 +852,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2717AF212C42B11300A23F06 /* InfoPlist.plist */ = {
+		2717AF212C42B11300A23F06 /* Info.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2717AF202C42B11300A23F06 /* en */,
 				2717AF232C42B11800A23F06 /* cs */,
 			);
-			name = InfoPlist.plist;
-			sourceTree = "<group>";
+			name = Info.plist;
+			path = lifeisskillapp/LiS/Resources/Resources/InfoPlist;
+			sourceTree = SOURCE_ROOT;
 		};
 		2717AF2D2C42BF2A00A23F06 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;

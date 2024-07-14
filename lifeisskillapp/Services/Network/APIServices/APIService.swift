@@ -51,7 +51,7 @@ enum ApiTask: String {
             "appID": appId
         ]
         if isLocationSecuredTask() {
-            let location = UserDefaults.standard.userLocation
+            let location = UserDefaults.standard.location
             let locationParams = [
                 "lat": String(location?.coordinate.latitude ?? 0),
                 "lng": String(location?.coordinate.longitude ?? 0)

@@ -13,4 +13,5 @@ public enum LogContext: String, Codable {
     case ui
     case database
     case system
+    case location
 }

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreLocation
+
 
 protocol HasUserDefaultsStorage {
     var userDefaultsStorage: UserDefaultsStoraging { get set }
@@ -15,6 +17,7 @@ protocol UserDefaultsStoraging : UserStoraging {
     var appId: String? { get set }
     var token: String? { get set }
     var credentials: LoginCredentials? { get set }
+    var location: CLLocation? { get set }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {    
@@ -26,6 +29,18 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     // MARK: - Initialization
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
+    }
+    
+    
+    var location: CLLocation? {
+        get { inTransaction ? transactionCache["location"] as? CLLocation : UserDefaults.standard.location }
+        set {
+            if inTransaction {
+                transactionCache["location"] = newValue
+            } else {
+                UserDefaults.standard.set(newValue, forKey: "location")
+            }
+        }
     }
     
     var appId: String? {

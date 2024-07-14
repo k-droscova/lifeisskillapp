@@ -12,11 +12,12 @@ let appDependencies = AppDependency()
 typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper
 typealias HasAPIDependencies = HasRegisterAppAPIService & HasLoginAPIService
 typealias HasStorage = HasUserDefaultsStorage
-typealias HasManagers = HasUserManager
+typealias HasManagers = HasUserManager & HasLocationManager
 
 
 final class AppDependency {
     lazy var userManager: UserManaging = UserManager(dependencies: self)
+    lazy var locationManager: LocationManaging = LocationManager(dependencies: self)
     lazy var urlSession: URLSessionWrapping = URLSessionWrapper()
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
     lazy var network: Networking = Network(dependencies: self)
