@@ -50,7 +50,6 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             self.tabBar = tabBarController
             self.checkLocationAuthorization()
         }
-        
     }
     
     private func showLogin() {
