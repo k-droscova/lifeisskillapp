@@ -48,10 +48,8 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             self.window?.makeKeyAndVisible()
             
             self.tabBar = tabBarController
-            //self.checkLocationAuthorization()
-
+            self.checkLocationAuthorization()
         }
-        
         
     }
     

@@ -8,7 +8,6 @@
 import Foundation
 import CoreLocation
 
-
 protocol HasUserDefaultsStorage {
     var userDefaultsStorage: UserDefaultsStoraging { get set }
 }
