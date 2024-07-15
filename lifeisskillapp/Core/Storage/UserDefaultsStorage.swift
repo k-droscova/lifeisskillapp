@@ -17,9 +17,10 @@ protocol UserDefaultsStoraging : UserStoraging {
     var token: String? { get set }
     var credentials: LoginCredentials? { get set }
     var location: CLLocation? { get set }
+    var checkSumData: CheckSumData? { get set }
 }
 
-final class UserDefaultsStorage: UserDefaultsStoraging {    
+final class UserDefaultsStorage: UserDefaultsStoraging {
     private var transactionCache: [String: Any] = [:]
     private var inTransaction: Bool = false
     
@@ -30,6 +31,16 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         self.dependencies = dependencies
     }
     
+    var checkSumData: CheckSumData? {
+        get { inTransaction ? transactionCache["checkSumData"] as? CheckSumData : UserDefaults.standard.checkSumData }
+        set {
+            if inTransaction {
+                transactionCache["checkSumData"] = newValue
+            } else {
+                UserDefaults.standard.set(newValue, forKey: "checkSumData")
+            }
+        }
+    }
     
     var location: CLLocation? {
         get { inTransaction ? transactionCache["location"] as? CLLocation : UserDefaults.standard.location }
@@ -105,7 +116,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         if let token = transactionCache["token"] as? String {
             UserDefaults.standard.set(token, forKey: "token")
             dependencies.logger.log(message: "New value for token: \(token)")
-
+            
         }
         if let credentials = transactionCache["credentials"] as? LoginCredentials {
             if let data = try? JSONEncoder().encode(credentials) {
@@ -115,17 +126,28 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         } else {
             UserDefaults.standard.removeObject(forKey: "credentials")
         }
+        if let location = transactionCache["location"] as? CLLocation {
+            if let data = location.toData() {
+                UserDefaults.standard.set(data, forKey: "location")
+                dependencies.logger.log(message: "New location saved")
+            }
+        }
+        if let checkSumData = transactionCache["checkSumData"] as? CheckSumData {
+            UserDefaults.standard.checkSumData = checkSumData
+            dependencies.logger.log(message: "New CheckSumData saved")
+        }
+
         
         inTransaction = false
         transactionCache = [:]
         dependencies.logger.log(message: "Transaction finished.")
-
+        
     }
     
     func rollbackTransaction() {
         inTransaction = false
         transactionCache = [:]
         dependencies.logger.log(message: "Transaction rolled back.")
-
+        
     }
 }

@@ -188,6 +188,10 @@ public final class Network: Networking {
     public static func apiKeyHeader(apiKey: String) -> (key: String, val: String) {
         ("Api-Key", "\(apiKey)")
     }
+    /// Helper method to create authorization header.
+    public static func apiTokenHeader(token: String) -> (key: String, val: String) {
+        ("User-Token", "\(token)")
+    }
     
     private let urlSession: URLSessionWrapping
     private let loggerService: LoggerServicing

@@ -18,8 +18,20 @@ extension UserDefaults {
         case clLocation = "clLocation"
         case token = "token"
         case logoutError = "logoutError"
+        case checkSumData = "CheckSumData"
     }
-
+    
+    // CheckSumData
+        var checkSumData: CheckSumData? {
+            get {
+                guard let data = data(forKey: Keys.checkSumData.rawValue) else { return nil }
+                return try? JSONDecoder().decode(CheckSumData.self, from: data)
+            }
+            set {
+                let data = try? JSONEncoder().encode(newValue)
+                set(data, forKey: Keys.checkSumData.rawValue)
+            }
+        }
     /// Stores or retrieves the logout error message.
     ///
     /// - Returns: An optional string containing the logout error message.
@@ -67,12 +79,12 @@ extension UserDefaults {
     /// - Returns: An optional `CLLocation` object representing the user's location.
     var location: CLLocation? {
             get {
-                guard let data = object(forKey: Keys.clLocation.rawValue) as? Data else { return nil }
-                return try? NSKeyedUnarchiver.unarchivedObject(ofClass: CLLocation.self, from: data)
+                guard let data = data(forKey: Keys.clLocation.rawValue) else { return nil }
+                return CLLocation.fromData(data)
             }
             set {
                 if let location = newValue {
-                    let data = try? NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
+                    let data = location.toData()
                     set(data, forKey: Keys.clLocation.rawValue)
                 } else {
                     removeObject(forKey: Keys.clLocation.rawValue)

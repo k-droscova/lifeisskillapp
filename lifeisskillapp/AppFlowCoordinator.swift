@@ -92,6 +92,9 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
 
 extension AppFlowCoordinator: UserManagerFlowDelegate {
     func onLogin() {
+        Task {
+            try await appDependencies.userManager.checkCheckSumData()
+        }
         prepareWindow()
     }
     

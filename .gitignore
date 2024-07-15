@@ -22,6 +22,8 @@ Temporary Items
 build/
 *.pbxuser
 !default.pbxuser
+*.xcuserstate
+*.xcbkptlist
 *.mode1v3
 !default.mode1v3
 *.mode2v3
