@@ -91,20 +91,55 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
 }
 
 extension AppFlowCoordinator: UserManagerFlowDelegate {
-    func onLogin() {
-        Task {
-            try await appDependencies.userManager.checkCheckSumData()
+    func fetchAllNewData() async {
+        await fetchNewUserPoints()
+        await fetchNewUserEvents()
+        await fetchNewUserRank()
+        await fetchNewUserMessages()
+        await fetchNewPoints()
+    }
+    
+    func fetchNewUserPoints() async {
+        appDependencies.logger.log(message: "Updating userPointsData")
+        do {
+            try await appDependencies.userPointManager.loadUserPoints()
+            guard let newCheckSumUserPoints = appDependencies.userPointManager.userPointData?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: appDependencies.logger)
+            }
+            appDependencies.userManager.updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
+        } catch {
+            
         }
-        prepareWindow()
+    }
+    
+    func fetchNewUserRank() async {
+        appDependencies.logger.log(message: "Updating user rank")
+    }
+    
+    func fetchNewUserMessages() async {
+        appDependencies.logger.log(message: "Updating user messages")
+    }
+    
+    func fetchNewUserEvents() async {
+        appDependencies.logger.log(message: "Updating user events")
+    }
+    
+    func fetchNewPoints() async {
+        appDependencies.logger.log(message: "Updating user points")
     }
     
     func onLogout() {
         prepareWindow()
     }
+    
 }
 
 extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidSucceed() {
+        Task {
+            try await appDependencies.userCategoryManager.loadUserCategories()
+            try await appDependencies.userManager.checkCheckSumData()
+        }
         prepareWindow()
     }
 }

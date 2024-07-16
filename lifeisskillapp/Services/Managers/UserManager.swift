@@ -8,8 +8,13 @@
 import Foundation
 
 protocol UserManagerFlowDelegate: NSObject {
-    func onLogin()
     func onLogout()
+    func fetchAllNewData() async
+    func fetchNewUserPoints() async
+    func fetchNewUserRank() async
+    func fetchNewUserMessages() async
+    func fetchNewUserEvents() async
+    func fetchNewPoints() async
 }
 
 protocol HasUserManager {
@@ -30,12 +35,13 @@ protocol UserManaging {
     func checkCheckSumData() async throws
     func login(loginCredentials: LoginCredentials) async throws
     func logout()
+    func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType)
     
 }
 
 
 final class UserManager: UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
     private var dependencies: Dependencies
     // MARK: - Initialization
     init(dependencies: Dependencies) {
@@ -82,7 +88,6 @@ final class UserManager: UserManaging {
             credentials = loginCredentials
             token = responseToken
             dependencies.userDefaultsStorage.commitTransaction()
-            delegate?.onLogin()
         } catch {
             throw BaseError(
                 context: .system,
@@ -129,13 +134,28 @@ final class UserManager: UserManaging {
             if checkSum == checkSumData {
                 return
             }
-            dependencies.userDefaultsStorage.beginTransaction()
-            checkSumData = checkSum
-            dependencies.userDefaultsStorage.commitTransaction()
-            try await updateData()
+            try await updateData(newCheckSum: checkSum)
         }
     }
     
+    func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
+        dependencies.userDefaultsStorage.beginTransaction()
+        switch type {
+        case .userPoints:
+            checkSumData?.userPoints = newCheckSum
+        case .rank:
+            checkSumData?.rank = newCheckSum
+        case .messages:
+            checkSumData?.messages = newCheckSum
+        case .events:
+            checkSumData?.events = newCheckSum
+        case .points:
+            checkSumData?.points = newCheckSum
+        }
+        dependencies.userDefaultsStorage.commitTransaction()
+    }
+    
+    // MARK: Private helpers
     private func fetchNewCheckSumData() async throws -> CheckSumData {
         var result = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         do {
@@ -153,7 +173,6 @@ final class UserManager: UserManaging {
             
             let eventsPatchResponse = try await dependencies.checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
             result.events = eventsPatchResponse.data.eventsProtect
-            
             return result
         } catch {
             throw BaseError(
@@ -164,10 +183,31 @@ final class UserManager: UserManaging {
         }
     }
     
-    private func updateData() async throws {
-        dependencies.logger.log(message: "Updating data")
+    private func updateData(newCheckSum: CheckSumData) async throws {
+        guard let currentData = checkSumData else {
+            dependencies.userDefaultsStorage.beginTransaction()
+            checkSumData = newCheckSum
+            dependencies.userDefaultsStorage.commitTransaction()
+            await delegate?.fetchAllNewData()
+            return
+        }
+        if (currentData.userPoints != newCheckSum.userPoints) {
+            await delegate?.fetchNewUserPoints()
+        }
+        if (currentData.events != newCheckSum.events) {
+            await delegate?.fetchNewUserEvents()
+        }
+        if (currentData.messages != newCheckSum.messages) {
+            await delegate?.fetchNewUserMessages()
+        }
+        if (currentData.rank != newCheckSum.rank) {
+            await delegate?.fetchNewUserRank()
+        }
+        if (currentData.points != newCheckSum.points) {
+            await delegate?.fetchNewPoints()
+        }
     }
-    
+
 }
 
 
