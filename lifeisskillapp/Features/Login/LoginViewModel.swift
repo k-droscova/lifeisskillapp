@@ -11,7 +11,6 @@ import Observation
 protocol LoginViewModeling {
     var username: String { get set }
     var password: String { get set }
-    var onLoginSuccess: (() -> Void)? { get set }
     func login()
     func register()
 }
@@ -24,7 +23,6 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
     
     @Published var username: String = ""
     @Published var password: String = ""
-    var onLoginSuccess: (() -> Void)?
 
     
     init(dependencies: Dependencies, delegate: LoginFlowDelegate?) {
@@ -37,7 +35,7 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
             do {
                 try await userManager.login(loginCredentials: .init(username: username, password: password))
                 if userManager.isLoggedIn {
-                    onLoginSuccess?()
+                    delegate?.loginSuccessful()
                 }
             } catch {
                 // Handle the error appropriately on the main thread
@@ -47,6 +45,6 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
     }
     
     func register() {
-            delegate?.registerTapped(in: nil)
+            delegate?.registerTapped()
     }
 }

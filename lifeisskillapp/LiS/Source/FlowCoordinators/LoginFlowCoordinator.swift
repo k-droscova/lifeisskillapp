@@ -19,13 +19,11 @@ protocol LoginFlowCoordinatorDelegate: NSObject {
 protocol LoginFlowDelegate: NSObject {
     /// Called when the user taps the register button.
     ///
-    /// - Parameter viewController: The view controller where the register button was tapped.
-    func registerTapped(in viewController: LoginViewController?)
+    func registerTapped()
 
     /// Called when the login process is successful.
     ///
-    /// - Parameter viewController: The view controller where the login process succeeded.
-    func loginSuccessful(in viewController: LoginViewController?)
+    func loginSuccessful()
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
@@ -39,7 +37,6 @@ final class LoginFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     override func start() -> UIViewController {
         let viewModel = LoginViewModel(dependencies: appDependencies, delegate: self)
         let loginController = LoginViewController(viewModel: viewModel)
-        loginController.delegate = self
         self.rootViewController = loginController
         return loginController
     }
@@ -49,15 +46,13 @@ final class LoginFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
 extension LoginFlowCoordinator: LoginFlowDelegate {
     /// Handles the event when the register button is tapped.
     ///
-    /// - Parameter viewController: The view controller where the register button was tapped.
-    func registerTapped(in viewController: LoginViewController?) {
+    func registerTapped() {
         print("Register Tapped")
     }
 
     /// Handles the event when the login process is successful.
     ///
-    /// - Parameter viewController: The view controller where the login process succeeded.
-    func loginSuccessful(in viewController: LoginViewController?) {
+    func loginSuccessful() {
         delegate?.loginDidSucceed()
     }
 }
