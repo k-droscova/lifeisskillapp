@@ -13,4 +13,12 @@ struct CheckSumData: Codable, Equatable {
     var messages: String
     var events: String
     var points: String
+    
+    enum CheckSumType: Int {
+        case userPoints = 1
+        case rank = 2
+        case messages = 3
+        case events = 4
+        case points = 5
+    }
 }
