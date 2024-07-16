@@ -12,7 +12,7 @@
 		27066A8F2C45623F0092B499 /* PointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A8E2C45623F0092B499 /* PointType.swift */; };
 		27066A912C4567260092B499 /* CodeSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A902C4567260092B499 /* CodeSource.swift */; };
 		27066A952C4570180092B499 /* GenericPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A942C4570180092B499 /* GenericPoint.swift */; };
-		27066A972C4573110092B499 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A962C4573110092B499 /* Date.swift */; };
+		27066A972C4573110092B499 /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A962C4573110092B499 /* DateTime.swift */; };
 		27066A992C45755C0092B499 /* CheckSumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A982C45755C0092B499 /* CheckSumData.swift */; };
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
 		27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9F2C458E0E0092B499 /* CLLocation.swift */; };
@@ -43,6 +43,7 @@
 		2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */; };
 		2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */; };
 		2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */; };
+		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
 		275457092C33254300F3B55A /* ACKategories in Frameworks */ = {isa = PBXBuildFile; productRef = 275457082C33254300F3B55A /* ACKategories */; };
 		2754570B2C33259200F3B55A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754570A2C33259200F3B55A /* Network.swift */; };
 		2754570D2C3328B300F3B55A /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754570C2C3328B300F3B55A /* AppFlowCoordinator.swift */; };
@@ -111,7 +112,7 @@
 		27066A8E2C45623F0092B499 /* PointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointType.swift; sourceTree = "<group>"; };
 		27066A902C4567260092B499 /* CodeSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSource.swift; sourceTree = "<group>"; };
 		27066A942C4570180092B499 /* GenericPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPoint.swift; sourceTree = "<group>"; };
-		27066A962C4573110092B499 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		27066A962C4573110092B499 /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
 		27066A982C45755C0092B499 /* CheckSumData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumData.swift; sourceTree = "<group>"; };
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
 		27066A9F2C458E0E0092B499 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryManager.swift; sourceTree = "<group>"; };
 		2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIService.swift; sourceTree = "<group>"; };
 		2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
+		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
 		2754570A2C33259200F3B55A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2754570C2C3328B300F3B55A /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppFlowCoordinator.swift; path = ../../../AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754570E2C33299300F3B55A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -224,7 +226,6 @@
 				27066A8E2C45623F0092B499 /* PointType.swift */,
 				27066A902C4567260092B499 /* CodeSource.swift */,
 				27066A942C4570180092B499 /* GenericPoint.swift */,
-				2734DCA52C469442008030F3 /* UserPoint.swift */,
 			);
 			path = Points;
 			sourceTree = "<group>";
@@ -485,7 +486,7 @@
 				27C6196F2C3822720067498F /* URLRequest.swift */,
 				27C619712C3822920067498F /* HTTPURLResponse.swift */,
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
-				27066A962C4573110092B499 /* Date.swift */,
+				27066A962C4573110092B499 /* DateTime.swift */,
 				27066A9F2C458E0E0092B499 /* CLLocation.swift */,
 			);
 			path = Extensions;
@@ -517,6 +518,7 @@
 		2734DCA42C4693C4008030F3 /* UserData */ = {
 			isa = PBXGroup;
 			children = (
+				2734DCA52C469442008030F3 /* UserPoint.swift */,
 				27066A982C45755C0092B499 /* CheckSumData.swift */,
 				27066A892C45580D0092B499 /* UserCategory.swift */,
 				27066A8B2C455FFB0092B499 /* UserGender.swift */,
@@ -528,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */,
+				2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */,
 			);
 			path = UserDataManagers;
 			sourceTree = "<group>";
@@ -857,7 +860,7 @@
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */,
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
-				27066A972C4573110092B499 /* Date.swift in Sources */,
+				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
 				27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */,
 				27C619672C37069E0067498F /* APIResponseError.swift in Sources */,
@@ -873,6 +876,7 @@
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
 				27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */,
+				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
 				275457232C3332BF00F3B55A /* HomeView.swift in Sources */,
 				2717AF422C42CBBE00A23F06 /* Generated_InfoPlist.swift in Sources */,
 				2717AF432C42CBBE00A23F06 /* Generated_Localizable_cs.swift in Sources */,

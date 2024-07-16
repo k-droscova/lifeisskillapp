@@ -74,6 +74,25 @@ extension Date {
     }
 }
 
+extension TimeInterval {
+    /// Parse duration string with `HH:mm:ss` format to TimeInterval
+    static func parseDuration(_ durationString: String) -> TimeInterval? {
+        let components = durationString.split(separator: ":").compactMap { Double($0) }
+        guard components.count == 3 else { return nil }
+        let hours = components[0] * 3600
+        let minutes = components[1] * 60
+        let seconds = components[2]
+        return hours + minutes + seconds
+    }
+
+    /// Returns duration string with `HH:mm:ss` format
+    func getDurationString() -> String {
+        let formatter = Formatters.timeLong
+        let date = Date(timeIntervalSince1970: self)
+        return formatter.string(from: date)
+    }
+}
+
 enum Formatters {
     static let year: DateFormatter = {
         let dateFormatter = DateFormatter()
