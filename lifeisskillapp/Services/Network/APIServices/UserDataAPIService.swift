@@ -29,7 +29,7 @@ protocol UserDataAPIServicing {
 public final class UserDataAPIService: UserDataAPIServicing {
     func getUserPoints(baseURL: URL) async throws -> APIResponse<UserPointData> {
         let endpoint = Endpoint.userpoints
-        let headers = endpoint.headers(authToken: APIHeader.Authorization)
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .GET,
@@ -41,7 +41,7 @@ public final class UserDataAPIService: UserDataAPIServicing {
     
     func getUserCategory(baseURL: URL) async throws -> APIResponse<UserCategoryData> {
         let endpoint = Endpoint.usercategory
-        let headers = endpoint.headers(authToken: APIHeader.Authorization)
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .GET,

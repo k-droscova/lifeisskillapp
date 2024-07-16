@@ -26,7 +26,7 @@ protocol CheckSumAPIServicing {
 public final class CheckSumAPIService: CheckSumAPIServicing {
     func getUserPoints(baseURL: URL) async throws -> APIResponse<CheckSumUserPointsData> {
         let endpoint = Endpoint.userpoints
-        let headers = endpoint.headers(authToken: APIHeader.Authorization)
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .PATCH,
