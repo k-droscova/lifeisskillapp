@@ -13,6 +13,7 @@ protocol HasUserDataStorage {
 
 protocol UserDataStoraging: UserStoraging {
     var userCategoryData: UserCategoryData? { get set }
+    var userPointData: UserPointData? { get set }
 }
 
 final class UserDataStorage: UserDataStoraging {
@@ -27,6 +28,7 @@ final class UserDataStorage: UserDataStoraging {
         self.dependencies = dependencies
     }
     
+    // MARK: - UserCategoryData Property
     var userCategoryData: UserCategoryData? {
         get { inTransaction ? transactionCache["userCategoryData"] as? UserCategoryData : internalStore["userCategoryData"] as? UserCategoryData }
         set {
@@ -37,8 +39,21 @@ final class UserDataStorage: UserDataStoraging {
             }
         }
     }
-
+    
+    // MARK: - UserPointData Property
+    var userPointData: UserPointData? {
+        get { inTransaction ? transactionCache["userPointData"] as? UserPointData : internalStore["userPointData"] as? UserPointData }
+        set {
+            if inTransaction {
+                transactionCache["userPointData"] = newValue
+            } else {
+                internalStore["userPointData"] = newValue
+            }
+        }
+    }
+    
     // Internal storage dictionary to store values
+    // MARK: - will be replaced with SwiftData/Realm later
     private var internalStore: [String: Any] = [:]
     
     // MARK: - Transaction Methods
