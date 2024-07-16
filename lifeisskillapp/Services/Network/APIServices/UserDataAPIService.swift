@@ -14,8 +14,8 @@ protocol HasUserDataAPIService {
 protocol UserDataAPIServicing {
     func getUserCategory(baseURL: URL) async throws -> APIResponse<UserCategoryData>
     
-    /*func getUserPoints(baseURL: URL) async throws -> APIResponse<UserPointData>
-    
+    func getUserPoints(baseURL: URL) async throws -> APIResponse<UserPointData>
+    /*
     func getRank(baseURL: URL) async throws -> APIResponse<CheckSumRankData>
     
     func getEvents(baseURL: URL) async throws -> APIResponse<CheckSumEventsData>
@@ -27,6 +27,18 @@ protocol UserDataAPIServicing {
 }
 
 public final class UserDataAPIService: UserDataAPIServicing {
+    func getUserPoints(baseURL: URL) async throws -> APIResponse<UserPointData> {
+        let endpoint = Endpoint.userpoints
+        let headers = endpoint.headers(authToken: APIHeader.Authorization)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+            method: .GET,
+            headers: headers,
+            sensitiveRequestBodyData: false,
+            sensitiveResponseData: false,
+            errorObject: APIResponseError.self)
+    }
+    
     func getUserCategory(baseURL: URL) async throws -> APIResponse<UserCategoryData> {
         let endpoint = Endpoint.usercategory
         let headers = endpoint.headers(authToken: APIHeader.Authorization)

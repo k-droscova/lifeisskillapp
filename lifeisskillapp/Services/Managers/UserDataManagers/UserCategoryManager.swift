@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol UserCategoryManagerFlowDelegate: AnyObject {
+protocol UserCategoryManagerFlowDelegate: NSObject {
     func onUserCategoriesUpdated()
 }
 
