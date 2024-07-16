@@ -72,7 +72,7 @@ public struct CheckSumPointsData: DataProtocol {
 struct UserCategoryData: DataProtocol {
     let main: UserCategory
     let data: [UserCategory]
-
+    
     enum CodingKeys: String, CodingKey {
         case main = "userMainCategory"
         case data = "allUserCategoryList"
@@ -91,5 +91,21 @@ struct UserCategoryData: DataProtocol {
         // Assign the found main category and the list of categories
         self.main = mainCategory
         self.data = allUserCategories
+    }
+}
+
+struct UserPointData: DataProtocol {
+    let checkSum: String
+    let data: [UserPoint]
+    
+    enum CodingKeys: String, CodingKey {
+        case data = "listPoints"
+        case checkSum = "userPointsProtect"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        checkSum = try container.decode(String.self, forKey: .checkSum)
+        data = try container.decode([UserPoint].self, forKey: .data)
     }
 }

@@ -16,6 +16,7 @@ enum PointType: Int, Codable {
     case tourist = 4
     case energySponsor = 5
     case virtual = 6
+    case unknown = 0 // Add an unknown case to handle unmapped values
        
     static func getPointType(from rawValue: Int) -> PointType? {
         guard let pointType = PointType(rawValue: rawValue) else {

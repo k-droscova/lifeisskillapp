@@ -56,17 +56,10 @@ struct GeneralPoint: Codable {
         pointName = try container.decode(String.self, forKey: .pointName)
         pointValue = try container.decode(Int.self, forKey: .pointValue)
         
-        let pointTypeResponse = try container.decode(Int.self, forKey: .pointType)
-        let pointTypeInt = pointTypeResponse & 0b1111
-        guard let pointType = PointType.getPointType(from: pointTypeInt) else {
-            throw BaseError(
-                context: .api,
-                message: "Unable to map PointType from API \(pointTypeInt)",
-                code: .general(.jsonDecoding),
-                logger: appDependencies.logger
-            )
-        }
-        self.pointType = pointType
+        let pointTypeInt = try container.decode(Int.self, forKey: .pointType)
+        let pointTypeMapped = PointType(rawValue: pointTypeInt & 0xF) ?? .unknown
+        pointType = pointTypeMapped
+        
         pointID = try container.decode(String.self, forKey: .pointID)
         cluster = try container.decode(String.self, forKey: .cluster)
         pointSpec = try container.decode(Int.self, forKey: .pointSpec)
