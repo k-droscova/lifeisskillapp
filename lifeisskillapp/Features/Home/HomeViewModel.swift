@@ -10,19 +10,31 @@ import Observation
 
 protocol HomeViewModeling {
     func logout()
+    func fetchUserCategoryData()
+    func fetchUserPointData()
 }
 
 final class HomeViewModel: HomeViewModeling, ObservableObject {
-    struct Dependencies: HasUserManager {
-        let userManager: UserManaging
-    }
-    private let userManager: UserManaging
+    
+    typealias Dependencies = HasManagers
+
+    private let dependencies: Dependencies
     
     init(dependencies: Dependencies) {
-        userManager = dependencies.userManager
+        self.dependencies = dependencies
     }
     
     func logout() {
-        userManager.logout()
+        dependencies.userManager.logout()
+    }
+    
+    func fetchUserCategoryData() {
+        let categories = dependencies.userCategoryManager.getAllCategories()
+        print(categories)
+    }
+    
+    func fetchUserPointData() {
+        let points = dependencies.userPointManager.getAllPoints()
+        print(points)
     }
 }

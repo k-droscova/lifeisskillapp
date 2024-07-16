@@ -15,7 +15,7 @@ final class HomeViewController: Base.ViewController {
     
     override init() {
         self.viewModel = HomeViewModel(
-            dependencies: .init(userManager: appDependencies.userManager)
+            dependencies: appDependencies
         )
         super.init()
     }

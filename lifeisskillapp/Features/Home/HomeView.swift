@@ -18,10 +18,45 @@ struct HomeView: View {
     
     var contentView: some View {
         VStack {
-            Button(action: viewModel.logout, label: {
-                Text("logout")
-            })
+            Button(
+                action: viewModel.logout,
+                label: {
+                    Text("logout")
+                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity, maxHeight: 20)
+                        .foregroundColor(Color.blue)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                }
+            )
             
+            Spacer()
+            
+            Button(
+                action: viewModel.fetchUserCategoryData,
+                label: {
+                    Text("User Category Data")
+                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity, maxHeight: 20)
+                        .foregroundColor(Color.blue)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                }
+            )
+            
+            Spacer()
+            
+            Button(
+                action: viewModel.fetchUserPointData,
+                label: {
+                    Text("User Point Data")
+                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity, maxHeight: 20)
+                        .foregroundColor(Color.blue)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                }
+            )
         }
     }
 }
