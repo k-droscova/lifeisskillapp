@@ -24,7 +24,7 @@
 "login.register" = "Vytvořit nový účet";
 "login.error.invalid_credentials" = "Zadali jste neplatné přihlašovací údaje.";
 "login.error.network" = "Chyba sítě. Připojte se k internetu.";
-"login.error.server" = "Chyba server. Připojte se později.";
+"login.error.server" = "Chyba serveru. Připojte se později.";
 "login.error.emptyFields" = "Vyplňte všechny položky.";
 "register.user_info" = "Údaje uživatele";
 "register.field.name" = "Jméno";
@@ -47,9 +47,9 @@
 "register.button.previous" = "Předchozí";
 "register.button.done" = "Registrovat";
 "register.error.empty" = "Pole nesmí být prázdné";
-"register.error.short_name" = "";
-"register.error.short_surname" = "";
-"register.error.short_relationship" = "";
+"register.error.short_name" = "Jméno je příliš krátké";
+"register.error.short_surname" = "Příjmení je příliš krátké";
+"register.error.short_relationship" = "Vztah je příliš krátký";
 "register.error.short_username" = "Minimálně 3 znaky";
 "register.error.weak_password" = "Min 5 znaků, číslice, malé a velké písmeno";
 "register.error.password_not_match" = "Hesla se neshodují";
@@ -60,7 +60,7 @@
 "register.error.invalid_postcode" = "Neplatné poštovní směrovací číslo";
 "register.error.age.old" = "Hra je pro uživatele do 18 let";
 "register.error.age.young" = "Hra je pro uživatele od 6 let";
-"register.error.parrent_email" = "Email nesmí být stejný jako email uživatele";
+"register.error.parrent_email" = "Email rodiče nesmí být stejný jako email uživatele";
 "register.success.title" = "Jste skoro zaregistrován";
 "register.success.message" = "Právě proběhla registrace nového uživatele. Pro plnou funkčnost je nutno účet aktivovat v OBOU emailech. Pokračujte do emailu rodiče, kde jsou další podrobnosti. Účet musíte ověřit nejdříve na emailu rodiče a poté na emailu uživatele. Účet je možné ověřit do 7 dnů od vytvoření registrace.";
 "home.title" = "Načíst body";
@@ -80,9 +80,9 @@
 "home.scan_error.no_internet" = "Bod byl naskenován, ale telefon není připojen k internetu. Bod byl uložen a bude ověřen až se připojíte k internetu. Zkontrolujte připojení k internetu.";
 "home.scan_error.request_error" = "Při ověřování bodu nastala chyba. Ověřte připojení k internetu, polohové služby a vyzkoušejte bod načíst znovu.";
 "home.scan_error.again" = "Opakovat";
-"home.nfc.scan_alert" = "Přiložte NFC čip na horní čás zadní strany telefonu.";
+"home.nfc.scan_alert" = "Přiložte NFC čip na horní část zadní strany telefonu.";
 "home.qr.scan_alert" = "Zaměřte fotoaparát na platný LiS QR kód";
-"home.qr.use_qr" = "Použít qr kód";
+"home.qr.use_qr" = "Použít QR kód";
 "home.qr.permission.title" = "Povolte fotoaparát";
 "home.qr.permission.message" = "Použití fotoaparátu musí být povoleno. Bez fotoaparátu nemůžete načítat QR kódy.";
 "home.qr.permission.setting" = "Otevřít nastavení";
@@ -95,7 +95,7 @@
 "point_list.outbox.two_four" = "Vyskytl se problém s připojením. %d načtené čipy čekají na validaci.";
 "point_list.outbox.more" = "Vyskytl se problém s připojením. %d načtených čipů čeká na validaci.";
 "point_list.outbox.title" = "Neodeslané body";
-"point_list.outbox.help.title" = "Připojení k internetu je zřejmě neaktivní";
+"point_list.outbox.help.title" = "Připojení k internetu je zřejmě neaktivní";
 "point_list.outbox.help.description" = "Telefon není připojen k internetu a proto nelze některé načtené body ověřit. Připojte se k internetu a vyčkejte. Body se automaticky odešlou po připojení k internetu. \n \n Pokud načtete stejný bod vícekrát v jedné minutě, pak se uloží nejnovější (poslední) načtení.";
 "point_list.outbox.cell" = "Několik bodů čeká na odeslání k validaci. Připojte se k internetu.";
 "point_list.outbox.unknownCell" = "Načtený bod";
@@ -122,7 +122,7 @@
 "settings.field.account.title" = "Můj profil";
 "settings.section.personal" = "Osobní";
 "settings.section.main" = "Obecné";
-"settings.field.share.invite_message" = "Pojď semnou hrát LifeIsSkill hru. Můžeš vyhrát dovolenou, vyhlídkový let nebo kolo. 🎁 Je to jednoduché. Stáhni aplikaci, sbírej body a vyhraj skvělé ceny. 🏅 (určeno pro hráče ve věku od 6 do 18 let)\"";
+"settings.field.share.invite_message" = "Pojď semnou hrát LifeIsSkill hru. Můžeš vyhrát dovolenou, vyhlídkový let nebo kolo. 🎁 Je to jednoduché. Stáhni aplikaci, sbírej body a vyhraj skvělé ceny. 🏅 (určeno pro hráče ve věku od 6 do 18 let)";
 "map.title" = "Mapa";
 "map.route_button.title" = "Navigovat";
 "prizes.title" = "Výhry";
