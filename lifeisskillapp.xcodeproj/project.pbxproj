@@ -28,11 +28,6 @@
 		2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */; };
 		2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */; };
 		2717AF222C42B11300A23F06 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF212C42B11300A23F06 /* Info.plist */; };
-		2717AF272C42BC5100A23F06 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF262C42BC5100A23F06 /* swiftgen.yml */; };
-		2717AF2F2C42BF2A00A23F06 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF2D2C42BF2A00A23F06 /* Localizable.strings */; };
-		2717AF412C42CBBE00A23F06 /* Generated_Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */; };
-		2717AF422C42CBBE00A23F06 /* Generated_InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3E2C42CBBE00A23F06 /* Generated_InfoPlist.swift */; };
-		2717AF432C42CBBE00A23F06 /* Generated_Localizable_cs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AF3F2C42CBBE00A23F06 /* Generated_Localizable_cs.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
 		27274F8A2C3320F3003453E2 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 27274F892C3320F3003453E2 /* Base */; };
@@ -59,6 +54,7 @@
 		275457282C3332E000F3B55A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* HomeViewController.swift */; };
 		2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
+		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
 		27B25C4F2C3AFE4F00864028 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4E2C3AFE4F00864028 /* APIService.swift */; };
 		27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6194D2C36E6000067498F /* HttpStatusCode.swift */; };
@@ -129,17 +125,10 @@
 		2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		2717AF202C42B11300A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
 		2717AF232C42B11800A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = cs; path = cs.lproj/Info.plist; sourceTree = "<group>"; };
-		2717AF262C42BC5100A23F06 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
-		2717AF2E2C42BF2A00A23F06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2717AF302C42BF2E00A23F06 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated_Assets.swift; sourceTree = "<group>"; };
-		2717AF3E2C42CBBE00A23F06 /* Generated_InfoPlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated_InfoPlist.swift; sourceTree = "<group>"; };
-		2717AF3F2C42CBBE00A23F06 /* Generated_Localizable_cs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated_Localizable_cs.swift; sourceTree = "<group>"; };
 		27274F7A2C3320F2003453E2 /* lifeisskillapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeisskillapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27274F892C3320F3003453E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		27274F8B2C3320F3003453E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27274F902C3320F3003453E2 /* lifeisskillappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F942C3320F3003453E2 /* lifeisskillappTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappTests.swift; sourceTree = "<group>"; };
 		27274F9A2C3320F3003453E2 /* lifeisskillappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,7 +154,7 @@
 		2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73C2C483C3D00491874 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = de; path = de.lproj/Info.plist; sourceTree = "<group>"; };
-		2755D73D2C483C3D00491874 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
 		27B25C4E2C3AFE4F00864028 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		27C6194D2C36E6000067498F /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
@@ -259,7 +248,7 @@
 		2717AF312C42C23300A23F06 /* StringResources */ = {
 			isa = PBXGroup;
 			children = (
-				2717AF2D2C42BF2A00A23F06 /* Localizable.strings */,
+				2755D73E2C483D7300491874 /* Localizable.xcstrings */,
 			);
 			path = StringResources;
 			sourceTree = "<group>";
@@ -281,16 +270,6 @@
 				2717AF212C42B11300A23F06 /* Info.plist */,
 			);
 			path = InfoPlist;
-			sourceTree = "<group>";
-		};
-		2717AF402C42CBBE00A23F06 /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-				2717AF3D2C42CBBE00A23F06 /* Generated_Assets.swift */,
-				2717AF3E2C42CBBE00A23F06 /* Generated_InfoPlist.swift */,
-				2717AF3F2C42CBBE00A23F06 /* Generated_Localizable_cs.swift */,
-			);
-			path = Generated;
 			sourceTree = "<group>";
 		};
 		27274F712C3320F2003453E2 = {
@@ -325,7 +304,6 @@
 				27274F7D2C3320F2003453E2 /* AppDelegate.swift */,
 				27274F862C3320F3003453E2 /* Assets.xcassets */,
 				27274F882C3320F3003453E2 /* LaunchScreen.storyboard */,
-				27274F8B2C3320F3003453E2 /* Info.plist */,
 			);
 			path = lifeisskillapp;
 			sourceTree = "<group>";
@@ -403,9 +381,7 @@
 		27274FB22C3321F0003453E2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2717AF402C42CBBE00A23F06 /* Generated */,
 				2717AF362C42C2B700A23F06 /* Resources */,
-				2717AF262C42BC5100A23F06 /* swiftgen.yml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -809,9 +785,8 @@
 				2717AEFE2C42ACCD00A23F06 /* Images.xcassets in Resources */,
 				2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */,
 				27274F8A2C3320F3003453E2 /* Base in Resources */,
+				2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */,
 				2717AF122C42ADB800A23F06 /* Montserrat-Hairline.otf in Resources */,
-				2717AF272C42BC5100A23F06 /* swiftgen.yml in Resources */,
-				2717AF2F2C42BF2A00A23F06 /* Localizable.strings in Resources */,
 				2717AF102C42ADB800A23F06 /* Montserrat-Bold.otf in Resources */,
 				2717AF222C42B11300A23F06 /* Info.plist in Resources */,
 			);
@@ -858,7 +833,6 @@
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				27C619972C3AB5D50067498F /* Theme.swift in Sources */,
-				2717AF412C42CBBE00A23F06 /* Generated_Assets.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */,
@@ -881,8 +855,6 @@
 				27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
 				275457232C3332BF00F3B55A /* HomeView.swift in Sources */,
-				2717AF422C42CBBE00A23F06 /* Generated_InfoPlist.swift in Sources */,
-				2717AF432C42CBBE00A23F06 /* Generated_Localizable_cs.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
 				2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */,
@@ -943,17 +915,7 @@
 				2755D73C2C483C3D00491874 /* de */,
 			);
 			name = Info.plist;
-			path = lifeisskillapp/LiS/Resources/Resources/InfoPlist;
-			sourceTree = SOURCE_ROOT;
-		};
-		2717AF2D2C42BF2A00A23F06 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2717AF2E2C42BF2A00A23F06 /* en */,
-				2717AF302C42BF2E00A23F06 /* cs */,
-				2755D73D2C483C3D00491874 /* de */,
-			);
-			name = Localizable.strings;
+			path = LiS/Resources/Resources/InfoPlist;
 			sourceTree = "<group>";
 		};
 		27274F882C3320F3003453E2 /* LaunchScreen.storyboard */ = {

@@ -21,7 +21,7 @@ struct HomeView: View {
             Button(
                 action: viewModel.logout,
                 label: {
-                    Text("logout")
+                    Text(LocalizedStringKey("settings.logout"))
                         .font(.system(size: 14, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 20)
                         .foregroundColor(Color.blue)

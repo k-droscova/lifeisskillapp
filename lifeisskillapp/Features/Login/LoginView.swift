@@ -9,10 +9,6 @@ import SwiftUI
 
 struct LoginView: View {
     @State var viewModel: LoginViewModeling
-    let defaultUsernameText = L10n.Login.username
-    let defaultPasswordText = L10n.Login.password
-    let loginButtonText = L10n.Login.login
-    let registerButtonText = L10n.Login.register
 
     
     var body: some View {
@@ -27,7 +23,7 @@ struct LoginView: View {
             
             VStack {
                 TextField(
-                    defaultUsernameText.localized,
+                    LocalizedStringKey("login.username"),
                     text: $viewModel.username
                 )
                 .autocapitalization(.none)
@@ -37,7 +33,7 @@ struct LoginView: View {
                 Divider()
                 
                 SecureField(
-                    defaultPasswordText.localized,
+                    LocalizedStringKey("login.password"),
                     text: $viewModel.password
                 )
                 .padding(.top, 20)
@@ -50,7 +46,7 @@ struct LoginView: View {
             Button(
                 action: viewModel.login,
                 label: {
-                    Text(loginButtonText.localized)
+                    Text(LocalizedStringKey("login.login"))
                         .font(.system(size: 24, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 60)
                         .foregroundColor(Color.white)
@@ -64,7 +60,7 @@ struct LoginView: View {
             Button(
                 action: viewModel.register,
                 label: {
-                    Text(registerButtonText.localized)
+                    Text(LocalizedStringKey("login.register"))
                         .font(.system(size: 14, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 20)
                         .foregroundColor(Color.red)

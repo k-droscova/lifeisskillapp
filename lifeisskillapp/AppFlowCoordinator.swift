@@ -36,8 +36,11 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             
             let homeVC = HomeViewController()
             let homeNavigationController = UINavigationController(rootViewController: homeVC)
-            homeNavigationController.tabBarItem.title = "Home"
-            homeNavigationController.tabBarItem.image = UIImage(systemName: "house")
+            homeNavigationController.tabBarItem = UITabBarItem(
+                        title: NSLocalizedString("home.title", comment: ""),
+                        image: UIImage(systemName: "house"),
+                        selectedImage: UIImage(systemName: "house.fill")
+            )
             
             let tabBarController = UITabBarController()
             tabBarController.viewControllers = [homeNavigationController]
