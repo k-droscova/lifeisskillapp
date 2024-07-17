@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "basic.attention" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -25,7 +25,7 @@
       }
     },
     "basic.close" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -48,7 +48,7 @@
       }
     },
     "basic.error" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -71,7 +71,7 @@
       }
     },
     "basic.error.message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -94,7 +94,7 @@
       }
     },
     "basic.finish" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -117,7 +117,7 @@
       }
     },
     "basic.ok" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -140,7 +140,7 @@
       }
     },
     "basic.refresh" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -163,7 +163,7 @@
       }
     },
     "basic.show_more" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -186,7 +186,7 @@
       }
     },
     "basic.use" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -209,7 +209,7 @@
       }
     },
     "events.placeholder" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -232,7 +232,7 @@
       }
     },
     "events.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -255,7 +255,7 @@
       }
     },
     "home.button.how" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -278,7 +278,7 @@
       }
     },
     "home.description.nfc" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -301,7 +301,7 @@
       }
     },
     "home.description.qr" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -324,7 +324,7 @@
       }
     },
     "home.description.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -347,7 +347,7 @@
       }
     },
     "home.nfc.aler_message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -370,7 +370,7 @@
       }
     },
     "home.nfc.button" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -393,7 +393,7 @@
       }
     },
     "home.nfc.scan_alert" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -416,7 +416,7 @@
       }
     },
     "home.points" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -439,7 +439,7 @@
       }
     },
     "home.qr.button" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -462,7 +462,7 @@
       }
     },
     "home.qr.permission.message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -485,7 +485,7 @@
       }
     },
     "home.qr.permission.setting" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -508,7 +508,7 @@
       }
     },
     "home.qr.permission.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -531,7 +531,7 @@
       }
     },
     "home.qr.scan_alert" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -554,7 +554,7 @@
       }
     },
     "home.qr.use_qr" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -577,7 +577,7 @@
       }
     },
     "home.scan_error.again" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -600,7 +600,7 @@
       }
     },
     "home.scan_error.nfc.message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -623,7 +623,7 @@
       }
     },
     "home.scan_error.no_internet" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -646,7 +646,7 @@
       }
     },
     "home.scan_error.qr.message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -669,7 +669,7 @@
       }
     },
     "home.scan_error.request_error" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -692,7 +692,7 @@
       }
     },
     "home.scan_success.message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -715,7 +715,7 @@
       }
     },
     "home.scan_success.next" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -738,7 +738,7 @@
       }
     },
     "home.scan_success.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -761,7 +761,7 @@
       }
     },
     "home.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -784,7 +784,7 @@
       }
     },
     "location.denied" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -807,7 +807,7 @@
       }
     },
     "location.restricted" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -831,7 +831,7 @@
     },
     "location.services_disabled" : {
       "comment" : "Localizable.strings\n  lifeisskillapp\n\n  Created by Karolína Droscová on 13.07.2024.",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -854,7 +854,7 @@
       }
     },
     "login.error.emptyFields" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -877,7 +877,7 @@
       }
     },
     "login.error.invalid_credentials" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -900,7 +900,7 @@
       }
     },
     "login.error.network" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -923,7 +923,7 @@
       }
     },
     "login.error.server" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -946,7 +946,6 @@
       }
     },
     "login.login" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -969,7 +968,6 @@
       }
     },
     "login.password" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -992,7 +990,6 @@
       }
     },
     "login.register" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1015,7 +1012,7 @@
       }
     },
     "login.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1038,7 +1035,6 @@
       }
     },
     "login.username" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1061,7 +1057,7 @@
       }
     },
     "map.route_button.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1084,7 +1080,7 @@
       }
     },
     "map.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1107,7 +1103,7 @@
       }
     },
     "messages.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1130,7 +1126,7 @@
       }
     },
     "onboarding.description.activity" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1153,7 +1149,7 @@
       }
     },
     "onboarding.description.find" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1176,7 +1172,7 @@
       }
     },
     "onboarding.description.point" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1199,7 +1195,7 @@
       }
     },
     "onboarding.description.prizes" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1222,7 +1218,7 @@
       }
     },
     "onboarding.description.problems" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1245,7 +1241,7 @@
       }
     },
     "onboarding.description.web" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1268,7 +1264,7 @@
       }
     },
     "point_list.outbox.cell" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1291,7 +1287,7 @@
       }
     },
     "point_list.outbox.help.description" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1314,7 +1310,7 @@
       }
     },
     "point_list.outbox.help.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1337,7 +1333,7 @@
       }
     },
     "point_list.outbox.more" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1360,7 +1356,7 @@
       }
     },
     "point_list.outbox.one" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1383,7 +1379,7 @@
       }
     },
     "point_list.outbox.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1406,7 +1402,7 @@
       }
     },
     "point_list.outbox.two_four" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1429,7 +1425,7 @@
       }
     },
     "point_list.outbox.unknownCell" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1452,7 +1448,7 @@
       }
     },
     "point_list.point" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1475,7 +1471,7 @@
       }
     },
     "point_list.points_sum.more" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1498,7 +1494,7 @@
       }
     },
     "point_list.points_sum.one" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1521,7 +1517,7 @@
       }
     },
     "point_list.points_sum.two_four" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1544,7 +1540,7 @@
       }
     },
     "point_list.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1567,7 +1563,7 @@
       }
     },
     "prizes.header.description" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1590,7 +1586,7 @@
       }
     },
     "prizes.header.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1613,7 +1609,7 @@
       }
     },
     "prizes.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1636,7 +1632,7 @@
       }
     },
     "register.button.cancel" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1659,7 +1655,7 @@
       }
     },
     "register.button.done" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1682,7 +1678,7 @@
       }
     },
     "register.button.next" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1705,7 +1701,7 @@
       }
     },
     "register.button.previous" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1728,7 +1724,7 @@
       }
     },
     "register.error.age.old" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1751,7 +1747,7 @@
       }
     },
     "register.error.age.young" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1774,7 +1770,7 @@
       }
     },
     "register.error.empty" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1797,7 +1793,7 @@
       }
     },
     "register.error.invalid_mail" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1820,7 +1816,7 @@
       }
     },
     "register.error.invalid_phone" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1843,7 +1839,7 @@
       }
     },
     "register.error.invalid_postcode" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1866,30 +1862,30 @@
       }
     },
     "register.error.invalid_username" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Používané uživatelské jméno"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Benutzername wird verwendet. Wählen Sie einen eindeutigen Namen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nickname is used. Find unique"
+            "value" : "Nickname is already used."
           }
         }
       }
     },
     "register.error.parrent_email" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1912,7 +1908,7 @@
       }
     },
     "register.error.password_not_match" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1935,7 +1931,7 @@
       }
     },
     "register.error.short_name" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1958,7 +1954,7 @@
       }
     },
     "register.error.short_relationship" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1981,7 +1977,7 @@
       }
     },
     "register.error.short_surname" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2004,7 +2000,7 @@
       }
     },
     "register.error.short_username" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2027,7 +2023,7 @@
       }
     },
     "register.error.used_mail" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2050,7 +2046,7 @@
       }
     },
     "register.error.weak_password" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2073,7 +2069,7 @@
       }
     },
     "register.field.birth" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2096,7 +2092,7 @@
       }
     },
     "register.field.gdpr" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2119,7 +2115,7 @@
       }
     },
     "register.field.gender" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2142,7 +2138,7 @@
       }
     },
     "register.field.gender.female" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2165,7 +2161,7 @@
       }
     },
     "register.field.gender.male" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2188,7 +2184,7 @@
       }
     },
     "register.field.mail" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2211,7 +2207,7 @@
       }
     },
     "register.field.name" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2234,7 +2230,7 @@
       }
     },
     "register.field.password" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2257,7 +2253,7 @@
       }
     },
     "register.field.phone" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2280,7 +2276,7 @@
       }
     },
     "register.field.post_number" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2303,7 +2299,7 @@
       }
     },
     "register.field.relationship" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2326,7 +2322,7 @@
       }
     },
     "register.field.second_password" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2349,7 +2345,7 @@
       }
     },
     "register.field.surname" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2372,7 +2368,7 @@
       }
     },
     "register.field.username" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2395,7 +2391,7 @@
       }
     },
     "register.parent_info" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2418,7 +2414,7 @@
       }
     },
     "register.success.message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2441,7 +2437,7 @@
       }
     },
     "register.success.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2464,7 +2460,7 @@
       }
     },
     "register.user_info" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2487,7 +2483,7 @@
       }
     },
     "settings.field.account.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2510,7 +2506,7 @@
       }
     },
     "settings.field.avatar.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2533,7 +2529,7 @@
       }
     },
     "settings.field.contact.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2556,7 +2552,7 @@
       }
     },
     "settings.field.info.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2579,7 +2575,7 @@
       }
     },
     "settings.field.manual.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2602,7 +2598,7 @@
       }
     },
     "settings.field.notifications.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2625,7 +2621,7 @@
       }
     },
     "settings.field.prize.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2648,7 +2644,7 @@
       }
     },
     "settings.field.rules.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2671,12 +2667,12 @@
       }
     },
     "settings.field.share.invite_message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pojď semnou hrát LifeIsSkill hru. Můžeš vyhrát dovolenou, vyhlídkový let nebo kolo. 🎁 Je to jednoduché. Stáhni aplikaci, sbírej body a vyhraj skvělé ceny. 🏅 (určeno pro hráče ve věku od 6 do 18 let)"
+            "value" : "Pojď se mnou hrát LifeIsSkill hru. Můžeš vyhrát dovolenou, vyhlídkový let nebo kolo. 🎁 Je to jednoduché. Stáhni aplikaci, sbírej body a vyhraj skvělé ceny. 🏅 (určeno pro hráče ve věku od 6 do 18 let)"
           }
         },
         "de" : {
@@ -2694,7 +2690,7 @@
       }
     },
     "settings.field.share.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2717,7 +2713,7 @@
       }
     },
     "settings.field.sponsors.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2739,8 +2735,31 @@
         }
       }
     },
+    "settings.logout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Logout"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abmelden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout"
+          }
+        }
+      }
+    },
     "settings.mail.footer.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2763,7 +2782,7 @@
       }
     },
     "settings.mail.footer.user_id" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2786,7 +2805,7 @@
       }
     },
     "settings.mail.footer.username" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2809,7 +2828,7 @@
       }
     },
     "settings.mail.subject" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2832,7 +2851,7 @@
       }
     },
     "settings.section.main" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2855,7 +2874,7 @@
       }
     },
     "settings.section.personal" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2878,7 +2897,7 @@
       }
     },
     "settings.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2901,7 +2920,7 @@
       }
     },
     "stats.myPosition" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2924,7 +2943,7 @@
       }
     },
     "stats.title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2942,6 +2961,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rank"
+          }
+        }
+      }
+    },
+    "User Category Data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Print UserCategory Data"
+          }
+        }
+      }
+    },
+    "User Point Data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Print UserPoint Data"
           }
         }
       }
