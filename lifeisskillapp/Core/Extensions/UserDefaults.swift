@@ -18,7 +18,7 @@ extension UserDefaults {
         case clLocation = "clLocation"
         case token = "token"
         case logoutError = "logoutError"
-        case checkSumData = "CheckSumData"
+        case checkSumData = "checkSumData"
     }
     
     // CheckSumData

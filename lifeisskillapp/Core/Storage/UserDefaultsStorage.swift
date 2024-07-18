@@ -135,6 +135,8 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         if let checkSumData = transactionCache["checkSumData"] as? CheckSumData {
             UserDefaults.standard.checkSumData = checkSumData
             dependencies.logger.log(message: "New CheckSumData saved")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "checkSumData")
         }
 
         
