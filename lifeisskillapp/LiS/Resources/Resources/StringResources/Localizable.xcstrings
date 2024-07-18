@@ -254,6 +254,9 @@
         }
       }
     },
+    "Generic Point Data" : {
+
+    },
     "home.button.how" : {
       "extractionState" : "manual",
       "localizations" : {

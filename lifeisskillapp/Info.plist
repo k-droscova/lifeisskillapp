@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please allow location services</string>
+	<string>Location Must Be Allowed In Order To Use The App</string>
 </dict>
 </plist>
