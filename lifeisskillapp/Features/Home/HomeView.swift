@@ -57,6 +57,20 @@ struct HomeView: View {
                         .cornerRadius(10)
                 }
             )
+            
+            Spacer()
+            
+            Button(
+                action: viewModel.fetchGenericPointData,
+                label: {
+                    Text("Generic Point Data")
+                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity, maxHeight: 20)
+                        .foregroundColor(Color.blue)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                }
+            )
         }
     }
 }

@@ -12,6 +12,7 @@ protocol HomeViewModeling {
     func logout()
     func fetchUserCategoryData()
     func fetchUserPointData()
+    func fetchGenericPointData()
 }
 
 final class HomeViewModel: HomeViewModeling, ObservableObject {
@@ -29,12 +30,17 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     }
     
     func fetchUserCategoryData() {
-        let categories = dependencies.userCategoryManager.getAllCategories()
+        let categories = dependencies.userCategoryManager.getAll()
         print(categories)
     }
     
     func fetchUserPointData() {
-        let points = dependencies.userPointManager.getAllPoints()
+        let points = dependencies.userPointManager.getAll()
         print(points)
+    }
+    
+    func fetchGenericPointData() {
+        let points = dependencies.genericPointManager.getAll()
+        print(points.count)
     }
 }

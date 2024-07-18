@@ -105,8 +105,8 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
     func fetchNewUserPoints() async {
         appDependencies.logger.log(message: "Updating userPointsData")
         do {
-            try await appDependencies.userPointManager.loadUserPoints()
-            guard let newCheckSumUserPoints = appDependencies.userPointManager.userPointData?.checkSum else {
+            try await appDependencies.userPointManager.fetch()
+            guard let newCheckSumUserPoints = appDependencies.userPointManager.data?.checkSum else {
                 throw BaseError(context: .system, code: .general(.missingConfigItem), logger: appDependencies.logger)
             }
             appDependencies.userManager.updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
@@ -128,7 +128,16 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
     }
     
     func fetchNewPoints() async {
-        appDependencies.logger.log(message: "Updating user points")
+        appDependencies.logger.log(message: "Updating generic points")
+        do {
+            try await appDependencies.genericPointManager.fetch()
+            guard let newCheckSum = appDependencies.genericPointManager.data?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: appDependencies.logger)
+            }
+            appDependencies.userManager.updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
+        } catch {
+            
+        }
     }
     
     func onLogout() {
@@ -140,7 +149,7 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
 extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidSucceed() {
         Task {
-            try await appDependencies.userCategoryManager.loadUserCategories()
+            try await appDependencies.userCategoryManager.fetch()
             try await appDependencies.userManager.checkCheckSumData()
         }
         prepareWindow()

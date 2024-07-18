@@ -7,21 +7,16 @@
 
 import Foundation
 
-protocol UserCategoryManagerFlowDelegate: NSObject {
-    func onUserCategoriesUpdated()
+protocol UserCategoryManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
 
 protocol HasUserCategoryManager {
-    var userCategoryManager: UserCategoryManaging { get }
+    var userCategoryManager: any UserCategoryManaging { get }
 }
 
-protocol UserCategoryManaging {
+protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, DataContainer == UserCategoryData {
     var delegate: UserCategoryManagerFlowDelegate? { get set }
-    var userCategoryData: UserCategoryData? { get set }
-    func loadUserCategories() async throws
     func getMainCategory() -> UserCategory?
-    func findCategoryById(id: String) -> UserCategory?
-    func getAllCategories() -> [UserCategory]
 }
 
 public final class UserCategoryManager: UserCategoryManaging {
@@ -36,7 +31,7 @@ public final class UserCategoryManager: UserCategoryManaging {
     // MARK: - Public Properties
     weak var delegate: UserCategoryManagerFlowDelegate?
     
-    var userCategoryData: UserCategoryData? {
+    var data: UserCategoryData? {
         get {
             return dependencies.userDataStorage.userCategoryData
         }
@@ -46,14 +41,14 @@ public final class UserCategoryManager: UserCategoryManaging {
     }
     
     // MARK: - Public Interface
-    func loadUserCategories() async throws {
+    func fetch() async throws {
         dependencies.logger.log(message: "Loading user categories")
         do {
             let response = try await dependencies.userDataAPI.getUserCategory(baseURL: APIUrl.baseURL)
             dependencies.userDataStorage.beginTransaction()
-            userCategoryData = response.data
+            data = response.data
             dependencies.userDataStorage.commitTransaction()
-            delegate?.onUserCategoriesUpdated()
+            delegate?.onUpdate()
         } catch {
             throw BaseError(
                 context: .system,
@@ -63,15 +58,15 @@ public final class UserCategoryManager: UserCategoryManaging {
         }
     }
     
+    func getById(id: String) -> UserCategory? {
+        return data?.data.first { $0.id == id }
+    }
+    
+    func getAll() -> [UserCategory] {
+        return data?.data ?? []
+    }
+    
     func getMainCategory() -> UserCategory? {
-        return userCategoryData?.main
-    }
-    
-    func findCategoryById(id: String) -> UserCategory? {
-        return userCategoryData?.data.first { $0.id == id }
-    }
-    
-    func getAllCategories() -> [UserCategory] {
-        return userCategoryData?.data ?? []
+        return data?.main
     }
 }

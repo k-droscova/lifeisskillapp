@@ -7,9 +7,9 @@
 import Foundation
 import CoreLocation
 
-struct UserPoint: Codable {
+struct UserPoint: UserData {
+    let id: String
     let recordKey: String
-    let pointId: String
     let pointTime: Date
     let pointName: String
     let pointValue: Int
@@ -26,7 +26,7 @@ struct UserPoint: Codable {
     
     enum CodingKeys: String, CodingKey {
         case recordKey
-        case pointId
+        case id = "pointId"
         case pointTime
         case pointName
         case pointValue
@@ -55,7 +55,7 @@ extension UserPoint {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         recordKey = try container.decode(String.self, forKey: .recordKey)
-        pointId = try container.decode(String.self, forKey: .pointId)
+        id = try container.decode(String.self, forKey: .id)
         let pointTimeString = try container.decode(String.self, forKey: .pointTime)
         pointTime = Date().fromPointList(dateString: pointTimeString)
         pointName = try container.decode(String.self, forKey: .pointName)
@@ -83,4 +83,25 @@ extension UserPoint {
             duration = nil
         }
     }
+    
+    func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(recordKey, forKey: .recordKey)
+            try container.encode(id, forKey: .id) // Correctly map id to pointId for encoding
+            try container.encode(pointTime.toPointListString(), forKey: .pointTime)
+            try container.encode(pointName, forKey: .pointName)
+            try container.encode(pointValue, forKey: .pointValue)
+            try container.encode(pointType.rawValue | (doesPointCount ? 0 : (1 << 11)), forKey: .pointType)
+            try container.encode(pointSpec, forKey: .pointSpec)
+            try container.encode(pointLat, forKey: .pointLat)
+            try container.encode(pointLng, forKey: .pointLng)
+            try container.encode(pointAlt, forKey: .pointAlt)
+            try container.encode(accuracy, forKey: .accuracy)
+            try container.encode(codeSource, forKey: .codeSource)
+            try container.encode(pointCategory.joined(separator: "}{"), forKey: .pointCategory)
+            if let duration = duration {
+                try container.encode(duration.getDurationString(), forKey: .duration)
+            }
+        }
 }
+

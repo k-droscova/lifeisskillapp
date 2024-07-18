@@ -83,7 +83,7 @@ struct UserCategoryData: DataProtocol {
         // Decode the main category ID
         let mainCategoryID = try container.decode(String.self, forKey: .main)
         // Decode the list of all user categories
-        var allUserCategories = try container.decode([UserCategory].self, forKey: .data)
+        let allUserCategories = try container.decode([UserCategory].self, forKey: .data)
         // Find the main category from the list
         guard let mainCategory = allUserCategories.first(where: { $0.id == mainCategoryID }) else {
             throw DecodingError.dataCorruptedError(forKey: .main, in: container, debugDescription: "Main category ID does not match any category in the list")
@@ -107,5 +107,21 @@ struct UserPointData: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserPoint].self, forKey: .data)
+    }
+}
+
+struct GenericPointData: DataProtocol {
+    let checkSum: String
+    let data: [GenericPoint]
+    
+    enum CodingKeys: String, CodingKey {
+        case data = "pointsList"
+        case checkSum = "pointsProtect"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        checkSum = try container.decode(String.self, forKey: .checkSum)
+        data = try container.decode([GenericPoint].self, forKey: .data)
     }
 }

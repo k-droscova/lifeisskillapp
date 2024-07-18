@@ -14,6 +14,7 @@ protocol HasUserDataStorage {
 protocol UserDataStoraging: UserStoraging {
     var userCategoryData: UserCategoryData? { get set }
     var userPointData: UserPointData? { get set }
+    var genericPointData: GenericPointData? { get set }
 }
 
 final class UserDataStorage: UserDataStoraging {
@@ -48,6 +49,18 @@ final class UserDataStorage: UserDataStoraging {
                 transactionCache["userPointData"] = newValue
             } else {
                 internalStore["userPointData"] = newValue
+            }
+        }
+    }
+    
+    // MARK: - Generic PointData Property
+    var genericPointData: GenericPointData? {
+        get { inTransaction ? transactionCache["pointData"] as? GenericPointData : internalStore["pointData"] as? GenericPointData }
+        set {
+            if inTransaction {
+                transactionCache["pointData"] = newValue
+            } else {
+                internalStore["pointData"] = newValue
             }
         }
     }

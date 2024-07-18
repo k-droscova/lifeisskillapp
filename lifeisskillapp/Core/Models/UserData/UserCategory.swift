@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserCategory: Codable {
+struct UserCategory: UserData {
     let id: String
     let name: String
     let description: String

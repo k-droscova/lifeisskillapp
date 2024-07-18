@@ -7,20 +7,16 @@
 
 import Foundation
 
-protocol UserPointManagerFlowDelegate: NSObject {
-    func onUserPointsUpdated()
+protocol UserPointManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
 
 protocol HasUserPointManager {
-    var userPointManager: UserPointManaging { get }
+    var userPointManager: any UserPointManaging { get }
 }
 
-protocol UserPointManaging {
+protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataContainer == UserPointData {
     var delegate: UserPointManagerFlowDelegate? { get set }
-    var userPointData: UserPointData? { get set }
-    func loadUserPoints() async throws
-    func getAllPoints() -> [UserPoint]
-    func getPoints(byCategory category: String) -> [UserPoint]
+    func getPoints(byCategory categoryId: String) -> [UserPoint]
 }
 
 public final class UserPointManager: UserPointManaging {
@@ -35,7 +31,7 @@ public final class UserPointManager: UserPointManaging {
     // MARK: - Public Properties
     weak var delegate: UserPointManagerFlowDelegate?
     
-    var userPointData: UserPointData? {
+    var data: UserPointData? {
         get {
             return dependencies.userDataStorage.userPointData
         }
@@ -45,14 +41,14 @@ public final class UserPointManager: UserPointManaging {
     }
     
     // MARK: - Public Interface
-    func loadUserPoints() async throws {
+    func fetch() async throws {
         dependencies.logger.log(message: "Loading user points")
         do {
             let response = try await dependencies.userDataAPI.getUserPoints(baseURL: APIUrl.baseURL)
             dependencies.userDataStorage.beginTransaction()
-            userPointData = response.data
+            data = response.data
             dependencies.userDataStorage.commitTransaction()
-            delegate?.onUserPointsUpdated()
+            delegate?.onUpdate()
         } catch {
             throw BaseError(
                 context: .system,
@@ -62,11 +58,15 @@ public final class UserPointManager: UserPointManaging {
         }
     }
     
-    func getAllPoints() -> [UserPoint] {
-        return userPointData?.data ?? []
+    func getById(id: String) -> UserPoint? {
+        return data?.data.first { $0.id == id }
     }
     
-    func getPoints(byCategory category: String) -> [UserPoint] {
-        return userPointData?.data.filter { $0.pointCategory.contains(category) } ?? []
+    func getAll() -> [UserPoint] {
+        return data?.data ?? []
+    }
+    
+    func getPoints(byCategory categoryId: String) -> [UserPoint] {
+        return data?.data.filter { $0.pointCategory.contains(categoryId) } ?? []
     }
 }

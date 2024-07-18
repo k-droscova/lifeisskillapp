@@ -8,14 +8,14 @@ import Foundation
 import CoreLocation
 
 
-struct GeneralPoint: Codable {
+struct GenericPoint: UserData {
     let pointLat: Double
     let pointLng: Double
     let pointAlt: Double
     let pointName: String
     let pointValue: Int
     let pointType: PointType
-    let pointID: String
+    let id: String
     let cluster: String
     let pointSpec: Int
     let sponsorId: String
@@ -30,7 +30,7 @@ struct GeneralPoint: Codable {
         case pointName
         case pointValue
         case pointType
-        case pointID
+        case id = "pointID"
         case cluster
         case pointSpec
         case sponsorId
@@ -60,7 +60,7 @@ struct GeneralPoint: Codable {
         let pointTypeMapped = PointType(rawValue: pointTypeInt & 0xF) ?? .unknown
         pointType = pointTypeMapped
         
-        pointID = try container.decode(String.self, forKey: .pointID)
+        id = try container.decode(String.self, forKey: .id)
         cluster = try container.decode(String.self, forKey: .cluster)
         pointSpec = try container.decode(Int.self, forKey: .pointSpec)
         sponsorId = try container.decode(String.self, forKey: .sponsorId)
