@@ -35,7 +35,7 @@ final class LoginViewController: Base.ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Login"
+        //navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationItem.title = "login.title".localized
     }
 }
