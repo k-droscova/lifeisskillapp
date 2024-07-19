@@ -18,22 +18,22 @@ extension Date {
     
     /// Returns date string with year `%d`
     func getYearString() -> String {
-        return Formatters.year.string(from: self)
+        Formatters.year.string(from: self)
     }
     
     /// Returns time string with hour and minutes `%d:%d`
     func getTimeString() -> String {
-        return Formatters.time.string(from: self)
+        Formatters.time.string(from: self)
     }
     
     /// Returns time string with hour, minutes and seconds `%d:%d:%d`
     func getLongTimeString() -> String {
-        return Formatters.timeLong.string(from: self)
+        Formatters.timeLong.string(from: self)
     }
     
     /// Returns date string `dd. MM. yyyy`
     func getDateString() -> String {
-        return Formatters.date.string(from: self)
+        Formatters.date.string(from: self)
     }
     
     /// Checks user top age limit
@@ -43,7 +43,6 @@ extension Date {
         
         let ageComponents = calendar.dateComponents([.year], from: self, to: currentDate)
         
-        // swiftlint:disable force_unwrapping
         return ageComponents.year! < 18
     }
     
@@ -54,27 +53,26 @@ extension Date {
         
         let ageComponents = calendar.dateComponents([.year], from: self, to: currentDate)
         
-        // swiftlint:disable force_unwrapping
         return ageComponents.year! >= 6
     }
     
     /// Transform date string with `yyyy-MM-dd HH:mm:ss` format
     func fromPointList(dateString: String) -> Date {
-        return Formatters.pointListDate.date(from: dateString) ?? Date()
+        Formatters.pointListDate.date(from: dateString) ?? Date()
     }
     
     func toPointListString() -> String {
-        return Formatters.pointListDate.string(from: self)
+        Formatters.pointListDate.string(from: self)
     }
     
     /// Transform date string with `dd.MM.yyyy HH:mm` format
     func fromEventsList(dateString: String) -> Date {
-        return Formatters.eventsListDate.date(from: dateString) ?? Date()
+        Formatters.eventsListDate.date(from: dateString) ?? Date()
     }
     
     /// `dd. MM. yyyy`
     func getEventsDate() -> String {
-        return Formatters.date.string(from: self)
+        Formatters.date.string(from: self)
     }
 }
 

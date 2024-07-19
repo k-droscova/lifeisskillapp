@@ -22,7 +22,7 @@ struct GenericPoint: UserData {
     let hasDetail: Bool
     let active: Bool
     let param: PointParam?
-
+    
     enum CodingKeys: String, CodingKey {
         case pointLat
         case pointLng
@@ -38,18 +38,18 @@ struct GenericPoint: UserData {
         case active
         case param
     }
-
+    
     var location: CLLocation? {
-        return CLLocation(coordinate: CLLocationCoordinate2D(latitude: pointLat, longitude: pointLng),
-                          altitude: pointAlt,
-                          horizontalAccuracy: -1,
-                          verticalAccuracy: -1,
-                          timestamp: API.baseDate)
+        CLLocation(coordinate: CLLocationCoordinate2D(latitude: pointLat, longitude: pointLng),
+                   altitude: pointAlt,
+                   horizontalAccuracy: -1,
+                   verticalAccuracy: -1,
+                   timestamp: API.baseDate)
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
+        
         pointLat = try container.decode(Double.self, forKey: .pointLat)
         pointLng = try container.decode(Double.self, forKey: .pointLng)
         pointAlt = try container.decode(Double.self, forKey: .pointAlt)
@@ -73,7 +73,7 @@ struct GenericPoint: UserData {
 struct PointParam: Codable {
     let timer: TimerParam?
     let status: StatusParam?
-
+    
     enum CodingKeys: String, CodingKey {
         case timer = "TIMER"
         case status = "STATUS"
@@ -91,7 +91,7 @@ struct TimerParam: Codable {
 struct StatusParam: Codable {
     let color: String
     let isValid: Bool
-
+    
     enum CodingKeys: String, CodingKey {
         case color = "COLOR"
         case isValid = "IS_VALID"

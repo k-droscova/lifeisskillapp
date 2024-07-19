@@ -37,7 +37,7 @@ public final class GenericPointManager: GenericPointManaging {
     
     var data: GenericPointData? {
         get {
-            return userDataStorage.genericPointData
+            userDataStorage.genericPointData
         }
         set {
             userDataStorage.genericPointData = newValue
@@ -63,11 +63,11 @@ public final class GenericPointManager: GenericPointManaging {
     }
     
     func getById(id: String) -> GenericPoint? {
-        return data?.data.first { $0.id == id }
+        data?.data.first { $0.id == id }
     }
     
     func getAll() -> [GenericPoint] {
-        return data?.data ?? []
+        data?.data ?? []
     }
     
 }

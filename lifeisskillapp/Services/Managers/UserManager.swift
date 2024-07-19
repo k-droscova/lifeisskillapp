@@ -82,10 +82,10 @@ final class UserManager: UserManaging {
     }
     
     var isLoggedIn: Bool {
-        return userDefaultsStorage.credentials != nil
+        userDefaultsStorage.credentials != nil
     }
     var hasAppId: Bool {
-        return userDefaultsStorage.appId != nil
+        userDefaultsStorage.appId != nil
     }
     
     // MARK: - Public Interface

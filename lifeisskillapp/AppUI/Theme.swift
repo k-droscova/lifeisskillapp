@@ -23,12 +23,12 @@ protocol ThemeCompatible {
 
 extension ThemeCompatible {
     static var theme: Theme<Self>.Type {
-        get { return Theme<Self>.self }
+        get { Theme<Self>.self }
         set { }
     }
     
     var theme: Theme<Self> {
-        get { return Theme(self) }
+        get { Theme(self) }
         set { }
     }
 }
@@ -36,13 +36,13 @@ extension ThemeCompatible {
 extension UIColor: ThemeCompatible {}
 
 extension Theme where Base: UIColor {
-    static var lisPink: UIColor { return UIColor(hex: 0xEB008B) }
-    static var lisGreen: UIColor { return UIColor(hex: 0x0DB04B) }
-    static var lisBlue: UIColor { return UIColor(hex: 0x3C9BD5) }
-    static var lisGrayTextFieldTitle: UIColor { return UIColor(hex: 0x939598) }
-    static var scanWrongRed: UIColor { return UIColor(hex: 0xD50000) }
+    static var lisPink: UIColor { UIColor(hex: 0xEB008B) }
+    static var lisGreen: UIColor { UIColor(hex: 0x0DB04B) }
+    static var lisBlue: UIColor { UIColor(hex: 0x3C9BD5) }
+    static var lisGrayTextFieldTitle: UIColor { UIColor(hex: 0x939598) }
+    static var scanWrongRed: UIColor { UIColor(hex: 0xD50000) }
 
-    static var pointSport: UIColor { return UIColor(hex: 0xEB008B) }
-    static var pointCulture: UIColor { return UIColor(hex: 0x3C9BD5) }
-    static var pointEnvironment: UIColor { return UIColor(hex: 0x0DB04B) }
+    static var pointSport: UIColor { UIColor(hex: 0xEB008B) }
+    static var pointCulture: UIColor { UIColor(hex: 0x3C9BD5) }
+    static var pointEnvironment: UIColor { UIColor(hex: 0x0DB04B) }
 }

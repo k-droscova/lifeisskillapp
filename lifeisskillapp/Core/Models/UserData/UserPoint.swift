@@ -43,11 +43,11 @@ struct UserPoint: UserData {
     }
     
     var location: CLLocation {
-        return CLLocation(coordinate: CLLocationCoordinate2D(latitude: pointLat, longitude: pointLng),
-                          altitude: pointAlt,
-                          horizontalAccuracy: accuracy,
-                          verticalAccuracy: accuracy,
-                          timestamp: pointTime)
+        CLLocation(coordinate: CLLocationCoordinate2D(latitude: pointLat, longitude: pointLng),
+                   altitude: pointAlt,
+                   horizontalAccuracy: accuracy,
+                   verticalAccuracy: accuracy,
+                   timestamp: pointTime)
     }
 }
 
@@ -85,23 +85,23 @@ extension UserPoint {
     }
     
     func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(recordKey, forKey: .recordKey)
-            try container.encode(id, forKey: .id) // Correctly map id to pointId for encoding
-            try container.encode(pointTime.toPointListString(), forKey: .pointTime)
-            try container.encode(pointName, forKey: .pointName)
-            try container.encode(pointValue, forKey: .pointValue)
-            try container.encode(pointType.rawValue | (doesPointCount ? 0 : (1 << 11)), forKey: .pointType)
-            try container.encode(pointSpec, forKey: .pointSpec)
-            try container.encode(pointLat, forKey: .pointLat)
-            try container.encode(pointLng, forKey: .pointLng)
-            try container.encode(pointAlt, forKey: .pointAlt)
-            try container.encode(accuracy, forKey: .accuracy)
-            try container.encode(codeSource, forKey: .codeSource)
-            try container.encode(pointCategory.joined(separator: "}{"), forKey: .pointCategory)
-            if let duration = duration {
-                try container.encode(duration.getDurationString(), forKey: .duration)
-            }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(recordKey, forKey: .recordKey)
+        try container.encode(id, forKey: .id) // Correctly map id to pointId for encoding
+        try container.encode(pointTime.toPointListString(), forKey: .pointTime)
+        try container.encode(pointName, forKey: .pointName)
+        try container.encode(pointValue, forKey: .pointValue)
+        try container.encode(pointType.rawValue | (doesPointCount ? 0 : (1 << 11)), forKey: .pointType)
+        try container.encode(pointSpec, forKey: .pointSpec)
+        try container.encode(pointLat, forKey: .pointLat)
+        try container.encode(pointLng, forKey: .pointLng)
+        try container.encode(pointAlt, forKey: .pointAlt)
+        try container.encode(accuracy, forKey: .accuracy)
+        try container.encode(codeSource, forKey: .codeSource)
+        try container.encode(pointCategory.joined(separator: "}{"), forKey: .pointCategory)
+        if let duration = duration {
+            try container.encode(duration.getDurationString(), forKey: .duration)
         }
+    }
 }
 

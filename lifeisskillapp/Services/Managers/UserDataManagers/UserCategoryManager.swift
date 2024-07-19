@@ -37,7 +37,7 @@ public final class UserCategoryManager: UserCategoryManaging {
     
     var data: UserCategoryData? {
         get {
-            return userDataStorage.userCategoryData
+            userDataStorage.userCategoryData
         }
         set {
             userDataStorage.userCategoryData = newValue
@@ -63,14 +63,14 @@ public final class UserCategoryManager: UserCategoryManaging {
     }
     
     func getById(id: String) -> UserCategory? {
-        return data?.data.first { $0.id == id }
+        data?.data.first { $0.id == id }
     }
     
     func getAll() -> [UserCategory] {
-        return data?.data ?? []
+        data?.data ?? []
     }
     
     func getMainCategory() -> UserCategory? {
-        return data?.main
+        data?.main
     }
 }

@@ -37,7 +37,7 @@ public final class UserPointManager: UserPointManaging {
     
     var data: UserPointData? {
         get {
-            return userDataStorage.userPointData
+            userDataStorage.userPointData
         }
         set {
             userDataStorage.userPointData = newValue
@@ -63,14 +63,14 @@ public final class UserPointManager: UserPointManaging {
     }
     
     func getById(id: String) -> UserPoint? {
-        return data?.data.first { $0.id == id }
+        data?.data.first { $0.id == id }
     }
     
     func getAll() -> [UserPoint] {
-        return data?.data ?? []
+        data?.data ?? []
     }
     
     func getPoints(byCategory categoryId: String) -> [UserPoint] {
-        return data?.data.filter { $0.pointCategory.contains(categoryId) } ?? []
+        data?.data.filter { $0.pointCategory.contains(categoryId) } ?? []
     }
 }
