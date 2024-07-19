@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public protocol APIResponseErroring: Codable, Error {
     var message: String { get }
 }
