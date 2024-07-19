@@ -254,9 +254,6 @@
         }
       }
     },
-    "Generic Point Data" : {
-
-    },
     "home.button.how" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2973,6 +2970,7 @@
       }
     },
     "User Category Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2983,6 +2981,7 @@
       }
     },
     "User Point Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
