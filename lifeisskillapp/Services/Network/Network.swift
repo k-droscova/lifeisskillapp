@@ -454,7 +454,6 @@ extension Network {
                 message: "NetworkError: " + errorMessage + " - " + urlString,
                 code: code,
                 url: request.url,
-                error: error,
                 meta: request.description(sensitiveData: sensitiveRequestBodyData),
                 logger: loggerService
             )
