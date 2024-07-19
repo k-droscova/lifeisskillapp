@@ -9,12 +9,7 @@ import Foundation
 
 protocol UserManagerFlowDelegate: NSObject {
     func onLogout()
-    func fetchAllNewData() async
-    func fetchNewUserPoints() async
-    func fetchNewUserRank() async
-    func fetchNewUserMessages() async
-    func fetchNewUserEvents() async
-    func fetchNewPoints() async
+    func onDataError(_ error: Error)
 }
 
 protocol HasUserManager {
@@ -32,30 +27,32 @@ protocol UserManaging {
     var hasAppId: Bool { get }
     
     func initializeAppId() async throws
-    func checkCheckSumData() async throws
     func login(loginCredentials: LoginCredentials) async throws
     func logout()
-    func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType)
-    
+    func loadDataAfterLogin() async
 }
-
 
 final class UserManager: UserManaging {
     typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
-    private var network: Networking
     private var logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
     private var loginAPI: LoginAPIServicing
     private var registerAppAPI: RegisterAppAPIServicing
     private var checkSumAPI: CheckSumAPIServicing
+    private var userCategoryManager: any UserCategoryManaging
+    private var userPointManager: any UserPointManaging
+    private var genericPointManager: any GenericPointManaging
+    
     // MARK: - Initialization
     init(dependencies: Dependencies) {
-        self.network = dependencies.network
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.loginAPI = dependencies.loginAPI
         self.registerAppAPI = dependencies.registerAppAPI
         self.checkSumAPI = dependencies.checkSumAPI
+        self.userCategoryManager = dependencies.userCategoryManager
+        self.genericPointManager = dependencies.genericPointManager
+        self.userPointManager = dependencies.userPointManager
     }
     // MARK: - Public Properties
     
@@ -112,7 +109,7 @@ final class UserManager: UserManaging {
         userDefaultsStorage.beginTransaction()
         credentials = nil
         token = nil
-        checkSumData = nil
+        checkSumData = nil // MARK: This will not be done once we have persitent data storage
         userDefaultsStorage.commitTransaction()
         delegate?.onLogout()
     }
@@ -138,7 +135,17 @@ final class UserManager: UserManaging {
         }
     }
     
-    func checkCheckSumData() async throws {
+    func loadDataAfterLogin() async {
+        do {
+            try await userCategoryManager.fetch(userToken: token)
+            try await checkCheckSumData()
+        } catch {
+            delegate?.onDataError(error)
+        }
+    }
+    
+    // MARK: Private helpers
+    private func checkCheckSumData() async throws {
         logger.log(message: "Checking Check Sums")
         do {
             let checkSum = try await fetchNewCheckSumData()
@@ -149,24 +156,6 @@ final class UserManager: UserManaging {
         }
     }
     
-    func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
-        userDefaultsStorage.beginTransaction()
-        switch type {
-        case .userPoints:
-            checkSumData?.userPoints = newCheckSum
-        case .rank:
-            checkSumData?.rank = newCheckSum
-        case .messages:
-            checkSumData?.messages = newCheckSum
-        case .events:
-            checkSumData?.events = newCheckSum
-        case .points:
-            checkSumData?.points = newCheckSum
-        }
-        userDefaultsStorage.commitTransaction()
-    }
-    
-    // MARK: Private helpers
     private func fetchNewCheckSumData() async throws -> CheckSumData {
         var result = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         do {
@@ -199,26 +188,88 @@ final class UserManager: UserManaging {
             userDefaultsStorage.beginTransaction()
             checkSumData = newCheckSum
             userDefaultsStorage.commitTransaction()
-            await delegate?.fetchAllNewData()
+            await fetchAllNewData()
             return
         }
         if (currentData.userPoints != newCheckSum.userPoints) {
-            await delegate?.fetchNewUserPoints()
+            await fetchNewUserPoints()
         }
         if (currentData.events != newCheckSum.events) {
-            await delegate?.fetchNewUserEvents()
+            await fetchNewUserEvents()
         }
         if (currentData.messages != newCheckSum.messages) {
-            await delegate?.fetchNewUserMessages()
+            await fetchNewUserMessages()
         }
         if (currentData.rank != newCheckSum.rank) {
-            await delegate?.fetchNewUserRank()
+            await fetchNewUserRank()
         }
         if (currentData.points != newCheckSum.points) {
-            await delegate?.fetchNewPoints()
+            await fetchNewPoints()
         }
     }
-
+    
+    private func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
+        userDefaultsStorage.beginTransaction()
+        switch type {
+        case .userPoints:
+            checkSumData?.userPoints = newCheckSum
+        case .rank:
+            checkSumData?.rank = newCheckSum
+        case .messages:
+            checkSumData?.messages = newCheckSum
+        case .events:
+            checkSumData?.events = newCheckSum
+        case .points:
+            checkSumData?.points = newCheckSum
+        }
+        userDefaultsStorage.commitTransaction()
+    }
+    
+    private func fetchAllNewData() async {
+        await fetchNewUserPoints()
+        await fetchNewUserEvents()
+        await fetchNewUserRank()
+        await fetchNewUserMessages()
+        await fetchNewPoints()
+    }
+    
+    private func fetchNewUserPoints() async {
+        logger.log(message: "Updating userPointsData")
+        do {
+            try await userPointManager.fetch(userToken: token)
+            guard let newCheckSumUserPoints = userPointManager.data?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+            }
+            updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
+        } catch {
+            
+        }
+    }
+    
+    private func fetchNewUserRank() async {
+        logger.log(message: "Updating user rank")
+    }
+    
+    private func fetchNewUserMessages() async {
+        logger.log(message: "Updating user messages")
+    }
+    
+    private func fetchNewUserEvents() async {
+        logger.log(message: "Updating user events")
+    }
+    
+    private func fetchNewPoints() async {
+        logger.log(message: "Updating generic points")
+        do {
+            try await genericPointManager.fetch(userToken: token)
+            guard let newCheckSum = genericPointManager.data?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+            }
+            updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
+        } catch {
+            
+        }
+    }
 }
 
 

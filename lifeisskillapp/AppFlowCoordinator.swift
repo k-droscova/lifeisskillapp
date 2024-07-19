@@ -48,7 +48,6 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             self.window?.makeKeyAndVisible()
             
             self.tabBar = tabBarController
-            self.checkLocationAuthorization()
         }
     }
     
@@ -89,64 +88,25 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
 }
 
 extension AppFlowCoordinator: UserManagerFlowDelegate {
-    func fetchAllNewData() async {
-        await fetchNewUserPoints()
-        await fetchNewUserEvents()
-        await fetchNewUserRank()
-        await fetchNewUserMessages()
-        await fetchNewPoints()
-    }
-    
-    func fetchNewUserPoints() async {
-        appDependencies.logger.log(message: "Updating userPointsData")
-        do {
-            try await appDependencies.userPointManager.fetch()
-            guard let newCheckSumUserPoints = appDependencies.userPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: appDependencies.logger)
-            }
-            appDependencies.userManager.updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
-        } catch {
-            
-        }
-    }
-    
-    func fetchNewUserRank() async {
-        appDependencies.logger.log(message: "Updating user rank")
-    }
-    
-    func fetchNewUserMessages() async {
-        appDependencies.logger.log(message: "Updating user messages")
-    }
-    
-    func fetchNewUserEvents() async {
-        appDependencies.logger.log(message: "Updating user events")
-    }
-    
-    func fetchNewPoints() async {
-        appDependencies.logger.log(message: "Updating generic points")
-        do {
-            try await appDependencies.genericPointManager.fetch()
-            guard let newCheckSum = appDependencies.genericPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: appDependencies.logger)
-            }
-            appDependencies.userManager.updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
-        } catch {
-            
-        }
-    }
-    
     func onLogout() {
         prepareWindow()
     }
-    
+    func onDataError(_ error: Error) {
+        // TODO: HANDLE ERROR BETTER
+        do {
+            throw BaseError(context: .system, message: error.localizedDescription, logger: appDependencies.logger)
+        } catch {
+            let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                self.prepareWindow()
+            })
+            window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidSucceed() {
-        Task {
-            try await appDependencies.userCategoryManager.fetch()
-            try await appDependencies.userManager.checkCheckSumData()
-        }
         prepareWindow()
     }
 }
@@ -159,10 +119,6 @@ extension AppFlowCoordinator: LocationManagerFlowDelegate {
     
     func onLocationSuccess() {
         appDependencies.logger.log(message: "Location Manager - SUCCESS")
-    }
-    
-    private func checkLocationAuthorization() {
-        appDependencies.locationManager.checkLocationAuthorization()
     }
     
     private func showLocationAccessAlert() {

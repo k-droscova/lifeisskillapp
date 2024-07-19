@@ -10,21 +10,24 @@ import Observation
 
 protocol HomeViewModeling {
     func logout()
-    func fetchUserCategoryData()
-    func fetchUserPointData()
-    func fetchGenericPointData()
+    func fetchData()
+    func printUserCategoryData()
+    func printUserPointData()
+    func printGenericPointData()
 }
 
 final class HomeViewModel: HomeViewModeling, ObservableObject {
     
     typealias Dependencies = HasManagers
 
+    private var locationManager: LocationManaging
     private var userManager: UserManaging
     private var userCategoryManager: any UserCategoryManaging
     private var userPointManager: any UserPointManaging
     private var genericPointManager: any GenericPointManaging
     
     init(dependencies: Dependencies) {
+        self.locationManager = dependencies.locationManager
         self.userManager = dependencies.userManager
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
@@ -35,17 +38,24 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
         userManager.logout()
     }
     
-    func fetchUserCategoryData() {
+    func fetchData() {
+        locationManager.checkLocationAuthorization()
+        Task {
+            await userManager.loadDataAfterLogin()
+        }
+    }
+    
+    func printUserCategoryData() {
         let categories = userCategoryManager.getAll()
         print(categories)
     }
     
-    func fetchUserPointData() {
+    func printUserPointData() {
         let points = userPointManager.getAll()
         print(points)
     }
     
-    func fetchGenericPointData() {
+    func printGenericPointData() {
         let points = genericPointManager.getAll()
         print(points.count)
     }

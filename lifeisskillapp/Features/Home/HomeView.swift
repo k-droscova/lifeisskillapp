@@ -33,7 +33,7 @@ struct HomeView: View {
             Spacer()
             
             Button(
-                action: viewModel.fetchUserCategoryData,
+                action: viewModel.printUserCategoryData,
                 label: {
                     Text("User Category Data".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
@@ -47,7 +47,7 @@ struct HomeView: View {
             Spacer()
             
             Button(
-                action: viewModel.fetchUserPointData,
+                action: viewModel.printUserPointData,
                 label: {
                     Text("User Point Data".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
@@ -61,7 +61,7 @@ struct HomeView: View {
             Spacer()
             
             Button(
-                action: viewModel.fetchGenericPointData,
+                action: viewModel.printGenericPointData,
                 label: {
                     Text("Generic Point Data".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
@@ -72,6 +72,9 @@ struct HomeView: View {
                 }
             )
         }
+        .onAppear(perform: {
+            viewModel.fetchData()
+        })
     }
 }
 

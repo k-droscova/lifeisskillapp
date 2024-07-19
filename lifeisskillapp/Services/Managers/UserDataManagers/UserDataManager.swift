@@ -20,7 +20,7 @@ protocol UserDataManaging {
     associatedtype DataContainer: DataProtocol
     
     var data: DataContainer? { get set }
-    func fetch() async throws
+    func fetch(userToken: String?) async throws
     func getAll() -> [DataType]
     func getById(id: String) -> DataType?
 }
