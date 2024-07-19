@@ -70,11 +70,6 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             [weak self] in
             self?.childCoordinators.forEach { $0.stop() }
         }
-        if !appDependencies.userManager.hasAppId {
-            Task {
-                try await appDependencies.userManager.initializeAppId()
-            }
-        }
         Task { @MainActor in
             if appDependencies.userManager.isLoggedIn {
                 self.setupTabBar()

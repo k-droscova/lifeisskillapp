@@ -69,5 +69,8 @@ struct LoginView: View {
                 }
             )
         }
+        .onAppear(perform: {
+            viewModel.fetchData()
+        })
     }
 }
