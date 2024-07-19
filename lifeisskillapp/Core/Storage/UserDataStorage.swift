@@ -22,11 +22,11 @@ final class UserDataStorage: UserDataStoraging {
     private var inTransaction: Bool = false
     
     typealias Dependencies = HasLoggerServicing
-    private var dependencies: Dependencies
+    private var logger: LoggerServicing
     
     // MARK: - Initialization
     init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+        self.logger = dependencies.logger
     }
     
     // MARK: - UserCategoryData Property
@@ -73,7 +73,7 @@ final class UserDataStorage: UserDataStoraging {
     func beginTransaction() {
         inTransaction = true
         transactionCache = [:]
-        dependencies.logger.log(message: "Transaction started.")
+        logger.log(message: "Transaction started.")
     }
     
     func commitTransaction() {
@@ -81,17 +81,17 @@ final class UserDataStorage: UserDataStoraging {
         
         for (key, value) in transactionCache {
             internalStore[key] = value
-            dependencies.logger.log(message: "New value for \(key): \(value)")
+            logger.log(message: "New value for \(key): \(value)")
         }
         
         inTransaction = false
         transactionCache = [:]
-        dependencies.logger.log(message: "Transaction finished.")
+        logger.log(message: "Transaction finished.")
     }
     
     func rollbackTransaction() {
         inTransaction = false
         transactionCache = [:]
-        dependencies.logger.log(message: "Transaction rolled back.")
+        logger.log(message: "Transaction rolled back.")
     }
 }

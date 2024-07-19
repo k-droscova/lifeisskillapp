@@ -21,11 +21,15 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 
 public final class UserCategoryManager: UserCategoryManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage
-    private var dependencies: Dependencies
+    private var userDataStorage: UserDataStoraging
+    private var logger: LoggerServicing
+    private var userDataAPIService: UserDataAPIServicing
     
     // MARK: - Initialization
     init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.userDataAPIService = dependencies.userDataAPI
     }
     
     // MARK: - Public Properties
@@ -33,27 +37,27 @@ public final class UserCategoryManager: UserCategoryManaging {
     
     var data: UserCategoryData? {
         get {
-            return dependencies.userDataStorage.userCategoryData
+            return userDataStorage.userCategoryData
         }
         set {
-            dependencies.userDataStorage.userCategoryData = newValue
+            userDataStorage.userCategoryData = newValue
         }
     }
     
     // MARK: - Public Interface
     func fetch() async throws {
-        dependencies.logger.log(message: "Loading user categories")
+        logger.log(message: "Loading user categories")
         do {
-            let response = try await dependencies.userDataAPI.getUserCategory(baseURL: APIUrl.baseURL)
-            dependencies.userDataStorage.beginTransaction()
+            let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL)
+            userDataStorage.beginTransaction()
             data = response.data
-            dependencies.userDataStorage.commitTransaction()
+            userDataStorage.commitTransaction()
             delegate?.onUpdate()
         } catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to load user categories",
-                logger: dependencies.logger
+                logger: logger
             )
         }
     }

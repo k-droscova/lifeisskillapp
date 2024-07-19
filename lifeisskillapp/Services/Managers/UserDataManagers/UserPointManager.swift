@@ -21,11 +21,15 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
 
 public final class UserPointManager: UserPointManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage
-    private var dependencies: Dependencies
+    private var userDataStorage: UserDataStoraging
+    private var logger: LoggerServicing
+    private var userDataAPIService: UserDataAPIServicing
     
     // MARK: - Initialization
     init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.userDataAPIService = dependencies.userDataAPI
     }
     
     // MARK: - Public Properties
@@ -33,27 +37,27 @@ public final class UserPointManager: UserPointManaging {
     
     var data: UserPointData? {
         get {
-            return dependencies.userDataStorage.userPointData
+            return userDataStorage.userPointData
         }
         set {
-            dependencies.userDataStorage.userPointData = newValue
+            userDataStorage.userPointData = newValue
         }
     }
     
     // MARK: - Public Interface
     func fetch() async throws {
-        dependencies.logger.log(message: "Loading user points")
+        logger.log(message: "Loading user points")
         do {
-            let response = try await dependencies.userDataAPI.getUserPoints(baseURL: APIUrl.baseURL)
-            dependencies.userDataStorage.beginTransaction()
+            let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL)
+            userDataStorage.beginTransaction()
             data = response.data
-            dependencies.userDataStorage.commitTransaction()
+            userDataStorage.commitTransaction()
             delegate?.onUpdate()
         } catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to load user points",
-                logger: dependencies.logger
+                logger: logger
             )
         }
     }

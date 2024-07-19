@@ -40,7 +40,8 @@ protocol LocationManaging {
 public final class LocationManager: NSObject, LocationManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDefaultsStorage
     private let locationManager = CLLocationManager()
-    private var dependencies: Dependencies
+    private var logger: LoggerServicing
+    private var userDefaultsStorage: UserDefaultsStoraging
     
     public var locationCoordinate: CLLocationCoordinate2D?
     public var locationAltitude: CLLocationDistance?
@@ -50,7 +51,8 @@ public final class LocationManager: NSObject, LocationManaging {
     /// Initializes a new instance of LocationManager with the specified dependencies.
     /// - Parameter dependencies: The dependencies required by the LocationManager (Logging and Storage)
     init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+        self.logger = dependencies.logger
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -79,14 +81,14 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - locations: An array of CLLocation objects representing the locations that were updated.
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        dependencies.userDefaultsStorage.beginTransaction()
-        dependencies.logger.log(message: "New location saved:\n"
-                                + "LAT: \(location.coordinate.latitude.description), "
-                                + "LON: \(location.coordinate.longitude.description), "
-                                + "ALT: \(location.altitude.description)"
+        userDefaultsStorage.beginTransaction()
+        logger.log(message: "New location saved:\n"
+                   + "LAT: \(location.coordinate.latitude.description), "
+                   + "LON: \(location.coordinate.longitude.description), "
+                   + "ALT: \(location.altitude.description)"
         )
-        dependencies.userDefaultsStorage.location = location
-        dependencies.userDefaultsStorage.commitTransaction()
+        userDefaultsStorage.location = location
+        userDefaultsStorage.commitTransaction()
         locationCoordinate = location.coordinate
         locationAltitude = location.altitude
     }
