@@ -20,16 +20,18 @@ protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, 
 }
 
 public final class GenericPointManager: GenericPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
     private var userDataAPIService: UserDataAPIServicing
+    private var userManager: UserManaging
     
     // MARK: - Initialization
     init(dependencies: Dependencies) {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
         self.userDataAPIService = dependencies.userDataAPI
+        self.userManager = dependencies.userManager
     }
     
     // MARK: - Public Properties
@@ -48,7 +50,7 @@ public final class GenericPointManager: GenericPointManaging {
     func fetch() async throws {
         logger.log(message: "Loading user points")
         do {
-            let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL)
+            let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: userManager.token ?? "")
             userDataStorage.beginTransaction()
             data = response.data
             userDataStorage.commitTransaction()

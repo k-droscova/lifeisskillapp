@@ -19,8 +19,8 @@ public final class RegisterAppAPIService: RegisterAppAPIServicing {
     
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
-    private let loggerService: LoggerServicing
-    private let network: Networking
+    private var loggerService: LoggerServicing
+    private var network: Networking
     
     init(dependencies: Dependencies) {
         self.loggerService = dependencies.logger

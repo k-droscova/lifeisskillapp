@@ -106,6 +106,7 @@ final class UserManager: UserManaging {
             )
         }
     }
+    
     func logout() {
         logger.log(message: "Logging out")
         userDefaultsStorage.beginTransaction()
@@ -169,19 +170,19 @@ final class UserManager: UserManaging {
     private func fetchNewCheckSumData() async throws -> CheckSumData {
         var result = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         do {
-            let userPointsResponse = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
+            let userPointsResponse = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL, userToken: token ?? "")
             result.userPoints = userPointsResponse.data.pointsProtect
             
-            let rankResponse = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL)
+            let rankResponse = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL, userToken: token ?? "")
             result.rank = rankResponse.data.rankProtect
             
-            let pointsPatchResponse = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
+            let pointsPatchResponse = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL, userToken: token ?? "")
             result.points = pointsPatchResponse.data.pointsProtect
             
-            let messagePatchResponse = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
+            let messagePatchResponse = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL, userToken: token ?? "")
             result.messages = messagePatchResponse.data.msgProtect
             
-            let eventsPatchResponse = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
+            let eventsPatchResponse = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL, userToken: token ?? "")
             result.events = eventsPatchResponse.data.eventsProtect
             return result
         } catch {

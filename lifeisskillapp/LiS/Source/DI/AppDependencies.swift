@@ -18,21 +18,75 @@ typealias HasLoggers = HasLoggerServicing
 
 
 final class AppDependency {
-    lazy var userManager: UserManaging = UserManager(dependencies: self)
-    lazy var locationManager: LocationManaging = LocationManager(dependencies: self)
-    lazy var urlSession: URLSessionWrapping = URLSessionWrapper()
-    lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
-    lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
-    lazy var network: Networking = Network(dependencies: self)
-    lazy var logger: LoggerServicing = OSLoggerService()
-    lazy var registerAppAPI: RegisterAppAPIServicing = RegisterAppAPIService(dependencies: self)
-    lazy var loginAPI: LoginAPIServicing = LoginAPIService(dependencies: self)
-    lazy var checkSumAPI: CheckSumAPIServicing = CheckSumAPIService(dependencies: self)
-    lazy var userDataAPI: UserDataAPIServicing = UserDataAPIService(dependencies: self)
-    lazy var userPointManager: any UserPointManaging = UserPointManager(dependencies: self)
-    lazy var userCategoryManager: any UserCategoryManaging = UserCategoryManager(dependencies: self)
-    lazy var genericPointManager: any GenericPointManaging = GenericPointManager(dependencies: self)
-
+    lazy var userManager: UserManaging = {
+        print("Initializing userManager")
+        return UserManager(dependencies: self)
+    }()
+    
+    lazy var locationManager: LocationManaging = {
+        print("Initializing locationManager")
+        return LocationManager(dependencies: self)
+    }()
+    
+    lazy var urlSession: URLSessionWrapping = {
+        print("Initializing urlSession")
+        return URLSessionWrapper()
+    }()
+    
+    lazy var userDefaultsStorage: UserDefaultsStoraging = {
+        print("Initializing userDefaultsStorage")
+        return UserDefaultsStorage(dependencies: self)
+    }()
+    
+    lazy var userDataStorage: UserDataStoraging = {
+        print("Initializing userDataStorage")
+        return UserDataStorage(dependencies: self)
+    }()
+    
+    lazy var network: Networking = {
+        print("Initializing network")
+        return Network(dependencies: self)
+    }()
+    
+    lazy var logger: LoggerServicing = {
+        print("Initializing logger")
+        return OSLoggerService()
+    }()
+    
+    lazy var registerAppAPI: RegisterAppAPIServicing = {
+        print("Initializing registerAppAPI")
+        return RegisterAppAPIService(dependencies: self)
+    }()
+    
+    lazy var loginAPI: LoginAPIServicing = {
+        print("Initializing loginAPI")
+        return LoginAPIService(dependencies: self)
+    }()
+    
+    lazy var checkSumAPI: CheckSumAPIServicing = {
+        print("Initializing checkSumAPI")
+        return CheckSumAPIService(dependencies: self)
+    }()
+    
+    lazy var userDataAPI: UserDataAPIServicing = {
+        print("Initializing userDataAPI")
+        return UserDataAPIService(dependencies: self)
+    }()
+    
+    lazy var userPointManager: any UserPointManaging = {
+        print("Initializing userPointManager")
+        return UserPointManager(dependencies: self)
+    }()
+    
+    lazy var userCategoryManager: any UserCategoryManaging = {
+        print("Initializing userCategoryManager")
+        return UserCategoryManager(dependencies: self)
+    }()
+    
+    lazy var genericPointManager: any GenericPointManaging = {
+        print("Initializing genericPointManager")
+        return GenericPointManager(dependencies: self)
+    }()
 }
 
 extension AppDependency: HasBaseNetwork {}

@@ -193,8 +193,8 @@ public final class Network: Networking {
         ("User-Token", "\(token)")
     }
     
-    private let urlSession: URLSessionWrapping
-    private let loggerService: LoggerServicing
+    private var urlSession: URLSessionWrapping
+    private var loggerService: LoggerServicing
     
     // MARK: - Initialization
     

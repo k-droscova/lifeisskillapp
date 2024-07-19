@@ -19,28 +19,34 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     
     typealias Dependencies = HasManagers
 
-    private let dependencies: Dependencies
+    private var userManager: UserManaging
+    private var userCategoryManager: any UserCategoryManaging
+    private var userPointManager: any UserPointManaging
+    private var genericPointManager: any GenericPointManaging
     
     init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+        self.userManager = dependencies.userManager
+        self.userCategoryManager = dependencies.userCategoryManager
+        self.userPointManager = dependencies.userPointManager
+        self.genericPointManager = dependencies.genericPointManager
     }
     
     func logout() {
-        dependencies.userManager.logout()
+        userManager.logout()
     }
     
     func fetchUserCategoryData() {
-        let categories = dependencies.userCategoryManager.getAll()
+        let categories = userCategoryManager.getAll()
         print(categories)
     }
     
     func fetchUserPointData() {
-        let points = dependencies.userPointManager.getAll()
+        let points = userPointManager.getAll()
         print(points)
     }
     
     func fetchGenericPointData() {
-        let points = dependencies.genericPointManager.getAll()
+        let points = genericPointManager.getAll()
         print(points.count)
     }
 }
