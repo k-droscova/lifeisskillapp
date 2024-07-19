@@ -63,8 +63,6 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             rootViewController = window?.rootViewController
             activeChild = loginFC
             self.window?.makeKeyAndVisible()
-            self.checkLocationAuthorization()
-
         }
     }
     
