@@ -138,7 +138,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         } else {
             UserDefaults.standard.removeObject(forKey: "checkSumData")
         }
-
+        
         inTransaction = false
         transactionCache = [:]
         logger.log(message: "Transaction finished.")
