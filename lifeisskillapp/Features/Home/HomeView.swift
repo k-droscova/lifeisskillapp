@@ -21,7 +21,7 @@ struct HomeView: View {
             Button(
                 action: viewModel.logout,
                 label: {
-                    Text(LocalizedStringKey("settings.logout"))
+                    Text("settings.logout".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 20)
                         .foregroundColor(Color.blue)
@@ -35,7 +35,7 @@ struct HomeView: View {
             Button(
                 action: viewModel.fetchUserCategoryData,
                 label: {
-                    Text("User Category Data")
+                    Text("User Category Data".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 20)
                         .foregroundColor(Color.blue)
@@ -49,7 +49,7 @@ struct HomeView: View {
             Button(
                 action: viewModel.fetchUserPointData,
                 label: {
-                    Text("User Point Data")
+                    Text("User Point Data".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 20)
                         .foregroundColor(Color.blue)
@@ -63,7 +63,7 @@ struct HomeView: View {
             Button(
                 action: viewModel.fetchGenericPointData,
                 label: {
-                    Text("Generic Point Data")
+                    Text("Generic Point Data".localized)
                         .font(.system(size: 14, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: 20)
                         .foregroundColor(Color.blue)

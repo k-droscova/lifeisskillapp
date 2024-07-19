@@ -949,6 +949,7 @@
       }
     },
     "login.login" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -971,6 +972,7 @@
       }
     },
     "login.password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -993,6 +995,7 @@
       }
     },
     "login.register" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1038,6 +1041,7 @@
       }
     },
     "login.username" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1869,14 +1873,14 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Používané uživatelské jméno"
+            "state" : "translated",
+            "value" : "Toto uživatelské jméno není k dispozici."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Benutzername wird verwendet. Wählen Sie einen eindeutigen Namen"
+            "state" : "translated",
+            "value" : "“Der Spitzname wird bereits verwendet.”"
           }
         },
         "en" : {
@@ -2743,8 +2747,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Logout"
+            "state" : "translated",
+            "value" : "Odhlásit se"
           }
         },
         "de" : {
