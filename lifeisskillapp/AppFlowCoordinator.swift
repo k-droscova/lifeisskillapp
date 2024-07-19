@@ -27,10 +27,7 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     
     private func setupTabBar() {
         guard tabBar == nil, appDependencies.userManager.isLoggedIn else { return }
-        
-        
         Task { @MainActor in
-            
             
             // MARK: - HOME
             
