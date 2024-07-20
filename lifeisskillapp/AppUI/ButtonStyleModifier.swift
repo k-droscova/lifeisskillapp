@@ -8,33 +8,29 @@
 import SwiftUI
 
 struct CustomButtonStyle: ViewModifier {
-    var fontSize: CGFloat
-    var fontWeight: Font.Weight
-    var foregroundColor: Color
+    var maxWidth: CGFloat = .infinity
+    var maxHeight: CGFloat
     var backgroundColor: Color
     var cornerRadius: CGFloat
-    var maxHeight: CGFloat
-    
+
     func body(content: Content) -> some View {
         content
-            .font(.system(size: fontSize, weight: fontWeight, design: .default))
-            .frame(maxWidth: .infinity, maxHeight: maxHeight)
-            .foregroundColor(foregroundColor)
+            .frame(maxWidth: maxWidth, maxHeight: maxHeight)
             .background(backgroundColor)
             .cornerRadius(cornerRadius)
     }
 }
 
 extension View {
-    func customButtonStyle(fontSize: CGFloat, fontWeight: Font.Weight, foregroundColor: Color, backgroundColor: Color, cornerRadius: CGFloat, maxHeight: CGFloat) -> some View {
-        self.modifier(CustomButtonStyle(fontSize: fontSize, fontWeight: fontWeight, foregroundColor: foregroundColor, backgroundColor: backgroundColor, cornerRadius: cornerRadius, maxHeight: maxHeight))
+    func customButtonStyle(maxHeight: CGFloat, backgroundColor: Color, cornerRadius: CGFloat) -> some View {
+        self.modifier(CustomButtonStyle(maxHeight: maxHeight, backgroundColor: backgroundColor, cornerRadius: cornerRadius))
     }
 }
 
 struct LoginButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 24, weight: .bold, design: .default))
+            .font(Font.custom("Montserrat-Bold", size: 24))
             .frame(maxWidth: .infinity, maxHeight: 60)
             .foregroundColor(.white)
             .background(Color.blue)
@@ -45,9 +41,20 @@ struct LoginButtonStyle: ViewModifier {
 struct RegisterButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 14, weight: .bold, design: .default))
+            .font(Font.custom("Montserrat-Bold", size: 14))
             .frame(maxWidth: .infinity, maxHeight: 20)
             .foregroundColor(.red)
+            .background(Color.white)
+            .cornerRadius(10)
+    }
+}
+
+struct LogoutButtonStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(Font.custom("Montserrat-Regular", size: 14))
+            .frame(maxWidth: .infinity, maxHeight: 20)
+            .foregroundColor(.black)
             .background(Color.white)
             .cornerRadius(10)
     }
@@ -60,5 +67,9 @@ extension View {
     
     func registerButtonStyle() -> some View {
         self.modifier(RegisterButtonStyle())
+    }
+    
+    func logoutButtonStyle() -> some View {
+        self.modifier(LogoutButtonStyle())
     }
 }

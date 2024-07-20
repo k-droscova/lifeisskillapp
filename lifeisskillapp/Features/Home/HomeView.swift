@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var viewModel: HomeViewModeling
-
+    
     
     var body: some View {
         contentView
@@ -18,59 +18,31 @@ struct HomeView: View {
     
     var contentView: some View {
         VStack {
-            Button(
-                action: viewModel.logout,
-                label: {
-                    Text("settings.logout".localized)
-                        .font(.system(size: 14, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, maxHeight: 20)
-                        .foregroundColor(Color.blue)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                }
-            )
+            Button(action: viewModel.logout) {
+                Text("settings.logout".localized)
+            }
+            .logoutButtonStyle()
             
             Spacer()
             
-            Button(
-                action: viewModel.printUserCategoryData,
-                label: {
-                    Text("User Category Data".localized)
-                        .font(.system(size: 14, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, maxHeight: 20)
-                        .foregroundColor(Color.blue)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                }
-            )
+            Button(action: viewModel.printUserCategoryData) {
+                Text("User Category Data".localized)
+            }
+            .logoutButtonStyle()
             
             Spacer()
             
-            Button(
-                action: viewModel.printUserPointData,
-                label: {
-                    Text("User Point Data".localized)
-                        .font(.system(size: 14, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, maxHeight: 20)
-                        .foregroundColor(Color.blue)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                }
-            )
+            Button(action: viewModel.printUserPointData) {
+                Text("User Point Data".localized)
+            }
+            .logoutButtonStyle()
             
             Spacer()
             
-            Button(
-                action: viewModel.printGenericPointData,
-                label: {
-                    Text("Generic Point Data".localized)
-                        .font(.system(size: 14, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, maxHeight: 20)
-                        .foregroundColor(Color.blue)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                }
-            )
+            Button(action: viewModel.printGenericPointData) {
+                Text("Generic Point Data".localized)
+            }
+            .logoutButtonStyle()
         }
         .onAppear(perform: {
             viewModel.fetchData()
