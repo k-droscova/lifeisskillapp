@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @State var viewModel: LoginViewModeling
-
+    
     
     var body: some View {
         contentView
@@ -43,31 +43,19 @@ struct LoginView: View {
             
             Spacer()
             
-            Button(
-                action: viewModel.login,
-                label: {
-                    Text("login.login".localized)
-                        .font(.system(size: 24, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, maxHeight: 60)
-                        .foregroundColor(Color.white)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-            )
+            // LOGIN BUTTON
+            Button(action: viewModel.login) {
+                Text("login.login".localized)
+            }
+            .loginButtonStyle()
             
             Spacer()
             
-            Button(
-                action: viewModel.register,
-                label: {
-                    Text("login.register".localized)
-                        .font(.system(size: 14, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, maxHeight: 20)
-                        .foregroundColor(Color.red)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                }
-            )
+            // REGISTER BUTTON
+            Button(action: viewModel.register) {
+                Text("login.register".localized)
+            }
+            .registerButtonStyle()
         }
         .onAppear(perform: {
             viewModel.fetchData()
