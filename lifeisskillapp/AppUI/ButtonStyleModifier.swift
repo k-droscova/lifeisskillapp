@@ -30,7 +30,7 @@ extension View {
 struct LoginButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(Font.custom("Montserrat-Bold", size: 24))
+            .headline1
             .frame(maxWidth: .infinity, maxHeight: 60)
             .foregroundColor(.white)
             .background(Color.blue)
@@ -41,7 +41,7 @@ struct LoginButtonStyle: ViewModifier {
 struct RegisterButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(Font.custom("Montserrat-Bold", size: 14))
+            .body1Regular
             .frame(maxWidth: .infinity, maxHeight: 20)
             .foregroundColor(.red)
             .background(Color.white)
@@ -52,7 +52,7 @@ struct RegisterButtonStyle: ViewModifier {
 struct LogoutButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(Font.custom("Montserrat-Regular", size: 14))
+            .body1Regular
             .frame(maxWidth: .infinity, maxHeight: 20)
             .foregroundColor(.black)
             .background(Color.white)
