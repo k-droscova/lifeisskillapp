@@ -27,56 +27,54 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     
     private func setupTabBar() {
         guard tabBar == nil, appDependencies.userManager.isLoggedIn else { return }
-        Task { @MainActor in
-            
+        // Ensuring that UINavigationController inits are on main thread
+        DispatchQueue.main.async {
+            self.stop(animated: true) // stops login FC to avoid memory leaks
             // MARK: - HOME
-            
+            /*
+             Right now homeVC has no flow coordinator, once I finish homeFC then homeVC init will be like this:
+                 let homeFC = HomeFlowCoordinator()
+                 homeFC.delegate = self
+                 addChild(homeFC)
+                 let homeVC = homeFC.start()
+             */
             let homeVC = HomeViewController()
-            let homeNavigationController = UINavigationController(rootViewController: homeVC)
-            homeNavigationController.tabBarItem = UITabBarItem(
-                        title: NSLocalizedString("home.title", comment: ""),
-                        image: UIImage(systemName: "house"),
-                        selectedImage: UIImage(systemName: "house.fill")
+            let homeNavVC = UINavigationController(rootViewController: homeVC) // Requires main thread
+            homeNavVC.tabBarItem = UITabBarItem(
+                title: NSLocalizedString("home.title", comment: ""),
+                image: UIImage(systemName: "house"),
+                selectedImage: UIImage(systemName: "house.fill")
             )
             
-            let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [homeNavigationController]
+            // MARK: - SETUP TABBAR with NavVCs
+            let tabVC = UITabBarController()
+            tabVC.viewControllers = [
+                homeNavVC
+            ]
             
-            self.rootViewController = tabBarController
-            
-            self.window?.rootViewController = tabBarController
+            self.tabBar = tabVC
+            self.window?.rootViewController = tabVC
+            self.rootViewController = self.window?.rootViewController
             self.window?.makeKeyAndVisible()
-            
-            self.tabBar = tabBarController
         }
     }
     
     private func showLogin() {
-        Task {
-            @MainActor in
-            let loginFC = LoginFlowCoordinator()
-            loginFC.delegate = self
-            addChild(loginFC)
-            let loginVC = loginFC.start()
-            window?.rootViewController = loginVC
-            rootViewController = window?.rootViewController
-            activeChild = loginFC
-            self.window?.makeKeyAndVisible()
-        }
+        let loginFC = LoginFlowCoordinator()
+        loginFC.delegate = self
+        addChild(loginFC)
+        let loginVC = loginFC.start()
+        
+        window?.rootViewController = loginVC
+        rootViewController = window?.rootViewController
+        window?.makeKeyAndVisible()
     }
     
     private func prepareWindow() {
-        Task {
-            [weak self] in
-            self?.childCoordinators.forEach { $0.stop() }
-        }
-        Task { @MainActor in
-            if appDependencies.userManager.isLoggedIn {
-                self.setupTabBar()
-            } else {
-                self.stop()
-                self.showLogin()
-            }
+        if appDependencies.userManager.isLoggedIn {
+            self.setupTabBar()
+        } else {
+            self.showLogin()
         }
     }
     
