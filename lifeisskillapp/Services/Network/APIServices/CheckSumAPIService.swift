@@ -31,8 +31,6 @@ public final class CheckSumAPIService: CheckSumAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .PATCH,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
@@ -43,8 +41,6 @@ public final class CheckSumAPIService: CheckSumAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .PATCH,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
@@ -55,8 +51,6 @@ public final class CheckSumAPIService: CheckSumAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .PATCH,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
@@ -67,8 +61,6 @@ public final class CheckSumAPIService: CheckSumAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .PATCH,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
@@ -79,8 +71,6 @@ public final class CheckSumAPIService: CheckSumAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .PATCH,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     

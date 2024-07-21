@@ -43,7 +43,6 @@ public final class LoginAPIService: LoginAPIServicing {
             headers: headers,
             body: data,
             sensitiveRequestBodyData: true,
-            sensitiveResponseData: true,
             errorObject: APIResponseError.self)
     }
     

@@ -33,8 +33,6 @@ public final class RegisterAppAPIService: RegisterAppAPIServicing {
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     

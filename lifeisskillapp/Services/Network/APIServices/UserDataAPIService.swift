@@ -33,8 +33,6 @@ public final class UserDataAPIService: UserDataAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .GET,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
@@ -45,8 +43,6 @@ public final class UserDataAPIService: UserDataAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .GET,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
@@ -93,8 +89,6 @@ public final class UserDataAPIService: UserDataAPIServicing {
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .GET,
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
     
