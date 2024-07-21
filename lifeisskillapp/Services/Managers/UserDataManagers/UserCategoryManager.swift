@@ -45,7 +45,7 @@ public final class UserCategoryManager: UserCategoryManaging {
     }
     
     // MARK: - Public Interface
-    func fetch(userToken: String?) async throws {
+    func fetch(credentials: LoginCredentials? = nil, userToken: String?) async throws {
         logger.log(message: "Loading user categories")
         do {
             let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: userToken ?? "")

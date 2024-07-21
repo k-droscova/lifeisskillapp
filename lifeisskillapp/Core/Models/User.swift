@@ -8,7 +8,7 @@
 import Foundation
 
 // Define the protocol with common user attributes
-protocol UserProtocol {
+protocol UserProtocol: UserData {
     var userId: String { get }
     var email: String { get }
     var nick: String { get }
@@ -47,4 +47,11 @@ struct LoggedInUser: UserProtocol, Codable {
     let distance: Int          // Distance to some reference point
     let mainCategory: String   // User's main category
     let fullActivation: Bool   // Whether the user's account is fully activated
+}
+
+// Extend the UserProtocol to provide a default implementation for the id property
+extension UserProtocol {
+    var id: String {
+        return userId
+    }
 }

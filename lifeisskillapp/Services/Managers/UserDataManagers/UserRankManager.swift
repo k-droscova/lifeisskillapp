@@ -44,7 +44,7 @@ public final class UserRankManager: UserRankManaging {
     }
     
     // MARK: - Public Interface
-    func fetch(userToken: String?) async throws {
+    func fetch(credentials: LoginCredentials? = nil, userToken: String?) async throws {
         logger.log(message: "Loading user ranks")
         do {
             let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: userToken ?? "")

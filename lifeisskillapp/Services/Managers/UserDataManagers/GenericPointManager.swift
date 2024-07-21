@@ -45,7 +45,7 @@ public final class GenericPointManager: GenericPointManaging {
     }
     
     // MARK: - Public Interface
-    func fetch(userToken: String?) async throws {
+    func fetch(credentials: LoginCredentials? = nil, userToken: String?) async throws {
         logger.log(message: "Loading user points")
         do {
             let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: userToken ?? "")
