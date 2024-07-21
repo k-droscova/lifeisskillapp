@@ -24,6 +24,16 @@ protocol CheckSumAPIServicing {
 }
 
 public final class CheckSumAPIService: CheckSumAPIServicing {
+    typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserManager
+    
+    private var loggerService: LoggerServicing
+    private var network: Networking
+    
+    init(dependencies: Dependencies) {
+        self.loggerService = dependencies.logger
+        self.network = dependencies.network
+    }
+    
     func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumUserPointsData> {
         let endpoint = Endpoint.userpoints
         let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
@@ -73,18 +83,6 @@ public final class CheckSumAPIService: CheckSumAPIServicing {
             headers: headers,
             errorObject: APIResponseError.self)
     }
-    
-    
-    typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserManager
-    
-    private var loggerService: LoggerServicing
-    private var network: Networking
-    
-    init(dependencies: Dependencies) {
-        self.loggerService = dependencies.logger
-        self.network = dependencies.network
-    }
-    
 }
 
 extension CheckSumAPIService {
