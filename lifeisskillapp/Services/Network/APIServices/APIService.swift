@@ -15,16 +15,14 @@ enum ApiTask: String {
     case login = "login"
     case register = "register"
     
-    func isLocationSecuredTask() -> Bool {
+    var isLocationSecuredTask: Bool {
         switch self {
-        case .register:
-            return false
-        default:
-            return true
+        case .register: return false
+        default: return true
         }
     }
     
-    func isTokenSecuredTask() -> Bool {
+    var isTokenSecuredTask: Bool {
         switch self {
         case .register, .login:
             return false
@@ -33,24 +31,24 @@ enum ApiTask: String {
         }
     }
     
-    func getTaskHeaders() -> [String: String] {
+    var taskHeaders: [String: String] {
         var headers: [String: String] = ["Content-Lis": "47639"]
         
-        if isTokenSecuredTask() {
+        if isTokenSecuredTask {
             let token = UserDefaults.standard.token ?? ""
             headers["User-Token"] = token
         }
         return headers
     }
     
-    func getTaskParams() -> [String: String] {
+    var taskParams: [String: String] {
         let appVersion = UserDefaults.standard.appVersion ?? ""
         let appId = UserDefaults.standard.appId ?? ""
         var commonParams = [
             "appVer": "I\(appVersion)",
             "appID": appId
         ]
-        if isLocationSecuredTask() {
+        if isLocationSecuredTask {
             let location = UserDefaults.standard.location
             let locationParams = [
                 "lat": String(location?.coordinate.latitude ?? 0),
