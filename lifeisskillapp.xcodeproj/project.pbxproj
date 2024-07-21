@@ -84,6 +84,9 @@
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */; };
 		27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */; };
+		27F27A4B2C4D568200928388 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A482C4D568200928388 /* View.swift */; };
+		27F27A4C2C4D568200928388 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A492C4D568200928388 /* AssetFontFamily.swift */; };
+		27F27A4D2C4D568200928388 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A4A2C4D568200928388 /* ButtonStyleModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +187,9 @@
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
 		27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
+		27F27A482C4D568200928388 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		27F27A492C4D568200928388 /* AssetFontFamily.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
+		27F27A4A2C4D568200928388 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +373,9 @@
 		27274FB12C3321D6003453E2 /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
+				27F27A492C4D568200928388 /* AssetFontFamily.swift */,
+				27F27A4A2C4D568200928388 /* ButtonStyleModifier.swift */,
+				27F27A482C4D568200928388 /* View.swift */,
 				27C619962C3AB5D50067498F /* Theme.swift */,
 			);
 			path = AppUI;
@@ -808,6 +817,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
+				27F27A4C2C4D568200928388 /* AssetFontFamily.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
@@ -838,11 +848,13 @@
 				27C619722C3822920067498F /* HTTPURLResponse.swift in Sources */,
 				27C619952C3AB0890067498F /* UserDefaults.swift in Sources */,
 				27066A8A2C45580D0092B499 /* UserCategory.swift in Sources */,
+				27F27A4B2C4D568200928388 /* View.swift in Sources */,
 				27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
+				27F27A4D2C4D568200928388 /* ButtonStyleModifier.swift in Sources */,
 				275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
