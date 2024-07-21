@@ -51,7 +51,7 @@
 		275457232C3332BF00F3B55A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* HomeView.swift */; };
 		275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* HomeViewModel.swift */; };
 		275457282C3332E000F3B55A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* HomeViewController.swift */; };
-		2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */; };
+		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
@@ -150,7 +150,7 @@
 		275457222C3332BF00F3B55A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		275457252C3332CE00F3B55A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		275457272C3332E000F3B55A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFlowCoordinator.swift; sourceTree = "<group>"; };
+		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
@@ -401,7 +401,7 @@
 		27274FB52C332255003453E2 /* FlowCoordinators */ = {
 			isa = PBXGroup;
 			children = (
-				2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */,
+				2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */,
 				2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
@@ -852,7 +852,7 @@
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
 				27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */,
-				2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */,
+				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
 				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,
 				2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */,
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,
