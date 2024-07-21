@@ -17,17 +17,17 @@ enum ApiTask: String {
     
     var isLocationSecuredTask: Bool {
         switch self {
-        case .register: return false
-        default: return true
+        case .register: false
+        default: true
         }
     }
     
     var isTokenSecuredTask: Bool {
         switch self {
         case .register, .login:
-            return false
+            false
         default:
-            return true
+            true
         }
     }
     
@@ -51,8 +51,8 @@ enum ApiTask: String {
         if isLocationSecuredTask {
             let location = UserDefaults.standard.location
             let locationParams = [
-                "lat": String(location?.coordinate.latitude ?? 0),
-                "lng": String(location?.coordinate.longitude ?? 0)
+                "lat": String(location?.latitude ?? 0),
+                "lng": String(location?.longitude ?? 0)
             ]
             commonParams = commonParams.merging(locationParams) { (lhs, rhs) -> String in
                 lhs
