@@ -1,25 +1,24 @@
 //
-//  UserCategoryManager.swift
+//  UserRankManager.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 16.07.2024.
+//  Created by Karolína Droscová on 21.07.2024.
 //
 
 import Foundation
 
-protocol UserCategoryManagerFlowDelegate: UserDataManagerFlowDelegate {
+protocol UserRankManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
 
-protocol HasUserCategoryManager {
-    var userCategoryManager: any UserCategoryManaging { get }
+protocol HasUserRankManager {
+    var userRankManager: any UserRankManaging { get }
 }
 
-protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, DataContainer == UserCategoryData {
-    var delegate: UserCategoryManagerFlowDelegate? { get set }
-    func getMainCategory() -> UserCategory?
+protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataContainer == UserRankData {
+    var delegate: UserRankManagerFlowDelegate? { get set }
 }
 
-public final class UserCategoryManager: UserCategoryManaging {
+public final class UserRankManager: UserRankManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
@@ -33,22 +32,22 @@ public final class UserCategoryManager: UserCategoryManaging {
     }
     
     // MARK: - Public Properties
-    weak var delegate: UserCategoryManagerFlowDelegate?
+    weak var delegate: UserRankManagerFlowDelegate?
     
-    var data: UserCategoryData? {
+    var data: UserRankData? {
         get {
-            userDataStorage.userCategoryData
+            userDataStorage.userRankData
         }
         set {
-            userDataStorage.userCategoryData = newValue
+            userDataStorage.userRankData = newValue
         }
     }
     
     // MARK: - Public Interface
     func fetch(credentials: LoginCredentials? = nil, userToken: String?) async throws {
-        logger.log(message: "Loading user categories")
+        logger.log(message: "Loading user ranks")
         do {
-            let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: userToken ?? "")
+            let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: userToken ?? "")
             userDataStorage.beginTransaction()
             data = response.data
             userDataStorage.commitTransaction()
@@ -56,21 +55,17 @@ public final class UserCategoryManager: UserCategoryManaging {
         } catch {
             throw BaseError(
                 context: .system,
-                message: "Unable to load user categories",
+                message: "Unable to load user ranks",
                 logger: logger
             )
         }
     }
     
-    func getById(id: String) -> UserCategory? {
+    func getById(id: String) -> UserRank? {
         data?.data.first { $0.id == id }
     }
     
-    func getAll() -> [UserCategory] {
+    func getAll() -> [UserRank] {
         data?.data ?? []
-    }
-    
-    func getMainCategory() -> UserCategory? {
-        data?.main
     }
 }

@@ -14,6 +14,7 @@ protocol HomeViewModeling {
     func printUserCategoryData()
     func printUserPointData()
     func printGenericPointData()
+    func printUserRankData()
 }
 
 final class HomeViewModel: HomeViewModeling, ObservableObject {
@@ -25,6 +26,7 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     private var userCategoryManager: any UserCategoryManaging
     private var userPointManager: any UserPointManaging
     private var genericPointManager: any GenericPointManaging
+    private var userRankManager: any UserRankManaging
     
     init(dependencies: Dependencies) {
         self.locationManager = dependencies.locationManager
@@ -32,6 +34,7 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
         self.genericPointManager = dependencies.genericPointManager
+        self.userRankManager = dependencies.userRankManager
     }
     
     func logout() {
@@ -58,5 +61,10 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     func printGenericPointData() {
         let points = genericPointManager.getAll()
         print(points.count)
+    }
+    
+    func printUserRankData() {
+        let ranks = userRankManager.getAll()
+        print(ranks)
     }
 }

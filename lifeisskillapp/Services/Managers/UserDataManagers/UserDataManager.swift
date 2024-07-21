@@ -20,9 +20,18 @@ protocol UserDataManaging {
     associatedtype DataContainer: DataProtocol
     
     var data: DataContainer? { get set }
-    func fetch(userToken: String?) async throws
+    func fetch(credentials: LoginCredentials?, userToken: String?) async throws
     func getAll() -> [DataType]
     func getById(id: String) -> DataType?
+}
+
+extension UserDataManaging {
+    func fetch(userToken: String?) async throws {
+        try await fetch(credentials: nil, userToken: userToken)
+    }
+    func fetch(credentials: LoginCredentials?) async throws {
+        try await fetch(credentials: credentials, userToken: "")
+    }
 }
 
 

@@ -15,6 +15,8 @@ protocol UserDataStoraging: UserStoraging {
     var userCategoryData: UserCategoryData? { get set }
     var userPointData: UserPointData? { get set }
     var genericPointData: GenericPointData? { get set }
+    var userRankData: UserRankData? { get set }
+    var loginData: LoginUserData? { get set }
 }
 
 final class UserDataStorage: UserDataStoraging {
@@ -61,6 +63,38 @@ final class UserDataStorage: UserDataStoraging {
                 transactionCache["pointData"] = newValue
             } else {
                 internalStore["pointData"] = newValue
+            }
+        }
+    }
+    
+    // MARK: - UserPointData Property
+    var userRankData: UserRankData? {
+        get { inTransaction ? transactionCache["userRankData"] as? UserRankData : internalStore["userRankData"] as? UserRankData }
+        set {
+            if inTransaction {
+                transactionCache["userRankData"] = newValue
+            } else {
+                internalStore["userRankData"] = newValue
+            }
+        }
+    }
+    
+    // MARK: - LoginAPIResponse Property
+    var loginData: LoginUserData? {
+        get { inTransaction ? transactionCache["loginData"] as? LoginUserData : internalStore["loginData"] as? LoginUserData }
+        set {
+            if inTransaction {
+                if newValue == nil {
+                    transactionCache["loginData"] = NSNull()
+                } else {
+                    transactionCache["loginData"] = newValue
+                }
+            } else {
+                if newValue == nil {
+                    internalStore["loginData"] = NSNull()
+                } else {
+                    internalStore["loginData"] = newValue
+                }
             }
         }
     }
