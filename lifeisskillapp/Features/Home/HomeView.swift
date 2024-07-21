@@ -43,6 +43,13 @@ struct HomeView: View {
                 Text("Generic Point Data".localized)
             }
             .logoutButtonStyle()
+            
+            Spacer()
+            
+            Button(action: viewModel.printUserRankData) {
+                Text("User Rank Data".localized)
+            }
+            .logoutButtonStyle()
         }
         .onAppear(perform: {
             viewModel.fetchData()

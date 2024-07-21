@@ -19,32 +19,45 @@ public struct RegisterAppAPIResponse: DataProtocol {
 }
 
 public struct LoginAPIResponse: DataProtocol {
-    let userId: String
-    let email: String
-    let nick: String
-    let rights: Int
-    let rightsCoded: String
-    let token: String
-    let userRank: Int
-    let userPoints: Int
-    let sex: UserGender
-    let distance: Int
-    let mainCategory: String
-    let fullActivation: Bool
+    let user: LoggedInUser
     
     enum CodingKeys: String, CodingKey {
-        case userId
-        case email
-        case nick
-        case rights
-        case rightsCoded
-        case token
-        case userRank
-        case userPoints
-        case sex
-        case distance
-        case mainCategory
-        case fullActivation
+        case userId, email, nick, rights, rightsCoded, token, userRank, userPoints, sex, distance, mainCategory, fullActivation
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let userId = try container.decode(String.self, forKey: .userId)
+        let email = try container.decode(String.self, forKey: .email)
+        let nick = try container.decode(String.self, forKey: .nick)
+        let rights = try container.decode(Int.self, forKey: .rights)
+        let rightsCoded = try container.decode(String.self, forKey: .rightsCoded)
+        let token = try container.decode(String.self, forKey: .token)
+        let userRank = try container.decode(Int.self, forKey: .userRank)
+        let userPoints = try container.decode(Int.self, forKey: .userPoints)
+        let sex = try container.decode(UserGender.self, forKey: .sex)
+        let distance = try container.decode(Int.self, forKey: .distance)
+        let mainCategory = try container.decode(String.self, forKey: .mainCategory)
+        let fullActivation = try container.decode(Bool.self, forKey: .fullActivation)
+        
+        self.user = LoggedInUser(userId: userId, email: email, nick: nick, sex: sex, rights: rights, rightsCoded: rightsCoded, token: token, userRank: userRank, userPoints: userPoints, distance: distance, mainCategory: mainCategory, fullActivation: fullActivation)
+    }
+    
+    // Custom encoder to encode the LoggedInUser into the API response
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(user.userId, forKey: .userId)
+        try container.encode(user.email, forKey: .email)
+        try container.encode(user.nick, forKey: .nick)
+        try container.encode(user.rights, forKey: .rights)
+        try container.encode(user.rightsCoded, forKey: .rightsCoded)
+        try container.encode(user.token, forKey: .token)
+        try container.encode(user.userRank, forKey: .userRank)
+        try container.encode(user.userPoints, forKey: .userPoints)
+        try container.encode(user.sex, forKey: .sex)
+        try container.encode(user.distance, forKey: .distance)
+        try container.encode(user.mainCategory, forKey: .mainCategory)
+        try container.encode(user.fullActivation, forKey: .fullActivation)
     }
 }
 
@@ -123,5 +136,21 @@ struct GenericPointData: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([GenericPoint].self, forKey: .data)
+    }
+}
+
+struct UserRankData: DataProtocol {
+    let checkSum: String
+    let data: [UserRank]
+    
+    enum CodingKeys: String, CodingKey {
+        case checkSum = "rankProtect"
+        case data = "catData"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        checkSum = try container.decode(String.self, forKey: .checkSum)
+        data = try container.decode([UserRank].self, forKey: .data)
     }
 }

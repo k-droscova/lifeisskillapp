@@ -15,6 +15,7 @@ protocol UserDataStoraging: UserStoraging {
     var userCategoryData: UserCategoryData? { get set }
     var userPointData: UserPointData? { get set }
     var genericPointData: GenericPointData? { get set }
+    var userRankData: UserRankData? { get set }
 }
 
 final class UserDataStorage: UserDataStoraging {
@@ -61,6 +62,18 @@ final class UserDataStorage: UserDataStoraging {
                 transactionCache["pointData"] = newValue
             } else {
                 internalStore["pointData"] = newValue
+            }
+        }
+    }
+    
+    // MARK: - UserPointData Property
+    var userRankData: UserRankData? {
+        get { inTransaction ? transactionCache["userRankData"] as? UserRankData : internalStore["userRankData"] as? UserRankData }
+        set {
+            if inTransaction {
+                transactionCache["userRankData"] = newValue
+            } else {
+                internalStore["userRankData"] = newValue
             }
         }
     }

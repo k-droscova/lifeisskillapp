@@ -15,9 +15,9 @@ protocol UserDataAPIServicing {
     func getUserCategory(baseURL: URL, userToken: String) async throws -> APIResponse<UserCategoryData>
     
     func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<UserPointData>
-    /*
-    func getRank(baseURL: URL) async throws -> APIResponse<CheckSumRankData>
     
+    func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<UserRankData>
+    /*
     func getEvents(baseURL: URL) async throws -> APIResponse<CheckSumEventsData>
     
     func getMessages(baseURL: URL) async throws -> APIResponse<CheckSumMessagesData>
@@ -50,9 +50,9 @@ public final class UserDataAPIService: UserDataAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    /*func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumRankData> {
+    func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<UserRankData> {
         let endpoint = Endpoint.rank
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .GET,
@@ -61,7 +61,7 @@ public final class UserDataAPIService: UserDataAPIServicing {
             sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
-    
+    /*
     func getEvents(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumEventsData> {
         let endpoint = Endpoint.events
         let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)

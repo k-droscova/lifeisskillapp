@@ -42,6 +42,7 @@ final class UserManager: UserManaging {
     private var userCategoryManager: any UserCategoryManaging
     private var userPointManager: any UserPointManaging
     private var genericPointManager: any GenericPointManaging
+    private var userRankManager: any UserRankManaging
     
     // MARK: - Initialization
     init(dependencies: Dependencies) {
@@ -53,6 +54,7 @@ final class UserManager: UserManaging {
         self.userCategoryManager = dependencies.userCategoryManager
         self.genericPointManager = dependencies.genericPointManager
         self.userPointManager = dependencies.userPointManager
+        self.userRankManager = dependencies.userRankManager
     }
     // MARK: - Public Properties
     
@@ -90,7 +92,7 @@ final class UserManager: UserManaging {
         logger.log(message: "Login User: " + loginCredentials.username)
         do {
             let response = try await loginAPI.login(loginCredentials: loginCredentials, baseURL: APIUrl.baseURL)
-            let responseToken = response.data.token
+            let responseToken = response.data.user.token
             userDefaultsStorage.beginTransaction()
             credentials = loginCredentials
             token = responseToken
@@ -226,11 +228,14 @@ final class UserManager: UserManaging {
     }
     
     private func fetchAllNewData() async {
-        await fetchNewUserPoints()
-        await fetchNewUserEvents()
-        await fetchNewUserRank()
-        await fetchNewUserMessages()
-        await fetchNewPoints()
+        async let userPoints: () = fetchNewUserPoints()
+        async let userEvents: () = fetchNewUserEvents()
+        async let userRank: () = fetchNewUserRank()
+        async let userMessages: () = fetchNewUserMessages()
+        async let newPoints: () = fetchNewPoints()
+        
+        // Await all concurrently running tasks
+        await (userPoints, userEvents, userRank, userMessages, newPoints)
     }
     
     private func fetchNewUserPoints() async {
@@ -248,6 +253,15 @@ final class UserManager: UserManaging {
     
     private func fetchNewUserRank() async {
         logger.log(message: "Updating user rank")
+        do {
+            try await userRankManager.fetch(userToken: token)
+            guard let newCheckSum = userRankManager.data?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+            }
+            updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.rank)
+        } catch {
+            
+        }
     }
     
     private func fetchNewUserMessages() async {
