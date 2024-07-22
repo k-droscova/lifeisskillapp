@@ -43,17 +43,6 @@ final class UserManager: BaseClass, UserManaging {
     private var userPointManager: any UserPointManaging
     private var genericPointManager: any GenericPointManaging
     
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.logger = dependencies.logger
-        self.userDefaultsStorage = dependencies.userDefaultsStorage
-        self.loginAPI = dependencies.loginAPI
-        self.registerAppAPI = dependencies.registerAppAPI
-        self.checkSumAPI = dependencies.checkSumAPI
-        self.userCategoryManager = dependencies.userCategoryManager
-        self.genericPointManager = dependencies.genericPointManager
-        self.userPointManager = dependencies.userPointManager
-    }
     // MARK: - Public Properties
     
     weak var delegate: UserManagerFlowDelegate?
@@ -83,6 +72,18 @@ final class UserManager: BaseClass, UserManaging {
     }
     var hasAppId: Bool {
         userDefaultsStorage.appId != nil
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.logger = dependencies.logger
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
+        self.loginAPI = dependencies.loginAPI
+        self.registerAppAPI = dependencies.registerAppAPI
+        self.checkSumAPI = dependencies.checkSumAPI
+        self.userCategoryManager = dependencies.userCategoryManager
+        self.genericPointManager = dependencies.genericPointManager
+        self.userPointManager = dependencies.userPointManager
     }
     
     // MARK: - Public Interface

@@ -25,13 +25,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     private var logger: LoggerServicing
     private var userDataAPIService: UserDataAPIServicing
     
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
-        self.logger = dependencies.logger
-        self.userDataAPIService = dependencies.userDataAPI
-    }
-    
     // MARK: - Public Properties
     weak var delegate: GenericPointManagerFlowDelegate?
     
@@ -42,6 +35,13 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         set {
             userDataStorage.genericPointData = newValue
         }
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.userDataAPIService = dependencies.userDataAPI
     }
     
     // MARK: - Public Interface

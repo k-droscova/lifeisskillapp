@@ -25,13 +25,6 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     private var logger: LoggerServicing
     private var userDataAPIService: UserDataAPIServicing
     
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
-        self.logger = dependencies.logger
-        self.userDataAPIService = dependencies.userDataAPI
-    }
-    
     // MARK: - Public Properties
     weak var delegate: UserCategoryManagerFlowDelegate?
     
@@ -42,6 +35,13 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         set {
             userDataStorage.userCategoryData = newValue
         }
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.userDataAPIService = dependencies.userDataAPI
     }
     
     // MARK: - Public Interface
