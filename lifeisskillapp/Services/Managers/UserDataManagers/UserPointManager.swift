@@ -45,10 +45,10 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     }
     
     // MARK: - Public Interface
-    func fetch(userToken: String?) async throws {
+    func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user points")
         do {
-            let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: userToken ?? "")
+            let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
             userDataStorage.beginTransaction()
             data = response.data
             userDataStorage.commitTransaction()
