@@ -19,25 +19,27 @@ protocol MainFlowDelegate: NSObject {
 }
 
 final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
-    private weak var tabBarController: UITabBarController?
-    private var pointsNC: UINavigationController?
     weak var delegate: MainFlowCoordinatorDelegate?
-    
-    override func start(with navigationController: UINavigationController) {
-        guard tabBarController == nil, appDependencies.userManager.isLoggedIn else { return }
+
+    override init() {
+        super.init()
         appDependencies.userManager.delegate = self
         appDependencies.locationManager.delegate = self
-        self.setupTabBar()
-        guard let tabBarController else {
-            return
-        }
+    }
+
+    override func start() -> UIViewController {
+        super.start()
+
+        let tabBarVC = setupTabBar()
+        let navigationController = UINavigationController(rootViewController: tabBarVC)
         self.navigationController = navigationController
-        navigationController.setViewControllers([tabBarController], animated: true)
-        rootViewController = navigationController
+        rootViewController = tabBarVC
+
+        return navigationController
     }
     
     // MARK: - Private helpers
-    private func setupTabBar() {
+    private func setupTabBar() -> UITabBarController{
         // MARK: HOME
         let homeVC = HomeViewController()
         homeVC.tabBarItem = UITabBarItem(
@@ -53,7 +55,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         ]
         tabVC.tabBar.tintColor = UIColor.theme.lisPink
         tabVC.selectedViewController = homeVC
-        self.tabBarController = tabVC
+        return tabVC
     }
 }
 
@@ -68,7 +70,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
         } catch {
             let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                self.setupTabBar()
+
             })
             rootViewController?.present(alert, animated: true, completion: nil)
         }
@@ -88,7 +90,7 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
             }
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            self.setupTabBar()
+
         })
         rootViewController?.present(alert, animated: true, completion: nil)
     }

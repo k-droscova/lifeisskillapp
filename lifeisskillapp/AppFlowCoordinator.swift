@@ -11,7 +11,6 @@ import ACKategories
 
 final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     private weak var window: UIWindow?
-    private var mainFlowCoordinator: MainFlowCoordinator?
     
     override func start(in window: UIWindow) {
         self.window = window
@@ -22,6 +21,7 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     // MARK: - Private helpers
     
     private func prepareWindow() {
+        childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
         if appDependencies.userManager.isLoggedIn {
             self.showHome()
         } else {
@@ -30,20 +30,16 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     }
     
     private func showHome() {
-        DispatchQueue.main.async {
-            self.stop(animated: true) // stops FCs to avoid memory leaks
-            let mainFC = MainFlowCoordinator()
-            mainFC.delegate = self
-            let navigationController = UINavigationController()
-            self.window?.rootViewController = navigationController
-            self.rootViewController = self.window?.rootViewController
-            mainFC.start(with: navigationController)
-            self.addChild(mainFC)
-            self.activeChild = mainFC
-            self.mainFlowCoordinator = mainFC // Store a strong reference
-        }
+        let mainFC = MainFlowCoordinator()
+        mainFC.delegate = self
+        self.addChild(mainFC)
+        let mainVC = mainFC.start()
+
+        window?.rootViewController = mainVC
+        rootViewController = window?.rootViewController
+        window?.makeKeyAndVisible()
     }
-    
+
     private func showLogin() {
         let loginFC = LoginFlowCoordinator()
         loginFC.delegate = self
@@ -53,18 +49,21 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         window?.rootViewController = loginVC
         rootViewController = window?.rootViewController
         window?.makeKeyAndVisible()
-        self.mainFlowCoordinator = nil // Clear reference when switching to login
     }
 }
 
 extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidSucceed() {
-        prepareWindow()
+        DispatchQueue.main.async { [weak self] in
+            self?.prepareWindow()
+        }
     }
 }
 
 extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
     func reload() {
-        prepareWindow()
+        DispatchQueue.main.async { [weak self] in
+            self?.prepareWindow()
+        }
     }
 }

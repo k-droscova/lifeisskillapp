@@ -114,7 +114,6 @@ public extension Networking {
     ///   - headers: Optional HTTP headers to include in the request (default is `nil`).
     ///   - body: Optional HTTP body data to include in the request (default is `nil`).
     ///   - sensitiveRequestBodyData: A boolean indicating whether the request body contains sensitive data.
-    ///   - sensitiveResponseData: A boolean indicating whether the response body contains sensitive data.
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The decoded response data of type `T`.
     /// - Throws: An error if the request fails or the response data cannot be decoded into the specified type `T`.
@@ -144,7 +143,6 @@ public extension Networking {
     ///   - headers: Optional HTTP headers to include in the request (default is `nil`).
     ///   - body: Optional HTTP body data to include in the request (default is `nil`).
     ///   - sensitiveRequestBodyData: A boolean indicating whether the request body contains sensitive data.
-    ///   - sensitiveResponseData: A boolean indicating whether the response body contains sensitive data.
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The raw response data.
     /// - Throws: An error if the request fails.
@@ -303,7 +301,6 @@ extension Network {
     ///   - headers: Optional HTTP headers.
     ///   - body: Optional HTTP body.
     ///   - sensitiveRequestBodyData: Indicates if the request body contains sensitive data.
-    ///   - sensitiveResponseData: Indicates if the response body contains sensitive data.
     ///   - errorObject: Type of error object conforming to `ResponseError`.
     /// - Returns: A `DataResponse` containing the status code, request, response, and data.
     /// - Throws: `BaseError` if the request fails or the response contains an error.

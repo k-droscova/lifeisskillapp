@@ -32,13 +32,6 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
     private var loginAPI: LoginAPIServicing
-
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
-        self.logger = dependencies.logger
-        self.loginAPI = dependencies.loginAPI
-    }
     
     // MARK: - Public Properties
     weak var delegate: UserLoginManagerFlowDelegate?
@@ -66,6 +59,13 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     
     var userMainCategory: String? {
         get { self.data?.user.mainCategory }
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.loginAPI = dependencies.loginAPI
     }
     
     // MARK: - Public Interface

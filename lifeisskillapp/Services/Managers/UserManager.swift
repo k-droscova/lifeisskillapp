@@ -35,13 +35,6 @@ final class UserManager: BaseClass, UserManaging {
     private var registerAppAPI: RegisterAppAPIServicing
     private var userLoginDataManager: any UserLoginDataManaging
     
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.logger = dependencies.logger
-        self.userDefaultsStorage = dependencies.userDefaultsStorage
-        self.registerAppAPI = dependencies.registerAppAPI
-        self.userLoginDataManager = dependencies.userLoginManager
-    }
     // MARK: - Public Properties
     
     weak var delegate: UserManagerFlowDelegate?
@@ -58,6 +51,14 @@ final class UserManager: BaseClass, UserManaging {
     private var checkSumData: CheckSumData? {
         get { userDefaultsStorage.checkSumData }
         set { userDefaultsStorage.checkSumData = newValue }
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.logger = dependencies.logger
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
+        self.registerAppAPI = dependencies.registerAppAPI
+        self.userLoginDataManager = dependencies.userLoginManager
     }
     
     // MARK: - Public interface
