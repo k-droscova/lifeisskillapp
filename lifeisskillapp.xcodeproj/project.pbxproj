@@ -344,9 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				275457122C332D5500F3B55A /* Home */,
-				27274FBE2C332300003453E2 /* Map */,
-				27274FBD2C3322FA003453E2 /* Profile */,
-				27274FBC2C3322F1003453E2 /* Registration */,
 				27274FB62C3322A1003453E2 /* Login */,
 			);
 			path = Features;
@@ -478,29 +475,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		27274FBC2C3322F1003453E2 /* Registration */ = {
-			isa = PBXGroup;
-			children = (
-				2754571A2C33301A00F3B55A /* User */,
-				275457192C33301500F3B55A /* App */,
-			);
-			path = Registration;
-			sourceTree = "<group>";
-		};
-		27274FBD2C3322FA003453E2 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		27274FBE2C332300003453E2 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
 		2734DCA42C4693C4008030F3 /* UserData */ = {
 			isa = PBXGroup;
 			children = (
@@ -534,20 +508,6 @@
 				275457272C3332E000F3B55A /* HomeViewController.swift */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		275457192C33301500F3B55A /* App */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		2754571A2C33301A00F3B55A /* User */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		2754571B2C33303B00F3B55A /* NetworkStructs */ = {
