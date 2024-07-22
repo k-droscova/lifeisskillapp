@@ -23,6 +23,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
+    private var userManager: UserManaging
     private var userDataAPIService: UserDataAPIServicing
     
     // MARK: - Public Properties
@@ -37,10 +38,15 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         }
     }
     
+    var token: String? {
+        get { userManager.token }
+    }
+    
     // MARK: - Initialization
     init(dependencies: Dependencies) {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
+        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
     }
     

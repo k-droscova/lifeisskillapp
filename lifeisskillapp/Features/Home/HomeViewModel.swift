@@ -22,6 +22,7 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
 
     private var locationManager: LocationManaging
     private var userManager: UserManaging
+    private var gameDataManager: GameDataManaging
     private var userCategoryManager: any UserCategoryManaging
     private var userPointManager: any UserPointManaging
     private var genericPointManager: any GenericPointManaging
@@ -29,6 +30,7 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     init(dependencies: Dependencies) {
         self.locationManager = dependencies.locationManager
         self.userManager = dependencies.userManager
+        self.gameDataManager = dependencies.gameDataManager
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
         self.genericPointManager = dependencies.genericPointManager
@@ -63,6 +65,6 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     
     private func fetchData() async {
         locationManager.checkLocationAuthorization()
-        await userManager.loadDataAfterLogin()
+        await gameDataManager.fetchNewDataIfNeccessary()
     }
 }

@@ -12,7 +12,7 @@ let appDependencies = AppDependency()
 typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper
 typealias HasAPIDependencies = HasRegisterAppAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService
 typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage
-typealias HasUserDataManagers = HasUserCategoryManager & HasUserPointManager & HasGenericPointManager
+typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager
 typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers
 typealias HasLoggers = HasLoggerServicing
 
@@ -36,6 +36,7 @@ final class AppDependency {
     // MARK: user and data managers
     lazy var userManager: UserManaging = UserManager(dependencies: self)
     lazy var locationManager: LocationManaging = LocationManager(dependencies: self)
+    lazy var gameDataManager: GameDataManaging = GameDataManager(dependencies: self)
     lazy var userPointManager: any UserPointManaging = UserPointManager(dependencies: self)
     lazy var userCategoryManager: any UserCategoryManaging = UserCategoryManager(dependencies: self)
     lazy var genericPointManager: any GenericPointManaging = GenericPointManager(dependencies: self)
