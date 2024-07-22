@@ -38,6 +38,6 @@ final class HomeViewController: Base.ViewController {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "home.title".localized
+        navigationItem.title = "home.title"
     }
 }

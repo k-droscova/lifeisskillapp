@@ -47,7 +47,6 @@
 		275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457152C332DB400F3B55A /* LoginViewModel.swift */; };
 		275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457172C332DBE00F3B55A /* LoginViewController.swift */; };
 		2754571F2C33324900F3B55A /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754571E2C33324900F3B55A /* UIViewController.swift */; };
-		275457212C33325900F3B55A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457202C33325900F3B55A /* String.swift */; };
 		275457232C3332BF00F3B55A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* HomeView.swift */; };
 		275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* HomeViewModel.swift */; };
 		275457282C3332E000F3B55A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* HomeViewController.swift */; };
@@ -153,7 +152,6 @@
 		275457152C332DB400F3B55A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		275457172C332DBE00F3B55A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2754571E2C33324900F3B55A /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
-		275457202C33325900F3B55A /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		275457222C3332BF00F3B55A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		275457252C3332CE00F3B55A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		275457272C3332E000F3B55A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -472,7 +470,6 @@
 			isa = PBXGroup;
 			children = (
 				2754571E2C33324900F3B55A /* UIViewController.swift */,
-				275457202C33325900F3B55A /* String.swift */,
 				27C6196F2C3822720067498F /* URLRequest.swift */,
 				27C619712C3822920067498F /* HTTPURLResponse.swift */,
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
@@ -834,7 +831,6 @@
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
 				278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */,
-				275457212C33325900F3B55A /* String.swift in Sources */,
 				275457142C332DAB00F3B55A /* LoginView.swift in Sources */,
 				27066A952C4570180092B499 /* GenericPoint.swift in Sources */,
 				27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */,

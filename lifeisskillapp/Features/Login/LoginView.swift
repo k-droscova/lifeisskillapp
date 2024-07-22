@@ -22,7 +22,7 @@ struct LoginView: View {
             
             VStack {
                 TextField(
-                    "login.username".localized,
+                    "login.username",
                     text: $viewModel.username
                 )
                 .autocapitalization(.none)
@@ -32,7 +32,7 @@ struct LoginView: View {
                 Divider()
                 
                 SecureField(
-                    "login.password".localized,
+                    "login.password",
                     text: $viewModel.password
                 )
                 .padding(.top, 20)
@@ -44,7 +44,7 @@ struct LoginView: View {
             
             // LOGIN BUTTON
             Button(action: viewModel.login) {
-                Text("login.login".localized)
+                Text("login.login")
             }
             .loginButtonStyle()
             
@@ -52,7 +52,7 @@ struct LoginView: View {
             
             // REGISTER BUTTON
             Button(action: viewModel.register) {
-                Text("login.register".localized)
+                Text("login.register")
             }
             .registerButtonStyle()
         }

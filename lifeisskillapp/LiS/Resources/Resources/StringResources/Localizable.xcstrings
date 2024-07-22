@@ -254,6 +254,9 @@
         }
       }
     },
+    "Generic Point Data" : {
+
+    },
     "home.button.how" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -946,7 +949,6 @@
       }
     },
     "login.login" : {
-      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -969,7 +971,6 @@
       }
     },
     "login.password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -992,7 +993,6 @@
       }
     },
     "login.register" : {
-      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1038,7 +1038,6 @@
       }
     },
     "login.username" : {
-      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2970,7 +2969,6 @@
       }
     },
     "User Category Data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2981,7 +2979,6 @@
       }
     },
     "User Point Data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
