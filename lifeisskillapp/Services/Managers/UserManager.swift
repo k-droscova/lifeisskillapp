@@ -32,7 +32,7 @@ protocol UserManaging {
     func loadDataAfterLogin() async
 }
 
-final class UserManager: UserManaging {
+final class UserManager: BaseClass, UserManaging {
     typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
     private var logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging

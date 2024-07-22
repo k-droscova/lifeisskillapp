@@ -19,7 +19,7 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
     func getMainCategory() -> UserCategory?
 }
 
-public final class UserCategoryManager: UserCategoryManaging {
+public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing

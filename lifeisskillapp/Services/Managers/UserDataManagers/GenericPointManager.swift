@@ -19,7 +19,7 @@ protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, 
     var delegate: GenericPointManagerFlowDelegate? { get set}
 }
 
-public final class GenericPointManager: GenericPointManaging {
+public final class GenericPointManager: BaseClass, GenericPointManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing

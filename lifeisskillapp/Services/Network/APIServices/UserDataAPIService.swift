@@ -27,7 +27,7 @@ protocol UserDataAPIServicing: APITasking {
     func postUserPoints(baseURL: URL, userToken: String, point: LoadPoint) async throws -> APIResponse<UserPointData>
 }
 
-public final class UserDataAPIService: UserDataAPIServicing {
+public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var loggerService: LoggerServicing

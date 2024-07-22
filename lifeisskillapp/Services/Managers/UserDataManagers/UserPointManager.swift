@@ -19,7 +19,7 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
     func getPoints(byCategory categoryId: String) -> [UserPoint]
 }
 
-public final class UserPointManager: UserPointManaging {
+public final class UserPointManager: BaseClass, UserPointManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing

@@ -168,7 +168,7 @@ public extension Networking {
 }
 
 
-public final class Network: Networking {
+public final class Network: BaseClass, Networking {
     typealias Dependencies = HasUrlSessionWrapper & HasLoggerServicing
     
     /// Helper method to create authorization header.

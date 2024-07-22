@@ -20,7 +20,7 @@ protocol LoginAPIServicing: APITasking {
     func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse>
 }
 
-public final class LoginAPIService: LoginAPIServicing {
+public final class LoginAPIService: BaseClass, LoginAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var loggerService: LoggerServicing

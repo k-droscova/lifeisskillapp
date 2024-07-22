@@ -82,6 +82,7 @@
 		27C619952C3AB0890067498F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619942C3AB0890067498F /* UserDefaults.swift */; };
 		27C619972C3AB5D50067498F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619962C3AB5D50067498F /* Theme.swift */; };
 		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
+		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */; };
@@ -186,6 +187,7 @@
 		27C619942C3AB0890067498F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		27C619962C3AB5D50067498F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* LoadPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPoint.swift; sourceTree = "<group>"; };
+		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27E32DE72C493BF900E69C58 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				27C619502C36E69C0067498F /* Mappers */,
 				27274FBB2C3322D4003453E2 /* Extensions */,
 				27274FBA2C3322CA003453E2 /* Models */,
+				27CBD7842C4E7DFF00612375 /* BaseClass.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
+				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
 				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,

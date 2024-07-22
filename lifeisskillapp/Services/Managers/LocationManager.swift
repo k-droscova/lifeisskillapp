@@ -32,7 +32,7 @@ protocol LocationManaging {
 }
 
 /// A class responsible for managing location services and handling location updates.
-public final class LocationManager: NSObject, LocationManaging {
+public final class LocationManager: BaseClass, LocationManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDefaultsStorage
     private let locationManager = CLLocationManager()
     private var logger: LoggerServicing

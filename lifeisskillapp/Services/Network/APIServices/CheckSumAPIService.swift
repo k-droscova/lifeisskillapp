@@ -23,7 +23,7 @@ protocol CheckSumAPIServicing {
     func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumPointsData>
 }
 
-public final class CheckSumAPIService: CheckSumAPIServicing {
+public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserManager
     
     private var loggerService: LoggerServicing
