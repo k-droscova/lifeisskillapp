@@ -7,91 +7,71 @@
 
 import Foundation
 
+/// Enum representing various error codes for tracking errors within the app.
+///
+/// This enum is used to categorize and manage different types of errors that can occur within the app.
+/// API response errors (400 and 500) are mapped to `statusCode`.
 public enum ErrorCodes {
     case `default`
     case statusCode(Int)
     case general(GeneralCodes)
     case networking(NetworkCodes)
-    case api(APIErrorCodes)
     
+    /// Returns the integer value of the error code.
     var code: Int {
         switch self {
-            case .default: 1
-            case .statusCode(let code): code
-            case .general(let code): code.rawValue
-            case .networking(let code): code.rawValue
-            case .api(let code): code.rawValue
+        case .default: return 1
+        case .statusCode(let code): return code
+        case .general(let code): return code.rawValue
+        case .networking(let code): return code.rawValue
         }
     }
     
-    public enum APIErrorCodes: Int {
-        case invalidRegistration = 412 // status code is 412
-        case loggedInOnOtherDevice = 401 // status code is 401
-        case invalidPointCode = 470 // status code is 470
-        case `default` = 400
-    }
-    
-    /// General error codes `5xxx`
-    ///
-    /// - `50xx` codes are related to JSON string that are exchanged between RN app and native module
-    /// - `51xx` codes are related to QR codes
-    /// - `52xx` codes are related to `setConfig`, `setAuthToken`
+    /// Enum representing general error codes with a prefix of `5xxx`.
     public enum GeneralCodes: Int {
         /// JSON string decoding error - `5000`
         case jsonDecoding = 5000
         /// Encoding to JSON string error - `5002`
         case jsonEncoding = 5002
-        /// Received QR code has invalid format
-        ///
-        /// - `mdoc:` prefix is missing
-        /// - Is not valid Base64URL
-        /// - eReader link is not valid URL
+        /// Received QR code has an invalid format - `5101`
         case invalidQRFormat = 5101
-        /// Device engagement is not valid
-        case invalidQREngagementContent = 5102
-        
-        /// Cannot proceed with the action. There is missing config data.
-        ///
-        /// - Fe. URL is missing
+        /// Cannot proceed with the action due to missing config data (e.g., missing URL) - `5200`
         case missingConfigItem = 5200
-        /// Config autorization token is missing
+        /// Config authorization token is missing - `5201`
         case missingToken = 5201
     }
     
-    /// Networking error codes
-    ///
-    /// - `60xx` general errors as decoding/encoding
-    /// - `61xx` codes are related to networking
-    ///   - Errors that happened before receiving HTTP response.
-    ///   - HTTP response was not received. This error does not contain 4xx and 5xx HTTP status codes.
-    /// - `6200` API error codes
+    /// Enum representing networking error codes with a prefix of `6xxx`.
     public enum NetworkCodes: Int {
         // MARK: - General network codes
         
-        /// Cannot decode object from API
+        /// Cannot decode object from API - `6000`
         case apiDecoding = 6000
-        /// Cannot encode object that should be send to API
+        /// Cannot encode object that should be sent to API - `6001`
         case apiEncoding = 6001
         
         // MARK: - URL session error codes
         
-        /// Unknown network error -
+        /// Unknown network error - `6100`
         case unknownNetworkError = 6100
-        /// The device is not connected to the internet
+        /// The device is not connected to the internet - `6101`
         ///
+        /// Possible underlying errors:
         /// - kCFURLErrorNetworkConnectionLost `-1005`
         /// - kCFURLErrorNotConnectedToInternet `-1009`
         /// - kCFURLErrorDataNotAllowed `-1020`
         case noConnection = 6101
-        /// The request URL is not valid
+        /// The request URL is not valid - `6102`
         ///
+        /// Possible underlying errors:
         /// - kCFURLErrorBadURL `-1000`
         /// - kCFURLErrorUnsupportedURL `-1002`
         /// - kCFURLErrorCannotFindHost `-1003`
         case invalidURL = 6102
-        /// Timeout
+        /// Timeout - `6103`
         ///
-        /// - kCFURLErrorTimedOut - `-1001`
+        /// Possible underlying error:
+        /// - kCFURLErrorTimedOut `-1001`
         case timeout = 6103
     }
 }
