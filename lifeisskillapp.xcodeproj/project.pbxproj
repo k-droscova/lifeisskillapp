@@ -83,6 +83,7 @@
 		27C619972C3AB5D50067498F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619962C3AB5D50067498F /* Theme.swift */; };
 		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
+		27CBD7872C4E877D00612375 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7862C4E877D00612375 /* FlowCoordinator.swift */; };
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */; };
@@ -188,6 +189,7 @@
 		27C619962C3AB5D50067498F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* LoadPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
+		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		27E32DE72C493BF900E69C58 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
 				27066A962C4573110092B499 /* DateTime.swift */,
 				27066A9F2C458E0E0092B499 /* CLLocation.swift */,
+				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 				27C619952C3AB0890067498F /* UserDefaults.swift in Sources */,
 				27066A8A2C45580D0092B499 /* UserCategory.swift in Sources */,
 				27F27A4B2C4D568200928388 /* View.swift in Sources */,
+				27CBD7872C4E877D00612375 /* FlowCoordinator.swift in Sources */,
 				27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
