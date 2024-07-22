@@ -7,38 +7,19 @@
 
 import Foundation
 
-protocol APIServicing {
+protocol APITasking {
     var task: ApiTask { get }
 }
 
 enum ApiTask: String {
     case login = "login"
-    case register = "register"
+    case userPoints = "userPoints"
     
     var isLocationSecuredTask: Bool {
         switch self {
-        case .register: false
-        default: true
+        case .userPoints: true
+        default: false
         }
-    }
-    
-    var isTokenSecuredTask: Bool {
-        switch self {
-        case .register, .login:
-            false
-        default:
-            true
-        }
-    }
-    
-    var taskHeaders: [String: String] {
-        var headers: [String: String] = ["Content-Lis": "47639"]
-        
-        if isTokenSecuredTask {
-            let token = UserDefaults.standard.token ?? ""
-            headers["User-Token"] = token
-        }
-        return headers
     }
     
     var taskParams: [String: String] {
@@ -46,13 +27,17 @@ enum ApiTask: String {
         let appId = UserDefaults.standard.appId ?? ""
         var commonParams = [
             "appVer": "I\(appVersion)",
-            "appID": appId
+            "appId": appId
         ]
         if isLocationSecuredTask {
             let location = UserDefaults.standard.location
+            let date = location?.timestamp ?? Date()
             let locationParams = [
                 "lat": String(location?.latitude ?? 0),
-                "lng": String(location?.longitude ?? 0)
+                "lng": String(location?.longitude ?? 0),
+                "acc": String(location?.accuracy ?? 0),
+                "alt": String(location?.altitude ?? 0),
+                "time": date.toPointListString()
             ]
             commonParams = commonParams.merging(locationParams) { (lhs, rhs) -> String in
                 lhs

@@ -16,17 +16,16 @@ protocol HasLoginAPIService {
     var loginAPI: LoginAPIServicing { get }
 }
 
-protocol LoginAPIServicing: APIServicing {
+protocol LoginAPIServicing: APITasking {
     func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse>
 }
 
 public final class LoginAPIService: LoginAPIServicing {
-    let task = ApiTask.login
-    
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var loggerService: LoggerServicing
     private var network: Networking
+    let task = ApiTask.login
     
     init(dependencies: Dependencies) {
         self.loggerService = dependencies.logger
@@ -35,7 +34,7 @@ public final class LoginAPIService: LoginAPIServicing {
     
     func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse> {
         let endpoint = Endpoint.login
-        let headers = endpoint.headers(headers: task.taskHeaders, token: APIHeader.Authorization)
+        let headers = endpoint.headers(token: APIHeader.Authorization)
         let data = try encodeParams(loginCredentials: loginCredentials)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
@@ -46,7 +45,7 @@ public final class LoginAPIService: LoginAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    func encodeParams(loginCredentials: LoginCredentials) throws -> Data {
+    private func encodeParams(loginCredentials: LoginCredentials) throws -> Data {
         var taskParams = task.taskParams
         let params = [
             "user": loginCredentials.username,
@@ -59,8 +58,6 @@ public final class LoginAPIService: LoginAPIServicing {
         }
         return jsonData
     }
-    
-    
 }
 
 extension LoginAPIService {

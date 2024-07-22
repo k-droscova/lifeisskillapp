@@ -35,8 +35,6 @@ public final class RegisterAppAPIService: RegisterAppAPIServicing {
             headers: headers,
             errorObject: APIResponseError.self)
     }
-    
-    
 }
 
 extension RegisterAppAPIService {
