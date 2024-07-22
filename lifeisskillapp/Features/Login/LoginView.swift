@@ -10,7 +10,6 @@ import SwiftUI
 struct LoginView: View {
     @State var viewModel: LoginViewModeling
     
-    
     var body: some View {
         contentView
             .padding(30)

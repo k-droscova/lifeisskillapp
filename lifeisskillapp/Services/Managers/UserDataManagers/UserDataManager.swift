@@ -24,6 +24,3 @@ protocol UserDataManaging {
     func getAll() -> [DataType]
     func getById(id: String) -> DataType?
 }
-
-
-

@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeView: View {
     @State var viewModel: HomeViewModeling
     
-    
     var body: some View {
         contentView
             .padding(30)
