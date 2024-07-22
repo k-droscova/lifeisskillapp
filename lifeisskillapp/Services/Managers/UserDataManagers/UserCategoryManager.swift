@@ -19,18 +19,12 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
     func getMainCategory() -> UserCategory?
 }
 
-public final class UserCategoryManager: UserCategoryManaging {
+public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
+    private var userManager: UserManaging
     private var userDataAPIService: UserDataAPIServicing
-    
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
-        self.logger = dependencies.logger
-        self.userDataAPIService = dependencies.userDataAPI
-    }
     
     // MARK: - Public Properties
     weak var delegate: UserCategoryManagerFlowDelegate?
@@ -44,11 +38,23 @@ public final class UserCategoryManager: UserCategoryManaging {
         }
     }
     
+    var token: String? {
+        get { userManager.token }
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.userManager = dependencies.userManager
+        self.userDataAPIService = dependencies.userDataAPI
+    }
+    
     // MARK: - Public Interface
-    func fetch(credentials: LoginCredentials? = nil, userToken: String?) async throws {
+    func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user categories")
         do {
-            let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: userToken ?? "")
+            let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
             userDataStorage.beginTransaction()
             data = response.data
             userDataStorage.commitTransaction()

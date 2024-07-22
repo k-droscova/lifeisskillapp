@@ -40,7 +40,6 @@ public protocol Networking {
     ///   - headers: Optional HTTP headers to include in the request.
     ///   - body: Optional HTTP body data to include in the request.
     ///   - sensitiveRequestBodyData: A boolean indicating whether the request body contains sensitive data.
-    ///   - sensitiveResponseData: A boolean indicating whether the response body contains sensitive data.
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The decoded response data of type `T`.
     /// - Throws: An error if the request fails or the response data cannot be decoded into the specified type `T`.
@@ -50,7 +49,6 @@ public protocol Networking {
         headers: [String: String]?,
         body: Data?,
         sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
         errorObject: E.Type
     ) async throws -> T
     
@@ -62,7 +60,6 @@ public protocol Networking {
     ///   - headers: Optional HTTP headers to include in the request.
     ///   - body: Optional HTTP body data to include in the request.
     ///   - sensitiveRequestBodyData: A boolean indicating whether the request body contains sensitive data.
-    ///   - sensitiveResponseData: A boolean indicating whether the response body contains sensitive data.
     ///   - errorObject: The type of error object expected in case of an API response error.
     /// - Returns: The raw response data.
     /// - Throws: An error if the request fails.
@@ -72,7 +69,6 @@ public protocol Networking {
         headers: [String: String]?,
         body: Data?,
         sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
         errorObject: E.Type
     ) async throws -> Data
 }
@@ -97,7 +93,7 @@ public extension Networking {
         method: Network.HTTPMethod = .GET,
         headers: [String: String]? = nil,
         body: Data? = nil,
-        sensitiveRequestBodyData: Bool,
+        sensitiveRequestBodyData: Bool = false,
         errorObject: E.Type
     ) async throws {
         try await _performRequest(
@@ -127,8 +123,7 @@ public extension Networking {
         method: Network.HTTPMethod = .GET,
         headers: [String: String]? = nil,
         body: Data? = nil,
-        sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
+        sensitiveRequestBodyData: Bool = false,
         errorObject: E.Type
     ) async throws -> T {
         try await _performRequestWithDataDecoding(
@@ -137,7 +132,6 @@ public extension Networking {
             headers: headers,
             body: body,
             sensitiveRequestBodyData: sensitiveRequestBodyData,
-            sensitiveResponseData: sensitiveResponseData,
             errorObject: errorObject
         )
     }
@@ -159,8 +153,7 @@ public extension Networking {
         method: Network.HTTPMethod,
         headers: [String: String]? = nil,
         body: Data? = nil,
-        sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
+        sensitiveRequestBodyData: Bool = false,
         errorObject: E.Type
     ) async throws -> Data {
         try await _performRequestWithoutDataDecoding(
@@ -169,14 +162,13 @@ public extension Networking {
             headers: headers,
             body: body,
             sensitiveRequestBodyData: sensitiveRequestBodyData,
-            sensitiveResponseData: sensitiveResponseData,
             errorObject: errorObject
         )
     }
 }
 
 
-public final class Network: Networking {
+public final class Network: BaseClass, Networking {
     typealias Dependencies = HasUrlSessionWrapper & HasLoggerServicing
     
     /// Helper method to create authorization header.
@@ -221,7 +213,6 @@ public final class Network: Networking {
             headers: headers,
             body: body,
             sensitiveRequestBodyData: sensitiveRequestBodyData,
-            sensitiveResponseData: true,
             errorObject: errorObject
         )
         return
@@ -233,7 +224,6 @@ public final class Network: Networking {
         headers: [String : String]?,
         body: Data?,
         sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
         errorObject: E.Type
     ) async throws -> T {
         let dataResponse = try await fetch(
@@ -242,7 +232,6 @@ public final class Network: Networking {
             headers: headers,
             body: body,
             sensitiveRequestBodyData: sensitiveRequestBodyData,
-            sensitiveResponseData: sensitiveResponseData,
             errorObject: errorObject
         )
         
@@ -255,7 +244,7 @@ public final class Network: Networking {
                     message: "NetworkError: Cannot decode response - " + url.absoluteString,
                     code: .networking(.apiDecoding),
                     url: url,
-                    meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                    meta: dataResponse.description(sensitiveData: sensitiveRequestBodyData),
                     logger: loggerService
                 )
             }
@@ -265,7 +254,7 @@ public final class Network: Networking {
                 message: "NetworkError: Empty response - " + url.absoluteString,
                 code: .networking(.apiDecoding),
                 url: url,
-                meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                meta: dataResponse.description(sensitiveData: sensitiveRequestBodyData),
                 logger: loggerService
             )
         }
@@ -279,7 +268,6 @@ public final class Network: Networking {
         headers: [String: String]?,
         body: Data?,
         sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
         errorObject: E.Type
     ) async throws -> Data {
         let dataResponse = try await fetch(
@@ -288,7 +276,6 @@ public final class Network: Networking {
             headers: headers,
             body: body,
             sensitiveRequestBodyData: sensitiveRequestBodyData,
-            sensitiveResponseData: sensitiveResponseData,
             errorObject: errorObject
         )
         
@@ -300,7 +287,7 @@ public final class Network: Networking {
                 message: "NetworkError: Empty response - " + url.absoluteString,
                 code: .networking(.apiDecoding),
                 url: url,
-                meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                meta: dataResponse.description(sensitiveData: sensitiveRequestBodyData),
                 logger: loggerService
             )
         }
@@ -325,22 +312,13 @@ extension Network {
         method: Network.HTTPMethod = .GET,
         headers: [String: String]? = nil,
         body: Data? = nil,
-        sensitiveRequestBodyData: Bool,
-        sensitiveResponseData: Bool,
+        sensitiveRequestBodyData: Bool = false,
         errorObject: E.Type
     ) async throws -> DataResponse {
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = headers
         request.httpMethod = method.rawValue
         request.httpBody = body
-        
-        // Do not share sensitive data!
-        loggerService.log(message:
-                            ""
-                          + url.absoluteString + "\n"
-                          + request.toString(sensitiveData: sensitiveRequestBodyData)
-                          
-        )
         
         let (data, response) = try await urlSession(
             for: request,
@@ -365,11 +343,11 @@ extension Network {
             data: data
         )
         
-        // Do not share sensitive data!
+        // Do not share sensitive data like login credentials!
         loggerService.log(message:
                             ""
                           + url.absoluteString + "\n"
-                          + dataResponse.toString(sensitiveData: sensitiveResponseData)
+                          + dataResponse.toString(sensitiveData: sensitiveRequestBodyData)
                           
         )
         
@@ -383,7 +361,7 @@ extension Network {
                     message: apiError.message,
                     code: .statusCode(statusCode),
                     url: url,
-                    meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                    meta: dataResponse.description(sensitiveData: sensitiveRequestBodyData),
                     logger: loggerService)
             } catch let error {
                 if error is DecodingError {
@@ -392,7 +370,7 @@ extension Network {
                         message: "Unable to decode message for API Error \(statusCode)",
                         code: .general(.jsonDecoding),
                         url: url,
-                        meta: dataResponse.description(sensitiveData: sensitiveResponseData),
+                        meta: dataResponse.description(sensitiveData: sensitiveRequestBodyData),
                         logger: loggerService
                     )
                 } else {

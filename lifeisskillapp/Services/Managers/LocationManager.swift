@@ -22,24 +22,16 @@ protocol HasLocationManager {
 /// Protocol defining the interface for managing location services.
 protocol LocationManaging {
     var delegate: LocationManagerFlowDelegate? { get set }
-    
-    /// The current location coordinates of the user.
-    var locationCoordinate: CLLocationCoordinate2D? { get }
-    /// The current altitude of the user.
-    var locationAltitude: CLLocationDistance? { get }
     /// Checks the location authorization status and requests permission if needed.
     func checkLocationAuthorization()
 }
 
 /// A class responsible for managing location services and handling location updates.
-public final class LocationManager: NSObject, LocationManaging {
+public final class LocationManager: BaseClass, LocationManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDefaultsStorage
     private let locationManager = CLLocationManager()
     private var logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
-    
-    public var locationCoordinate: CLLocationCoordinate2D?
-    public var locationAltitude: CLLocationDistance?
     
     weak var delegate: LocationManagerFlowDelegate?
     
@@ -83,10 +75,8 @@ extension LocationManager: CLLocationManagerDelegate {
                    + "LON: \(location.coordinate.longitude.description), "
                    + "ALT: \(location.altitude.description)"
         )
-        userDefaultsStorage.location = location
+        userDefaultsStorage.location = location.toUserLocation()
         userDefaultsStorage.commitTransaction()
-        locationCoordinate = location.coordinate
-        locationAltitude = location.altitude
     }
     
     /// Called when the location manager fails to update locations.

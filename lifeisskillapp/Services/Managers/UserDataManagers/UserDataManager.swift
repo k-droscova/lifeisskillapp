@@ -20,19 +20,20 @@ protocol UserDataManaging {
     associatedtype DataContainer: DataProtocol
     
     var data: DataContainer? { get set }
-    func fetch(credentials: LoginCredentials?, userToken: String?) async throws
+    var token: String? { get }
+    func fetch() async throws
+    func fetch(withToken token: String) async throws
     func getAll() -> [DataType]
     func getById(id: String) -> DataType?
 }
 
 extension UserDataManaging {
-    func fetch(userToken: String?) async throws {
-        try await fetch(credentials: nil, userToken: userToken)
-    }
-    func fetch(credentials: LoginCredentials?) async throws {
-        try await fetch(credentials: credentials, userToken: "")
+    func fetch() async throws {
+        guard let token else {
+            throw BaseError(context: .api,
+                            message: "Needs User Token To Fetch Data",
+                            logger: appDependencies.logger)
+        }
+        try await fetch(withToken: token) // Call the method with the token
     }
 }
-
-
-

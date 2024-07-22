@@ -11,7 +11,7 @@ protocol HasUserDataAPIService {
     var userDataAPI: UserDataAPIServicing { get }
 }
 
-protocol UserDataAPIServicing {
+protocol UserDataAPIServicing: APITasking {
     func getUserCategory(baseURL: URL, userToken: String) async throws -> APIResponse<UserCategoryData>
     
     func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<UserPointData>
@@ -23,6 +23,8 @@ protocol UserDataAPIServicing {
     func getMessages(baseURL: URL) async throws -> APIResponse<CheckSumMessagesData>
      */
     func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<GenericPointData>
+    
+    func postUserPoints(baseURL: URL, userToken: String, point: LoadPoint) async throws -> APIResponse<UserPointData>
 }
 
 public final class UserDataAPIService: UserDataAPIServicing {
@@ -102,6 +104,7 @@ public final class UserDataAPIService: UserDataAPIServicing {
     
     private var loggerService: LoggerServicing
     private var network: Networking
+    var task = ApiTask.userPoints
     
     init(dependencies: Dependencies) {
         self.loggerService = dependencies.logger

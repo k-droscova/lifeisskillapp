@@ -7,15 +7,9 @@
 
 import Foundation
 
-// Example inner data structures conforming to the protocol
 public struct RegisterAppAPIResponse: DataProtocol {
     let appId: String
     let versionCode: Int
-    
-    enum CodingKeys: CodingKey {
-        case appId
-        case versionCode
-    }
 }
 
 typealias LoginUserData = LoginAPIResponse

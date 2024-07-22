@@ -12,89 +12,83 @@ protocol HasCheckSumAPIService {
 }
 
 protocol CheckSumAPIServicing {
-    func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumUserPointsData>
+    func getUserPoints(baseURL: URL) async throws -> APIResponse<CheckSumUserPointsData>
     
-    func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumRankData>
+    func getRank(baseURL: URL) async throws -> APIResponse<CheckSumRankData>
     
-    func getEvents(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumEventsData>
+    func getEvents(baseURL: URL) async throws -> APIResponse<CheckSumEventsData>
     
-    func getMessages(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumMessagesData>
+    func getMessages(baseURL: URL) async throws -> APIResponse<CheckSumMessagesData>
     
-    func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumPointsData>
+    func getPoints(baseURL: URL) async throws -> APIResponse<CheckSumPointsData>
 }
 
-public final class CheckSumAPIService: CheckSumAPIServicing {
-    func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumUserPointsData> {
-        let endpoint = Endpoint.userpoints
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .PATCH,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
-            errorObject: APIResponseError.self)
-    }
-    
-    func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumRankData> {
-        let endpoint = Endpoint.rank
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .PATCH,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
-            errorObject: APIResponseError.self)
-    }
-    
-    func getEvents(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumEventsData> {
-        let endpoint = Endpoint.events
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .PATCH,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
-            errorObject: APIResponseError.self)
-    }
-    
-    func getMessages(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumMessagesData> {
-        let endpoint = Endpoint.messages
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .PATCH,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
-            errorObject: APIResponseError.self)
-    }
-    
-    func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumPointsData> {
-        let endpoint = Endpoint.points
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .PATCH,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
-            errorObject: APIResponseError.self)
-    }
-    
-    
+public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserManager
     
     private var loggerService: LoggerServicing
+    private var userManager: UserManaging
     private var network: Networking
+    
+    private var token: String? {
+        userManager.token
+    }
     
     init(dependencies: Dependencies) {
         self.loggerService = dependencies.logger
         self.network = dependencies.network
+        self.userManager = dependencies.userManager
     }
     
+    func getUserPoints(baseURL: URL) async throws -> APIResponse<CheckSumUserPointsData> {
+        let endpoint = Endpoint.userpoints
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: token)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+            method: .PATCH,
+            headers: headers,
+            errorObject: APIResponseError.self)
+    }
+    
+    func getRank(baseURL: URL) async throws -> APIResponse<CheckSumRankData> {
+        let endpoint = Endpoint.rank
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: token)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+            method: .PATCH,
+            headers: headers,
+            errorObject: APIResponseError.self)
+    }
+    
+    func getEvents(baseURL: URL) async throws -> APIResponse<CheckSumEventsData> {
+        let endpoint = Endpoint.events
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: token)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+            method: .PATCH,
+            headers: headers,
+            errorObject: APIResponseError.self)
+    }
+    
+    func getMessages(baseURL: URL) async throws -> APIResponse<CheckSumMessagesData> {
+        let endpoint = Endpoint.messages
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: token)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+            method: .PATCH,
+            headers: headers,
+            errorObject: APIResponseError.self)
+    }
+    
+    func getPoints(baseURL: URL) async throws -> APIResponse<CheckSumPointsData> {
+        let endpoint = Endpoint.points
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: token)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+            method: .PATCH,
+            headers: headers,
+            errorObject: APIResponseError.self)
+    }
 }
 
 extension CheckSumAPIService {

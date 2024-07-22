@@ -15,23 +15,26 @@ extension UserDefaults {
         case appId = "appId"
         case appVersion = "appVersion"
         case firstOpened = "firstOpened"
-        case clLocation = "clLocation"
+        case location = "location"
         case token = "token"
         case logoutError = "logoutError"
         case checkSumData = "checkSumData"
     }
     
-    // CheckSumData
-        var checkSumData: CheckSumData? {
-            get {
-                guard let data = data(forKey: Keys.checkSumData.rawValue) else { return nil }
-                return try? JSONDecoder().decode(CheckSumData.self, from: data)
-            }
-            set {
-                let data = try? JSONEncoder().encode(newValue)
-                set(data, forKey: Keys.checkSumData.rawValue)
-            }
+    /// Stores or retrieves the CheckSumData.
+    ///
+    /// - Returns: An optional CheckSumData object containing the checksum data.
+    var checkSumData: CheckSumData? {
+        get {
+            guard let data = data(forKey: Keys.checkSumData.rawValue) else { return nil }
+            return try? JSONDecoder().decode(CheckSumData.self, from: data)
         }
+        set {
+            let data = try? JSONEncoder().encode(newValue)
+            set(data, forKey: Keys.checkSumData.rawValue)
+        }
+    }
+    
     /// Stores or retrieves the logout error message.
     ///
     /// - Returns: An optional string containing the logout error message.
@@ -43,7 +46,7 @@ extension UserDefaults {
             set(newValue, forKey: Keys.logoutError.rawValue)
         }
     }
-
+    
     /// Stores or retrieves the user's login credentials.
     ///
     /// - Returns: An optional `LoginCredentials` object.
@@ -61,7 +64,7 @@ extension UserDefaults {
             }
         }
     }
-
+    
     /// Stores or retrieves the user's token.
     ///
     /// - Returns: An optional string containing the token.
@@ -73,25 +76,25 @@ extension UserDefaults {
             set(newValue, forKey: Keys.token.rawValue)
         }
     }
-
+    
     /// Stores or retrieves the user's location.
     ///
     /// - Returns: An optional `CLLocation` object representing the user's location.
-    var location: CLLocation? {
-            get {
-                guard let data = data(forKey: Keys.clLocation.rawValue) else { return nil }
-                return CLLocation.fromData(data)
-            }
-            set {
-                if let location = newValue {
-                    let data = location.toData()
-                    set(data, forKey: Keys.clLocation.rawValue)
-                } else {
-                    removeObject(forKey: Keys.clLocation.rawValue)
-                }
+    var location: UserLocation? {
+        get {
+            guard let data = data(forKey: Keys.location.rawValue) else { return nil }
+            return try? JSONDecoder().decode(UserLocation.self, from: data)
+        }
+        set {
+            if let location = newValue {
+                let data = try? JSONEncoder().encode(location)
+                set(data, forKey: Keys.location.rawValue)
+            } else {
+                removeObject(forKey: Keys.location.rawValue)
             }
         }
-
+    }
+    
     /// Stores or retrieves the API key.
     ///
     /// - Returns: An optional string containing the API key.
@@ -103,7 +106,7 @@ extension UserDefaults {
             set(newValue, forKey: Keys.appId.rawValue)
         }
     }
-
+    
     /// Stores or retrieves the app version.
     ///
     /// - Returns: An optional string containing the app version.
@@ -115,7 +118,7 @@ extension UserDefaults {
             set(newValue, forKey: Keys.appVersion.rawValue)
         }
     }
-
+    
     /// Stores or retrieves a boolean value indicating whether the app was first opened.
     ///
     /// - Returns: A boolean value indicating whether the app was first opened.

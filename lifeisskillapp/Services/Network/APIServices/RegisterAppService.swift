@@ -15,7 +15,7 @@ protocol RegisterAppAPIServicing {
     func registerApp(baseURL: URL) async throws -> APIResponse<RegisterAppAPIResponse>
 }
 
-public final class RegisterAppAPIService: RegisterAppAPIServicing {
+public final class RegisterAppAPIService: BaseClass, RegisterAppAPIServicing {
     
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
@@ -33,12 +33,8 @@ public final class RegisterAppAPIService: RegisterAppAPIServicing {
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             headers: headers,
-            sensitiveRequestBodyData: false,
-            sensitiveResponseData: false,
             errorObject: APIResponseError.self)
     }
-    
-    
 }
 
 extension RegisterAppAPIService {

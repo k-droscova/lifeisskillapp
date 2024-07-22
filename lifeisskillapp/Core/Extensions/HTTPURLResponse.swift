@@ -8,18 +8,14 @@
 import Foundation
 
 extension HTTPURLResponse {
-    func toString(sensitiveData: Bool) -> String {
+    func toString() -> String {
         var description = "Status Code: \(self.statusCode)\n"
         // Create a basic description of the request
-        if !sensitiveData {
-            description += "Headers: \(self.allHeaderFields)\n"
-        } else {
-            description += "Headers: Hidden-SensitiveData\n"
-        }
+        description += "Headers: \(self.allHeaderFields)\n"
         return description
     }
-    func description(sensitiveData: Bool) -> [String: String] {
-        ["HTTPUrlResponse": toString(sensitiveData: sensitiveData)]
+    func description() -> [String: String] {
+        ["HTTPUrlResponse": toString()]
     }
 }
 

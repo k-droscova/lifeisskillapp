@@ -17,7 +17,7 @@ public protocol URLSessionWrapping {
     ) async throws -> (Data, URLResponse)
 }
 
-public final class URLSessionWrapper: URLSessionWrapping {
+public final class URLSessionWrapper: BaseClass, URLSessionWrapping {
     public func data(
         for request: URLRequest
     ) async throws -> (Data, URLResponse) {

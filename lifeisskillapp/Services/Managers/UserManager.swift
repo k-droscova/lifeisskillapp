@@ -32,19 +32,13 @@ protocol UserManaging {
     func initializeAppId() async throws
     func login(loginCredentials: LoginCredentials) async throws
     func logout()
-    func loadDataAfterLogin() async
 }
 
-final class UserManager: UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasStorage & HasUserDataManagers
+final class UserManager: BaseClass, UserManaging {
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
     private var logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
     private var registerAppAPI: RegisterAppAPIServicing
-    private var checkSumAPI: CheckSumAPIServicing
-    private var userCategoryManager: any UserCategoryManaging
-    private var userPointManager: any UserPointManaging
-    private var genericPointManager: any GenericPointManaging
-    private var userRankManager: any UserRankManaging
     private var userLoginDataManager: any UserLoginDataManaging
     
     // MARK: - Initialization
@@ -53,10 +47,6 @@ final class UserManager: UserManaging {
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
         self.checkSumAPI = dependencies.checkSumAPI
-        self.userCategoryManager = dependencies.userCategoryManager
-        self.genericPointManager = dependencies.genericPointManager
-        self.userPointManager = dependencies.userPointManager
-        self.userRankManager = dependencies.userRankManager
         self.userLoginDataManager = dependencies.userLoginManager
     }
     // MARK: - Public Properties
@@ -73,25 +63,25 @@ final class UserManager: UserManaging {
         get { userLoginDataManager.userMainCategory }
     }
     var userName: String? {
+        get { userLoginDataManager.token }
+    }
+    var userId: String? {
+        get { userLoginDataManager.userId }
+    }
+    var userMainCategory: String? {
+        get { userLoginDataManager.userMainCategory }
+    }
+    var userName: String? {
         get { userLoginDataManager.userName }
+    // MARK: - Private Properties
+    // TODO: CAN BE DELETED once we have persitent data storage
+    private var checkSumData: CheckSumData? {
+        get { userDefaultsStorage.checkSumData }
+        set { userDefaultsStorage.checkSumData = newValue }
     }
     
-    var isLoggedIn: Bool {
-        userLoginDataManager.data != nil
-    }
-    var hasAppId: Bool {
-        userDefaultsStorage.appId != nil
-    }
-    
-    // MARK: - Public Interface
-    func login(loginCredentials: LoginCredentials) async throws {
-        try await userLoginDataManager.fetch(credentials: loginCredentials)
-    }
-    
-    func logout() {
-        logger.log(message: "Logging out")
-        userDefaultsStorage.beginTransaction()
-        userDefaultsStorage.checkSumData = nil // MARK: This will not be done once we have persitent data storage
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
         userDefaultsStorage.commitTransaction()
         userLoginDataManager.logout()
         delegate?.onLogout()
@@ -116,7 +106,7 @@ final class UserManager: UserManaging {
                 logger: logger
             )
         }
-    }
+            userDefaultsStorage.appId = responseAppId
     
     func loadDataAfterLogin() async {
         do {

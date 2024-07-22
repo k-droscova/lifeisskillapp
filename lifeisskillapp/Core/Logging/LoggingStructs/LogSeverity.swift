@@ -15,15 +15,15 @@ public enum LogSeverity: String, Codable {
     var osLogType: OSLogType {
         switch self {
         case .debug:
-            return .debug
+                .debug
         case .info:
-            return .info
+                .info
         case .warning:
-            return .default // No direct mapping for warning, using default
+                .default // No direct mapping for warning, using default
         case .error:
-            return .error
+                .error
         case .fatal:
-            return .fault
+                .fault
         }
     }
 }

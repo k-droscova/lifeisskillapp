@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeView: View {
     @State var viewModel: HomeViewModeling
     
-    
     var body: some View {
         contentView
             .padding(30)
@@ -19,28 +18,28 @@ struct HomeView: View {
     var contentView: some View {
         VStack {
             Button(action: viewModel.logout) {
-                Text("settings.logout".localized)
+                Text("settings.logout")
             }
             .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printUserCategoryData) {
-                Text("User Category Data".localized)
+                Text("User Category Data")
             }
             .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printUserPointData) {
-                Text("User Point Data".localized)
+                Text("User Point Data")
             }
             .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printGenericPointData) {
-                Text("Generic Point Data".localized)
+                Text("Generic Point Data")
             }
             .logoutButtonStyle()
             
@@ -51,9 +50,9 @@ struct HomeView: View {
             }
             .logoutButtonStyle()
         }
-        .onAppear(perform: {
-            viewModel.fetchData()
-        })
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 

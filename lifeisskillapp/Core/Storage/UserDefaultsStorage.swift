@@ -14,7 +14,7 @@ protocol HasUserDefaultsStorage {
 
 protocol UserDefaultsStoraging : UserStoraging {
     var appId: String? { get set }
-    var location: CLLocation? { get set }
+    var location: UserLocation? { get set }
     var checkSumData: CheckSumData? { get set }
 }
 
@@ -40,13 +40,27 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
     }
     
-    var location: CLLocation? {
-        get { inTransaction ? transactionCache["location"] as? CLLocation : UserDefaults.standard.location }
+    var location: UserLocation? {
+        get {
+            if inTransaction {
+                return transactionCache["location"] as? UserLocation
+            }
+            guard let data = UserDefaults.standard.data(forKey: "location"),
+                  let location = try? JSONDecoder().decode(UserLocation.self, from: data) else {
+                return nil
+            }
+            return location
+        }
         set {
             if inTransaction {
                 transactionCache["location"] = newValue
             } else {
-                UserDefaults.standard.set(newValue, forKey: "location")
+                if let newValue = newValue {
+                    let data = try? JSONEncoder().encode(newValue)
+                    UserDefaults.standard.set(data, forKey: "location")
+                } else {
+                    UserDefaults.standard.removeObject(forKey: "location")
+                }
             }
         }
     }

@@ -39,12 +39,14 @@ struct GenericPoint: UserData {
         case param
     }
     
-    var location: CLLocation? {
-        CLLocation(coordinate: CLLocationCoordinate2D(latitude: pointLat, longitude: pointLng),
-                   altitude: pointAlt,
-                   horizontalAccuracy: -1,
-                   verticalAccuracy: -1,
-                   timestamp: API.baseDate)
+    var location: UserLocation {
+        UserLocation(
+            latitude: pointLat,
+            longitude: pointLng,
+            altitude: pointAlt,
+            accuracy: 1,
+            timestamp: API.baseDate
+        )
     }
     
     init(from decoder: Decoder) throws {

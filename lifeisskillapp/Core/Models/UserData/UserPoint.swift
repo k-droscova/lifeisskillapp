@@ -42,12 +42,14 @@ struct UserPoint: UserData {
         case doesPointCount
     }
     
-    var location: CLLocation {
-        CLLocation(coordinate: CLLocationCoordinate2D(latitude: pointLat, longitude: pointLng),
-                   altitude: pointAlt,
-                   horizontalAccuracy: accuracy,
-                   verticalAccuracy: accuracy,
-                   timestamp: pointTime)
+    var location: UserLocation {
+        UserLocation(
+            latitude: pointLat,
+            longitude: pointLng,
+            altitude: pointAlt,
+            accuracy: accuracy,
+            timestamp: pointTime
+        )
     }
 }
 
