@@ -46,7 +46,7 @@ struct HomeView: View {
             Spacer()
             
             Button(action: viewModel.printUserRankData) {
-                Text("User Rank Data".localized)
+                Text("User Rank Data")
             }
             .logoutButtonStyle()
         }

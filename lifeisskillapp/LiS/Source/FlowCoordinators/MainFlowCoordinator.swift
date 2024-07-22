@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import ACKategories
+import SwiftUI
 
 protocol MainFlowCoordinatorDelegate: NSObject {
     func reload()
@@ -40,7 +41,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         // MARK: HOME
         let homeVC = HomeViewController()
         homeVC.tabBarItem = UITabBarItem(
-            title: "home.title".localized,
+            title: NSLocalizedString("home.title", comment: ""),
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house.fill")
         )

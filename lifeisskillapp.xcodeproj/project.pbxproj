@@ -15,7 +15,6 @@
 		27066A972C4573110092B499 /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A962C4573110092B499 /* DateTime.swift */; };
 		27066A992C45755C0092B499 /* CheckSumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A982C45755C0092B499 /* CheckSumData.swift */; };
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
-		27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9F2C458E0E0092B499 /* CLLocation.swift */; };
 		2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AEB62C429C2A00A23F06 /* LocationManager.swift */; };
 		2717AEFE2C42ACCD00A23F06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2717AEFD2C42ACCD00A23F06 /* Images.xcassets */; };
 		2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */; };
@@ -85,7 +84,6 @@
 		27C619972C3AB5D50067498F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619962C3AB5D50067498F /* Theme.swift */; };
 		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
-		27CBD7872C4E877D00612375 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7862C4E877D00612375 /* FlowCoordinator.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
@@ -122,7 +120,6 @@
 		27066A962C4573110092B499 /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
 		27066A982C45755C0092B499 /* CheckSumData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumData.swift; sourceTree = "<group>"; };
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
-		27066A9F2C458E0E0092B499 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		2717AEB62C429C2A00A23F06 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2717AEFD2C42ACCD00A23F06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.otf"; sourceTree = "<group>"; };
@@ -480,7 +477,6 @@
 				27C619712C3822920067498F /* HTTPURLResponse.swift */,
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
 				27066A962C4573110092B499 /* DateTime.swift */,
-				27066A9F2C458E0E0092B499 /* CLLocation.swift */,
 				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
 			);
 			path = Extensions;
@@ -843,7 +839,6 @@
 				275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
-				27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
 				275457232C3332BF00F3B55A /* HomeView.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,

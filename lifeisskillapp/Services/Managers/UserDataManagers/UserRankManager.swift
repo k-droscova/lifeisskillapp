@@ -18,18 +18,12 @@ protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataCont
     var delegate: UserRankManagerFlowDelegate? { get set }
 }
 
-public final class UserRankManager: UserRankManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
+public final class UserRankManager: UserRankManaging {    
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
+    private var dataManager: UserLoginDataManaging
     private var userDataAPIService: UserDataAPIServicing
-    
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
-        self.logger = dependencies.logger
-        self.userDataAPIService = dependencies.userDataAPI
-    }
     
     // MARK: - Public Properties
     weak var delegate: UserRankManagerFlowDelegate?
@@ -43,11 +37,23 @@ public final class UserRankManager: UserRankManaging {
         }
     }
     
+    var token: String? {
+        get { dataManager.token }
+    }
+    
+    // MARK: - Initialization
+    init(dependencies: Dependencies) {
+        self.userDataStorage = dependencies.userDataStorage
+        self.logger = dependencies.logger
+        self.dataManager = dependencies.userLoginManager
+        self.userDataAPIService = dependencies.userDataAPI
+    }
+    
     // MARK: - Public Interface
-    func fetch(credentials: LoginCredentials? = nil, userToken: String?) async throws {
+    func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user ranks")
         do {
-            let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: userToken ?? "")
+            let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
             userDataStorage.beginTransaction()
             data = response.data
             userDataStorage.commitTransaction()

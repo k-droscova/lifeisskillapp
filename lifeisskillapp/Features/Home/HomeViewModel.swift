@@ -67,6 +67,7 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     func printUserRankData() {
         let ranks = userRankManager.getAll()
         print(ranks)
+    }
     // MARK: Private helpers
     
     private func fetchData() async {

@@ -29,6 +29,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private var userCategoryManager: any UserCategoryManaging
     private var userPointManager: any UserPointManaging
     private var genericPointManager: any GenericPointManaging
+    private var userRankManager: any UserRankManaging
     
     // MARK: - Public Properties
     
@@ -47,6 +48,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         self.userCategoryManager = dependencies.userCategoryManager
         self.genericPointManager = dependencies.genericPointManager
         self.userPointManager = dependencies.userPointManager
+        self.userRankManager = dependencies.userRankManager
     }
     
     // MARK: - Public Interface
@@ -170,6 +172,15 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     private func fetchNewUserRank() async {
         logger.log(message: "Updating user rank")
+        do {
+            try await userRankManager.fetch()
+            guard let newCheckSumUserRank = userRankManager.data?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+            }
+            updateCheckSum(newCheckSum: newCheckSumUserRank, type: CheckSumData.CheckSumType.rank)
+        } catch {
+            logger.log(message: "fetch New User Rank threw error")
+        }
     }
     
     private func fetchNewUserMessages() async {

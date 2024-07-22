@@ -19,12 +19,6 @@ protocol HasUserManager {
 protocol UserManaging {
     var delegate: UserManagerFlowDelegate? { get set }
     
-    // MARK: USER DATA FETCHED FROM userLoginDataManager
-    var userId: String? { get }
-    var token: String? { get }
-    var userName: String? { get }
-    var userMainCategory: String? { get }
-    
     // MARK: APP SETUP RELATED PROPERTIES
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
@@ -46,33 +40,19 @@ final class UserManager: BaseClass, UserManaging {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
-        self.checkSumAPI = dependencies.checkSumAPI
         self.userLoginDataManager = dependencies.userLoginManager
     }
     // MARK: - Public Properties
     
     weak var delegate: UserManagerFlowDelegate?
     
-    var token: String? {
-        get { userLoginDataManager.token }
+    var isLoggedIn: Bool {
+        userLoginDataManager.data != nil
     }
-    var userId: String? {
-        get { userLoginDataManager.userId }
+    var hasAppId: Bool {
+        userDefaultsStorage.appId != nil
     }
-    var userMainCategory: String? {
-        get { userLoginDataManager.userMainCategory }
-    }
-    var userName: String? {
-        get { userLoginDataManager.token }
-    }
-    var userId: String? {
-        get { userLoginDataManager.userId }
-    }
-    var userMainCategory: String? {
-        get { userLoginDataManager.userMainCategory }
-    }
-    var userName: String? {
-        get { userLoginDataManager.userName }
+    
     // MARK: - Private Properties
     // TODO: CAN BE DELETED once we have persitent data storage
     private var checkSumData: CheckSumData? {
@@ -80,13 +60,7 @@ final class UserManager: BaseClass, UserManaging {
         set { userDefaultsStorage.checkSumData = newValue }
     }
     
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        userDefaultsStorage.commitTransaction()
-        userLoginDataManager.logout()
-        delegate?.onLogout()
-    }
-    
+    // MARK: - Public interface
     func initializeAppId() async throws {
         logger.log(message: "Initializing App Id")
         if let appId = userDefaultsStorage.appId {
@@ -106,154 +80,20 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
-            userDefaultsStorage.appId = responseAppId
-    
-    func loadDataAfterLogin() async {
-        do {
-            try await userCategoryManager.fetch(userToken: token)
-            try await checkCheckSumData()
-        } catch {
-            delegate?.onDataError(error)
-        }
     }
     
-    // MARK: Private helpers
-    private func checkCheckSumData() async throws {
-        logger.log(message: "Checking Check Sums")
-        do {
-            let checkSum = try await fetchNewCheckSumData()
-            if checkSum == userDefaultsStorage.checkSumData {
-                return
-            }
-            try await updateData(newCheckSum: checkSum)
-        }
+    // MARK: - Public Interface
+    func login(loginCredentials: LoginCredentials) async throws {
+        try await userLoginDataManager.login(credentials: loginCredentials)
     }
     
-    private func fetchNewCheckSumData() async throws -> CheckSumData {
-        var result = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
-        do {
-            let userPointsResponse = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL, userToken: token ?? "")
-            result.userPoints = userPointsResponse.data.pointsProtect
-            
-            let rankResponse = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL, userToken: token ?? "")
-            result.rank = rankResponse.data.rankProtect
-            
-            let pointsPatchResponse = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL, userToken: token ?? "")
-            result.points = pointsPatchResponse.data.pointsProtect
-            
-            let messagePatchResponse = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL, userToken: token ?? "")
-            result.messages = messagePatchResponse.data.msgProtect
-            
-            let eventsPatchResponse = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL, userToken: token ?? "")
-            result.events = eventsPatchResponse.data.eventsProtect
-            return result
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to fetch check sum data",
-                logger: logger
-            )
-        }
-    }
-    
-    private func updateData(newCheckSum: CheckSumData) async throws {
-        guard let currentData = userDefaultsStorage.checkSumData else {
-            userDefaultsStorage.beginTransaction()
-            userDefaultsStorage.checkSumData = newCheckSum
-            userDefaultsStorage.commitTransaction()
-            await fetchAllNewData()
-            return
-        }
-        if (currentData.userPoints != newCheckSum.userPoints) {
-            await fetchNewUserPoints()
-        }
-        if (currentData.events != newCheckSum.events) {
-            await fetchNewUserEvents()
-        }
-        if (currentData.messages != newCheckSum.messages) {
-            await fetchNewUserMessages()
-        }
-        if (currentData.rank != newCheckSum.rank) {
-            await fetchNewUserRank()
-        }
-        if (currentData.points != newCheckSum.points) {
-            await fetchNewPoints()
-        }
-    }
-    
-    private func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
+    func logout() {
+        logger.log(message: "Logging out")
         userDefaultsStorage.beginTransaction()
-        switch type {
-        case .userPoints:
-            userDefaultsStorage.checkSumData?.userPoints = newCheckSum
-        case .rank:
-            userDefaultsStorage.checkSumData?.rank = newCheckSum
-        case .messages:
-            userDefaultsStorage.checkSumData?.messages = newCheckSum
-        case .events:
-            userDefaultsStorage.checkSumData?.events = newCheckSum
-        case .points:
-            userDefaultsStorage.checkSumData?.points = newCheckSum
-        }
+        userDefaultsStorage.checkSumData = nil // MARK: This will not be done once we have persitent data storage
         userDefaultsStorage.commitTransaction()
-    }
-    
-    private func fetchAllNewData() async {
-        async let userPoints: () = fetchNewUserPoints()
-        async let userEvents: () = fetchNewUserEvents()
-        async let userRank: () = fetchNewUserRank()
-        async let userMessages: () = fetchNewUserMessages()
-        async let newPoints: () = fetchNewPoints()
-        
-        // Await all concurrently running tasks
-        await (userPoints, userEvents, userRank, userMessages, newPoints)
-    }
-    
-    private func fetchNewUserPoints() async {
-        logger.log(message: "Updating userPointsData")
-        do {
-            try await userPointManager.fetch(userToken: token)
-            guard let newCheckSumUserPoints = userPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
-            }
-            updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
-        } catch {
-            
-        }
-    }
-    
-    private func fetchNewUserRank() async {
-        logger.log(message: "Updating user rank")
-        do {
-            try await userRankManager.fetch(userToken: token)
-            guard let newCheckSum = userRankManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
-            }
-            updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.rank)
-        } catch {
-            
-        }
-    }
-    
-    private func fetchNewUserMessages() async {
-        logger.log(message: "Updating user messages")
-    }
-    
-    private func fetchNewUserEvents() async {
-        logger.log(message: "Updating user events")
-    }
-    
-    private func fetchNewPoints() async {
-        logger.log(message: "Updating generic points")
-        do {
-            try await genericPointManager.fetch(userToken: token)
-            guard let newCheckSum = genericPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
-            }
-            updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
-        } catch {
-            
-        }
+        userLoginDataManager.logout()
+        delegate?.onLogout()
     }
 }
 

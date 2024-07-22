@@ -40,6 +40,8 @@ final class AppDependency {
     lazy var userPointManager: any UserPointManaging = UserPointManager(dependencies: self)
     lazy var userCategoryManager: any UserCategoryManaging = UserCategoryManager(dependencies: self)
     lazy var genericPointManager: any GenericPointManaging = GenericPointManager(dependencies: self)
+    lazy var userRankManager: any UserRankManaging = UserRankManager(dependencies: self)
+    lazy var userLoginManager: UserLoginDataManaging = UserLoginDataManager(dependencies: self)
 }
 
 extension AppDependency: HasBaseNetwork {}

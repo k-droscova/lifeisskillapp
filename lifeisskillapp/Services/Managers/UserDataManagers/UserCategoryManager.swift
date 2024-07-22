@@ -20,10 +20,10 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
-    private var userManager: UserManaging
+    private var dataManager: UserLoginDataManaging
     private var userDataAPIService: UserDataAPIServicing
     
     // MARK: - Public Properties
@@ -39,14 +39,14 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     }
     
     var token: String? {
-        get { userManager.token }
+        get { dataManager.token }
     }
     
     // MARK: - Initialization
     init(dependencies: Dependencies) {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
-        self.userManager = dependencies.userManager
+        self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
     }
     

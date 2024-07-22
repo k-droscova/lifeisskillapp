@@ -14,17 +14,20 @@ protocol HasUserLoginManager {
     var userLoginManager: any UserLoginDataManaging { get }
 }
 
-protocol UserLoginDataManaging: UserDataManaging where DataType == LoggedInUser, DataContainer == LoginUserData {
+protocol UserLoginDataManaging {
     var delegate: UserLoginManagerFlowDelegate? { get set }
+    var data: LoginUserData? { get set }
+    
     var userId: String? { get }
     var token: String? { get }
     var userName: String? { get }
     var userMainCategory: String? { get }
+    
+    func login(credentials: LoginCredentials) async throws
     func logout()
 }
 
-public final class UserLoginDataManager: UserLoginDataManaging {
-    
+public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     typealias Dependencies = HasLoggerServicing & HasLoginAPIService & HasUserDataStorage & HasUserManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing
@@ -66,14 +69,7 @@ public final class UserLoginDataManager: UserLoginDataManaging {
     }
     
     // MARK: - Public Interface
-    func fetch(credentials: LoginCredentials?, userToken: String? = "") async throws {
-        guard let credentials else {
-            throw BaseError(
-                context: .system,
-                message: "Attempting login with empty credentials",
-                logger: logger
-            )
-        }
+    func login(credentials: LoginCredentials) async throws {
         logger.log(message: "Login User: " + credentials.username)
         do {
             let response = try await loginAPI.login(loginCredentials: credentials, baseURL: APIUrl.baseURL)
