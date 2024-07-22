@@ -18,7 +18,7 @@ protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataCont
     var delegate: UserRankManagerFlowDelegate? { get set }
 }
 
-public final class UserRankManager: UserRankManaging {    
+public final class UserRankManager: BaseClass, UserRankManaging {    
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
     private var userDataStorage: UserDataStoraging
     private var logger: LoggerServicing

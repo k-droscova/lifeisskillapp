@@ -85,6 +85,7 @@
 		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
+		27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD78C2C4EC72F00612375 /* CLLocation.swift */; };
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */; };
@@ -193,6 +194,7 @@
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
+		27CBD78C2C4EC72F00612375 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		27E32DE72C493BF900E69C58 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
 				27066A962C4573110092B499 /* DateTime.swift */,
 				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
+				27CBD78C2C4EC72F00612375 /* CLLocation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
+				27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
 				278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */,
