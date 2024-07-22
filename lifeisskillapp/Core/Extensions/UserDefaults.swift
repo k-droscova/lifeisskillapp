@@ -21,7 +21,9 @@ extension UserDefaults {
         case checkSumData = "checkSumData"
     }
     
-    // CheckSumData
+    /// Stores or retrieves the CheckSumData.
+    ///
+    /// - Returns: An optional CheckSumData object containing the checksum data.
     var checkSumData: CheckSumData? {
         get {
             guard let data = data(forKey: Keys.checkSumData.rawValue) else { return nil }
@@ -32,6 +34,7 @@ extension UserDefaults {
             set(data, forKey: Keys.checkSumData.rawValue)
         }
     }
+    
     /// Stores or retrieves the logout error message.
     ///
     /// - Returns: An optional string containing the logout error message.
