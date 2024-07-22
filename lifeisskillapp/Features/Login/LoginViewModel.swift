@@ -12,7 +12,7 @@ protocol LoginViewModeling {
     var username: String { get set }
     var password: String { get set }
     func login()
-    func fetchData()
+    func onAppear()
     func register()
 }
 
@@ -45,15 +45,21 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
         }
     }
     
-    func fetchData() {
+    func onAppear() {
         if !userManager.hasAppId {
-            Task {
-                try await appDependencies.userManager.initializeAppId()
-            }
+            fetchData()
         }
     }
     
     func register() {
         delegate?.registerTapped()
+    }
+    
+    // MARK: Private Helpers
+    
+    private func fetchData() {
+        Task {
+            try await appDependencies.userManager.initializeAppId()
+        }
     }
 }

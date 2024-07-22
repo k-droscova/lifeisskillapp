@@ -43,9 +43,9 @@ struct HomeView: View {
             }
             .logoutButtonStyle()
         }
-        .onAppear(perform: {
-            viewModel.fetchData()
-        })
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 

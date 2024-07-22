@@ -56,8 +56,8 @@ struct LoginView: View {
             }
             .registerButtonStyle()
         }
-        .onAppear(perform: {
-            viewModel.fetchData()
-        })
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }

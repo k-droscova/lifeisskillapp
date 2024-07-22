@@ -10,7 +10,7 @@ import Observation
 
 protocol HomeViewModeling {
     func logout()
-    func fetchData()
+    func onAppear()
     func printUserCategoryData()
     func printUserPointData()
     func printGenericPointData()
@@ -38,10 +38,9 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
         userManager.logout()
     }
     
-    func fetchData() {
-        locationManager.checkLocationAuthorization()
+    func onAppear() {
         Task {
-            await userManager.loadDataAfterLogin()
+            await fetchData()
         }
     }
     
@@ -58,5 +57,12 @@ final class HomeViewModel: HomeViewModeling, ObservableObject {
     func printGenericPointData() {
         let points = genericPointManager.getAll()
         print(points.count)
+    }
+    
+    // MARK: Private helpers
+    
+    private func fetchData() async {
+        locationManager.checkLocationAuthorization()
+        await userManager.loadDataAfterLogin()
     }
 }
