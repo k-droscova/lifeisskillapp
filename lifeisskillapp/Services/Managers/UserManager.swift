@@ -20,6 +20,7 @@ protocol UserManaging {
     var delegate: UserManagerFlowDelegate? { get set }
     
     // MARK: APP SETUP RELATED PROPERTIES
+    
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
     
@@ -30,10 +31,18 @@ protocol UserManaging {
 
 final class UserManager: BaseClass, UserManaging {
     typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
-    private var logger: LoggerServicing
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
-    private var registerAppAPI: RegisterAppAPIServicing
-    private var userLoginDataManager: any UserLoginDataManaging
+    private let registerAppAPI: RegisterAppAPIServicing
+    private let userLoginDataManager: any UserLoginDataManaging
+    // TODO: CAN BE DELETED once we have persitent data storage
+    private var checkSumData: CheckSumData? {
+        get { userDefaultsStorage.checkSumData }
+        set { userDefaultsStorage.checkSumData = newValue }
+    }
     
     // MARK: - Public Properties
     
@@ -46,14 +55,8 @@ final class UserManager: BaseClass, UserManaging {
         userDefaultsStorage.appId != nil
     }
     
-    // MARK: - Private Properties
-    // TODO: CAN BE DELETED once we have persitent data storage
-    private var checkSumData: CheckSumData? {
-        get { userDefaultsStorage.checkSumData }
-        set { userDefaultsStorage.checkSumData = newValue }
-    }
-    
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
@@ -62,6 +65,7 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     // MARK: - Public interface
+    
     func initializeAppId() async throws {
         logger.log(message: "Initializing App Id")
         if let appId = userDefaultsStorage.appId {

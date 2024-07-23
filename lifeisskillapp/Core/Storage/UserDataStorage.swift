@@ -20,18 +20,18 @@ protocol UserDataStoraging: UserStoraging {
 }
 
 final class UserDataStorage: UserDataStoraging {
+    typealias Dependencies = HasLoggerServicing
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
     private var transactionCache: [String: Any] = [:]
     private var inTransaction: Bool = false
+    // Internal storage dictionary to store values, will be replaced with SwiftData/Realm later
+    private var internalStore: [String: Any] = [:]
     
-    typealias Dependencies = HasLoggerServicing
-    private var logger: LoggerServicing
+    // MARK: - Public Properties
     
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.logger = dependencies.logger
-    }
-    
-    // MARK: - UserCategoryData Property
     var userCategoryData: UserCategoryData? {
         get { inTransaction ? transactionCache["userCategoryData"] as? UserCategoryData : internalStore["userCategoryData"] as? UserCategoryData }
         set {
@@ -43,7 +43,6 @@ final class UserDataStorage: UserDataStoraging {
         }
     }
     
-    // MARK: - UserPointData Property
     var userPointData: UserPointData? {
         get { inTransaction ? transactionCache["userPointData"] as? UserPointData : internalStore["userPointData"] as? UserPointData }
         set {
@@ -55,7 +54,6 @@ final class UserDataStorage: UserDataStoraging {
         }
     }
     
-    // MARK: - Generic PointData Property
     var genericPointData: GenericPointData? {
         get { inTransaction ? transactionCache["pointData"] as? GenericPointData : internalStore["pointData"] as? GenericPointData }
         set {
@@ -67,7 +65,6 @@ final class UserDataStorage: UserDataStoraging {
         }
     }
     
-    // MARK: - UserPointData Property
     var userRankData: UserRankData? {
         get { inTransaction ? transactionCache["userRankData"] as? UserRankData : internalStore["userRankData"] as? UserRankData }
         set {
@@ -79,7 +76,6 @@ final class UserDataStorage: UserDataStoraging {
         }
     }
     
-    // MARK: - LoginAPIResponse Property
     var loginData: LoginUserData? {
         get { inTransaction ? transactionCache["loginData"] as? LoginUserData : internalStore["loginData"] as? LoginUserData }
         set {
@@ -99,11 +95,14 @@ final class UserDataStorage: UserDataStoraging {
         }
     }
     
-    // Internal storage dictionary to store values
-    // MARK: - will be replaced with SwiftData/Realm later
-    private var internalStore: [String: Any] = [:]
+    // MARK: - Initialization
     
-    // MARK: - Transaction Methods
+    init(dependencies: Dependencies) {
+        self.logger = dependencies.logger
+    }
+    
+    // MARK: - Public Interface
+    
     func beginTransaction() {
         inTransaction = true
         transactionCache = [:]

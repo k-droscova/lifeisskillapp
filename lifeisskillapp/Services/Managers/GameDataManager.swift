@@ -23,13 +23,16 @@ protocol GameDataManaging {
 
 public final class GameDataManager: BaseClass, GameDataManaging {
     typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasUserDefaultsStorage
-    private var logger: LoggerServicing
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
-    private var checkSumAPI: CheckSumAPIServicing
-    private var userCategoryManager: any UserCategoryManaging
-    private var userPointManager: any UserPointManaging
-    private var genericPointManager: any GenericPointManaging
-    private var userRankManager: any UserRankManaging
+    private let checkSumAPI: CheckSumAPIServicing
+    private let userCategoryManager: any UserCategoryManaging
+    private let userPointManager: any UserPointManaging
+    private let genericPointManager: any GenericPointManaging
+    private let userRankManager: any UserRankManaging
     
     // MARK: - Public Properties
     
@@ -41,6 +44,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage

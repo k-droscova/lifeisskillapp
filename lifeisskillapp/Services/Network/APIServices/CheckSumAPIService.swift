@@ -26,9 +26,9 @@ protocol CheckSumAPIServicing {
 public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserLoginManager
     
-    private var loggerService: LoggerServicing
-    private var dataManager: UserLoginDataManaging
-    private var network: Networking
+    private let loggerService: LoggerServicing
+    private let dataManager: UserLoginDataManaging
+    private let network: Networking
     
     private var token: String? {
         dataManager.token

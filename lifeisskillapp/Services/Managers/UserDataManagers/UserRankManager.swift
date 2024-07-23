@@ -20,12 +20,16 @@ protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataCont
 
 public final class UserRankManager: BaseClass, UserRankManaging {    
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
+    
+    // MARK: - Private Properties
+    
     private var userDataStorage: UserDataStoraging
-    private var logger: LoggerServicing
-    private var dataManager: UserLoginDataManaging
-    private var userDataAPIService: UserDataAPIServicing
+    private let logger: LoggerServicing
+    private let dataManager: UserLoginDataManaging
+    private let userDataAPIService: UserDataAPIServicing
     
     // MARK: - Public Properties
+    
     weak var delegate: UserRankManagerFlowDelegate?
     
     var data: UserRankData? {
@@ -42,6 +46,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     }
     
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
@@ -50,6 +55,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     }
     
     // MARK: - Public Interface
+    
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user ranks")
         do {

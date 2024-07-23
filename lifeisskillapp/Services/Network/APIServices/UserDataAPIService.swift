@@ -30,8 +30,8 @@ protocol UserDataAPIServicing: APITasking {
 public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
-    private var loggerService: LoggerServicing
-    private var network: Networking
+    private let loggerService: LoggerServicing
+    private let network: Networking
     var task = ApiTask.userPoints
     
     init(dependencies: Dependencies) {

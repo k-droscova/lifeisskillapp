@@ -29,11 +29,18 @@ protocol LocationManaging {
 /// A class responsible for managing location services and handling location updates.
 public final class LocationManager: BaseClass, LocationManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDefaultsStorage
+    
+    // MARK: - Private Properties
+    
     private let locationManager = CLLocationManager()
-    private var logger: LoggerServicing
+    private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
     
+    // MARK: - Public Properties
+    
     weak var delegate: LocationManagerFlowDelegate?
+    
+    // MARK: - Initialization
     
     /// Initializes a new instance of LocationManager with the specified dependencies.
     /// - Parameter dependencies: The dependencies required by the LocationManager (Logging and Storage)
@@ -44,6 +51,8 @@ public final class LocationManager: BaseClass, LocationManaging {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
+    
+    // MARK: - Public Interface
     
     /// Checks the location authorization status and requests permission if needed.
     public func checkLocationAuthorization() {

@@ -39,6 +39,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     }
     
     // MARK: - Private helpers
+    
     private func setupTabBar() -> UITabBarController{
         // MARK: HOME
         let homeVC = HomeViewController()

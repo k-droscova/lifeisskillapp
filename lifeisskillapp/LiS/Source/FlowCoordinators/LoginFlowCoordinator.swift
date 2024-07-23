@@ -42,7 +42,6 @@ final class LoginFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     }
 }
 
-// MARK: - LoginFlowDelegate
 extension LoginFlowCoordinator: LoginFlowDelegate {
     /// Handles the event when the register button is tapped.
     ///

@@ -19,15 +19,15 @@ protocol UserDefaultsStoraging : UserStoraging {
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
+    typealias Dependencies = HasLoggerServicing
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
     private var transactionCache: [String: Any] = [:]
     private var inTransaction: Bool = false
     
-    typealias Dependencies = HasLoggerServicing
-    private var logger: LoggerServicing
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.logger = dependencies.logger
-    }
+    // MARK: - Public Properties
     
     var checkSumData: CheckSumData? {
         get { inTransaction ? transactionCache["checkSumData"] as? CheckSumData : UserDefaults.standard.checkSumData }
@@ -75,6 +75,14 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
             }
         }
     }
+    
+    // MARK: - Initialization
+    
+    init(dependencies: Dependencies) {
+        self.logger = dependencies.logger
+    }
+    
+    // MARK: - Public Interface
     
     func beginTransaction() {
         inTransaction = true

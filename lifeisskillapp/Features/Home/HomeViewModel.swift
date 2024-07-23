@@ -18,16 +18,15 @@ protocol HomeViewModeling {
 }
 
 final class HomeViewModel: HomeViewModeling, ObservableObject {
-    
     typealias Dependencies = HasManagers
 
-    private var locationManager: LocationManaging
-    private var userManager: UserManaging
-    private var gameDataManager: GameDataManaging
-    private var userCategoryManager: any UserCategoryManaging
-    private var userPointManager: any UserPointManaging
-    private var genericPointManager: any GenericPointManaging
-    private var userRankManager: any UserRankManaging
+    private let locationManager: LocationManaging
+    private let userManager: UserManaging
+    private let gameDataManager: GameDataManaging
+    private let userCategoryManager: any UserCategoryManaging
+    private let userPointManager: any UserPointManaging
+    private let genericPointManager: any GenericPointManaging
+    private let userRankManager: any UserRankManaging
     
     init(dependencies: Dependencies) {
         self.locationManager = dependencies.locationManager

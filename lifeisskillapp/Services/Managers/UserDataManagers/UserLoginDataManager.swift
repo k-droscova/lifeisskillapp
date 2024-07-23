@@ -29,11 +29,15 @@ protocol UserLoginDataManaging {
 
 public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     typealias Dependencies = HasLoggerServicing & HasLoginAPIService & HasUserDataStorage & HasUserManager
+    
+    // MARK: - Private Properties
+    
     private var userDataStorage: UserDataStoraging
-    private var logger: LoggerServicing
-    private var loginAPI: LoginAPIServicing
+    private let logger: LoggerServicing
+    private let loginAPI: LoginAPIServicing
     
     // MARK: - Public Properties
+    
     weak var delegate: UserLoginManagerFlowDelegate?
     
     var data: LoginUserData? {
@@ -62,6 +66,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     }
     
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
@@ -69,6 +74,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     }
     
     // MARK: - Public Interface
+    
     func login(credentials: LoginCredentials) async throws {
         logger.log(message: "Login User: " + credentials.username)
         do {

@@ -19,9 +19,11 @@ typealias HasLoggers = HasLoggerServicing
 
 final class AppDependency {
     // MARK: logger
+    
     lazy var logger: LoggerServicing = OSLoggerService()
     
     // MARK: network
+    
     lazy var urlSession: URLSessionWrapping = URLSessionWrapper()
     lazy var network: Networking = Network(dependencies: self)
     lazy var registerAppAPI: RegisterAppAPIServicing = RegisterAppAPIService(dependencies: self)
@@ -30,10 +32,12 @@ final class AppDependency {
     lazy var userDataAPI: UserDataAPIServicing = UserDataAPIService(dependencies: self)
     
     // MARK: storage
+    
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
     lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
     
     // MARK: user and data managers
+    
     lazy var userManager: UserManaging = UserManager(dependencies: self)
     lazy var locationManager: LocationManaging = LocationManager(dependencies: self)
     lazy var gameDataManager: GameDataManaging = GameDataManager(dependencies: self)
