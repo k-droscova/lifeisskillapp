@@ -30,6 +30,10 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     // MARK: - Public Properties
     
+    /*
+     Delegate is not able to be passed into init, hence declared public.
+     Must be handled with caution -> can be set from anywhere
+     */
     weak var delegate: UserRankManagerFlowDelegate?
     
     var data: UserRankData? {

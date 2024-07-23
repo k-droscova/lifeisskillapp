@@ -31,6 +31,10 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     // MARK: - Public Properties
     
+    /*
+     Delegate is not able to be passed into init, hence declared public.
+     Must be handled with caution -> can be set from anywhere
+     */
     weak var delegate: UserPointManagerFlowDelegate?
     
     var data: UserPointData? {

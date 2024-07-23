@@ -8,7 +8,6 @@
 import Foundation
 
 protocol GenericPointManagerFlowDelegate: UserDataManagerFlowDelegate {
-    
 }
 
 protocol HasGenericPointManager {
@@ -31,6 +30,10 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     // MARK: - Public Properties
     
+    /*
+     Delegate is not able to be passed into init, hence declared public.
+     Must be handled with caution -> can be set from anywhere
+     */
     weak var delegate: GenericPointManagerFlowDelegate?
     
     var data: GenericPointData? {

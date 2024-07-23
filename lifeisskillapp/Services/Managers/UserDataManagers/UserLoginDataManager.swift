@@ -38,6 +38,10 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     
     // MARK: - Public Properties
     
+    /*
+     Delegate is not able to be passed into init, hence declared public.
+     Must be handled with caution -> can be set from anywhere
+     */
     weak var delegate: UserLoginManagerFlowDelegate?
     
     var data: LoginUserData? {
