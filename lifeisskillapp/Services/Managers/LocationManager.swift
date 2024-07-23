@@ -96,6 +96,7 @@ extension LocationManager: CLLocationManagerDelegate {
         do {
             throw BaseError(context: .location, message: error.localizedDescription, logger: logger)
         } catch {
+            logger.log(message: "CCLocationManager did fail with Error.")
         }
     }
     
