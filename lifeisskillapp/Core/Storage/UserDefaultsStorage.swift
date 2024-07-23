@@ -14,22 +14,20 @@ protocol HasUserDefaultsStorage {
 
 protocol UserDefaultsStoraging : UserStoraging {
     var appId: String? { get set }
-    var token: String? { get set }
-    var credentials: LoginCredentials? { get set }
     var location: UserLocation? { get set }
     var checkSumData: CheckSumData? { get set }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
+    typealias Dependencies = HasLoggerServicing
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
     private var transactionCache: [String: Any] = [:]
     private var inTransaction: Bool = false
     
-    typealias Dependencies = HasLoggerServicing
-    private var logger: LoggerServicing
-    // MARK: - Initialization
-    init(dependencies: Dependencies) {
-        self.logger = dependencies.logger
-    }
+    // MARK: - Public Properties
     
     var checkSumData: CheckSumData? {
         get { inTransaction ? transactionCache["checkSumData"] as? CheckSumData : UserDefaults.standard.checkSumData }
@@ -78,41 +76,13 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
     }
     
-    var token: String? {
-        get { inTransaction ? transactionCache["token"] as? String : UserDefaults.standard.string(forKey: "token") }
-        set {
-            if inTransaction {
-                transactionCache["token"] = newValue
-            } else {
-                UserDefaults.standard.set(newValue, forKey: "token")
-            }
-        }
+    // MARK: - Initialization
+    
+    init(dependencies: Dependencies) {
+        self.logger = dependencies.logger
     }
     
-    var credentials: LoginCredentials? {
-        get {
-            if inTransaction {
-                return transactionCache["credentials"] as? LoginCredentials
-            }
-            guard let data = UserDefaults.standard.data(forKey: "credentials"),
-                  let credentials = try? JSONDecoder().decode(LoginCredentials.self, from: data) else {
-                return nil
-            }
-            return credentials
-        }
-        set {
-            if inTransaction {
-                transactionCache["credentials"] = newValue
-            } else {
-                if let newValue = newValue {
-                    let data = try? JSONEncoder().encode(newValue)
-                    UserDefaults.standard.set(data, forKey: "credentials")
-                } else {
-                    UserDefaults.standard.removeObject(forKey: "credentials")
-                }
-            }
-        }
-    }
+    // MARK: - Public Interface
     
     func beginTransaction() {
         inTransaction = true
@@ -126,19 +96,6 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         if let appId = transactionCache["appId"] as? String {
             UserDefaults.standard.set(appId, forKey: "appId")
             logger.log(message: "New value for appId: \(appId)")
-        }
-        if let token = transactionCache["token"] as? String {
-            UserDefaults.standard.set(token, forKey: "token")
-            logger.log(message: "New value for token: \(token)")
-            
-        }
-        if let credentials = transactionCache["credentials"] as? LoginCredentials {
-            if let data = try? JSONEncoder().encode(credentials) {
-                UserDefaults.standard.set(data, forKey: "credentials")
-                logger.log(message: "New credentials saved")
-            }
-        } else {
-            UserDefaults.standard.removeObject(forKey: "credentials")
         }
         if let location = transactionCache["location"] as? CLLocation {
             if let data = location.toData() {

@@ -20,13 +20,21 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
+    
+    // MARK: - Private Properties
+    
     private var userDataStorage: UserDataStoraging
-    private var logger: LoggerServicing
-    private var userManager: UserManaging
-    private var userDataAPIService: UserDataAPIServicing
+    private let logger: LoggerServicing
+    private let dataManager: UserLoginDataManaging
+    private let userDataAPIService: UserDataAPIServicing
     
     // MARK: - Public Properties
+    
+    /*
+     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
+     Now it can be set from anywhere, needs to be handled with caution.
+     */
     weak var delegate: UserCategoryManagerFlowDelegate?
     
     var data: UserCategoryData? {
@@ -39,18 +47,20 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     }
     
     var token: String? {
-        get { userManager.token }
+        get { dataManager.token }
     }
     
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
-        self.userManager = dependencies.userManager
+        self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
     }
     
     // MARK: - Public Interface
+    
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user categories")
         do {

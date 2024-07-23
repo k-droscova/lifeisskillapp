@@ -16,7 +16,6 @@ protocol RegisterAppAPIServicing {
 }
 
 public final class RegisterAppAPIService: BaseClass, RegisterAppAPIServicing {
-    
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var loggerService: LoggerServicing

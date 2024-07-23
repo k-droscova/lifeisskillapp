@@ -23,15 +23,23 @@ protocol GameDataManaging {
 
 public final class GameDataManager: BaseClass, GameDataManaging {
     typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasUserDefaultsStorage
-    private var logger: LoggerServicing
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
-    private var checkSumAPI: CheckSumAPIServicing
-    private var userCategoryManager: any UserCategoryManaging
-    private var userPointManager: any UserPointManaging
-    private var genericPointManager: any GenericPointManaging
+    private let checkSumAPI: CheckSumAPIServicing
+    private let userCategoryManager: any UserCategoryManaging
+    private let userPointManager: any UserPointManaging
+    private let genericPointManager: any GenericPointManaging
+    private let userRankManager: any UserRankManaging
     
     // MARK: - Public Properties
     
+    /*
+     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
+     Now it can be set from anywhere, needs to be handled with caution.
+     */
     weak var delegate: GameDataManagerFlowDelegate?
     
     var checkSumData: CheckSumData? {
@@ -40,6 +48,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
@@ -47,6 +56,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         self.userCategoryManager = dependencies.userCategoryManager
         self.genericPointManager = dependencies.genericPointManager
         self.userPointManager = dependencies.userPointManager
+        self.userRankManager = dependencies.userRankManager
     }
     
     // MARK: - Public Interface
@@ -170,6 +180,15 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     private func fetchNewUserRank() async {
         logger.log(message: "Updating user rank")
+        do {
+            try await userRankManager.fetch()
+            guard let newCheckSumUserRank = userRankManager.data?.checkSum else {
+                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+            }
+            updateCheckSum(newCheckSum: newCheckSumUserRank, type: CheckSumData.CheckSumType.rank)
+        } catch {
+            logger.log(message: "fetch New User Rank threw error")
+        }
     }
     
     private func fetchNewUserMessages() async {

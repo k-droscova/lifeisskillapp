@@ -18,9 +18,8 @@ protocol HasUserManager {
 
 protocol UserManaging {
     var delegate: UserManagerFlowDelegate? { get set }
-    var appId: String? { get }
-    var token: String? { get }
-    var credentials: LoginCredentials? { get set }
+    
+    // MARK: APP SETUP RELATED PROPERTIES
     
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
@@ -32,84 +31,44 @@ protocol UserManaging {
 
 final class UserManager: BaseClass, UserManaging {
     typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
-    private var logger: LoggerServicing
-    private var userDefaultsStorage: UserDefaultsStoraging
-    private var loginAPI: LoginAPIServicing
-    private var registerAppAPI: RegisterAppAPIServicing
-    
-    // MARK: - Public Properties
-    
-    weak var delegate: UserManagerFlowDelegate?
-    
-    var appId: String? {
-        get { userDefaultsStorage.appId }
-        set { userDefaultsStorage.appId = newValue }
-    }
-    
-    var token: String? {
-        get { userDefaultsStorage.token }
-        set { userDefaultsStorage.token = newValue }
-    }
-    
-    var credentials: LoginCredentials? {
-        get { userDefaultsStorage.credentials }
-        set { userDefaultsStorage.credentials = newValue }
-    }
-    
-    var isLoggedIn: Bool {
-        userDefaultsStorage.credentials != nil
-    }
-    var hasAppId: Bool {
-        userDefaultsStorage.appId != nil
-    }
     
     // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
+    private var userDefaultsStorage: UserDefaultsStoraging
+    private let registerAppAPI: RegisterAppAPIServicing
+    private let userLoginDataManager: any UserLoginDataManaging
     // TODO: CAN BE DELETED once we have persitent data storage
     private var checkSumData: CheckSumData? {
         get { userDefaultsStorage.checkSumData }
         set { userDefaultsStorage.checkSumData = newValue }
     }
     
+    // MARK: - Public Properties
+    
+    weak var delegate: UserManagerFlowDelegate?
+    
+    var isLoggedIn: Bool {
+        userLoginDataManager.data != nil
+    }
+    var hasAppId: Bool {
+        userDefaultsStorage.appId != nil
+    }
+    
     // MARK: - Initialization
+    
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
-        self.loginAPI = dependencies.loginAPI
         self.registerAppAPI = dependencies.registerAppAPI
+        self.userLoginDataManager = dependencies.userLoginManager
     }
     
-    // MARK: - Public Interface
-    func login(loginCredentials: LoginCredentials) async throws {
-        logger.log(message: "Login User: " + loginCredentials.username)
-        do {
-            let response = try await loginAPI.login(loginCredentials: loginCredentials, baseURL: APIUrl.baseURL)
-            let responseToken = response.data.token
-            userDefaultsStorage.beginTransaction()
-            credentials = loginCredentials
-            token = responseToken
-            userDefaultsStorage.commitTransaction()
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to login",
-                logger: logger
-            )
-        }
-    }
-    
-    func logout() {
-        logger.log(message: "Logging out")
-        userDefaultsStorage.beginTransaction()
-        credentials = nil
-        token = nil
-        checkSumData = nil // MARK: This will not be done once we have persitent data storage
-        userDefaultsStorage.commitTransaction()
-        delegate?.onLogout()
-    }
+    // MARK: - Public interface
     
     func initializeAppId() async throws {
         logger.log(message: "Initializing App Id")
-        if let appId = appId {
+        if let appId = userDefaultsStorage.appId {
             logger.log(message: "App Id \(appId) exists")
             return
         }
@@ -117,7 +76,7 @@ final class UserManager: BaseClass, UserManaging {
             let response = try await registerAppAPI.registerApp(baseURL: APIUrl.baseURL)
             let responseAppId = response.data.appId
             userDefaultsStorage.beginTransaction()
-            appId = responseAppId
+            userDefaultsStorage.appId = responseAppId
             userDefaultsStorage.commitTransaction()
         } catch {
             throw BaseError(
@@ -126,6 +85,20 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
+    }
+    
+    // MARK: - Public Interface
+    func login(loginCredentials: LoginCredentials) async throws {
+        try await userLoginDataManager.login(credentials: loginCredentials)
+    }
+    
+    func logout() {
+        logger.log(message: "Logging out")
+        userDefaultsStorage.beginTransaction()
+        userDefaultsStorage.checkSumData = nil // MARK: This will not be done once we have persitent data storage
+        userDefaultsStorage.commitTransaction()
+        userLoginDataManager.logout()
+        delegate?.onLogout()
     }
 }
 

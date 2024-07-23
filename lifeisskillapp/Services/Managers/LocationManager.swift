@@ -12,11 +12,6 @@ import CoreLocation
 protocol LocationManagerFlowDelegate: NSObject {
     /// Called when the location authorization is unsuccessful.
     func onLocationUnsuccess()
-    /// Called when the location authorization is successful.
-    func onLocationSuccess()
-    /// Called when there is an error with location services.
-    /// - Parameter error: The error that occurred.
-    func onLocationError(_ error: Error)
 }
 
 /// Protocol to provide a LocationManager instance.
@@ -34,11 +29,18 @@ protocol LocationManaging {
 /// A class responsible for managing location services and handling location updates.
 public final class LocationManager: BaseClass, LocationManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDefaultsStorage
+    
+    // MARK: - Private Properties
+    
     private let locationManager = CLLocationManager()
-    private var logger: LoggerServicing
+    private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
     
+    // MARK: - Public Properties
+    
     weak var delegate: LocationManagerFlowDelegate?
+    
+    // MARK: - Initialization
     
     /// Initializes a new instance of LocationManager with the specified dependencies.
     /// - Parameter dependencies: The dependencies required by the LocationManager (Logging and Storage)
@@ -50,15 +52,18 @@ public final class LocationManager: BaseClass, LocationManaging {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+    // MARK: - Public Interface
+    
     /// Checks the location authorization status and requests permission if needed.
     public func checkLocationAuthorization() {
         switch locationManager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager.startUpdatingLocation()
-            delegate?.onLocationSuccess()
+            logger.log(message: "Location Manager - SUCCESS")
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .denied, .restricted:
+            logger.log(message: "Location Manager - UNSUCCESS")
             delegate?.onLocationUnsuccess()
         default:
             break
@@ -88,7 +93,11 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - manager: The location manager object that was unable to retrieve the location.
     ///   - error: The error object containing the reason for the failure.
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        delegate?.onLocationError(error)
+        do {
+            throw BaseError(context: .location, message: error.localizedDescription, logger: logger)
+        } catch {
+            logger.log(message: "CCLocationManager did fail with Error.")
+        }
     }
     
     /// Called when the location authorization status changes.

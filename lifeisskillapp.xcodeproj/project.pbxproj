@@ -15,7 +15,6 @@
 		27066A972C4573110092B499 /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A962C4573110092B499 /* DateTime.swift */; };
 		27066A992C45755C0092B499 /* CheckSumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A982C45755C0092B499 /* CheckSumData.swift */; };
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
-		27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9F2C458E0E0092B499 /* CLLocation.swift */; };
 		2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AEB62C429C2A00A23F06 /* LocationManager.swift */; };
 		2717AEFE2C42ACCD00A23F06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2717AEFD2C42ACCD00A23F06 /* Images.xcassets */; };
 		2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */; };
@@ -50,9 +49,12 @@
 		275457232C3332BF00F3B55A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* HomeView.swift */; };
 		275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* HomeViewModel.swift */; };
 		275457282C3332E000F3B55A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* HomeViewController.swift */; };
-		2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */; };
+		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
+		278174842C4BF96B00138376 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174832C4BF96B00138376 /* View.swift */; };
+		278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174872C4BFBB500138376 /* AssetFontFamily.swift */; };
+		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
 		27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4E2C3AFE4F00864028 /* APITask.swift */; };
@@ -82,15 +84,15 @@
 		27C619972C3AB5D50067498F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619962C3AB5D50067498F /* Theme.swift */; };
 		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
-		27CBD7872C4E877D00612375 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7862C4E877D00612375 /* FlowCoordinator.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
+		27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD78C2C4EC72F00612375 /* CLLocation.swift */; };
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */; };
 		27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */; };
-		27F27A4B2C4D568200928388 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A482C4D568200928388 /* View.swift */; };
-		27F27A4C2C4D568200928388 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A492C4D568200928388 /* AssetFontFamily.swift */; };
-		27F27A4D2C4D568200928388 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A4A2C4D568200928388 /* ButtonStyleModifier.swift */; };
+		27F27A412C4CFA8600928388 /* UserRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A402C4CFA8600928388 /* UserRank.swift */; };
+		27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A422C4CFEFC00928388 /* UserRankManager.swift */; };
+		27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A462C4D334F00928388 /* UserLoginDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,7 +121,6 @@
 		27066A962C4573110092B499 /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
 		27066A982C45755C0092B499 /* CheckSumData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumData.swift; sourceTree = "<group>"; };
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
-		27066A9F2C458E0E0092B499 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		2717AEB62C429C2A00A23F06 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2717AEFD2C42ACCD00A23F06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.otf"; sourceTree = "<group>"; };
@@ -156,9 +157,12 @@
 		275457222C3332BF00F3B55A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		275457252C3332CE00F3B55A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		275457272C3332E000F3B55A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFlowCoordinator.swift; sourceTree = "<group>"; };
+		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		278174832C4BF96B00138376 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		278174872C4BFBB500138376 /* AssetFontFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
+		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
 		27B25C4E2C3AFE4F00864028 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
@@ -190,14 +194,15 @@
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
+		27CBD78C2C4EC72F00612375 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		27E32DE72C493BF900E69C58 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27E6D6D92C3EBAE6009FC809 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
 		27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
-		27F27A482C4D568200928388 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		27F27A492C4D568200928388 /* AssetFontFamily.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
-		27F27A4A2C4D568200928388 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
+		27F27A402C4CFA8600928388 /* UserRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRank.swift; sourceTree = "<group>"; };
+		27F27A422C4CFEFC00928388 /* UserRankManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManager.swift; sourceTree = "<group>"; };
+		27F27A462C4D334F00928388 /* UserLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,9 +352,6 @@
 			isa = PBXGroup;
 			children = (
 				275457122C332D5500F3B55A /* Home */,
-				27274FBE2C332300003453E2 /* Map */,
-				27274FBD2C3322FA003453E2 /* Profile */,
-				27274FBC2C3322F1003453E2 /* Registration */,
 				27274FB62C3322A1003453E2 /* Login */,
 			);
 			path = Features;
@@ -383,10 +385,10 @@
 		27274FB12C3321D6003453E2 /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
-				27F27A492C4D568200928388 /* AssetFontFamily.swift */,
-				27F27A4A2C4D568200928388 /* ButtonStyleModifier.swift */,
-				27F27A482C4D568200928388 /* View.swift */,
+				278174872C4BFBB500138376 /* AssetFontFamily.swift */,
+				278174832C4BF96B00138376 /* View.swift */,
 				27C619962C3AB5D50067498F /* Theme.swift */,
+				278174892C4BFD6500138376 /* ButtonStyleModifier.swift */,
 			);
 			path = AppUI;
 			sourceTree = "<group>";
@@ -420,7 +422,7 @@
 		27274FB52C332255003453E2 /* FlowCoordinators */ = {
 			isa = PBXGroup;
 			children = (
-				2754AA5D2C41351C0011A618 /* HomeViewFlowCoordinator.swift */,
+				2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */,
 				2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
@@ -477,33 +479,10 @@
 				27C619712C3822920067498F /* HTTPURLResponse.swift */,
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
 				27066A962C4573110092B499 /* DateTime.swift */,
-				27066A9F2C458E0E0092B499 /* CLLocation.swift */,
 				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
+				27CBD78C2C4EC72F00612375 /* CLLocation.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		27274FBC2C3322F1003453E2 /* Registration */ = {
-			isa = PBXGroup;
-			children = (
-				2754571A2C33301A00F3B55A /* User */,
-				275457192C33301500F3B55A /* App */,
-			);
-			path = Registration;
-			sourceTree = "<group>";
-		};
-		27274FBD2C3322FA003453E2 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		27274FBE2C332300003453E2 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		2734DCA42C4693C4008030F3 /* UserData */ = {
@@ -513,6 +492,7 @@
 				27066A982C45755C0092B499 /* CheckSumData.swift */,
 				27066A892C45580D0092B499 /* UserCategory.swift */,
 				27066A8B2C455FFB0092B499 /* UserGender.swift */,
+				27F27A402C4CFA8600928388 /* UserRank.swift */,
 				278D99FA2C4D7C5100B17083 /* UserLocation.swift */,
 			);
 			path = UserData;
@@ -525,6 +505,8 @@
 				2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */,
 				27E32DE72C493BF900E69C58 /* UserDataManager.swift */,
 				27E32DE92C49504100E69C58 /* GenericPointManager.swift */,
+				27F27A422C4CFEFC00928388 /* UserRankManager.swift */,
+				27F27A462C4D334F00928388 /* UserLoginDataManager.swift */,
 			);
 			path = UserDataManagers;
 			sourceTree = "<group>";
@@ -537,20 +519,6 @@
 				275457272C3332E000F3B55A /* HomeViewController.swift */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		275457192C33301500F3B55A /* App */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		2754571A2C33301A00F3B55A /* User */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		2754571B2C33303B00F3B55A /* NetworkStructs */ = {
@@ -829,8 +797,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
-				27F27A4C2C4D568200928388 /* AssetFontFamily.swift in Sources */,
+				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
+				27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
 				278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */,
@@ -846,9 +815,11 @@
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
+				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				275457282C3332E000F3B55A /* HomeViewController.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
+				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
 				27C619972C3AB5D50067498F /* Theme.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
@@ -861,24 +832,23 @@
 				27C619722C3822920067498F /* HTTPURLResponse.swift in Sources */,
 				27C619952C3AB0890067498F /* UserDefaults.swift in Sources */,
 				27066A8A2C45580D0092B499 /* UserCategory.swift in Sources */,
-				27F27A4B2C4D568200928388 /* View.swift in Sources */,
-				27CBD7872C4E877D00612375 /* FlowCoordinator.swift in Sources */,
+				278174842C4BF96B00138376 /* View.swift in Sources */,
 				27E6D6DA2C3EBAE6009FC809 /* UserStorage.swift in Sources */,
+				27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
-				27F27A4D2C4D568200928388 /* ButtonStyleModifier.swift in Sources */,
+				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
 				275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
-				27066AA02C458E0E0092B499 /* CLLocation.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
 				275457232C3332BF00F3B55A /* HomeView.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
 				27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */,
-				2754AA5E2C41351C0011A618 /* HomeViewFlowCoordinator.swift in Sources */,
+				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
 				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,
 				2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */,
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,

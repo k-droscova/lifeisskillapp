@@ -1,24 +1,24 @@
 //
-//  GenericPointDataManager.swift
+//  UserRankManager.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 18.07.2024.
+//  Created by Karolína Droscová on 21.07.2024.
 //
 
 import Foundation
 
-protocol GenericPointManagerFlowDelegate: UserDataManagerFlowDelegate {
+protocol UserRankManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
 
-protocol HasGenericPointManager {
-    var genericPointManager: any GenericPointManaging { get }
+protocol HasUserRankManager {
+    var userRankManager: any UserRankManaging { get }
 }
 
-protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, DataContainer == GenericPointData {
-    var delegate: GenericPointManagerFlowDelegate? { get set}
+protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataContainer == UserRankData {
+    var delegate: UserRankManagerFlowDelegate? { get set }
 }
 
-public final class GenericPointManager: BaseClass, GenericPointManaging {
+public final class UserRankManager: BaseClass, UserRankManaging {    
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
     
     // MARK: - Private Properties
@@ -34,14 +34,14 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
      TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
      Now it can be set from anywhere, needs to be handled with caution.
      */
-    weak var delegate: GenericPointManagerFlowDelegate?
+    weak var delegate: UserRankManagerFlowDelegate?
     
-    var data: GenericPointData? {
+    var data: UserRankData? {
         get {
-            userDataStorage.genericPointData
+            userDataStorage.userRankData
         }
         set {
-            userDataStorage.genericPointData = newValue
+            userDataStorage.userRankData = newValue
         }
     }
     
@@ -61,9 +61,9 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     // MARK: - Public Interface
     
     func fetch(withToken token: String) async throws {
-        logger.log(message: "Loading user points")
+        logger.log(message: "Loading user ranks")
         do {
-            let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: token)
+            let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
             userDataStorage.beginTransaction()
             data = response.data
             userDataStorage.commitTransaction()
@@ -71,17 +71,17 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         } catch {
             throw BaseError(
                 context: .system,
-                message: "Unable to load points",
+                message: "Unable to load user ranks",
                 logger: logger
             )
         }
     }
     
-    func getById(id: String) -> GenericPoint? {
+    func getById(id: String) -> UserRank? {
         data?.data.first { $0.id == id }
     }
     
-    func getAll() -> [GenericPoint] {
+    func getAll() -> [UserRank] {
         data?.data ?? []
     }
 }

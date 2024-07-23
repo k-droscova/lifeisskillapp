@@ -42,6 +42,13 @@ struct HomeView: View {
                 Text("Generic Point Data")
             }
             .logoutButtonStyle()
+            
+            Spacer()
+            
+            Button(action: viewModel.printUserRankData) {
+                Text("User Rank Data")
+            }
+            .logoutButtonStyle()
         }
         .onAppear {
             viewModel.onAppear()
