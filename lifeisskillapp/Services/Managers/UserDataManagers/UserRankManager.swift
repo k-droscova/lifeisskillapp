@@ -31,8 +31,8 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     // MARK: - Public Properties
     
     /*
-     Delegate is not able to be passed into init, hence declared public.
-     Must be handled with caution -> can be set from anywhere
+     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
+     Now it can be set from anywhere, needs to be handled with caution.
      */
     weak var delegate: UserRankManagerFlowDelegate?
     

@@ -39,8 +39,8 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     // MARK: - Public Properties
     
     /*
-     Delegate is not able to be passed into init, hence declared public.
-     Must be handled with caution -> can be set from anywhere
+     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate) or if delegate is even necessary as it is not called anywhere.
+     Now it can be set from anywhere, needs to be handled with caution.
      */
     weak var delegate: UserLoginManagerFlowDelegate?
     
