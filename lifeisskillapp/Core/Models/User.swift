@@ -18,35 +18,79 @@ protocol UserProtocol: UserData {
 // Extend the protocol for Codable to make it easy to decode
 extension UserProtocol where Self: Codable {}
 
-// Model for user data from the listUserRank endpoint
+/// Model for user data from the Rank endpoint
 struct RankedUser: UserProtocol, Codable {
-    let userId: String         // Unique identifier for the user
-    let email: String          // User's email address
-    let nick: String           // User's nickname
-    let sex: UserGender        // User's sex
-    let order: String          // User's order in the ranking list
-    let points: String         // User's points
-    let lastTime: String       // Last time the user was active
-    let psc: String            // Postal code
-    let emailr: String         // Secondary email address
-    let mobil: String          // Mobile phone number
-    let mobilr: String         // Secondary mobile phone number
+    /// Unique identifier for the user
+    let userId: String
+    
+    /// User's email address
+    let email: String
+    
+    /// User's nickname
+    let nick: String
+    
+    /// User's sex
+    let sex: UserGender
+    
+    /// User's order in the ranking list
+    let order: String
+    
+    /// User's points
+    let points: String
+    
+    /// Last time the user was active
+    let lastTime: String
+    
+    /// Postal code
+    let psc: String
+    
+    /// Secondary email address
+    let emailr: String
+    
+    /// Mobile phone number
+    let mobil: String
+    
+    /// Secondary mobile phone number
+    let mobilr: String
 }
 
-// Model for user data from the login endpoint
+/// Model for user data from the login endpoint. Saved using UserLoginDataManager, this data is retrieved throughout App UI 
 struct LoggedInUser: UserProtocol, Codable {
-    let userId: String         // Unique identifier for the user
-    let email: String          // User's email address
-    let nick: String           // User's nickname
-    let sex: UserGender        // User's sex
-    let rights: Int            // User's rights (permissions level)
-    let rightsCoded: String    // Coded representation of user's rights
-    let token: String          // Authentication token
-    let userRank: Int          // User's rank
-    let userPoints: Int        // User's points
-    let distance: Int          // Distance to some reference point
-    let mainCategory: String   // User's main category
-    let fullActivation: Bool   // Whether the user's account is fully activated
+    /// Unique identifier for the user
+    let userId: String
+    
+    /// User's email address
+    let email: String
+    
+    /// User's nickname
+    let nick: String
+    
+    /// User's sex
+    let sex: UserGender
+    
+    /// User's rights (permissions level)
+    let rights: Int
+    
+    /// Coded representation of user's rights
+    let rightsCoded: String
+    
+    /// Authentication token
+    let token: String
+    
+    /// User's rank
+    let userRank: Int
+    
+    /// User's points
+    let userPoints: Int
+    
+    /// Distance to some reference point
+    let distance: Int
+    
+    /// User's main category
+    let mainCategory: String
+    
+    /// Whether the user's account is fully activated
+    let fullActivation: Bool
 }
 
 // Extend the UserProtocol to provide a default implementation for the id property
