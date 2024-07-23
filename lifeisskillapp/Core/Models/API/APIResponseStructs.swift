@@ -36,7 +36,20 @@ public struct LoginAPIResponse: DataProtocol {
         let mainCategory = try container.decode(String.self, forKey: .mainCategory)
         let fullActivation = try container.decode(Bool.self, forKey: .fullActivation)
         
-        self.user = LoggedInUser(userId: userId, email: email, nick: nick, sex: sex, rights: rights, rightsCoded: rightsCoded, token: token, userRank: userRank, userPoints: userPoints, distance: distance, mainCategory: mainCategory, fullActivation: fullActivation)
+        self.user = LoggedInUser(
+            userId: userId,
+            email: email,
+            nick: nick,
+            sex: sex,
+            rights: rights,
+            rightsCoded: rightsCoded,
+            token: token,
+            userRank: userRank,
+            userPoints: userPoints,
+            distance: distance,
+            mainCategory: mainCategory,
+            fullActivation: fullActivation
+        )
     }
     
     // Custom encoder to encode the LoggedInUser into the API response
