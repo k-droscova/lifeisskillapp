@@ -30,6 +30,7 @@
 		2720DF282C513D4B007B4E77 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF272C513D4B007B4E77 /* HomeViewController.swift */; };
 		2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */; };
 		2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2B2C514A0A007B4E77 /* HomeView.swift */; };
+		2720DF2E2C515906007B4E77 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2D2C515906007B4E77 /* String.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
 		27274F8A2C3320F3003453E2 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 27274F892C3320F3003453E2 /* Base */; };
@@ -140,6 +141,8 @@
 		2720DF272C513D4B007B4E77 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowCoordinator.swift; sourceTree = "<group>"; };
 		2720DF2B2C514A0A007B4E77 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2720DF2D2C515906007B4E77 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		2720DF2F2C516619007B4E77 /* lifeisskillapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lifeisskillapp.entitlements; sourceTree = "<group>"; };
 		27274F7A2C3320F2003453E2 /* lifeisskillapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeisskillapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -305,6 +308,7 @@
 		27274F712C3320F2003453E2 = {
 			isa = PBXGroup;
 			children = (
+				2720DF2F2C516619007B4E77 /* lifeisskillapp.entitlements */,
 				27274F7C2C3320F2003453E2 /* lifeisskillapp */,
 				27274F932C3320F3003453E2 /* lifeisskillappTests */,
 				27274F9D2C3320F3003453E2 /* lifeisskillappUITests */,
@@ -501,6 +505,7 @@
 				27066A962C4573110092B499 /* DateTime.swift */,
 				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
 				27CBD78C2C4EC72F00612375 /* CLLocation.swift */,
+				2720DF2D2C515906007B4E77 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -880,6 +885,7 @@
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
 				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
+				2720DF2E2C515906007B4E77 /* String.swift in Sources */,
 				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,

@@ -372,6 +372,9 @@
         }
       }
     },
+    "home.nfc.alertMessage" : {
+
+    },
     "home.nfc.button" : {
       "extractionState" : "manual",
       "localizations" : {

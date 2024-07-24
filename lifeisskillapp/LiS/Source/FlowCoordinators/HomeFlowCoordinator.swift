@@ -15,9 +15,8 @@ protocol HomeFlowCoordinatorDelegate: NSObject {
 }
 
 protocol HomeFlowDelegate: NSObject {
-    func loadWithNFC()
-    func loadWithQRCode()
-    func loadFromPhoto()
+    func loadingSuccessNFC()
+    func loadingFailureNFC()
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
@@ -37,18 +36,11 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
 }
 
 extension HomeFlowCoordinator: HomeFlowDelegate {
-    func loadWithNFC() {
-        print("NFC tapped")
-        // Implement actual navigation or logic here
+    func loadingSuccessNFC() {
+        delegate?.pointLoadingSuccess()
     }
     
-    func loadWithQRCode() {
-        print("QR tapped")
-        // Implement actual navigation or logic here
-    }
-    
-    func loadFromPhoto() {
-        print("Photo tapped")
-        // Implement actual navigation or logic here
+    func loadingFailureNFC() {
+        delegate?.pointLoadingFailure()
     }
 }
