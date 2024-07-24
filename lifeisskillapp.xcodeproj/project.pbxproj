@@ -46,9 +46,9 @@
 		275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457152C332DB400F3B55A /* LoginViewModel.swift */; };
 		275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457172C332DBE00F3B55A /* LoginViewController.swift */; };
 		2754571F2C33324900F3B55A /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754571E2C33324900F3B55A /* UIViewController.swift */; };
-		275457232C3332BF00F3B55A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* HomeView.swift */; };
-		275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* HomeViewModel.swift */; };
-		275457282C3332E000F3B55A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* HomeViewController.swift */; };
+		275457232C3332BF00F3B55A /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* DebugView.swift */; };
+		275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* DebugViewModel.swift */; };
+		275457282C3332E000F3B55A /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* DebugViewController.swift */; };
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
@@ -154,9 +154,9 @@
 		275457152C332DB400F3B55A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		275457172C332DBE00F3B55A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2754571E2C33324900F3B55A /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
-		275457222C3332BF00F3B55A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		275457252C3332CE00F3B55A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		275457272C3332E000F3B55A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		275457222C3332BF00F3B55A /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		275457252C3332CE00F3B55A /* DebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewModel.swift; sourceTree = "<group>"; };
+		275457272C3332E000F3B55A /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -351,7 +351,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				275457122C332D5500F3B55A /* Home */,
+				275457122C332D5500F3B55A /* Debug */,
 				27274FB62C3322A1003453E2 /* Login */,
 			);
 			path = Features;
@@ -511,14 +511,14 @@
 			path = UserDataManagers;
 			sourceTree = "<group>";
 		};
-		275457122C332D5500F3B55A /* Home */ = {
+		275457122C332D5500F3B55A /* Debug */ = {
 			isa = PBXGroup;
 			children = (
-				275457222C3332BF00F3B55A /* HomeView.swift */,
-				275457252C3332CE00F3B55A /* HomeViewModel.swift */,
-				275457272C3332E000F3B55A /* HomeViewController.swift */,
+				275457222C3332BF00F3B55A /* DebugView.swift */,
+				275457252C3332CE00F3B55A /* DebugViewModel.swift */,
+				275457272C3332E000F3B55A /* DebugViewController.swift */,
 			);
-			path = Home;
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		2754571B2C33303B00F3B55A /* NetworkStructs */ = {
@@ -816,7 +816,7 @@
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
-				275457282C3332E000F3B55A /* HomeViewController.swift in Sources */,
+				275457282C3332E000F3B55A /* DebugViewController.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
@@ -840,11 +840,11 @@
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
-				275457262C3332CE00F3B55A /* HomeViewModel.swift in Sources */,
+				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
-				275457232C3332BF00F3B55A /* HomeView.swift in Sources */,
+				275457232C3332BF00F3B55A /* DebugView.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
 				27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */,

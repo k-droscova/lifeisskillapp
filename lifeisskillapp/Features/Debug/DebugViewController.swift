@@ -8,13 +8,13 @@
 import ACKategories
 import SwiftUI
 
-final class HomeViewController: Base.ViewController {
-    let viewModel: HomeViewModeling
+final class DebugViewController: Base.ViewController {
+    let viewModel: DebugViewModeling
     
     // MARK: - Initialization
     
     override init() {
-        self.viewModel = HomeViewModel(
+        self.viewModel = DebugViewModel(
             dependencies: appDependencies
         )
         super.init()
@@ -29,7 +29,7 @@ final class HomeViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = HomeView(viewModel: viewModel)
+        let rootView = DebugView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)
         embedController(vc)
     }

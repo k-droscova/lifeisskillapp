@@ -8,7 +8,7 @@
 import Foundation
 import Observation
 
-protocol HomeViewModeling {
+protocol DebugViewModeling {
     func logout()
     func onAppear()
     func printUserCategoryData()
@@ -17,7 +17,7 @@ protocol HomeViewModeling {
     func printUserRankData()
 }
 
-final class HomeViewModel: HomeViewModeling, ObservableObject {
+final class DebugViewModel: DebugViewModeling, ObservableObject {
     typealias Dependencies = HasManagers
 
     private let locationManager: LocationManaging

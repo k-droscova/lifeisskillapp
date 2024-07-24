@@ -42,11 +42,11 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     
     private func setupTabBar() -> UITabBarController{
         // MARK: HOME
-        let homeVC = HomeViewController()
+        let homeVC = DebugViewController()
         homeVC.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("home.title", comment: ""),
-            image: UIImage(systemName: "house"),
-            selectedImage: UIImage(systemName: "house.fill")
+            title: "debug",
+            image: UIImage(systemName: "ladybug.circle"),
+            selectedImage: UIImage(systemName: "ladybug.circle.fill")
         )
         
         // MARK: - SETUP TabBar

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    @State var viewModel: HomeViewModeling
+struct DebugView: View {
+    @State var viewModel: DebugViewModeling
     
     var body: some View {
         contentView
