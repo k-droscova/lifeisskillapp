@@ -418,6 +418,29 @@
         }
       }
     },
+    "home.photo.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načíst z obrázku"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkt von Bild laden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load from picture"
+          }
+        }
+      }
+    },
     "home.points" : {
       "extractionState" : "manual",
       "localizations" : {

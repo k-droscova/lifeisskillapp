@@ -26,6 +26,10 @@
 		2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */; };
 		2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */; };
 		2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */; };
+		2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF252C513D40007B4E77 /* HomeViewModel.swift */; };
+		2720DF282C513D4B007B4E77 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF272C513D4B007B4E77 /* HomeViewController.swift */; };
+		2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */; };
+		2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2B2C514A0A007B4E77 /* HomeView.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
 		27274F8A2C3320F3003453E2 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 27274F892C3320F3003453E2 /* Base */; };
@@ -132,6 +136,10 @@
 		2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
 		2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.otf"; sourceTree = "<group>"; };
 		2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		2720DF252C513D40007B4E77 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		2720DF272C513D4B007B4E77 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowCoordinator.swift; sourceTree = "<group>"; };
+		2720DF2B2C514A0A007B4E77 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		27274F7A2C3320F2003453E2 /* lifeisskillapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeisskillapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -284,6 +292,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		2720DF242C513D28007B4E77 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2720DF252C513D40007B4E77 /* HomeViewModel.swift */,
+				2720DF272C513D4B007B4E77 /* HomeViewController.swift */,
+				2720DF2B2C514A0A007B4E77 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		27274F712C3320F2003453E2 = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +369,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2720DF242C513D28007B4E77 /* Home */,
 				275457122C332D5500F3B55A /* Debug */,
 				27274FB62C3322A1003453E2 /* Login */,
 			);
@@ -424,6 +443,7 @@
 			children = (
 				2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */,
 				2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */,
+				2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -813,12 +833,14 @@
 				27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */,
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
+				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				275457282C3332E000F3B55A /* DebugViewController.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
+				2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
 				27C619972C3AB5D50067498F /* Theme.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
@@ -854,9 +876,11 @@
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
+				2720DF282C513D4B007B4E77 /* HomeViewController.swift in Sources */,
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
 				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
+				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,
 				27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */,
