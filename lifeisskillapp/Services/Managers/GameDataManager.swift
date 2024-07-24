@@ -17,7 +17,6 @@ protocol HasGameDataManager {
 
 protocol GameDataManaging {
     var delegate: GameDataManagerFlowDelegate? { get set }
-    var checkSumData: CheckSumData? { get set }
     func fetchNewDataIfNeccessary() async
 }
 
@@ -33,6 +32,10 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private let userPointManager: any UserPointManaging
     private let genericPointManager: any GenericPointManaging
     private let userRankManager: any UserRankManaging
+    private var checkSumData: CheckSumData? {
+        get { userDefaultsStorage.checkSumData }
+        set { userDefaultsStorage.checkSumData = newValue }
+    }
     
     // MARK: - Public Properties
     
@@ -41,11 +44,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
      Now it can be set from anywhere, needs to be handled with caution.
      */
     weak var delegate: GameDataManagerFlowDelegate?
-    
-    var checkSumData: CheckSumData? {
-        get { userDefaultsStorage.checkSumData }
-        set { userDefaultsStorage.checkSumData = newValue }
-    }
     
     // MARK: - Initialization
     
@@ -69,7 +67,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             delegate?.onError(error)
         }
     }
-
+    
     // MARK: - Private Helpers
     
     private func checkCheckSumData() async throws {
@@ -79,6 +77,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             let checkSum = try await fetchNewCheckSumData()
             // if no data have changed since last data fetch then do nothing
             if checkSum == checkSumData {
+                logger.log(message: "FETCHED CHECK SUM: \(String(describing: checkSum)) EQUALS OLD: \(String(describing: checkSumData))")
                 return
             }
             // else update
@@ -87,23 +86,22 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func fetchNewCheckSumData() async throws -> CheckSumData {
-        var result = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         do {
-            let userPointsResponse = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
-            result.userPoints = userPointsResponse.data.pointsProtect
+            // Start calls on different threads
+            async let userPointsResponse = checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
+            async let rankResponse = checkSumAPI.getRank(baseURL: APIUrl.baseURL)
+            async let pointsPatchResponse = checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
+            async let messagePatchResponse = checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
+            async let eventsPatchResponse = checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
             
-            let rankResponse = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL)
-            result.rank = rankResponse.data.rankProtect
-            
-            let pointsPatchResponse = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
-            result.points = pointsPatchResponse.data.pointsProtect
-            
-            let messagePatchResponse = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
-            result.messages = messagePatchResponse.data.msgProtect
-            
-            let eventsPatchResponse = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
-            result.events = eventsPatchResponse.data.eventsProtect
-            return result
+            // Initialize and return CheckSumData with await (waits for async thread results)
+            return try await CheckSumData(
+                userPoints: userPointsResponse.data.pointsProtect,
+                rank: rankResponse.data.rankProtect,
+                messages: messagePatchResponse.data.msgProtect,
+                events: eventsPatchResponse.data.eventsProtect,
+                points: pointsPatchResponse.data.pointsProtect
+            )
         } catch {
             throw BaseError(
                 context: .system,
@@ -117,27 +115,29 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         // if no data have been saved until now then fetch all user data
         guard let currentData = checkSumData else {
             userDefaultsStorage.beginTransaction()
-            checkSumData = newCheckSum
+            checkSumData = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
             userDefaultsStorage.commitTransaction()
             await fetchAllNewData()
             return
         }
-        // else fetch just the data that has been updated
-        if (currentData.userPoints != newCheckSum.userPoints) {
-            await fetchNewUserPoints()
-        }
-        if (currentData.events != newCheckSum.events) {
-            await fetchNewUserEvents()
-        }
-        if (currentData.messages != newCheckSum.messages) {
-            await fetchNewUserMessages()
-        }
-        if (currentData.rank != newCheckSum.rank) {
-            await fetchNewUserRank()
-        }
-        if (currentData.points != newCheckSum.points) {
-            await fetchNewPoints()
-        }
+        /*
+         If there is data saved, we will dispatch different threads to handle different data.
+         The async let binding allows the fetchNewUserPoints() function to run concurrently with the other fetch functions. This should dramatically speed up the process of fetching data, especially if there have been changes in Generic Points which have a lot of data.
+         However, the fetch is performed only if the current checksum for that data is different than new checksum.
+         This ensures only the necessary data is fetched and updated.
+         */
+        async let userPoints: Void? = (currentData.userPoints != newCheckSum.userPoints) ? fetchNewUserPoints() : nil
+        async let events: Void? = (currentData.events != newCheckSum.events) ? fetchNewUserEvents() : nil
+        async let messages: Void? = (currentData.messages != newCheckSum.messages) ? fetchNewUserMessages() : nil
+        async let rank: Void? = (currentData.rank != newCheckSum.rank) ? fetchNewUserRank() : nil
+        async let points: Void? = (currentData.points != newCheckSum.points) ? fetchNewPoints() : nil
+        
+        // Await all results
+        await userPoints
+        await events
+        await messages
+        await rank
+        await points
     }
     
     private func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
@@ -158,11 +158,19 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func fetchAllNewData() async {
-        await fetchNewUserPoints()
-        await fetchNewUserEvents()
-        await fetchNewUserRank()
-        await fetchNewUserMessages()
-        await fetchNewPoints()
+        // Run this concurrently on different threads
+        async let userPoints: () = fetchNewUserPoints()
+        async let events: () = fetchNewUserEvents()
+        async let rank: () = fetchNewUserRank()
+        async let messages: () = fetchNewUserMessages()
+        async let points: () = fetchNewPoints()
+        
+        // Await all results
+        await userPoints
+        await events
+        await messages
+        await rank
+        await points
     }
     
     private func fetchNewUserPoints() async {
