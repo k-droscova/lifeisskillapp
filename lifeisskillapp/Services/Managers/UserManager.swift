@@ -101,5 +101,3 @@ final class UserManager: BaseClass, UserManaging {
         delegate?.onLogout()
     }
 }
-
-
