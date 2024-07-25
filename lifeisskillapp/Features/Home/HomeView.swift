@@ -2,57 +2,34 @@
 //  HomeView.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 01.07.2024.
+//  Created by Karolína Droscová on 24.07.2024.
 //
 
 import SwiftUI
 
 struct HomeView: View {
-    @State var viewModel: HomeViewModeling
+    @State private var viewModel: HomeViewModeling
     
-    var body: some View {
-        contentView
-            .padding(30)
+    init(viewModel: HomeViewModeling) {
+        self.viewModel = viewModel
     }
-    
-    var contentView: some View {
+
+    var body: some View {
         VStack {
-            Button(action: viewModel.logout) {
-                Text("settings.logout")
+            Button(action: viewModel.loadWithNFC) {
+                Text("home.nfc.button")
             }
-            .logoutButtonStyle()
-            
-            Spacer()
-            
-            Button(action: viewModel.printUserCategoryData) {
-                Text("User Category Data")
+            .loginButtonStyle()
+
+            Button(action: viewModel.loadWithQRCode) {
+                Text("home.qr.button")
             }
-            .logoutButtonStyle()
-            
-            Spacer()
-            
-            Button(action: viewModel.printUserPointData) {
-                Text("User Point Data")
+            .loginButtonStyle()
+
+            Button(action: viewModel.loadFromPhoto) {
+                Text("home.photo.button")
             }
-            .logoutButtonStyle()
-            
-            Spacer()
-            
-            Button(action: viewModel.printGenericPointData) {
-                Text("Generic Point Data")
-            }
-            .logoutButtonStyle()
-            
-            Spacer()
-            
-            Button(action: viewModel.printUserRankData) {
-                Text("User Rank Data")
-            }
-            .logoutButtonStyle()
-        }
-        .onAppear {
-            viewModel.onAppear()
+            .loginButtonStyle()
         }
     }
 }
-

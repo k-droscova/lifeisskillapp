@@ -2,19 +2,21 @@
 //  HomeViewController.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 24.07.2024.
+//  Created by Karolína Droscová on 01.07.2024.
 //
 
 import ACKategories
 import SwiftUI
 
-final class HomeViewController: Base.ViewController {
-    private let viewModel: HomeViewModeling
+final class DebugViewController: Base.ViewController {
+    let viewModel: DebugViewModeling
     
     // MARK: - Initialization
     
-    init(viewModel: HomeViewModeling) {
-        self.viewModel = viewModel
+    override init() {
+        self.viewModel = DebugViewModel(
+            dependencies: appDependencies
+        )
         super.init()
     }
     
@@ -27,7 +29,7 @@ final class HomeViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = HomeView(viewModel: viewModel)
+        let rootView = DebugView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)
         embedController(vc)
     }

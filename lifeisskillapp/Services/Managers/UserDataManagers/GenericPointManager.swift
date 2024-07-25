@@ -64,9 +64,7 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         logger.log(message: "Loading user points")
         do {
             let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: token)
-            userDataStorage.beginTransaction()
             data = response.data
-            userDataStorage.commitTransaction()
             delegate?.onUpdate()
         } catch {
             throw BaseError(

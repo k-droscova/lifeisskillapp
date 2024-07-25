@@ -41,8 +41,18 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     // MARK: - Private helpers
     
     private func setupTabBar() -> UITabBarController{
+        // MARK: DEBUG
+        let debugVC = DebugViewController()
+        debugVC.tabBarItem = UITabBarItem(
+            title: "debug",
+            image: UIImage(systemName: "ladybug.circle"),
+            selectedImage: UIImage(systemName: "ladybug.circle.fill")
+        )
+        
         // MARK: HOME
-        let homeVC = HomeViewController()
+        let homeFC = HomeFlowCoordinator(delegate: self)
+        addChild(homeFC)
+        let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("home.title", comment: ""),
             image: UIImage(systemName: "house"),
@@ -52,6 +62,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         // MARK: - SETUP TabBar
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
+            debugVC,
             homeVC
         ]
         tabVC.tabBar.tintColor = UIColor.theme.lisPink
@@ -94,5 +105,14 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 
         })
         rootViewController?.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
+    func pointLoadingSuccess() {
+        print("Point loaded successfully")
+    }
+    func pointLoadingFailure() {
+        print("Point loading failed")
     }
 }

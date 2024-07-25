@@ -11,7 +11,7 @@ protocol HasUserDataStorage {
     var userDataStorage: UserDataStoraging { get set }
 }
 
-protocol UserDataStoraging: UserStoraging {
+protocol UserDataStoraging {
     var userCategoryData: UserCategoryData? { get set }
     var userPointData: UserPointData? { get set }
     var genericPointData: GenericPointData? { get set }
@@ -25,18 +25,27 @@ final class UserDataStorage: UserDataStoraging {
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private var transactionCache: [String: Any] = [:]
-    private var inTransaction: Bool = false
-    // Internal storage dictionary to store values, will be replaced with SwiftData/Realm later
+    /*
+     Internal storage dictionary to store values, will be replaced with SwiftData/Realm later
+     Note: [String: Any] cannot store nil directly, hence we store NSNull instead when newValue is nil, and return nil when stored value is NSNull
+     */
     private var internalStore: [String: Any] = [:]
     
     // MARK: - Public Properties
     
     var userCategoryData: UserCategoryData? {
-        get { inTransaction ? transactionCache["userCategoryData"] as? UserCategoryData : internalStore["userCategoryData"] as? UserCategoryData }
+        get {
+            if let data = internalStore["userCategoryData"] as? UserCategoryData {
+                return data
+            } else if internalStore["userCategoryData"] is NSNull {
+                return nil
+            } else {
+                return nil
+            }
+        }
         set {
-            if inTransaction {
-                transactionCache["userCategoryData"] = newValue
+            if newValue == nil {
+                internalStore["userCategoryData"] = NSNull()
             } else {
                 internalStore["userCategoryData"] = newValue
             }
@@ -44,10 +53,18 @@ final class UserDataStorage: UserDataStoraging {
     }
     
     var userPointData: UserPointData? {
-        get { inTransaction ? transactionCache["userPointData"] as? UserPointData : internalStore["userPointData"] as? UserPointData }
+        get {
+            if let data = internalStore["userPointData"] as? UserPointData {
+                return data
+            } else if internalStore["userPointData"] is NSNull {
+                return nil
+            } else {
+                return nil
+            }
+        }
         set {
-            if inTransaction {
-                transactionCache["userPointData"] = newValue
+            if newValue == nil {
+                internalStore["userPointData"] = NSNull()
             } else {
                 internalStore["userPointData"] = newValue
             }
@@ -55,10 +72,18 @@ final class UserDataStorage: UserDataStoraging {
     }
     
     var genericPointData: GenericPointData? {
-        get { inTransaction ? transactionCache["pointData"] as? GenericPointData : internalStore["pointData"] as? GenericPointData }
+        get {
+            if let data = internalStore["pointData"] as? GenericPointData {
+                return data
+            } else if internalStore["pointData"] is NSNull {
+                return nil
+            } else {
+                return nil
+            }
+        }
         set {
-            if inTransaction {
-                transactionCache["pointData"] = newValue
+            if newValue == nil {
+                internalStore["pointData"] = NSNull()
             } else {
                 internalStore["pointData"] = newValue
             }
@@ -66,10 +91,18 @@ final class UserDataStorage: UserDataStoraging {
     }
     
     var userRankData: UserRankData? {
-        get { inTransaction ? transactionCache["userRankData"] as? UserRankData : internalStore["userRankData"] as? UserRankData }
+        get {
+            if let data = internalStore["userRankData"] as? UserRankData {
+                return data
+            } else if internalStore["userRankData"] is NSNull {
+                return nil
+            } else {
+                return nil
+            }
+        }
         set {
-            if inTransaction {
-                transactionCache["userRankData"] = newValue
+            if newValue == nil {
+                internalStore["userRankData"] = NSNull()
             } else {
                 internalStore["userRankData"] = newValue
             }
@@ -77,20 +110,20 @@ final class UserDataStorage: UserDataStoraging {
     }
     
     var loginData: LoginUserData? {
-        get { inTransaction ? transactionCache["loginData"] as? LoginUserData : internalStore["loginData"] as? LoginUserData }
-        set {
-            if inTransaction {
-                if newValue == nil {
-                    transactionCache["loginData"] = NSNull()
-                } else {
-                    transactionCache["loginData"] = newValue
-                }
+        get {
+            if let data = internalStore["loginData"] as? LoginUserData {
+                return data
+            } else if internalStore["loginData"] is NSNull {
+                return nil
             } else {
-                if newValue == nil {
-                    internalStore["loginData"] = NSNull()
-                } else {
-                    internalStore["loginData"] = newValue
-                }
+                return nil
+            }
+        }
+        set {
+            if newValue == nil {
+                internalStore["loginData"] = NSNull()
+            } else {
+                internalStore["loginData"] = newValue
             }
         }
     }
@@ -99,32 +132,5 @@ final class UserDataStorage: UserDataStoraging {
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
-    }
-    
-    // MARK: - Public Interface
-    
-    func beginTransaction() {
-        inTransaction = true
-        transactionCache = [:]
-        logger.log(message: "Transaction started.")
-    }
-    
-    func commitTransaction() {
-        guard inTransaction else { return }
-        
-        for (key, value) in transactionCache {
-            internalStore[key] = value
-            logger.log(message: "New value for \(key): \(value)")
-        }
-        
-        inTransaction = false
-        transactionCache = [:]
-        logger.log(message: "Transaction finished.")
-    }
-    
-    func rollbackTransaction() {
-        inTransaction = false
-        transactionCache = [:]
-        logger.log(message: "Transaction rolled back.")
     }
 }

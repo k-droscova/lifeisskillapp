@@ -372,6 +372,9 @@
         }
       }
     },
+    "home.nfc.alertMessage" : {
+
+    },
     "home.nfc.button" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -414,6 +417,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hold NFC chip close to the phone top back."
+          }
+        }
+      }
+    },
+    "home.photo.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načíst z obrázku"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkt von Bild laden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load from picture"
           }
         }
       }

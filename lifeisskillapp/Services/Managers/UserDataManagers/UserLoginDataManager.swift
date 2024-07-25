@@ -83,9 +83,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
         logger.log(message: "Login User: " + credentials.username)
         do {
             let response = try await loginAPI.login(loginCredentials: credentials, baseURL: APIUrl.baseURL)
-            userDataStorage.beginTransaction()
             data = response.data
-            userDataStorage.commitTransaction()
         } catch {
             throw BaseError(
                 context: .system,
@@ -96,9 +94,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     }
     
     func logout() {
-        userDataStorage.beginTransaction()
         data = nil
-        userDataStorage.commitTransaction()
     }
     
     func getById(id: String) -> LoggedInUser? {

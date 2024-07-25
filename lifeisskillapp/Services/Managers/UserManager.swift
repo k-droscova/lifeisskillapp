@@ -75,9 +75,7 @@ final class UserManager: BaseClass, UserManaging {
         do {
             let response = try await registerAppAPI.registerApp(baseURL: APIUrl.baseURL)
             let responseAppId = response.data.appId
-            userDefaultsStorage.beginTransaction()
             userDefaultsStorage.appId = responseAppId
-            userDefaultsStorage.commitTransaction()
         } catch {
             throw BaseError(
                 context: .system,
@@ -94,9 +92,7 @@ final class UserManager: BaseClass, UserManaging {
     
     func logout() {
         logger.log(message: "Logging out")
-        userDefaultsStorage.beginTransaction()
         userDefaultsStorage.checkSumData = nil // MARK: This will not be done once we have persitent data storage
-        userDefaultsStorage.commitTransaction()
         userLoginDataManager.logout()
         delegate?.onLogout()
     }
