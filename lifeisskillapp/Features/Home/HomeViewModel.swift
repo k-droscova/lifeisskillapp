@@ -44,11 +44,11 @@ final class HomeViewModel: NSObject, HomeViewModeling, ObservableObject {
     }
     
     func loadWithQRCode() {
-
+        
     }
     
     func loadFromPhoto() {
-
+        
     }
 }
 
@@ -68,18 +68,27 @@ extension HomeViewModel {
     func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
         for message in messages {
             for record in message.records {
-                if let string = String(data: record.payload, encoding: .ascii) {
-                    if string.contains("Life is Skill") {
-                        pointScanned(pointID: string.parseMessage(), source: .nfc)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                            session.invalidate()
-                        }
-                        return
-                    }
+                // ensure correct format
+                guard let string = String(data: record.payload, encoding: .ascii) else {
+                    continue
                 }
+                //ensure that nfc is from LiS
+                guard string.contains("Life is Skill") else {
+                    continue
+                }
+                pointScanned(pointID: string.parseMessage(), source: .nfc)
+                /*
+                 Delay the session invalidation by 0.75 seconds to ensure smooth user experience and allow enough time for the pointScanned function to complete its processing.
+                 TODO: test that this is neccessary once developer licence is obtained
+                 */
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                    session.invalidate()
+                }
+                return
             }
         }
         session.invalidate()
+        // TODO: test that this is neccessary once developer licence is obtained
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.delegate?.loadingFailureNFC()
         }
