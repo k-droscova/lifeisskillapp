@@ -9,7 +9,7 @@ import ACKategories
 import SwiftUI
 
 final class HomeViewController: Base.ViewController {
-    let viewModel: HomeViewModeling
+    private let viewModel: HomeViewModeling
     
     // MARK: - Initialization
     
