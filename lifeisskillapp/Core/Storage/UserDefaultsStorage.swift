@@ -29,7 +29,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     
     var checkSumData: CheckSumData? {
         get {
-            return UserDefaults.standard.checkSumData // uses UserDefaults extension for custom key
+            UserDefaults.standard.checkSumData // uses UserDefaults extension for custom key
         }
         set {
             UserDefaults.standard.checkSumData = newValue
@@ -38,7 +38,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     
     var location: UserLocation? {
         get {
-            return UserDefaults.standard.location // uses UserDefaults extension for custom key
+            UserDefaults.standard.location // uses UserDefaults extension for custom key
         }
         set {
             UserDefaults.standard.location = newValue
@@ -47,7 +47,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     
     var appId: String? {
         get {
-            return UserDefaults.standard.appId // uses UserDefaults extension for custom key
+            UserDefaults.standard.appId // uses UserDefaults extension for custom key
         }
         set {
             UserDefaults.standard.appId = newValue
