@@ -22,7 +22,13 @@ protocol HomeFlowDelegate: NSObject {
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
 final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
-    weak var delegate: HomeFlowCoordinatorDelegate?
+    private weak var delegate: HomeFlowCoordinatorDelegate?
+    
+    // MARK: - Initialization
+    
+    init(delegate: HomeFlowCoordinatorDelegate? = nil) {
+        self.delegate = delegate
+    }
 
     /// Starts the home flow by presenting the home view controller.
     ///
