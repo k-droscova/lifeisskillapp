@@ -65,9 +65,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         logger.log(message: "Loading user points")
         do {
             let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
-            userDataStorage.beginTransaction()
             data = response.data
-            userDataStorage.commitTransaction()
             delegate?.onUpdate()
         } catch {
             throw BaseError(

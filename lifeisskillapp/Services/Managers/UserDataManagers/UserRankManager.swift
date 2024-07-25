@@ -64,9 +64,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
         logger.log(message: "Loading user ranks")
         do {
             let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
-            userDataStorage.beginTransaction()
             data = response.data
-            userDataStorage.commitTransaction()
             delegate?.onUpdate()
         } catch {
             throw BaseError(

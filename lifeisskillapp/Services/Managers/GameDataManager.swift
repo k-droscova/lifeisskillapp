@@ -116,9 +116,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private func updateData(newCheckSum: CheckSumData) async throws {
         // if no data have been saved until now then fetch all user data
         guard let currentData = checkSumData else {
-            userDefaultsStorage.beginTransaction()
             checkSumData = newCheckSum
-            userDefaultsStorage.commitTransaction()
             await fetchAllNewData()
             return
         }
@@ -141,7 +139,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
-        userDefaultsStorage.beginTransaction()
         switch type {
         case .userPoints:
             checkSumData?.userPoints = newCheckSum
@@ -154,7 +151,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         case .points:
             checkSumData?.points = newCheckSum
         }
-        userDefaultsStorage.commitTransaction()
     }
     
     private func fetchAllNewData() async {
