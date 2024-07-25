@@ -109,10 +109,16 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 }
 
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
+    func featureUnavailable() {
+        // TODO: show alert
+        print("feature unavailable")
+    }
     func pointLoadingSuccess() {
+        // TODO: handle this better
         print("Point loaded successfully")
     }
     func pointLoadingFailure() {
+        // TODO: handle this better
         print("Point loading failed")
     }
 }

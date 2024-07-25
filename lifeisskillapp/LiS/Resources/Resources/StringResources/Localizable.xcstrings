@@ -280,6 +280,28 @@
         }
       }
     },
+    "home.camera.instructions" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenujte název, rok a kód turistické značky. Název je nahoře (měl by obsahovat \"KČT\"), rok je vlevo dole a kód vpravo dole."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scannen Sie den Titel, das Jahr und den Code des Touristenschildes. Der Titel steht oben (muss „KČT“ enthalten), das Jahr unten links und der Code unten rechts."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan the title, year and code of the Tourist Sign. Title is at the top (should contain \"KČT\"), year in bottom left, and code in bottom right."
+          }
+        }
+      }
+    },
     "home.description.nfc" : {
       "extractionState" : "manual",
       "localizations" : {

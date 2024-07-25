@@ -1,14 +1,15 @@
 //
-//  HomeViewController.swift
+//  HomeCameraOCRViewController.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 24.07.2024.
+//  Created by Karolína Droscová on 25.07.2024.
 //
 
 import ACKategories
 import SwiftUI
 
-final class HomeViewController: Base.ViewController {
+@available(iOS 16.0, *)
+final class HomeCameraOCRViewController: Base.ViewController {
     private let viewModel: HomeViewModeling
     
     // MARK: - Initialization
@@ -27,7 +28,7 @@ final class HomeViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = HomeView(viewModel: viewModel)
+        let rootView = HomeCameraOCRView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)
         embedController(vc)
     }
