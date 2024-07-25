@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var viewModel: HomeViewModeling
+    @State private var viewModel: HomeViewModeling
+    
+    init(viewModel: HomeViewModeling) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         VStack {
