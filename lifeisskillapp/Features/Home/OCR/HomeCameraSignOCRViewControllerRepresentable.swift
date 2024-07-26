@@ -12,11 +12,11 @@ import VisionKit
 /// A SwiftUI representable struct that wraps a `UIViewController` to use the VisionKit `DataScannerViewController` for scanning text.
 @available(iOS 16.0, *)
 struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentable {
-    private let viewModel: HomeViewModeling
+    private let viewModel: OcrViewModeling
     
     /// Initializes the `HomeCameraSignOCRViewControllerRepresentable` with the provided view model.
-    /// - Parameter viewModel: The view model conforming to `HomeViewModeling`.
-    init(viewModel: HomeViewModeling) {
+    /// - Parameter viewModel: The view model conforming to `OcrViewModeling`.
+    init(viewModel: OcrViewModeling) {
         self.viewModel = viewModel
     }
     
@@ -64,13 +64,13 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
     
     /// A coordinator class that serves as the delegate for the `DataScannerViewController`.
     class Coordinator: NSObject, DataScannerViewControllerDelegate {
-        private let viewModel: HomeViewModeling
+        private let viewModel: OcrViewModeling
         weak var dataScannerVC: DataScannerViewController?
         private var itemHighlightViews: [RecognizedItem.ID: HighlightView] = [:]
         
         /// Initializes the coordinator with the provided view model.
-        /// - Parameter viewModel: The view model conforming to `HomeViewModeling`.
-        init(viewModel: HomeViewModeling) {
+        /// - Parameter viewModel: The view model conforming to `OcrViewModeling`.
+        init(viewModel: OcrViewModeling) {
             self.viewModel = viewModel
         }
         

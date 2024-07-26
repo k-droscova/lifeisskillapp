@@ -9,9 +9,9 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct HomeCameraOCRView: View {
-    @State private var viewModel: HomeViewModeling
+    @State private var viewModel: OcrViewModeling
     
-    init(viewModel: HomeViewModeling) {
+    init(viewModel: OcrViewModeling) {
         self.viewModel = viewModel
     }
 
