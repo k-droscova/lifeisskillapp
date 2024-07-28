@@ -8,7 +8,7 @@
 import Foundation
 import CoreNFC
 
-protocol NfcViewModeling: NFCNDEFReaderSessionDelegate {
+protocol NfcViewModeling: NSObject {
     func startScanning()
     func stopScanning()
 }
@@ -42,6 +42,21 @@ final class NfcViewModel: NSObject, NfcViewModeling {
         session = nil
     }
     
+    private func handleScannedPoint(_ pointID: String) {
+        logger.log(message: "Point scanned from NFC: \(pointID)")
+        let point = LoadPoint(code: pointID, codeSource: .nfc)
+        Task {
+            do {
+                try await scanningManager.sendScannedPoint(point)
+                delegate?.onSuccess(source: .nfc)
+            } catch {
+                delegate?.onFailure(source: .nfc)
+            }
+        }
+    }
+}
+
+extension NfcViewModel: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
         do {
             throw BaseError(
@@ -73,19 +88,6 @@ final class NfcViewModel: NSObject, NfcViewModeling {
         session.invalidate()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.delegate?.onFailure(source: .nfc)
-        }
-    }
-    
-    private func handleScannedPoint(_ pointID: String) {
-        logger.log(message: "Point scanned from NFC: \(pointID)")
-        let point = LoadPoint(code: pointID, codeSource: .nfc)
-        Task {
-            do {
-                try await scanningManager.sendScannedPoint(point)
-                delegate?.onSuccess(source: .nfc)
-            } catch {
-                delegate?.onFailure(source: .nfc)
-            }
         }
     }
 }
