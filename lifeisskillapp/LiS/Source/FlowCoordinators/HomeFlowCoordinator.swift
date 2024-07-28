@@ -18,9 +18,8 @@ protocol HomeFlowDelegate: NSObject {
     // MARK: - scanning flow
     func loadFromQR()
     func dismissQR()
-    func loadFromCamera()
+    func loadFromCamera(viewModel: OcrViewModeling)
     func dismissCamera()
-    func loadFromNFC()
     // MARK: - message flow
     func featureUnavailable()
     func onSuccess(source: CodeSource)
@@ -32,9 +31,6 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: HomeViewModeling?
-    private weak var ocrVM: OcrViewModeling?
-    private weak var nfcVM: NfcViewModeling?
-    
     
     // MARK: - Initialization
     
@@ -70,11 +66,9 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     
     // MARK: - Camera Flow
     
-    func loadFromCamera() {
+    func loadFromCamera(viewModel: OcrViewModeling) {
         if #available(iOS 16.0, *) {
-            let ocrVM = OcrViewModel(dependencies: appDependencies, delegate: self)
-            self.ocrVM = ocrVM
-            let cameraViewController = HomeCameraOCRViewController(viewModel: ocrVM)
+            let cameraViewController = HomeCameraOCRViewController(viewModel: viewModel)
             cameraViewController.modalPresentationStyle = .fullScreen
             navigationController?.present(cameraViewController, animated: true, completion: nil)
         } else {
@@ -84,14 +78,6 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     
     func dismissCamera() {
         navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: - NFC Flow
-    
-    func loadFromNFC() {
-        let nfcVM = NfcViewModel(dependencies: appDependencies, delegate: self)
-        self.nfcVM = nfcVM
-        self.nfcVM?.startScanning()
     }
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 /// A protocol that defines the required methods for the HomeViewModel.
-protocol HomeViewModeling: NSObject {
+protocol HomeViewModeling: BaseClass {
     /// Initiates the process of loading with NFC.
     func loadWithNFC()
     
@@ -24,11 +24,13 @@ protocol HomeViewModeling: NSObject {
 }
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
-final class HomeViewModel: NSObject, ObservableObject, HomeViewModeling {
-    typealias Dependencies = HasLoggerServicing
+final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
+    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
+    private let nfcVM: NfcViewModeling
+    private let ocrVM: OcrViewModeling
     
     /// Initializes the HomeViewModel.
     /// - Parameters:
@@ -37,11 +39,13 @@ final class HomeViewModel: NSObject, ObservableObject, HomeViewModeling {
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
         self.logger = dependencies.logger
         self.delegate = delegate
+        self.nfcVM = NfcViewModel(dependencies: dependencies, delegate: delegate)
+        self.ocrVM = OcrViewModel(dependencies: dependencies, delegate: delegate)
     }
     
     // MARK: - NFC
     func loadWithNFC() {
-        delegate?.loadFromNFC()
+        nfcVM.startScanning()
     }
     
     // MARK: - QR
@@ -51,7 +55,7 @@ final class HomeViewModel: NSObject, ObservableObject, HomeViewModeling {
     
     // MARK: - Camera
     func loadFromCamera() {
-        delegate?.loadFromCamera()
+        delegate?.loadFromCamera(viewModel: self.ocrVM)
     }
     
     func dismissCamera() {

@@ -8,12 +8,12 @@
 import Foundation
 import CoreNFC
 
-protocol NfcViewModeling: NSObject {
+protocol NfcViewModeling {
     func startScanning()
     func stopScanning()
 }
 
-final class NfcViewModel: NSObject, NfcViewModeling {
+final class NfcViewModel: BaseClass, NfcViewModeling {
     typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
     
     private weak var delegate: HomeFlowDelegate?
@@ -48,8 +48,10 @@ final class NfcViewModel: NSObject, NfcViewModeling {
         Task { @MainActor in
             do {
                 try await scanningManager.sendScannedPoint(point)
+                self.stopScanning()
                 delegate?.onSuccess(source: .nfc)
             } catch {
+                self.stopScanning()
                 delegate?.onFailure(source: .nfc)
             }
         }
@@ -65,6 +67,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 logger: logger
             )
         } catch {
+            self.stopScanning()
             delegate?.onFailure(source: .nfc)
         }
     }
@@ -85,7 +88,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 return
             }
         }
-        session.invalidate()
+        self.stopScanning()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.delegate?.onFailure(source: .nfc)
         }

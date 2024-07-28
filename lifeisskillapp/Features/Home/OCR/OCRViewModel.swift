@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol OcrViewModeling: NSObject {
+protocol OcrViewModeling: BaseClass {
     func dismissCamera()
     func scanningFailed()
     func categorizeText(_ text: String)
     func isSignTextValid(_ str: String) -> Bool
 }
 
-final class OcrViewModel: NSObject, OcrViewModeling {
+final class OcrViewModel: BaseClass, OcrViewModeling {
     typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
     
     // MARK: - Private Properties
@@ -71,26 +71,23 @@ final class OcrViewModel: NSObject, OcrViewModeling {
         locationManager.checkLocationAuthorization()
         guard let code = sign.code else { return }
         let point = LoadPoint(code: code, codeSource: .text)
-        Task {
+        Task { @MainActor in
             do {
                 try await scanningManager.sendScannedPoint(point)
-                DispatchQueue.main.async {
-                    self.delegate?.onSuccess(source: .text)
-                }
+                self.delegate?.onSuccess(source: .text)
             } catch {
-                DispatchQueue.main.async {
-                    self.delegate?.onFailure(source: .text)
-                }
+                self.delegate?.onFailure(source: .text)
             }
         }
     }
     
     private func isSignValid(sign: TouristSign) -> Bool {
+        // TODO: Handle validation logic (combination of title, year and code)
         true
     }
     
     func isSignTextValid(_ str: String) -> Bool {
-        return containsRouteName(str) || containsYear(str) || containsCode(str)
+        containsRouteName(str) || containsYear(str) || containsCode(str)
     }
     
     private func containsRouteName(_ text: String) -> Bool {
