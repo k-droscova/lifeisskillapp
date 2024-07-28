@@ -59,10 +59,14 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         }
         
         // Check if all required fields are scanned
-        if scannedSignInfo.routeName != nil && scannedSignInfo.year != nil && scannedSignInfo.code != nil {
+        if isSignComplete() {
             sendScannedPointToAPI(sign: scannedSignInfo)
             dismissCamera()
         }
+    }
+    
+    func isSignTextValid(_ str: String) -> Bool {
+        containsRouteName(str) || containsYear(str) || containsCode(str)
     }
     
     // MARK: - Private Helpers
@@ -86,8 +90,8 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         true
     }
     
-    func isSignTextValid(_ str: String) -> Bool {
-        containsRouteName(str) || containsYear(str) || containsCode(str)
+    private func isSignComplete() -> Bool {
+        scannedSignInfo.routeName != nil && scannedSignInfo.year != nil && scannedSignInfo.code != nil
     }
     
     private func containsRouteName(_ text: String) -> Bool {
@@ -96,14 +100,14 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     private func extractYear(from text: String) -> String? {
         let yearRegex = "\\b\\d{4}\\b"
-        if let range = text.range(of: yearRegex, options: .regularExpression) {
-            return String(text[range])
+        guard let range = text.range(of: yearRegex, options: .regularExpression) else {
+            return nil
         }
-        return nil
+        return String(text[range])
     }
     
     private func containsYear(_ text: String) -> Bool {
-        return extractYear(from: text) != nil
+        extractYear(from: text) != nil
     }
     
     private func extractCode(from text: String) -> String? {
@@ -115,23 +119,23 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     private func extractNewCode(from text: String) -> String? {
         let newCodeRegex = "\\b[A-Z]{2}\\d{3}[a-z]?\\b"
-        if let range = text.range(of: newCodeRegex, options: .regularExpression) {
-            let code = String(text[range])
-            return String(code.prefix(5)) // Extract first 5 characters (2 letters and 3 numbers)
+        guard let range = text.range(of: newCodeRegex, options: .regularExpression) else {
+            return nil
         }
-        return nil
+        let code = String(text[range])
+        return String(code.prefix(5)) // Extract first 5 characters (2 letters and 3 numbers)
     }
     
     private func extractOldCode(from text: String) -> String? {
         let oldCodeRegex = "\\b\\d{4}/\\d+[a-z]*\\b"
-        if let range = text.range(of: oldCodeRegex, options: .regularExpression) {
-            return String(text[range])
+        guard let range = text.range(of: oldCodeRegex, options: .regularExpression) else {
+            return nil
         }
-        return nil
+        return String(text[range])
     }
     
     private func containsCode(_ text: String) -> Bool {
-        return extractCode(from: text) != nil
+        extractCode(from: text) != nil
     }
     
     private func resetTouristSign() {
