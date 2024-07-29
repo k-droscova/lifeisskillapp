@@ -26,6 +26,7 @@
 		2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */; };
 		2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */; };
 		2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */; };
+		27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B5C2C57C51A003D22C6 /* QRViewModel.swift */; };
 		271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */; };
 		271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F112C5406F600DF9DFD /* ScanningManager.swift */; };
 		271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F132C54124D00DF9DFD /* NFCViewModel.swift */; };
@@ -142,6 +143,7 @@
 		2717AF0C2C42ADB700A23F06 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
 		2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.otf"; sourceTree = "<group>"; };
 		2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		27187B5C2C57C51A003D22C6 /* QRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewModel.swift; sourceTree = "<group>"; };
 		271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		271F1F112C5406F600DF9DFD /* ScanningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManager.swift; sourceTree = "<group>"; };
 		271F1F132C54124D00DF9DFD /* NFCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCViewModel.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 		271F1F0D2C54035800DF9DFD /* QR */ = {
 			isa = PBXGroup;
 			children = (
+				27187B5C2C57C51A003D22C6 /* QRViewModel.swift */,
 			);
 			path = QR;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
 				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,
 				27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */,
+				27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
