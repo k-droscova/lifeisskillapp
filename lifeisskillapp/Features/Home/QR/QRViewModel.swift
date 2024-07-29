@@ -7,24 +7,34 @@
 
 import AVFoundation
 
-protocol QRViewModeling: BaseClass {
+protocol QRViewModeling: CameraViewModeling {
+    var captureSession: AVCaptureSession? { get set }
+    var previewLayer: AVCaptureVideoPreviewLayer? { get set }
+    
+    func setUpScanner()
     func dismissScanner()
     func scanningFailed()
     func handleScannedQRCode(_ code: String)
+    func startScanning()
+    func stopScanning()
+    func setupPreviewLayer()
 }
 
-final class QRViewModel: BaseClass, ObservableObject, QRViewModeling {
+final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
     
     // MARK: - Private Properties
     
-    private weak var delegate: HomeFlowDelegate?
+    weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
     private let scanningManager: ScanningManaging
     private let locationManager: LocationManaging
-    @Published var scannedCode: String?
-    private var captureSession: AVCaptureSession?
-    private var previewLayer: AVCaptureVideoPreviewLayer?
+    
+    // MARK: - Public Properties
+    
+    var captureSession: AVCaptureSession?
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    @Published var isFlashOn: Bool = false
     
     // MARK: - Initialization
     
@@ -34,7 +44,7 @@ final class QRViewModel: BaseClass, ObservableObject, QRViewModeling {
         self.scanningManager = dependencies.scanningManager
         self.locationManager = dependencies.locationManager
         super.init()
-        setupScanner()
+        setUpScanner()
     }
     
     // MARK: - Public Interface
@@ -56,15 +66,42 @@ final class QRViewModel: BaseClass, ObservableObject, QRViewModeling {
     }
     
     func handleScannedQRCode(_ code: String) {
-        // Handle the scanned QR code, e.g., send to server
-        stopScanning()
-        nulifyReferences()
-        delegate?.onSuccess(source: .qr)
+        locationManager.checkLocationAuthorization()
+        let point = LoadPoint(code: code, codeSource: .text)
+        Task { @MainActor in
+            do {
+                try await scanningManager.sendScannedPoint(point)
+                self.delegate?.onSuccess(source: .qr)
+            } catch {
+                self.delegate?.onFailure(source: .qr)
+            }
+        }
     }
     
-    // MARK: - Private Helpers
+    func startScanning() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            if let captureSession = self?.captureSession, !captureSession.isRunning {
+                captureSession.startRunning()
+            }
+        }
+    }
+    
+    func stopScanning() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            if let captureSession = self?.captureSession, captureSession.isRunning {
+                captureSession.stopRunning()
+            }
+        }
+    }
+    
+    func setupPreviewLayer() {
+        if let captureSession = captureSession {
+            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer?.videoGravity = .resizeAspectFill
+        }
+    }
         
-    private func setupScanner() {
+    func setUpScanner() {
         captureSession = AVCaptureSession()
         
         guard let captureSession = captureSession,
@@ -95,22 +132,6 @@ final class QRViewModel: BaseClass, ObservableObject, QRViewModeling {
             scanningFailed()
             return
         }
-        
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer?.videoGravity = .resizeAspectFill
-        startScanning()
-    }
-    
-    private func startScanning() {
-        if let captureSession = captureSession, !captureSession.isRunning {
-            captureSession.startRunning()
-        }
-    }
-    
-    private func stopScanning() {
-        if let captureSession = captureSession, captureSession.isRunning {
-            captureSession.stopRunning()
-        }
     }
     
     private func nulifyReferences() {
@@ -126,8 +147,15 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
+            let string = stringValue.removingPercentEncoding ?? ""
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            handleScannedQRCode(stringValue)
+
+            if string.contains("lifeisskill.cz") {
+                handleScannedQRCode(string.parseMessage())
+            } else {
+                scanningFailed()
+                delegate?.onFailure(source: .qr)
+            }
         }
     }
 }

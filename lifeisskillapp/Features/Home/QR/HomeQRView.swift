@@ -1,30 +1,31 @@
 //
-//  HomeCameraOCRView.swift
+//  HomeQRView.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 25.07.2024.
+//  Created by Karolína Droscová on 29.07.2024.
 //
 
 import SwiftUI
 
 @available(iOS 16.0, *)
-struct HomeCameraOCRView: View {
-    @State private var viewModel: OcrViewModeling
-    
-    init(viewModel: OcrViewModeling) {
+struct HomeQRView: View {
+    @State private var viewModel: QRViewModeling
+
+    init(viewModel: QRViewModeling) {
         self.viewModel = viewModel
     }
     
     var body: some View {
         ZStack {
-            HomeCameraSignOCRViewControllerRepresentable(viewModel: viewModel)
-
+            HomeQRViewControllerRepresentable(viewModel: viewModel)
+                .edgesIgnoringSafeArea(.all)
+            
             VStack {
                 TopButtons(viewModel: viewModel)
                 
                 Spacer(minLength: 32)
                 
-                //CenterView()
+                CenterView()
                 
                 Spacer(minLength: 32)
                 
@@ -36,15 +37,15 @@ struct HomeCameraOCRView: View {
     }
     
     private struct TopButtons: View {
-        @State private var viewModel: OcrViewModeling
+        @State private var viewModel: QRViewModeling
         
-        init(viewModel: OcrViewModeling) {
+        init(viewModel: QRViewModeling) {
             self._viewModel = State(initialValue: viewModel)
         }
         
         var body: some View {
             HStack {
-                CameraButton(action: viewModel.dismissCamera)
+                CameraButton(action: viewModel.dismissScanner)
                 .padding(.leading, 20)
                 .padding(.top, 20)
                 
@@ -65,43 +66,25 @@ struct HomeCameraOCRView: View {
     private struct CenterView: View {
         var body: some View {
             VStack {
-                HStack {
-                    BorderView()
-                        .frame(width: 20)
-                    Spacer()
-                    BorderView()
-                        .frame(width: 20)
-                }
-                .frame(maxHeight: 200)
 
                 Spacer(minLength: 32)
                 
-                Image(systemName: "camera.viewfinder")
+                Image("frame")
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
+                    .aspectRatio(contentMode: .fit)
                     .padding()
-                    .background(Color.black.opacity(0.3))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 Spacer(minLength: 32)
                 
-                HStack {
-                    BorderView()
-                        .frame(width: 20)
-                    Spacer()
-                    BorderView()
-                        .frame(width: 20)
-                }
-                .frame(maxHeight: 200)
             }
         }
     }
     
     private struct InstructionsView: View {
         var body: some View {
-            Text("home.camera.instructions")
+            Text("home.qr.scan_alert")
                 .foregroundColor(.white)
+                .multilineTextAlignment(.center)
                 .padding()
                 .background(Color.black.opacity(0.5))
                 .cornerRadius(10)

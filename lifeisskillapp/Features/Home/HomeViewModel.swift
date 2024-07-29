@@ -38,8 +38,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     private let dependencies: HomeDependencies
     private var nfcVM: NfcViewModeling?
     private var ocrVM: OcrViewModeling?
-    
-    // MARK: - Initialization
+    private let qrVM: QRViewModeling
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
         self.dependencies = HomeDependencies(
@@ -50,6 +49,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
         self.delegate = delegate
         self.nfcVM = NfcViewModel(dependencies: dependencies, delegate: delegate)
         self.ocrVM = OcrViewModel(dependencies: dependencies, delegate: delegate)
+        self.qrVM = QRViewModel(dependencies: dependencies, delegate: delegate)
     }
     
     // MARK: - NFC
@@ -60,7 +60,8 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - QR
     func loadWithQRCode() {
-        delegate?.loadFromQR()
+        qrVM.setUpScanner()
+        delegate?.loadFromQR(viewModel: self.qrVM)
     }
     
     // MARK: - Camera

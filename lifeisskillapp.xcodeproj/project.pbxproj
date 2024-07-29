@@ -27,6 +27,13 @@
 		2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */; };
 		2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */; };
 		27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B5C2C57C51A003D22C6 /* QRViewModel.swift */; };
+		27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B5E2C57CD78003D22C6 /* HomeQRView.swift */; };
+		27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B602C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift */; };
+		27187B632C57CE85003D22C6 /* HomeQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B622C57CE85003D22C6 /* HomeQRViewController.swift */; };
+		27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */; };
+		27187B672C57D866003D22C6 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B662C57D866003D22C6 /* Buttons.swift */; };
+		27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B682C57E310003D22C6 /* CameraViewModeling.swift */; };
+		27187B6B2C57FA43003D22C6 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B6A2C57FA43003D22C6 /* Alerts.swift */; };
 		271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */; };
 		271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F112C5406F600DF9DFD /* ScanningManager.swift */; };
 		271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F132C54124D00DF9DFD /* NFCViewModel.swift */; };
@@ -144,6 +151,13 @@
 		2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.otf"; sourceTree = "<group>"; };
 		2717AF0E2C42ADB800A23F06 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		27187B5C2C57C51A003D22C6 /* QRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewModel.swift; sourceTree = "<group>"; };
+		27187B5E2C57CD78003D22C6 /* HomeQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQRView.swift; sourceTree = "<group>"; };
+		27187B602C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQRViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		27187B622C57CE85003D22C6 /* HomeQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQRViewController.swift; sourceTree = "<group>"; };
+		27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanningViewController.swift; sourceTree = "<group>"; };
+		27187B662C57D866003D22C6 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		27187B682C57E310003D22C6 /* CameraViewModeling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModeling.swift; sourceTree = "<group>"; };
+		27187B6A2C57FA43003D22C6 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		271F1F112C5406F600DF9DFD /* ScanningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManager.swift; sourceTree = "<group>"; };
 		271F1F132C54124D00DF9DFD /* NFCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCViewModel.swift; sourceTree = "<group>"; };
@@ -319,6 +333,10 @@
 			isa = PBXGroup;
 			children = (
 				27187B5C2C57C51A003D22C6 /* QRViewModel.swift */,
+				27187B5E2C57CD78003D22C6 /* HomeQRView.swift */,
+				27187B602C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift */,
+				27187B622C57CE85003D22C6 /* HomeQRViewController.swift */,
+				27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */,
 			);
 			path = QR;
 			sourceTree = "<group>";
@@ -332,6 +350,7 @@
 				2720DF252C513D40007B4E77 /* HomeViewModel.swift */,
 				2720DF272C513D4B007B4E77 /* HomeViewController.swift */,
 				2720DF2B2C514A0A007B4E77 /* HomeView.swift */,
+				27187B682C57E310003D22C6 /* CameraViewModeling.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -443,6 +462,8 @@
 				278174832C4BF96B00138376 /* View.swift */,
 				27C619962C3AB5D50067498F /* Theme.swift */,
 				278174892C4BFD6500138376 /* ButtonStyleModifier.swift */,
+				27187B662C57D866003D22C6 /* Buttons.swift */,
+				27187B6A2C57FA43003D22C6 /* Alerts.swift */,
 			);
 			path = AppUI;
 			sourceTree = "<group>";
@@ -868,6 +889,7 @@
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
 				271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */,
+				27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */,
 				27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
@@ -877,6 +899,7 @@
 				27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */,
 				2754570D2C3328B300F3B55A /* AppFlowCoordinator.swift in Sources */,
 				27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */,
+				27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */,
 				27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */,
 				274863282C5262A8008D8A3E /* HomeCameraOCRViewController.swift in Sources */,
 				27C6197F2C398C570067498F /* LogSeverity.swift in Sources */,
@@ -889,6 +912,7 @@
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				275457282C3332E000F3B55A /* DebugViewController.swift in Sources */,
+				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
@@ -902,17 +926,21 @@
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
 				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
+				27187B6B2C57FA43003D22C6 /* Alerts.swift in Sources */,
 				27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */,
+				27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */,
 				27C619672C37069E0067498F /* APIResponseError.swift in Sources */,
 				27C619722C3822920067498F /* HTTPURLResponse.swift in Sources */,
 				27C619952C3AB0890067498F /* UserDefaults.swift in Sources */,
 				27066A8A2C45580D0092B499 /* UserCategory.swift in Sources */,
+				27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */,
 				278174842C4BF96B00138376 /* View.swift in Sources */,
 				27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
+				27187B632C57CE85003D22C6 /* HomeQRViewController.swift in Sources */,
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,

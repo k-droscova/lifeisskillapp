@@ -32,7 +32,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         logger.log(message: "Attempting to load point with NFC")
         locationManager.checkLocationAuthorization()
         session = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
-        session?.alertMessage = NSLocalizedString("home.nfc.alertMessage", comment: "")
+        session?.alertMessage = NSLocalizedString("home.nfc.alert_message", comment: "")
         session?.begin()
     }
     
