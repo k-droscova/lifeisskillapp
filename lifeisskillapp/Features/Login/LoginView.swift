@@ -7,28 +7,28 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    @State var viewModel: LoginViewModeling
+struct LoginView<ViewModel: LoginViewModeling>: View {
+    @StateObject var viewModel: ViewModel
     
     var body: some View {
         VStack {
             Spacer()
             
-            LoginImageView()
+            loginImageView
             
             VStack(spacing: 16) {
-                UsernameTextField(viewModel: viewModel)
-                PasswordSecureField(viewModel: viewModel)
+                usernameTextField
+                passwordSecureField
             }
             .padding(.horizontal, 30)
             
-            LoginButton(viewModel: viewModel)
+            loginButton
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
             
             Spacer()
             
-            BottomButtons(viewModel: viewModel)
+            bottomButtons
         }
         .body2Login
         .onAppear {
@@ -38,7 +38,7 @@ struct LoginView: View {
             Group {
                 if viewModel.isLoading {
                     ZStack {
-                        Color.black.opacity(0.8)
+                        Color.black.opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
@@ -51,46 +51,30 @@ struct LoginView: View {
 }
 
 private extension LoginView {
-    struct LoginImageView: View {
-        
-        var body: some View {
-            Image("loginScreen") // Replace with your image asset name
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 200)
-                .padding(.bottom, 20)
-        }
+    
+    private var loginImageView: some View {
+        Image("loginScreen")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 200)
+            .padding(.bottom, 20)
     }
     
-    struct UsernameTextField: View {
-        @State private var viewModel: LoginViewModeling
-        
-        init(viewModel: LoginViewModeling) {
-            self._viewModel = State(initialValue: viewModel)
-        }
-        
-        var body: some View {
-            TextField(
-                "login.username",
-                text: $viewModel.username
-            )
-            .autocapitalization(.none)
-            .disableAutocorrection(true)
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(10)
-        }
+    private var usernameTextField: some View {
+        TextField(
+            "login.username",
+            text: $viewModel.username
+        )
+        .autocapitalization(.none)
+        .disableAutocorrection(true)
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(10)
     }
     
-    struct PasswordSecureField: View {
-        @State private var viewModel: LoginViewModeling
-        
-        init(viewModel: LoginViewModeling) {
-            self._viewModel = State(initialValue: viewModel)
-        }
-        
-        var body: some View {
-            ZStack(alignment: .trailing) {
+    private var passwordSecureField: some View {
+        ZStack(alignment: .trailing) {
+            Group {
                 if viewModel.isPasswordVisible {
                     TextField(
                         "login.password",
@@ -108,57 +92,40 @@ private extension LoginView {
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                 }
-                
-                Button(action: viewModel.onPasswordVisibilityTapped) {
-                    Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
-                        .foregroundColor(.gray)
-                        .padding(.trailing, 10)
-                }
+            }
+            
+            Button(action: viewModel.onPasswordVisibilityTapped) {
+                Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
+                    .foregroundColor(.gray)
+                    .padding(.trailing, 10)
             }
         }
     }
     
-    struct LoginButton: View {
-        @State private var viewModel: LoginViewModeling
-        
-        init(viewModel: LoginViewModeling) {
-            self._viewModel = State(initialValue: viewModel)
+    private var loginButton: some View {
+        Button(action: viewModel.login) {
+            Text("login.login")
+                .foregroundColor(viewModel.isLoginEnabled ? Color(.white) : Color("LisGreyTextFieldTitle"))
+                .padding()
+                .padding(.horizontal, 20)
+                .background(viewModel.isLoginEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
+                .cornerRadius(20)
         }
-        
-        var body: some View {
-            Button(action: viewModel.login) {
-                Text("login.login")
-                    .foregroundColor(viewModel.isLoginEnabled ? Color(.white) : Color("LisGreyTextFieldTitle"))
-                    .padding()
-                    .padding(.horizontal, 20)
-                    .background(viewModel.isLoginEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
-                    .cornerRadius(20)
-            }
-            .cornerRadius(10)
-            .disabled(!viewModel.isLoginEnabled)
-        }
+        .disabled(!viewModel.isLoginEnabled)
     }
     
-    struct BottomButtons: View {
-        @State private var viewModel: LoginViewModeling
-        
-        init(viewModel: LoginViewModeling) {
-            self._viewModel = State(initialValue: viewModel)
-        }
-        
-        var body: some View {
-            HStack {
-                Button(action: viewModel.register) {
-                    Text("login.register")
-                }
-                Spacer()
-                Button(action: viewModel.forgotPassword) {
-                    Text("login.forgotPassword")
-                }
+    private var bottomButtons: some View {
+        HStack {
+            Button(action: viewModel.register) {
+                Text("login.register")
             }
-            .padding(.horizontal, 30)
-            .padding(.bottom, 30)
+            Spacer()
+            Button(action: viewModel.forgotPassword) {
+                Text("login.forgotPassword")
+            }
         }
+        .padding(.horizontal, 30)
+        .padding(.bottom, 30)
     }
 }
 

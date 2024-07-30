@@ -8,7 +8,7 @@
 import Foundation
 import Observation
 
-protocol LoginViewModeling {
+protocol LoginViewModeling: ObservableObject {
     var username: String { get set }
     var password: String { get set }
     var isLoginEnabled: Bool { get set }
