@@ -6,36 +6,30 @@
 //
 
 import Foundation
+import AVFoundation
 
-<<<<<<< HEAD
-protocol OcrViewModeling: BaseClass {
-=======
-protocol OcrViewModeling: CameraViewModeling, ChildHomeViewModeling {
->>>>>>> 1b1ea39 (basic qr scanning)
+protocol OcrViewModeling: CameraViewModeling {
+    var captureSession: AVCaptureSession? { get set }
+    var previewLayer: AVCaptureVideoPreviewLayer? { get set }
     func dismissCamera()
     func scanningFailed()
     func handleProcessedCode(_ code: String)
     func extractCode(from text: String) -> String?
 }
 
-final class OcrViewModel: BaseClass, OcrViewModeling, ObservableObject {
+final class OcrViewModel: BaseClass, OcrViewModeling {
     typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
     private let scanningManager: ScanningManaging
     private let locationManager: LocationManaging
-<<<<<<< HEAD
-=======
-    private var scannedSignInfo = TouristSign()
-    private let possibleSignTitles = ["PESI TRASA KCT", "KCT", "TRASA"]
     
     // MARK: - Public Properties
     
+    var captureSession: AVCaptureSession?
+    var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var isFlashOn: Bool = false
-    
-    // MARK: - Initialization
->>>>>>> 1b1ea39 (basic qr scanning)
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
