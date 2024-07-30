@@ -23,6 +23,11 @@ protocol HomeViewModeling: BaseClass {
     func dismissCamera()
 }
 
+/// A protocol that defines required methods for the Child View Models responsible for scanning Points
+protocol ChildHomeViewModeling: BaseClass {
+    func setToDefaultState()
+}
+
 /// The HomeViewModel class responsible for managing the home flow within the app.
 final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
@@ -45,6 +50,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - NFC
     func loadWithNFC() {
+        nfcVM.setToDefaultState()
         nfcVM.startScanning()
     }
     
@@ -55,6 +61,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - Camera
     func loadFromCamera() {
+        ocrVM.setToDefaultState()
         delegate?.loadFromCamera(viewModel: self.ocrVM)
     }
     

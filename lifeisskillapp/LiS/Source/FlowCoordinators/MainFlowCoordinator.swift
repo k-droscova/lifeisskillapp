@@ -77,7 +77,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
     }
     func onDataError(_ error: Error) {
         // TODO: HANDLE ERROR BETTER
-        let logEvent = LogEvent(
+        _ = LogEvent(
             message: "Error: \(error.localizedDescription)",
             context: .system,
             severity: .error,

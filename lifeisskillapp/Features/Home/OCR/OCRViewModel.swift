@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol OcrViewModeling: BaseClass {
+protocol OcrViewModeling: ChildHomeViewModeling {
     func dismissCamera()
     func scanningFailed()
     func categorizeText(_ text: String)
@@ -37,12 +37,16 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     // MARK: - Public Interface
     
+    func setToDefaultState() {
+        scannedSignInfo = TouristSign()
+    }
+    
     func dismissCamera() {
         delegate?.dismissCamera()
     }
     
     func scanningFailed() {
-        let logEvent = LogEvent(
+        _ = LogEvent(
             message: "Error: Scanning Failure",
             context: .system,
             severity: .error,
@@ -138,11 +142,5 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     private func containsCode(_ text: String) -> Bool {
         extractCode(from: text) != nil
-    }
-    
-    private func resetTouristSign() {
-        scannedSignInfo.routeName = nil
-        scannedSignInfo.code = nil
-        scannedSignInfo.year = nil
     }
 }

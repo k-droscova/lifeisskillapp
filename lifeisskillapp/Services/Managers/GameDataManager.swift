@@ -174,7 +174,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await userPointManager.fetch()
             guard let newCheckSumUserPoints = userPointManager.data?.checkSum else {
-                let logEvent = LogEvent(
+                _ = LogEvent(
                     message: "Error: \(ErrorCodes.general(.missingConfigItem))",
                     context: .system,
                     severity: .error,
@@ -193,7 +193,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await userRankManager.fetch()
             guard let newCheckSumUserRank = userRankManager.data?.checkSum else {
-                let logEvent = LogEvent(
+                _ = LogEvent(
                     message: "Error: \(ErrorCodes.general(.missingConfigItem))",
                     context: .system,
                     severity: .error,
@@ -220,7 +220,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await genericPointManager.fetch()
             guard let newCheckSum = genericPointManager.data?.checkSum else {
-                let logEvent = LogEvent(
+                _ = LogEvent(
                     message: "Error: \(ErrorCodes.general(.missingConfigItem))",
                     context: .system,
                     severity: .error,

@@ -8,9 +8,8 @@
 import Foundation
 import CoreNFC
 
-protocol NfcViewModeling {
+protocol NfcViewModeling: ChildHomeViewModeling {
     func startScanning()
-    func stopScanning()
 }
 
 final class NfcViewModel: BaseClass, NfcViewModeling {
@@ -37,7 +36,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         session?.begin()
     }
     
-    func stopScanning() {
+    func setToDefaultState() {
         session?.invalidate()
         session = nil
     }
@@ -48,10 +47,10 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         Task { @MainActor in
             do {
                 try await scanningManager.sendScannedPoint(point)
-                self.stopScanning()
+                self.setToDefaultState()
                 delegate?.onSuccess(source: .nfc)
             } catch {
-                self.stopScanning()
+                self.setToDefaultState()
                 delegate?.onFailure(source: .nfc)
             }
         }
@@ -60,13 +59,13 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
 
 extension NfcViewModel: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
-        let logEvent = LogEvent(
+        _ = LogEvent(
             message: "Error: \(error.localizedDescription)",
             context: .system,
             severity: .error,
             logger: logger
         )
-        self.stopScanning()
+        self.setToDefaultState()
         delegate?.onFailure(source: .nfc)
     }
     
@@ -86,7 +85,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 return
             }
         }
-        self.stopScanning()
+        self.setToDefaultState()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.delegate?.onFailure(source: .nfc)
         }

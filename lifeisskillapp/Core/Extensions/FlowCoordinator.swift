@@ -17,7 +17,7 @@ public extension Base.FlowCoordinatorNoDeepLink {
     ///   - error: The error to be handled.
     ///   - handle: A closure that defines custom handling logic to be executed after the alert is dismissed.
     public func onError(_ error: Error, handle: @escaping () -> Void) {
-        let logEvent = LogEvent(
+        _ = LogEvent(
             message: error.localizedDescription,
             context: .system,
             severity: .error,
