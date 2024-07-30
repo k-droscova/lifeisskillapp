@@ -38,7 +38,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     private let dependencies: HomeDependencies
     private var nfcVM: NfcViewModeling?
     private var ocrVM: OcrViewModeling?
-    private let qrVM: QRViewModeling
+    private var qrVM: QRViewModeling?
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
         self.dependencies = HomeDependencies(
@@ -47,9 +47,6 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
             locationManager: dependencies.locationManager
         )
         self.delegate = delegate
-        self.nfcVM = NfcViewModel(dependencies: dependencies, delegate: delegate)
-        self.ocrVM = OcrViewModel(dependencies: dependencies, delegate: delegate)
-        self.qrVM = QRViewModel(dependencies: dependencies, delegate: delegate)
     }
     
     // MARK: - NFC
@@ -60,8 +57,17 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - QR
     func loadWithQRCode() {
-        qrVM.setUpScanner()
-        delegate?.loadFromQR(viewModel: self.qrVM)
+        qrVM = QRViewModel(dependencies: self.dependencies, delegate: self.delegate)
+        guard let qrVM else {
+            _ = LogEvent(
+                message: "Error: qrVM initialization failed",
+                context: .system,
+                severity: .error,
+                logger: dependencies.logger
+            )
+            return
+        }
+        delegate?.loadFromQR(viewModel: qrVM)
     }
     
     // MARK: - Camera
