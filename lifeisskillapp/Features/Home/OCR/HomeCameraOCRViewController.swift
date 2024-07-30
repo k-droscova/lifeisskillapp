@@ -10,11 +10,11 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 final class HomeCameraOCRViewController: Base.ViewController {
-    private let viewModel: HomeViewModeling
+    private let viewModel: OcrViewModeling
     
     // MARK: - Initialization
     
-    init(viewModel: HomeViewModeling) {
+    init(viewModel: OcrViewModeling) {
         self.viewModel = viewModel
         super.init()
     }
