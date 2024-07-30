@@ -67,25 +67,14 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
         private let viewModel: OcrViewModeling
         weak var dataScannerVC: DataScannerViewController?
         private var itemHighlightViews: [RecognizedItem.ID: HighlightView] = [:]
+        private var itemTimers: [RecognizedItem.ID: Timer] = [:]
+        private var currentRecognizedCode: String?
+        private let timerConstant: TimeInterval = 2.0
         
         /// Initializes the coordinator with the provided view model.
         /// - Parameter viewModel: The view model conforming to `OcrViewModeling`.
         init(viewModel: OcrViewModeling) {
             self.viewModel = viewModel
-        }
-        
-        /// Called when the user taps on a recognized item.
-        /// - Parameters:
-        ///   - dataScanner: The `DataScannerViewController` instance.
-        ///   - item: The recognized item that was tapped.
-        func dataScanner(_ dataScanner: DataScannerViewController, didTapOn item: RecognizedItem) {
-            switch item {
-            case .text(let text):
-                viewModel.categorizeText(text.transcript)
-            case .barcode: break
-            @unknown default:
-                viewModel.scanningFailed()
-            }
         }
         
         /// Called when new recognized items are added.
@@ -97,10 +86,11 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
             for item in addItems {
                 switch item {
                 case .text(let text):
-                    if viewModel.isSignTextValid(text.transcript) {
+                    if let code = viewModel.extractCode(from: text.transcript) {
                         let newView = HighlightView(item: item)
                         itemHighlightViews[item.id] = newView
                         dataScanner.overlayContainerView.addSubview(newView)
+                        startTimer(for: code, itemID: item.id)
                     }
                 case .barcode: break
                 @unknown default:
@@ -119,9 +109,14 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
                 if let view = itemHighlightViews[item.id] {
                     view.removeFromSuperview()
                     itemHighlightViews.removeValue(forKey: item.id)
-                    let newView = HighlightView(item: item)
-                    itemHighlightViews[item.id] = newView
-                    dataScanner.overlayContainerView.addSubview(newView)
+                    if case .text(let text) = item {
+                        if let code = viewModel.extractCode(from: text.transcript) {
+                            let newView = HighlightView(item: item)
+                            itemHighlightViews[item.id] = newView
+                            dataScanner.overlayContainerView.addSubview(newView)
+                            startTimer(for: code, itemID: item.id)
+                        }
+                    }
                 }
             }
         }
@@ -136,8 +131,39 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
                 if let view = itemHighlightViews[item.id] {
                     itemHighlightViews.removeValue(forKey: item.id)
                     view.removeFromSuperview()
+                    stopTimer(for: item.id)
                 }
             }
+        }
+        
+        private func startTimer(for code: String, itemID: RecognizedItem.ID) {
+            guard itemTimers[itemID] == nil else {
+                // Timer already exists, no need to start a new one
+                return
+            }            
+            print("TIMER FOR \(code), id \(itemID)")
+            itemTimers[itemID] = Timer.scheduledTimer(withTimeInterval: timerConstant, repeats: false) { [weak self] _ in
+                self?.processRecognizedCode(code)
+                self?.itemTimers[itemID] = nil
+            }
+        }
+        
+        private func stopTimer(for itemID: RecognizedItem.ID? = nil) {
+            guard let itemID else {
+                for timer in itemTimers.values {
+                    timer.invalidate()
+                }
+                itemTimers.removeAll()
+                return
+            }
+            if let timer = itemTimers[itemID] {
+                timer.invalidate()
+                itemTimers[itemID] = nil
+            }
+        }
+        
+        private func processRecognizedCode(_ code: String) {
+            viewModel.handleProcessedCode(code)
         }
     }
     
