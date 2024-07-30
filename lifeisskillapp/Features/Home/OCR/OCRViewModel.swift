@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol OcrViewModeling: ChildHomeViewModeling {
+protocol OcrViewModeling: BaseClass {
     func dismissCamera()
     func scanningFailed()
     func categorizeText(_ text: String)
@@ -36,10 +36,6 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     // MARK: - Public Interface
-    
-    func setToDefaultState() {
-        scannedSignInfo = TouristSign()
-    }
     
     func dismissCamera() {
         delegate?.dismissCamera()

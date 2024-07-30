@@ -23,26 +23,30 @@ protocol HomeViewModeling: BaseClass {
     func dismissCamera()
 }
 
-/// A protocol that defines required methods for the Child View Models responsible for scanning Points
-protocol ChildHomeViewModeling: BaseClass {
-    func setToDefaultState()
-}
-
 /// The HomeViewModel class responsible for managing the home flow within the app.
 final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
+    struct HomeDependencies: Dependencies {
+        let scanningManager: ScanningManaging
+        let logger: LoggerServicing
+        let locationManager: LocationManaging
+    }
+    
+    // MARK: - Private Properties
     
     private weak var delegate: HomeFlowDelegate?
-    private let logger: LoggerServicing
-    private let nfcVM: NfcViewModeling
-    private let ocrVM: OcrViewModeling
+    private let dependencies: HomeDependencies
+    private var nfcVM: NfcViewModeling?
+    private var ocrVM: OcrViewModeling?
     
-    /// Initializes the HomeViewModel.
-    /// - Parameters:
-    ///   - dependencies: The dependencies required by the view model.
-    ///   - delegate: The delegate to notify about events.
+    // MARK: - Initialization
+    
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
-        self.logger = dependencies.logger
+        self.dependencies = HomeDependencies(
+            scanningManager: dependencies.scanningManager,
+            logger: dependencies.logger,
+            locationManager: dependencies.locationManager
+        )
         self.delegate = delegate
         self.nfcVM = NfcViewModel(dependencies: dependencies, delegate: delegate)
         self.ocrVM = OcrViewModel(dependencies: dependencies, delegate: delegate)
@@ -50,8 +54,8 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - NFC
     func loadWithNFC() {
-        nfcVM.setToDefaultState()
-        nfcVM.startScanning()
+        nfcVM = NfcViewModel(dependencies: self.dependencies, delegate: self.delegate)
+        nfcVM?.startScanning()
     }
     
     // MARK: - QR
@@ -61,8 +65,17 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - Camera
     func loadFromCamera() {
-        ocrVM.setToDefaultState()
-        delegate?.loadFromCamera(viewModel: self.ocrVM)
+        ocrVM = OcrViewModel(dependencies: self.dependencies, delegate: self.delegate)
+        guard let ocrVM else {
+            _ = LogEvent(
+                message: "Error: OcrVM initialization failed",
+                context: .system,
+                severity: .error,
+                logger: dependencies.logger
+            )
+            return
+        }
+        delegate?.loadFromCamera(viewModel: ocrVM)
     }
     
     func dismissCamera() {
