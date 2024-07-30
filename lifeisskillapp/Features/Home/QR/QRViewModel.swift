@@ -58,11 +58,13 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     func scanningFailed() {
         stopScanning()
         nulifyReferences()
-        do {
-            throw BaseError(context: .system, message: "Scanning failed", logger: logger)
-        } catch {
-            delegate?.onFailure(source: .qr)
-        }
+        _ = LogEvent(
+            message: "ERROR: QR scanning failed",
+            context: .system,
+            severity: .error,
+            logger: logger
+        )
+        delegate?.onFailure(source: .qr)
     }
     
     func handleScannedQRCode(_ code: String) {
