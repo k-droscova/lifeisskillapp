@@ -49,6 +49,14 @@ public extension View {
             textStyle: .body
         )
     }
+    
+    var body2Login: some View {
+        self.font(
+            AssetsFontFamily.Montserrat.regular(size: 16),
+            lineHeight: 22,
+            textStyle: .body
+        )
+    }
 }
 
 struct CustomFontModifier: ViewModifier {

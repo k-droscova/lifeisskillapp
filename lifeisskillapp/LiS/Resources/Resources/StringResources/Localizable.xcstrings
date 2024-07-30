@@ -974,6 +974,9 @@
         }
       }
     },
+    "login.forgotPassword" : {
+
+    },
     "login.login" : {
       "localizations" : {
         "cs" : {

@@ -94,6 +94,7 @@
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */; };
+		27EBADD42C592F3100F01CFB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27EBADD32C592F3100F01CFB /* Colors.xcassets */; };
 		27F27A412C4CFA8600928388 /* UserRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A402C4CFA8600928388 /* UserRank.swift */; };
 		27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A422C4CFEFC00928388 /* UserRankManager.swift */; };
 		27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A462C4D334F00928388 /* UserLoginDataManager.swift */; };
@@ -209,6 +210,7 @@
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
+		27EBADD32C592F3100F01CFB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = lifeisskillapp/LiS/Resources/Resources/Colors/Colors.xcassets; sourceTree = SOURCE_ROOT; };
 		27F27A402C4CFA8600928388 /* UserRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRank.swift; sourceTree = "<group>"; };
 		27F27A422C4CFEFC00928388 /* UserRankManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManager.swift; sourceTree = "<group>"; };
 		27F27A462C4D334F00928388 /* UserLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginDataManager.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 		2717AF362C42C2B700A23F06 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27EBADD22C592F0F00F01CFB /* Colors */,
 				2717AF312C42C23300A23F06 /* StringResources */,
 				2717AED12C42A72600A23F06 /* Fonts */,
 				2717AEE42C42A95C00A23F06 /* Images */,
@@ -669,6 +672,14 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		27EBADD22C592F0F00F01CFB /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				27EBADD32C592F3100F01CFB /* Colors.xcassets */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -792,6 +803,7 @@
 				2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */,
 				27274F8A2C3320F3003453E2 /* Base in Resources */,
 				2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */,
+				27EBADD42C592F3100F01CFB /* Colors.xcassets in Resources */,
 				2717AF122C42ADB800A23F06 /* Montserrat-Hairline.otf in Resources */,
 				2717AF102C42ADB800A23F06 /* Montserrat-Bold.otf in Resources */,
 			);
