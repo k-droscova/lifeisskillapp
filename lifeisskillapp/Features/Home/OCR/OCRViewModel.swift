@@ -42,11 +42,13 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func scanningFailed() {
-        do {
-            throw BaseError(context: .system, message: "Scanning failed", logger: logger)
-        } catch {
-            delegate?.onFailure(source: .text)
-        }
+        let logEvent = LogEvent(
+            message: "Error: Scanning Failure",
+            context: .system,
+            severity: .error,
+            logger: logger
+        )
+        delegate?.onFailure(source: .text)
     }
     
     func categorizeText(_ text: String) {

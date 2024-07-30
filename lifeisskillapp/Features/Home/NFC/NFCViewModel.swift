@@ -60,16 +60,14 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
 
 extension NfcViewModel: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
-        do {
-            throw BaseError(
-                context: .system,
-                message: error.localizedDescription,
-                logger: logger
-            )
-        } catch {
-            self.stopScanning()
-            delegate?.onFailure(source: .nfc)
-        }
+        let logEvent = LogEvent(
+            message: "Error: \(error.localizedDescription)",
+            context: .system,
+            severity: .error,
+            logger: logger
+        )
+        self.stopScanning()
+        delegate?.onFailure(source: .nfc)
     }
     
     func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {

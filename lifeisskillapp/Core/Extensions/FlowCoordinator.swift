@@ -17,14 +17,16 @@ public extension Base.FlowCoordinatorNoDeepLink {
     ///   - error: The error to be handled.
     ///   - handle: A closure that defines custom handling logic to be executed after the alert is dismissed.
     public func onError(_ error: Error, handle: @escaping () -> Void) {
-        do {
-            throw BaseError(context: .system, message: error.localizedDescription, logger: appDependencies.logger)
-        } catch {
-            let alert = UIAlertController(title: "Oops, something went wrong", message: "Error: \(error.localizedDescription)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                handle()
-            })
-            rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        let logEvent = LogEvent(
+            message: error.localizedDescription,
+            context: .system,
+            severity: .error,
+            logger: appDependencies.logger
+        )
+        let alert = UIAlertController(title: "Oops, something went wrong", message: "Error: \(error.localizedDescription)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            handle()
+        })
+        rootViewController?.present(alert, animated: true, completion: nil)
     }
 }

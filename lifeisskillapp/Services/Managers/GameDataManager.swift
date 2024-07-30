@@ -174,7 +174,13 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await userPointManager.fetch()
             guard let newCheckSumUserPoints = userPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+                let logEvent = LogEvent(
+                    message: "Error: \(ErrorCodes.general(.missingConfigItem))",
+                    context: .system,
+                    severity: .error,
+                    logger: logger
+                )
+                return
             }
             updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
         } catch {
@@ -187,7 +193,13 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await userRankManager.fetch()
             guard let newCheckSumUserRank = userRankManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+                let logEvent = LogEvent(
+                    message: "Error: \(ErrorCodes.general(.missingConfigItem))",
+                    context: .system,
+                    severity: .error,
+                    logger: logger
+                )
+                return
             }
             updateCheckSum(newCheckSum: newCheckSumUserRank, type: CheckSumData.CheckSumType.rank)
         } catch {
@@ -208,7 +220,13 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await genericPointManager.fetch()
             guard let newCheckSum = genericPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+                let logEvent = LogEvent(
+                    message: "Error: \(ErrorCodes.general(.missingConfigItem))",
+                    context: .system,
+                    severity: .error,
+                    logger: logger
+                )
+                return
             }
             updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
         } catch {

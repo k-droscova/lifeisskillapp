@@ -131,7 +131,12 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
         taskParams.merge(params) { (_, new) in new }
         let jsonString = try JsonMapper.jsonString(from: taskParams)
         guard let jsonData = jsonString.data(using: .utf8) else {
-            throw BaseError(context: .system, message: "Could not encode login params", code: .general(.jsonEncoding),logger: loggerService)
+            throw BaseError(
+                context: .system,
+                message: "Could not encode login params",
+                code: .general(.jsonEncoding),
+                logger: loggerService
+            )
         }
         return jsonData
     }
