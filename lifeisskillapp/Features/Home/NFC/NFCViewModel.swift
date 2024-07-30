@@ -8,7 +8,7 @@
 import Foundation
 import CoreNFC
 
-protocol NfcViewModeling: ChildHomeViewModeling {
+protocol NfcViewModeling: BaseClass {
     func startScanning()
 }
 
@@ -36,7 +36,9 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         session?.begin()
     }
     
-    func setToDefaultState() {
+    // MARK: - Private Helpers
+    
+    private func setToDefaultState() {
         session?.invalidate()
         session = nil
     }
