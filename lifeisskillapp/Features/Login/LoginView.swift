@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct LoginView: View {
     @State var viewModel: LoginViewModeling
     
@@ -19,28 +17,19 @@ struct LoginView: View {
             LoginImageView()
             
             VStack(spacing: 16) {
-                UsernameTextField(username: $viewModel.username)
-                
-                PasswordSecureField(
-                    password: $viewModel.password,
-                    isPasswordVisible: $viewModel.isPasswordVisible,
-                    toggleVisibilityAction: viewModel.onPasswordVisibilityTapped
-                )
+                UsernameTextField(viewModel: viewModel)
+                PasswordSecureField(viewModel: viewModel)
             }
             .padding(.horizontal, 30)
             
-            LoginButton(
-                isEnabled: viewModel.isLoginEnabled,
-                action: viewModel.login
-            )
-            .padding(.horizontal, 30)
-            .padding(.top, 20)
+            LoginButton(viewModel: viewModel)
+                .padding(.horizontal, 30)
+                .padding(.top, 20)
             
             Spacer()
             
-            BottomButtons(registerAction: viewModel.register, forgotPasswordAction: viewModel.forgotPassword)
+            BottomButtons(viewModel: viewModel)
         }
-        .body2Login
         .onAppear {
             viewModel.onAppear()
         }
@@ -48,7 +37,7 @@ struct LoginView: View {
             Group {
                 if viewModel.isLoading {
                     ZStack {
-                        Color.black.opacity(0.3)
+                        Color.black.opacity(0.8)
                             .edgesIgnoringSafeArea(.all)
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
@@ -61,8 +50,8 @@ struct LoginView: View {
 }
 
 private extension LoginView {
-    
     struct LoginImageView: View {
+        
         var body: some View {
             Image("loginScreen") // Replace with your image asset name
                 .resizable()
@@ -73,12 +62,16 @@ private extension LoginView {
     }
     
     struct UsernameTextField: View {
-        @Binding var username: String
+        @State private var viewModel: LoginViewModeling
+        
+        init(viewModel: LoginViewModeling) {
+            self._viewModel = State(initialValue: viewModel)
+        }
         
         var body: some View {
             TextField(
                 "login.username",
-                text: $username
+                text: $viewModel.username
             )
             .autocapitalization(.none)
             .disableAutocorrection(true)
@@ -89,16 +82,18 @@ private extension LoginView {
     }
     
     struct PasswordSecureField: View {
-        @Binding var password: String
-        @Binding var isPasswordVisible: Bool
-        var toggleVisibilityAction: () -> Void
+        @State private var viewModel: LoginViewModeling
+        
+        init(viewModel: LoginViewModeling) {
+            self._viewModel = State(initialValue: viewModel)
+        }
         
         var body: some View {
             ZStack(alignment: .trailing) {
-                if isPasswordVisible {
+                if viewModel.isPasswordVisible {
                     TextField(
                         "login.password",
-                        text: $password
+                        text: $viewModel.password
                     )
                     .padding()
                     .background(Color(.secondarySystemBackground))
@@ -106,58 +101,70 @@ private extension LoginView {
                 } else {
                     SecureField(
                         "login.password",
-                        text: $password
+                        text: $viewModel.password
                     )
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                 }
                 
-                Button(action: toggleVisibilityAction) {
-                    Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
+                Button(action: viewModel.onPasswordVisibilityTapped) {
+                    Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
                         .foregroundColor(.gray)
                         .padding(.trailing, 10)
                 }
             }
         }
     }
-
     
     struct LoginButton: View {
-        var isEnabled: Bool
-        var action: () -> Void
+        @State private var viewModel: LoginViewModeling
+        
+        init(viewModel: LoginViewModeling) {
+            self._viewModel = State(initialValue: viewModel)
+        }
         
         var body: some View {
-            Button(action: action) {
+            Button(action: viewModel.login) {
                 Text("login.login")
-                    .foregroundColor(isEnabled ? Color(.white) : Color("LisGreyTextFieldTitle"))
+                    .foregroundColor(viewModel.isLoginEnabled ? Color(.white) : Color("LisGreyTextFieldTitle"))
                     .padding()
                     .padding(.horizontal, 20)
-                    .background(isEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
+                    .background(viewModel.isLoginEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
                     .cornerRadius(20)
             }
             .cornerRadius(10)
-            .disabled(!isEnabled)
+            .disabled(!viewModel.isLoginEnabled)
         }
     }
     
     struct BottomButtons: View {
-        var registerAction: () -> Void
-        var forgotPasswordAction: () -> Void
+        @State private var viewModel: LoginViewModeling
+        
+        init(viewModel: LoginViewModeling) {
+            self._viewModel = State(initialValue: viewModel)
+        }
         
         var body: some View {
             HStack {
-                Button(action: registerAction) {
+                Button(action: viewModel.register) {
                     Text("login.register")
                 }
                 Spacer()
-                Button(action: forgotPasswordAction) {
+                Button(action: viewModel.forgotPassword) {
                     Text("login.forgotPassword")
                 }
             }
             .padding(.horizontal, 30)
             .padding(.bottom, 30)
         }
+    }
+}
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        let mockViewModel = MockLoginViewModel()
+        LoginView(viewModel: mockViewModel)
     }
 }
 
@@ -196,12 +203,5 @@ class MockLoginViewModel: BaseClass, LoginViewModeling, ObservableObject {
     func onPasswordVisibilityTapped() {
         isPasswordVisible.toggle()
         print("Password visibility toggled: \(isPasswordVisible)")
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockViewModel = MockLoginViewModel()
-        LoginView(viewModel: mockViewModel)
     }
 }
