@@ -60,6 +60,16 @@ struct LogoutButtonStyle: ViewModifier {
     }
 }
 
+struct CameraButtonStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.black.opacity(0.5))
+            .clipShape(Circle())
+    }
+}
+
 extension View {
     func loginButtonStyle() -> some View {
         self.modifier(LoginButtonStyle())
@@ -71,5 +81,8 @@ extension View {
     
     func logoutButtonStyle() -> some View {
         self.modifier(LogoutButtonStyle())
+    }
+    func cameraButtonStyle() -> some View {
+        self.modifier(CameraButtonStyle())
     }
 }

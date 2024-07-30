@@ -280,6 +280,28 @@
         }
       }
     },
+    "home.camera.instructions" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenujte kód na pravém spodním rohu turistické značky. Kód se zvýrazní poté, co je detekován. Pro zpracování udržte kód zvýrazněn po dobu 2 sekund."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scannen Sie den Code in der unteren rechten Ecke des Touristenschildes. Der Code wird hervorgehoben, wenn er von der Kamera erfasst wird. Der Code wird verarbeitet, nachdem er 2 Sekunden lang ununterbrochen hervorgehoben wurde."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan the code in the bottom right corner of the Tourist Sign. Code gets highlighted when registered by camera. The code will get processed after being highlighted for 2 seconds straight. "
+          }
+        }
+      }
+    },
     "home.description.nfc" : {
       "extractionState" : "manual",
       "localizations" : {
