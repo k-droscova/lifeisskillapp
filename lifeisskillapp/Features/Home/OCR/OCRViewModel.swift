@@ -21,7 +21,6 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     private let logger: LoggerServicing
     private let scanningManager: ScanningManaging
     private let locationManager: LocationManaging
-    private var scannedSignInfo = TouristSign()
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
@@ -47,8 +46,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func handleProcessedCode(_ code: String) {
-        scannedSignInfo.code = code
-        sendScannedPointToAPI(sign: scannedSignInfo)
+        sendScannedPointToAPI(code)
         dismissCamera()
     }
     
@@ -59,9 +57,8 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         return extractOldCode(from: text)
     }
     
-    private func sendScannedPointToAPI(sign: TouristSign) {
+    private func sendScannedPointToAPI(_ code: String) {
         locationManager.checkLocationAuthorization()
-        guard let code = sign.code else { return }
         let point = LoadPoint(code: code, codeSource: .text)
         Task { @MainActor in
             do {
