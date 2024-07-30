@@ -30,6 +30,7 @@ struct LoginView: View {
             
             BottomButtons(viewModel: viewModel)
         }
+        .body2Login
         .onAppear {
             viewModel.onAppear()
         }
