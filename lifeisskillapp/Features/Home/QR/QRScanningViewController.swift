@@ -39,6 +39,10 @@ final class QRScannerViewController: Base.ViewController {
             previewLayer.frame = view.layer.bounds
             view.layer.addSublayer(previewLayer)
         }
+        else {
+            appDependencies.logger.log(message: "ERROR: QR Preview Layer was not setup")
+            viewModel.scanningFailed()
+        }
         viewModel.startScanning()
     }
 }
