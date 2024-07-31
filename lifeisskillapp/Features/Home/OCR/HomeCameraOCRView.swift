@@ -55,7 +55,7 @@ struct HomeCameraOCRView: View {
     }
     
     private var InstructionsView: some View {
-        Text(Instructions.Scanning.camera.rawValue)
+        Text("home.camera.instructions")
             .foregroundColor(.white)
             .padding()
             .background(Color.black.opacity(0.5))

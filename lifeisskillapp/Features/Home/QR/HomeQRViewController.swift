@@ -27,8 +27,7 @@ final class HomeQRViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = HomeQRView(viewModel: viewModel)
-        let vc = UIHostingController(rootView: rootView)
+        let vc = HomeQRView(viewModel: viewModel).hosting()
         embedController(vc)
     }
     

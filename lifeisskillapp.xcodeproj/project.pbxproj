@@ -112,6 +112,7 @@
 		27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A422C4CFEFC00928388 /* UserRankManager.swift */; };
 		27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A462C4D334F00928388 /* UserLoginDataManager.swift */; };
 		27F528FE2C5A6FB50042F537 /* UIAssetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */; };
+		27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FF2C5A8A380042F537 /* ViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +243,7 @@
 		27F27A422C4CFEFC00928388 /* UserRankManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManager.swift; sourceTree = "<group>"; };
 		27F27A462C4D334F00928388 /* UserLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginDataManager.swift; sourceTree = "<group>"; };
 		27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAssetEnums.swift; sourceTree = "<group>"; };
+		27F528FF2C5A8A380042F537 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -562,6 +564,7 @@
 				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
 				27CBD78C2C4EC72F00612375 /* CLLocation.swift */,
 				2720DF2D2C515906007B4E77 /* String.swift */,
+				27F528FF2C5A8A380042F537 /* ViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
+				27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				275457282C3332E000F3B55A /* DebugViewController.swift in Sources */,

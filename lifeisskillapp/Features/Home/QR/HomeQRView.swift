@@ -65,7 +65,7 @@ struct HomeQRView: View {
     }
     
     private var InstructionsView: some View {
-        Text(Instructions.Scanning.qr.rawValue)
+        Text("home.qr.scan_alert")
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
             .padding()
