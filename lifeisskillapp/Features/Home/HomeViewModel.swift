@@ -59,12 +59,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     func loadWithQRCode() {
         qrVM = QRViewModel(dependencies: self.dependencies, delegate: self.delegate)
         guard let qrVM else {
-            _ = LogEvent(
-                message: "Error: qrVM initialization failed",
-                context: .system,
-                severity: .error,
-                logger: dependencies.logger
-            )
+            dependencies.logger.log(message: "ERROR: QR ViewModel Init Failed")
             return
         }
         delegate?.loadFromQR(viewModel: qrVM)
@@ -74,12 +69,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     func loadFromCamera() {
         ocrVM = OcrViewModel(dependencies: self.dependencies, delegate: self.delegate)
         guard let ocrVM else {
-            _ = LogEvent(
-                message: "Error: OcrVM initialization failed",
-                context: .system,
-                severity: .error,
-                logger: dependencies.logger
-            )
+            dependencies.logger.log(message: "ERROR: OCR ViewModel Init Failed")
             return
         }
         delegate?.loadFromCamera(viewModel: ocrVM)

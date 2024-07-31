@@ -45,12 +45,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func scanningFailed() {
-        _ = LogEvent(
-            message: "Error: Scanning Failure",
-            context: .system,
-            severity: .error,
-            logger: logger
-        )
+        logger.log(message: "ERROR: OCR Scanning Failure")
         delegate?.onFailure(source: .text)
     }
     
