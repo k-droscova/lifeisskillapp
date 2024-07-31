@@ -57,7 +57,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     // MARK: - QR Flow
     
     func loadFromQR(viewModel: QRViewModeling) {
-        if #available(iOS 16.0, *) {
+        if #available(iOS 10.0, *) {
             let qrViewController = HomeQRViewController(viewModel: viewModel)
             qrViewController.modalPresentationStyle = .fullScreen
             navigationController?.present(qrViewController, animated: true, completion: nil)

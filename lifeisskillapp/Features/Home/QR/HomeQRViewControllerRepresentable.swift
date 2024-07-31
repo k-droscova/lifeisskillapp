@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-import AVFoundation
 
-@available(iOS 16.0, *)
 struct HomeQRViewControllerRepresentable: UIViewControllerRepresentable {
     typealias UIViewControllerType = QRScannerViewController
     

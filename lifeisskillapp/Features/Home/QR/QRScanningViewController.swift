@@ -9,7 +9,6 @@ import ACKategories
 import SwiftUI
 import AVFoundation
 
-@available(iOS 16.0, *)
 final class QRScannerViewController: Base.ViewController {
     let viewModel: QRViewModeling
     
