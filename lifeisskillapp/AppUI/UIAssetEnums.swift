@@ -14,4 +14,13 @@ enum SFSSymbols: String {
 enum CustomImages: String {
     case flashOn = "flash_selected"
     case flashOff = "flash_unselected"
+    case scanningFrame = "frame"
+}
+
+enum Instructions {
+    enum Scanning: String {
+        case qr = "home.qr.scan_alert"
+        case nfc = "home.nfc.scan_alert"
+        case camera = "home.camera.instructions"
+    }
 }
