@@ -7,57 +7,155 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    @State var viewModel: LoginViewModeling
+struct LoginView<ViewModel: LoginViewModeling>: View {
+    @StateObject var viewModel: ViewModel
     
     var body: some View {
-        contentView
-            .padding(30)
-    }
-    
-    var contentView: some View {
         VStack {
-            
             Spacer()
             
-            VStack {
-                TextField(
-                    "login.username",
-                    text: $viewModel.username
-                )
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
+            loginImageView
+            
+            VStack(spacing: 16) {
+                usernameTextField
+                passwordSecureField
+            }
+            .padding(.horizontal, 30)
+            
+            loginButton
+                .padding(.horizontal, 30)
                 .padding(.top, 20)
-                
-                Divider()
-                
-                SecureField(
-                    "login.password",
-                    text: $viewModel.password
-                )
-                .padding(.top, 20)
-                
-                Divider()
-            }
             
             Spacer()
             
-            // LOGIN BUTTON
-            Button(action: viewModel.login) {
-                Text("login.login")
-            }
-            .loginButtonStyle()
-            
-            Spacer()
-            
-            // REGISTER BUTTON
-            Button(action: viewModel.register) {
-                Text("login.register")
-            }
-            .registerButtonStyle()
+            bottomButtons
         }
+        .body2Login
         .onAppear {
             viewModel.onAppear()
         }
+        .overlay(
+            Group {
+                if viewModel.isLoading {
+                    ZStack {
+                        Color.black.opacity(0.3)
+                            .edgesIgnoringSafeArea(.all)
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(.white)
+                    }
+                }
+            }
+        )
+    }
+}
+
+private extension LoginView {
+    
+    private var loginImageView: some View {
+        Image("loginScreen")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 200)
+            .padding(.bottom, 20)
+    }
+    
+    private var usernameTextField: some View {
+        TextField(
+            "login.username",
+            text: $viewModel.username
+        )
+        .autocapitalization(.none)
+        .disableAutocorrection(true)
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(10)
+    }
+    
+    private var passwordSecureField: some View {
+        SecureField(
+            "login.password",
+            text: $viewModel.password
+        )
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(10)
+    }
+    
+    private var loginButton: some View {
+        Button(action: viewModel.login) {
+            Text("login.login")
+                .foregroundColor(.white)
+                .padding()
+                .padding(.horizontal, 20)
+                .background(viewModel.isLoginEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
+                .cornerRadius(20)
+        }
+        .disabled(!viewModel.isLoginEnabled)
+    }
+    
+    private var bottomButtons: some View {
+        HStack {
+            Button(action: viewModel.register) {
+                Text("login.register")
+            }
+            Spacer()
+            Button(action: viewModel.forgotPassword) {
+                Text("login.forgotPassword")
+            }
+        }
+        .padding(.horizontal, 30)
+        .padding(.bottom, 30)
+    }
+}
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        let mockViewModel = MockLoginViewModel()
+        LoginView(viewModel: mockViewModel)
+    }
+}
+
+class MockLoginViewModel: BaseClass, LoginViewModeling, ObservableObject {
+    @Published var username: String = "dc" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var password: String = "csdc" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var isLoginEnabled: Bool = false
+    @Published var isLoading: Bool = false
+    
+    func login() {
+        // Mock loading behavior
+        isLoading = true
+        print("Login started")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.isLoading = false
+            print("Login finished")
+        }
+    }
+    
+    func onAppear() {
+        // Mock onAppear behavior
+        print("Mock onAppear")
+    }
+    
+    func register() {
+        // Mock register behavior
+        print("Mock register")
+    }
+    
+    func forgotPassword() {
+        // Mock forgotPassword behavior
+        print("Mock forgotPassword")
+    }
+    
+    private func shouldEnableLoginButton() {
+        isLoginEnabled = username.isNotEmpty && password.isNotEmpty
     }
 }
