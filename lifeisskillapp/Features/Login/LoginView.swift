@@ -73,39 +73,19 @@ private extension LoginView {
     }
     
     private var passwordSecureField: some View {
-        ZStack(alignment: .trailing) {
-            Group {
-                if viewModel.isPasswordVisible {
-                    TextField(
-                        "login.password",
-                        text: $viewModel.password
-                    )
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(10)
-                } else {
-                    SecureField(
-                        "login.password",
-                        text: $viewModel.password
-                    )
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(10)
-                }
-            }
-            
-            Button(action: viewModel.onPasswordVisibilityTapped) {
-                Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
-                    .foregroundColor(.gray)
-                    .padding(.trailing, 10)
-            }
-        }
+        SecureField(
+            "login.password",
+            text: $viewModel.password
+        )
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(10)
     }
     
     private var loginButton: some View {
         Button(action: viewModel.login) {
             Text("login.login")
-                .foregroundColor(viewModel.isLoginEnabled ? Color(.white) : Color("LisGreyTextFieldTitle"))
+                .foregroundColor(.white)
                 .padding()
                 .padding(.horizontal, 20)
                 .background(viewModel.isLoginEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
@@ -137,10 +117,17 @@ struct LoginView_Previews: PreviewProvider {
 }
 
 class MockLoginViewModel: BaseClass, LoginViewModeling, ObservableObject {
-    @Published var username: String = "TestUser"
-    @Published var password: String = "Password123"
-    @Published var isLoginEnabled: Bool = true
-    @Published var isPasswordVisible: Bool = false
+    @Published var username: String = "dc" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var password: String = "csdc" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var isLoginEnabled: Bool = false
     @Published var isLoading: Bool = false
     
     func login() {
@@ -168,8 +155,7 @@ class MockLoginViewModel: BaseClass, LoginViewModeling, ObservableObject {
         print("Mock forgotPassword")
     }
     
-    func onPasswordVisibilityTapped() {
-        isPasswordVisible.toggle()
-        print("Password visibility toggled: \(isPasswordVisible)")
+    private func shouldEnableLoginButton() {
+        isLoginEnabled = username.isNotEmpty && password.isNotEmpty
     }
 }

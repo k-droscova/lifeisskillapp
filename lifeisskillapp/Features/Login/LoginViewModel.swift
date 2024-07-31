@@ -12,13 +12,11 @@ protocol LoginViewModeling: ObservableObject {
     var username: String { get set }
     var password: String { get set }
     var isLoginEnabled: Bool { get set }
-    var isPasswordVisible: Bool { get set }
     var isLoading: Bool { get set }
     func login()
     func onAppear()
     func register()
     func forgotPassword()
-    func onPasswordVisibilityTapped()
 }
 
 final class LoginViewModel: LoginViewModeling, ObservableObject {
@@ -27,10 +25,17 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
     private let userManager: UserManaging
     weak var delegate: LoginFlowDelegate?
     
-    @Published var username: String = ""
-    @Published var password: String = ""
-    @Published var isLoginEnabled: Bool = true
-    @Published var isPasswordVisible: Bool = false
+    @Published var username: String = "" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var password: String = "" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var isLoginEnabled: Bool = false
     @Published var isLoading: Bool = false
     
     init(dependencies: Dependencies, delegate: LoginFlowDelegate?) {
@@ -39,7 +44,7 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
     }
     
     func login() {
-        Task {
+        Task { @MainActor in
             isLoading = true
             do {
                 try await userManager.login(loginCredentials: .init(username: username, password: password))
@@ -69,15 +74,15 @@ final class LoginViewModel: LoginViewModeling, ObservableObject {
         print("forgot password tapped")
     }
     
-    func onPasswordVisibilityTapped() {
-        isPasswordVisible.toggle()
-    }
-    
     // MARK: Private Helpers
     
     private func fetchData() {
         Task {
             try await appDependencies.userManager.initializeAppId()
         }
+    }
+    
+    private func shouldEnableLoginButton() {
+        isLoginEnabled = username.isNotEmpty && password.isNotEmpty
     }
 }
