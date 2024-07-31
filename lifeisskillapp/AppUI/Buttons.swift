@@ -10,13 +10,12 @@ import SwiftUI
 
 struct CameraButton: View {
     let action: () -> Void
-    let systemImageName: String = "xmark"
     
     var body: some View {
         Button(action: {
             action()
         }) {
-            Image(systemName: systemImageName)
+            Image(systemName: SFSSymbols.camera.rawValue)
         }
         .cameraButtonStyle()
     }
@@ -24,8 +23,6 @@ struct CameraButton: View {
 
 struct FlashButton: View {
     let action: () -> Void
-    let flashOnButton: String = "flash_selected"
-    let flashOffButton: String = "flash_unselected"
     @Binding var flashOn: Bool
     
     var body: some View {
@@ -33,11 +30,11 @@ struct FlashButton: View {
             action()
         }) {
             flashOn ?
-            Image(flashOnButton)
+            Image(CustomImages.flashOn.rawValue)
                 .resizable()
                 .frame(width: 16, height: 24)
             :
-            Image(flashOffButton)
+            Image(CustomImages.flashOff.rawValue)
                 .resizable()
                 .frame(width: 16, height: 24)
         }

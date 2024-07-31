@@ -111,6 +111,7 @@
 		27F27A412C4CFA8600928388 /* UserRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A402C4CFA8600928388 /* UserRank.swift */; };
 		27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A422C4CFEFC00928388 /* UserRankManager.swift */; };
 		27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A462C4D334F00928388 /* UserLoginDataManager.swift */; };
+		27F528FE2C5A6FB50042F537 /* CustomImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FD2C5A6FB50042F537 /* CustomImages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,6 +241,7 @@
 		27F27A402C4CFA8600928388 /* UserRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRank.swift; sourceTree = "<group>"; };
 		27F27A422C4CFEFC00928388 /* UserRankManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManager.swift; sourceTree = "<group>"; };
 		27F27A462C4D334F00928388 /* UserLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginDataManager.swift; sourceTree = "<group>"; };
+		27F528FD2C5A6FB50042F537 /* CustomImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -464,6 +466,7 @@
 				278174892C4BFD6500138376 /* ButtonStyleModifier.swift */,
 				27187B662C57D866003D22C6 /* Buttons.swift */,
 				27187B6A2C57FA43003D22C6 /* Alerts.swift */,
+				27F528FD2C5A6FB50042F537 /* CustomImages.swift */,
 			);
 			path = AppUI;
 			sourceTree = "<group>";
@@ -964,6 +967,7 @@
 				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,
+				27F528FE2C5A6FB50042F537 /* CustomImages.swift in Sources */,
 				27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */,
 				2734DCA62C469442008030F3 /* UserPoint.swift in Sources */,
 				2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */,
