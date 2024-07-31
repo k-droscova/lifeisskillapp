@@ -14,6 +14,9 @@ protocol CameraViewModeling: BaseClass {
 }
 
 extension CameraViewModeling {
+    
+    // MARK: - Default Implementation as behavior is consistent throughout inheritors
+    
     func toggleFlash() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
