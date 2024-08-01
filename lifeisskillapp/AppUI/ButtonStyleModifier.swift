@@ -12,7 +12,7 @@ struct CustomButtonStyle: ViewModifier {
     var maxHeight: CGFloat
     var backgroundColor: Color
     var cornerRadius: CGFloat
-
+    
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: maxWidth, maxHeight: maxHeight)
@@ -72,12 +72,13 @@ struct CameraButtonStyle: ViewModifier {
 
 struct HomeButtonStyle: ViewModifier {
     var color: Color
-
+    var textColor: Color
+    
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.white)
+            .foregroundColor(textColor)
             .padding()
-            .headline2
+            .headline3
             .background(color)
             .clipShape(Capsule())
             .shadow(color: color.opacity(0.3), radius: 10, x: 0, y: 5)
@@ -99,7 +100,12 @@ extension View {
     func cameraButtonStyle() -> some View {
         self.modifier(CameraButtonStyle())
     }
-    func homeButtonStyle(_ color: Color) -> some View {
-        self.modifier(HomeButtonStyle(color: color))
+    func homeButtonStyle(background: Color, text: Color) -> some View {
+        self.modifier(
+            HomeButtonStyle(
+                color: background,
+                textColor: text
+            )
+        )
     }
 }

@@ -325,25 +325,48 @@
         }
       }
     },
-    "home.description.nfc" : {
+    "home.description.nfc.available" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bod se ti přičte přiblížením telefonu ke značce a načtením pomocí NFC. Můžeš použít také QR kód nebo kameru stisknutím tlačítek níže."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Halten Sie den NFC-Chip nahe an die obere Rückseite des Telefons, und der Punkt wird gescannt. Sie können auch QR oder Kamera verwenden, indem Sie auf die unten stehenden Tasten tippen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hold NFC chip close to the phone top back, and the point will be scanned. You can also use QR or Camera by tapping the buttons below."
+            "value" : "To scan an NFC chip, hold it to the top of the phone from the back. You can also use QR or Camera by tapping the buttons below"
+          }
+        }
+      }
+    },
+    "home.description.nfc.unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NFC funkce není na tomto zařízení dostupná. Pro načtení bodu použij QR či fotoaparát pomocí tlačítek níže"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFC ist auf Ihrem Gerät nicht verfügbar. Bitte verwenden Sie die QR- oder Kamerascanner, indem Sie auf die unten stehenden Schaltflächen tippen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFC is not available on your device. Please use QR or Camera scanners by tapping the buttons below"
           }
         }
       }
@@ -643,6 +666,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Again"
+          }
+        }
+      }
+    },
+    "home.scan_error.feature_unavailable.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato funkce není na vašem zařízení dostupná."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Funktion ist auf Ihrem Gerät nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This feature is not available on your device"
+          }
+        }
+      }
+    },
+    "home.scan_error.feature_unavailable.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funkce nedostupná"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funktion nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feature Unavailable"
           }
         }
       }
@@ -3060,6 +3129,9 @@
       }
     },
     "User Rank Data" : {
+
+    },
+    "Username" : {
 
     }
   },

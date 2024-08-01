@@ -9,6 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModeling
+    /// isLoading is set to true on View Appear and waits for HomeViewModel to check if NFC feature is available, which ensures correct instructionsView is showed
+    // This is done via View isLoading property to avoid HomeViewModeling conform to ObservableObject and have @StateObject viewModel
+    @State private var isLoading: Bool = true
     
     init(viewModel: HomeViewModeling) {
         self.viewModel = viewModel
@@ -20,22 +23,41 @@ struct HomeView: View {
             ScrollView {
                 VStack {
                     imageView
-                    instructionsView
-                    // TODO: change button colors
-                    // TODO: implement automatic nfc scan?
-                    buttonsView
+                    if isLoading {
+                        ProgressView()
+                            .frame(width: 200, height: 100)
+                    }
+                    else {
+                        instructionsView
+                        // TODO: change button colors to match LiS
+                        buttonsView
+                    }
                 }
             }
+        }
+        .onAppear {
+            Task { @MainActor in
+                self.isLoading = true
+                await viewModel.onAppear()
+                self.isLoading = false
+            }
+        }
+        .onDisappear {
+            viewModel.onDisappear()
         }
     }
     
     private var topBarView: some View {
         HStack {
-            Text("Username")
+            Text(viewModel.username)
                 .padding()
-                .headline2
+                .headline3
             Spacer()
+            // TODO: ask Martin if this should be implemented since the POST request for scanned point does not specify user category and hence it can be confusing for user (why is this here? can I choose which category this scanned point is going to count towards?)
+            // MARK: - if this is going to be kept, then homeviewmodel will need to provide the usercategory list for the drowdownmenu through property
             DropdownMenu()
+                .subheadline
+                .foregroundColor(.secondary)
         }
     }
     
@@ -48,7 +70,7 @@ struct HomeView: View {
     }
     
     private var instructionsView: some View {
-        Text("home.description.nfc")
+        Text(viewModel.isNFCavailable ? "home.description.nfc.available" : "home.description.nfc.unavailable")
             .body1Regular
             .padding(.horizontal, 34)
             .padding()
@@ -56,36 +78,37 @@ struct HomeView: View {
     
     private var buttonsView: some View {
         VStack {
-            Button(action: viewModel.loadWithNFC) {
-                Text("home.nfc.button")
-            }
-            .buttonStyle(DefaultButtonStyle())
-            .padding()
-            
             Button(action: viewModel.loadWithQRCode) {
                 Text("home.qr.button")
             }
-            .homeButtonStyle(.green)
+            .homeButtonStyle(background: .green, text: .white)
             .padding()
             
             Button(action: viewModel.loadFromCamera) {
                 Text("home.camera.button")
             }
-            .homeButtonStyle(.yellow)
+            .homeButtonStyle(background: .yellow, text: .black)
             .padding()
             
             Button(action: viewModel.showOnboarding) {
-                Text("Jak na to?")
+                Text("home.button.how")
             }
-            .buttonStyle(DefaultButtonStyle())
+            .homeButtonStyle(background: .clear, text: .secondary)
             .padding()
         }
     }
 }
 
 class MockHomeViewModel: BaseClass, HomeViewModeling {
-    func loadWithNFC() {
-        print("I was tapped: loadWithNFC")
+    var username: String = "Test"
+    var isNFCavailable: Bool = true
+    
+    func onAppear() {
+        print("I appeared")
+    }
+    
+    func onDisappear() {
+        print("I disappeared")
     }
     
     func loadWithQRCode() {

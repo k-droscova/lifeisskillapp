@@ -9,7 +9,9 @@ import Foundation
 import CoreNFC
 
 protocol NfcViewModeling: BaseClass {
-    func startScanning()
+    func startScanning() throws
+    func stopScanning()
+    var isNFCavailable: Bool { get }
 }
 
 final class NfcViewModel: BaseClass, NfcViewModeling {
@@ -21,6 +23,8 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     private let scanningManager: ScanningManaging
     private var session: NFCReaderSession?
     
+    public var isNFCavailable: Bool { NFCNDEFReaderSession.readingAvailable }
+    
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
         self.logger = dependencies.logger
@@ -28,7 +32,14 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         self.scanningManager = dependencies.scanningManager
     }
     
-    func startScanning() {
+    func startScanning() throws {
+        guard isNFCavailable else {
+            throw BaseError(
+                context: .system,
+                message: "NFC feature unavailable",
+                logger: logger
+            )
+        }
         logger.log(message: "Attempting to load point with NFC")
         locationManager.checkLocationAuthorization()
         session = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
@@ -36,12 +47,12 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         session?.begin()
     }
     
-    // MARK: - Private Helpers
-    
-    private func setToDefaultState() {
+    func stopScanning() {
         session?.invalidate()
         session = nil
     }
+    
+    // MARK: - Private Helpers
     
     private func handleScannedPoint(_ pointID: String) {
         logger.log(message: "Point scanned from NFC: \(pointID)")
@@ -49,10 +60,10 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         Task { @MainActor in
             do {
                 try await scanningManager.sendScannedPoint(point)
-                self.setToDefaultState()
+                self.stopScanning()
                 delegate?.onSuccess(source: .nfc)
             } catch {
-                self.setToDefaultState()
+                self.stopScanning()
                 delegate?.onFailure(source: .nfc)
             }
         }
@@ -62,7 +73,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
 extension NfcViewModel: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
         logger.log(message: "ERROR: NFC Readed Failed with \(error.localizedDescription)")
-        self.setToDefaultState()
+        self.stopScanning()
         delegate?.onFailure(source: .nfc)
     }
     
@@ -82,7 +93,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 return
             }
         }
-        self.setToDefaultState()
+        self.stopScanning()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.delegate?.onFailure(source: .nfc)
         }
