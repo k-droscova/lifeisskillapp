@@ -37,8 +37,7 @@ struct HomeCameraOCRView: View {
     
     private var TopButtons: some View {
         HStack {
-            CameraButton(
-                action: viewModel.dismissCamera
+            CameraButton(action: viewModel.dismissCamera
             )
                 .padding(.leading, 20)
                 .padding(.top, 20)

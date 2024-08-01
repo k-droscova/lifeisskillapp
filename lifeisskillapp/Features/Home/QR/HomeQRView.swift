@@ -27,22 +27,21 @@ struct HomeQRView: View {
     
     private var OverlayView: some View {
         VStack {
-            TopButtons
+            topButtons
             
             Spacer(minLength: 32)
             
-            CenterView
+            centerView
             
             Spacer(minLength: 32)
             
-            InstructionsView
+            instructionsView
         }
     }
     
-    private var TopButtons: some View {
+    private var topButtons: some View {
         HStack {
-            CameraButton(
-                action: viewModel.dismissScanner)
+            CameraButton(action: viewModel.dismissScanner)
             .padding(.leading, 20)
             .padding(.top, 20)
             
@@ -57,14 +56,14 @@ struct HomeQRView: View {
         }
     }
     
-    private var CenterView: some View {
+    private var centerView: some View {
         Image(CustomImages.scanningFrame.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .padding()
     }
     
-    private var InstructionsView: some View {
+    private var instructionsView: some View {
         Text("home.qr.scan_alert")
             .foregroundColor(.white)
             .multilineTextAlignment(.center)

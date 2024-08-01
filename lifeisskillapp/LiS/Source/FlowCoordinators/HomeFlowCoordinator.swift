@@ -42,7 +42,14 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     ///
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
-        let viewModel = HomeViewModel(dependencies: appDependencies, delegate: self)
+        let viewModel = HomeViewModel(
+            dependencies: .init(
+                scanningManager: appDependencies.scanningManager,
+                logger: appDependencies.logger,
+                locationManager: appDependencies.locationManager
+            ),
+            delegate: self
+        )
         self.homeVM = viewModel
         let homeController = HomeViewController(viewModel: viewModel)
         self.rootViewController = homeController
@@ -57,13 +64,9 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     // MARK: - QR Flow
     
     func loadFromQR(viewModel: QRViewModeling) {
-        if #available(iOS 10.0, *) {
-            let qrViewController = HomeQRViewController(viewModel: viewModel)
-            qrViewController.modalPresentationStyle = .fullScreen
-            navigationController?.present(qrViewController, animated: true, completion: nil)
-        } else {
-            self.featureUnavailable()
-        }
+        let qrViewController = HomeQRViewController(viewModel: viewModel)
+        qrViewController.modalPresentationStyle = .fullScreen
+        navigationController?.present(qrViewController, animated: true, completion: nil)
     }
     
     func dismissQR() {
