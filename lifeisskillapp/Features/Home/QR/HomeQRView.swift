@@ -19,13 +19,13 @@ struct HomeQRView: View {
             HomeQRViewControllerRepresentable(viewModel: viewModel)
                 .edgesIgnoringSafeArea(.all)
             
-            OverlayView
+            overlayView
             .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
             .padding(.top, UIApplication.shared.connectedScenes.first?.inputView?.window?.safeAreaInsets.top) // Ensure the view respects the top safe area so that the buttons react to taps
         }
     }
     
-    private var OverlayView: some View {
+    private var overlayView: some View {
         VStack {
             topButtons
             
