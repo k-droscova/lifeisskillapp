@@ -77,12 +77,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
     }
     func onDataError(_ error: Error) {
         // TODO: HANDLE ERROR BETTER
-        _ = LogEvent(
-            message: "Error: \(error.localizedDescription)",
-            context: .system,
-            severity: .error,
-            logger: appDependencies.logger
-        )
+        appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
         let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
 

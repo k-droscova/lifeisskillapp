@@ -27,7 +27,7 @@ struct HomeView: View {
             .loginButtonStyle()
 
             Button(action: viewModel.loadFromCamera) {
-                Text("home.photo.button")
+                Text("home.camera.button")
             }
             .loginButtonStyle()
         }

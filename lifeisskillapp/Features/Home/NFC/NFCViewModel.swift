@@ -32,7 +32,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         logger.log(message: "Attempting to load point with NFC")
         locationManager.checkLocationAuthorization()
         session = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
-        session?.alertMessage = NSLocalizedString("home.nfc.alertMessage", comment: "")
+        session?.alertMessage = NSLocalizedString("home.nfc.alert_message", comment: "")
         session?.begin()
     }
     
@@ -61,12 +61,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
 
 extension NfcViewModel: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
-        _ = LogEvent(
-            message: "Error: \(error.localizedDescription)",
-            context: .system,
-            severity: .error,
-            logger: logger
-        )
+        logger.log(message: "ERROR: NFC Readed Failed with \(error.localizedDescription)")
         self.setToDefaultState()
         delegate?.onFailure(source: .nfc)
     }

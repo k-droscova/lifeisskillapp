@@ -28,8 +28,7 @@ final class HomeCameraOCRViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = HomeCameraOCRView(viewModel: viewModel)
-        let vc = UIHostingController(rootView: rootView)
+        let vc = HomeCameraOCRView(viewModel: viewModel).hosting()
         embedController(vc)
     }
     

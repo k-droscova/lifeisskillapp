@@ -16,7 +16,7 @@ protocol HomeFlowCoordinatorDelegate: NSObject {
 
 protocol HomeFlowDelegate: NSObject {
     // MARK: - scanning flow
-    func loadFromQR()
+    func loadFromQR(viewModel: QRViewModeling)
     func dismissQR()
     func loadFromCamera(viewModel: OcrViewModeling)
     func dismissCamera()
@@ -42,7 +42,14 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     ///
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
-        let viewModel = HomeViewModel(dependencies: appDependencies, delegate: self)
+        let viewModel = HomeViewModel(
+            dependencies: .init(
+                scanningManager: appDependencies.scanningManager,
+                logger: appDependencies.logger,
+                locationManager: appDependencies.locationManager
+            ),
+            delegate: self
+        )
         self.homeVM = viewModel
         let homeController = HomeViewController(viewModel: viewModel)
         self.rootViewController = homeController
@@ -56,12 +63,14 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     
     // MARK: - QR Flow
     
-    func loadFromQR() {
-        appDependencies.logger.log(message: "loading from qr")
+    func loadFromQR(viewModel: QRViewModeling) {
+        let qrViewController = HomeQRViewController(viewModel: viewModel)
+        qrViewController.modalPresentationStyle = .fullScreen
+        navigationController?.present(qrViewController, animated: true, completion: nil)
     }
     
     func dismissQR() {
-        appDependencies.logger.log(message: "dismissing qr")
+        returnToHomeScreen()
     }
     
     // MARK: - Camera Flow
@@ -77,20 +86,69 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     }
     
     func dismissCamera() {
-        navigationController?.dismiss(animated: true, completion: nil)
+        returnToHomeScreen()
     }
 }
 
 extension HomeFlowCoordinator {
     func featureUnavailable() {
+        self.returnToHomeScreen()
         appDependencies.logger.log(message: "feature unavailable")
+        self.showAlert(titleKey: "home.scan_error.feature_unavailable.title", messageKey: "home.scan_error.feature_unavailable.message")
     }
     
     func onSuccess(source: CodeSource) {
+        self.returnToHomeScreen()
         appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
+        self.showSuccessAlert()
     }
     
     func onFailure(source: CodeSource) {
+        self.returnToHomeScreen()
         appDependencies.logger.log(message: "scanning failure for source: \(source.rawValue)")
+        self.showFailureAlert(source)
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func returnToHomeScreen() {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func showSuccessAlert() {
+        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
+    }
+    
+    private func showFailureAlert(_ source: CodeSource) {
+        switch source {
+        case .qr:
+            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.qr.message")
+        case .nfc:
+            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.nfc.message")
+        case .virtual:
+            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
+        case .text:
+            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
+        }
+    }
+}
+
+extension HomeFlowCoordinator {
+    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
+        guard let navigationController = self.navigationController else {
+            return
+        }
+        
+        let alertController = UIAlertController(
+            title: NSLocalizedString(titleKey, comment: ""),
+            message: NSLocalizedString(messageKey, comment: ""),
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+            completion?()
+        }
+        alertController.addAction(okAction)
+        
+        navigationController.present(alertController, animated: true, completion: nil)
     }
 }

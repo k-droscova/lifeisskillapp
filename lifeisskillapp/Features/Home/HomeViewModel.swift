@@ -25,8 +25,7 @@ protocol HomeViewModeling: BaseClass {
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
 final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
-    struct HomeDependencies: Dependencies {
+    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager {
         let scanningManager: ScanningManaging
         let logger: LoggerServicing
         let locationManager: LocationManaging
@@ -35,44 +34,63 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     // MARK: - Private Properties
     
     private weak var delegate: HomeFlowDelegate?
-    private let dependencies: HomeDependencies
     private var nfcVM: NfcViewModeling?
     private var ocrVM: OcrViewModeling?
+    private var qrVM: QRViewModeling?
     
-    // MARK: - Initialization
+    private let scanningManager: ScanningManaging
+    private let logger: LoggerServicing
+    private let locationManager: LocationManaging
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
-        self.dependencies = HomeDependencies(
-            scanningManager: dependencies.scanningManager,
-            logger: dependencies.logger,
-            locationManager: dependencies.locationManager
-        )
+        self.locationManager = dependencies.locationManager
+        self.scanningManager = dependencies.scanningManager
+        self.logger = dependencies.logger
         self.delegate = delegate
-        self.nfcVM = NfcViewModel(dependencies: dependencies, delegate: delegate)
-        self.ocrVM = OcrViewModel(dependencies: dependencies, delegate: delegate)
     }
     
     // MARK: - NFC
     func loadWithNFC() {
-        nfcVM = NfcViewModel(dependencies: self.dependencies, delegate: self.delegate)
+        nfcVM = NfcViewModel(
+            dependencies: Dependencies(
+                scanningManager: self.scanningManager,
+                logger: self.logger,
+                locationManager: self.locationManager
+            ),
+            delegate: self.delegate
+        )
         nfcVM?.startScanning()
     }
     
     // MARK: - QR
     func loadWithQRCode() {
-        delegate?.loadFromQR()
+        qrVM = QRViewModel(
+            dependencies: Dependencies(
+                scanningManager: self.scanningManager,
+                logger: self.logger,
+                locationManager: self.locationManager
+            ),
+            delegate: self.delegate
+        )
+        guard let qrVM else {
+            logger.log(message: "ERROR: QR ViewModel Init Failed")
+            return
+        }
+        delegate?.loadFromQR(viewModel: qrVM)
     }
     
     // MARK: - Camera
     func loadFromCamera() {
-        ocrVM = OcrViewModel(dependencies: self.dependencies, delegate: self.delegate)
+        ocrVM = OcrViewModel(
+            dependencies: Dependencies(
+                scanningManager: self.scanningManager,
+                logger: self.logger,
+                locationManager: self.locationManager
+            ),
+            delegate: self.delegate
+        )
         guard let ocrVM else {
-            _ = LogEvent(
-                message: "Error: OcrVM initialization failed",
-                context: .system,
-                severity: .error,
-                logger: dependencies.logger
-            )
+            logger.log(message: "ERROR: OCR ViewModel Init Failed")
             return
         }
         delegate?.loadFromCamera(viewModel: ocrVM)

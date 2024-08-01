@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import AVFoundation
 
-protocol OcrViewModeling: BaseClass {
+protocol OcrViewModeling: CameraViewModeling {
+    var captureSession: AVCaptureSession? { get set }
+    var previewLayer: AVCaptureVideoPreviewLayer? { get set }
     func dismissCamera()
     func scanningFailed()
     func handleProcessedCode(_ code: String)
@@ -21,6 +24,12 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     private let logger: LoggerServicing
     private let scanningManager: ScanningManaging
     private let locationManager: LocationManaging
+    
+    // MARK: - Public Properties
+    
+    var captureSession: AVCaptureSession?
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    @Published var isFlashOn: Bool = false
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
@@ -36,12 +45,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func scanningFailed() {
-        _ = LogEvent(
-            message: "Error: Scanning Failure",
-            context: .system,
-            severity: .error,
-            logger: logger
-        )
+        logger.log(message: "ERROR: OCR Scanning Failure")
         delegate?.onFailure(source: .text)
     }
     

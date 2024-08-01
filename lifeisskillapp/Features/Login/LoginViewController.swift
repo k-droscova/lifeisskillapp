@@ -27,8 +27,7 @@ final class LoginViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = LoginView(viewModel: viewModel)
-        let vc = UIHostingController(rootView: rootView)
+        let vc = LoginView(viewModel: viewModel).hosting()
         embedController(vc)
     }
     
