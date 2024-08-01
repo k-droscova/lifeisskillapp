@@ -9,9 +9,8 @@ import Foundation
 import CoreNFC
 
 protocol NfcViewModeling: BaseClass {
-    func startScanning() throws
+    func startScanning()
     func stopScanning()
-    var isNFCavailable: Bool { get }
 }
 
 final class NfcViewModel: BaseClass, NfcViewModeling {
@@ -32,13 +31,10 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         self.scanningManager = dependencies.scanningManager
     }
     
-    func startScanning() throws {
+    func startScanning() {
         guard isNFCavailable else {
-            throw BaseError(
-                context: .system,
-                message: "NFC feature unavailable",
-                logger: logger
-            )
+            delegate?.featureUnavailable(source: .nfc)
+            return
         }
         logger.log(message: "Attempting to load point with NFC")
         locationManager.checkLocationAuthorization()

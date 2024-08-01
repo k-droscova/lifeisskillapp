@@ -9,14 +9,12 @@ import Foundation
 import Observation
 
 protocol HomeViewModeling: BaseClass {
-    var isNFCavailable: Bool { get }
     var username: String { get }
+    func loadWithNFC()
     func loadWithQRCode()
     func loadFromCamera()
     func dismissCamera()
     func showOnboarding()
-    func onAppear() async
-    func onDisappear()
 }
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
@@ -30,7 +28,6 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - Public Properties
     
-    var isNFCavailable: Bool = true
     var username: String { userDataManager.userName ?? "" }
     
     // MARK: - Private Properties
@@ -55,9 +52,8 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     // MARK: - Public Interface
     
-    func onAppear() async {
-        // Create nfcVM for automatic background scanning on home screen
-        self.nfcVM = NfcViewModel(
+    func loadWithNFC() {
+        nfcVM = NfcViewModel(
             dependencies: Dependencies(
                 scanningManager: self.scanningManager,
                 logger: self.logger,
@@ -66,20 +62,7 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
             ),
             delegate: self.delegate
         )
-        // guard init
-        guard let nfcVM = nfcVM else {
-            logger.log(message: "ERROR: NFC VM was not initialized properly")
-            self.isNFCavailable = false
-            return
-        }
-        // check if nfc feature is available and if not then return
-        self.isNFCavailable = nfcVM.isNFCavailable
-        guard isNFCavailable else { return }
-        loadWithNFC()
-    }
-    
-    func onDisappear() {
-        nfcVM?.stopScanning()
+        nfcVM?.startScanning()
     }
     
     func loadWithQRCode() {
@@ -122,16 +105,5 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     func showOnboarding() {
         delegate?.showOnboarding()
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func loadWithNFC() {
-        do {
-            try nfcVM?.startScanning()
-        } catch {
-            logger.log(message: "NFC unavailable")
-            self.isNFCavailable = false
-        }
     }
 }

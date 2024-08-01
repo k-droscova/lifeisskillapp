@@ -263,7 +263,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "jak na to?"
+            "value" : "Jak na to?"
           }
         },
         "de" : {
@@ -325,48 +325,25 @@
         }
       }
     },
-    "home.description.nfc.available" : {
+    "home.description" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bod se ti přičte přiblížením telefonu ke značce a načtením pomocí NFC. Můžeš použít také QR kód nebo kameru stisknutím tlačítek níže."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Halten Sie den NFC-Chip nahe an die obere Rückseite des Telefons, und der Punkt wird gescannt. Sie können auch QR oder Kamera verwenden, indem Sie auf die unten stehenden Tasten tippen."
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To scan an NFC chip, hold it to the top of the phone from the back. You can also use QR or Camera by tapping the buttons below"
-          }
-        }
-      }
-    },
-    "home.description.nfc.unavailable" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "NFC funkce není na tomto zařízení dostupná. Pro načtení bodu použij QR či fotoaparát pomocí tlačítek níže"
+            "value" : "Můžete použít NFC nebo QR kód k naskenování Life Is Skill štítků, nebo Fotoaparát k naskenování turistických značek. Stačí klepnout na příslušné tlačítko níže:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NFC ist auf Ihrem Gerät nicht verfügbar. Bitte verwenden Sie die QR- oder Kamerascanner, indem Sie auf die unten stehenden Schaltflächen tippen"
+            "value" : "Sie können NFC oder QR-Code verwenden, um Life Is Skill-Tags zu scannen, oder die Kamera, um Touristenschilder zu scannen. Tippen Sie einfach auf die entsprechende Schaltfläche unten:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NFC is not available on your device. Please use QR or Camera scanners by tapping the buttons below"
+            "value" : "You can use NFC or QR code to scan Life Is Skill tags, or Camera to scan Tourist signs. Just tap the appropriate button below:"
           }
         }
       }
@@ -3129,9 +3106,6 @@
       }
     },
     "User Rank Data" : {
-
-    },
-    "Username" : {
 
     }
   },

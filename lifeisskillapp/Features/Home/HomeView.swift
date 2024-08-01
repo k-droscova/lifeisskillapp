@@ -9,9 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModeling
-    /// isLoading is set to true on View Appear and waits for HomeViewModel to check if NFC feature is available, which ensures correct instructionsView is showed
-    // This is done via View isLoading property to avoid HomeViewModeling conform to ObservableObject and have @StateObject viewModel
-    @State private var isLoading: Bool = true
     
     init(viewModel: HomeViewModeling) {
         self.viewModel = viewModel
@@ -23,27 +20,11 @@ struct HomeView: View {
             ScrollView {
                 VStack {
                     imageView
-                    if isLoading {
-                        ProgressView()
-                            .frame(width: 200, height: 100)
-                    }
-                    else {
-                        instructionsView
-                        // TODO: change button colors to match LiS
-                        buttonsView
-                    }
+                    instructionsView
+                    // TODO: change button colors to match LiS
+                    buttonsView
                 }
             }
-        }
-        .onAppear {
-            Task { @MainActor in
-                self.isLoading = true
-                await viewModel.onAppear()
-                self.isLoading = false
-            }
-        }
-        .onDisappear {
-            viewModel.onDisappear()
         }
     }
     
@@ -70,7 +51,7 @@ struct HomeView: View {
     }
     
     private var instructionsView: some View {
-        Text(viewModel.isNFCavailable ? "home.description.nfc.available" : "home.description.nfc.unavailable")
+        Text("home.description")
             .body1Regular
             .padding(.horizontal, 34)
             .padding()
@@ -78,6 +59,12 @@ struct HomeView: View {
     
     private var buttonsView: some View {
         VStack {
+            Button(action: viewModel.loadWithNFC) {
+                Text("home.nfc.button")
+            }
+            .homeButtonStyle(background: .pink, text: .white)
+            .padding()
+            
             Button(action: viewModel.loadWithQRCode) {
                 Text("home.qr.button")
             }
@@ -101,14 +88,9 @@ struct HomeView: View {
 
 class MockHomeViewModel: BaseClass, HomeViewModeling {
     var username: String = "Test"
-    var isNFCavailable: Bool = true
     
-    func onAppear() {
-        print("I appeared")
-    }
-    
-    func onDisappear() {
-        print("I disappeared")
+    func loadWithNFC() {
+        print("I was tapped: loadWithNFC")
     }
     
     func loadWithQRCode() {
