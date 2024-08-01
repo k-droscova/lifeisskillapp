@@ -27,7 +27,6 @@ struct DropdownMenu: View {
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
-            .background(Color(.systemGray6))
             .cornerRadius(8)
         }
     }
