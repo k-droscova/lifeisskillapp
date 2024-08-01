@@ -331,19 +331,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bod se ti přičte přiblížením telefonu ke značce a načtením pomocí NFC. Můžeš použít také čtení QR kódu."
+            "value" : "Bod se ti přičte přiblížením telefonu ke značce a načtením pomocí NFC. Můžeš použít také QR kód nebo kameru stisknutím tlačítek níže."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Halten Sie das NFC-Chip nahe an die obere Rückseite des Telefons und der Punkt wird gescannt. Sie können auch den QR-Scan verwenden."
+            "value" : "Halten Sie den NFC-Chip nahe an die obere Rückseite des Telefons, und der Punkt wird gescannt. Sie können auch QR oder Kamera verwenden, indem Sie auf die unten stehenden Tasten tippen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hold NFC chip close to the phone top back, and the point will be scanned. You can use the QR scan too."
+            "value" : "Hold NFC chip close to the phone top back, and the point will be scanned. You can also use QR or Camera by tapping the buttons below."
           }
         }
       }

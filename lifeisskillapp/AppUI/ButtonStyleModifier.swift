@@ -70,6 +70,20 @@ struct CameraButtonStyle: ViewModifier {
     }
 }
 
+struct HomeButtonStyle: ViewModifier {
+    var color: Color
+
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.white)
+            .padding()
+            .headline2
+            .background(color)
+            .clipShape(Capsule())
+            .shadow(color: color.opacity(0.3), radius: 10, x: 0, y: 5)
+    }
+}
+
 extension View {
     func loginButtonStyle() -> some View {
         self.modifier(LoginButtonStyle())
@@ -84,5 +98,8 @@ extension View {
     }
     func cameraButtonStyle() -> some View {
         self.modifier(CameraButtonStyle())
+    }
+    func homeButtonStyle(_ color: Color) -> some View {
+        self.modifier(HomeButtonStyle(color: color))
     }
 }

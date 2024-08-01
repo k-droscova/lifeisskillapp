@@ -41,3 +41,16 @@ struct FlashButton: View {
         .cameraButtonStyle()
     }
 }
+
+struct HomeButton: View {
+    let action: () -> Void
+    let text: Text
+    let color: Color
+    
+    var body: some View {
+        Button(action: action) {
+            text
+        }
+        .homeButtonStyle(color)
+    }
+}

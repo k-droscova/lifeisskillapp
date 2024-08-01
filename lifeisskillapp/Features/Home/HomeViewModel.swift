@@ -21,6 +21,8 @@ protocol HomeViewModeling: BaseClass {
     
     /// Dismisses the camera view.
     func dismissCamera()
+    
+    func showOnboarding()
 }
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
@@ -98,5 +100,9 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     func dismissCamera() {
         delegate?.dismissCamera()
+    }
+    
+    func showOnboarding() {
+        logger.log(message: "Onboarding tapped")
     }
 }
