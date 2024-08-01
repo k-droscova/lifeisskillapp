@@ -7,22 +7,27 @@
 
 import SwiftUI
 
-struct DropdownMenu: View {
-    @State private var selectedOption: String = "Option 1"
-    private let options = ["Option 1", "Option 2"]
+struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
+    @State private var selectedOption: T
+    private let options: [T]
+
+    init(options: [T], defaultSelection: T) {
+        self.options = options
+        self._selectedOption = State(initialValue: defaultSelection)
+    }
 
     var body: some View {
         Menu {
-            ForEach(options, id: \.self) { option in
+            ForEach(options) { option in
                 Button(action: {
                     selectedOption = option
                 }) {
-                    Text(option)
+                    Text(option.description)
                 }
             }
         } label: {
             HStack {
-                Text(selectedOption)
+                Text(selectedOption.description)
                 Image(systemName: "chevron.down")
             }
             .padding(.horizontal)

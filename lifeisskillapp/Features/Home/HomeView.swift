@@ -9,6 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModeling
+    private let userCategories = [
+        UserCategory(id: "1", name: "Category 1", detail: "Description 1", isPublic: true),
+        UserCategory(id: "2", name: "Category 2", detail: "Description 2", isPublic: false),
+        UserCategory(id: "3", name: "Category 3", detail: "Description 3", isPublic: true)
+    ]
     
     init(viewModel: HomeViewModeling) {
         self.viewModel = viewModel
@@ -36,9 +41,13 @@ struct HomeView: View {
             Spacer()
             // TODO: ask Martin if this should be implemented since the POST request for scanned point does not specify user category and hence it can be confusing for user (why is this here? can I choose which category this scanned point is going to count towards?)
             // MARK: - if this is going to be kept, then homeviewmodel will need to provide the usercategory list for the drowdownmenu through property
-            DropdownMenu()
-                .subheadline
-                .foregroundColor(.secondary)
+            DropdownMenu(
+                options: userCategories,
+                defaultSelection: userCategories[0]
+            )
+            .subheadline
+            .foregroundColor(.secondary)
+            
         }
     }
     
