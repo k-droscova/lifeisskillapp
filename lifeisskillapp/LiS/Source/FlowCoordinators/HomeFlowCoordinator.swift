@@ -21,9 +21,11 @@ protocol HomeFlowDelegate: NSObject {
     func loadFromCamera(viewModel: OcrViewModeling)
     func dismissCamera()
     // MARK: - message flow
-    func featureUnavailable()
+    func featureUnavailable(source: CodeSource)
     func onSuccess(source: CodeSource)
     func onFailure(source: CodeSource)
+    // MARK: - navigation
+    func showOnboarding()
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
@@ -46,7 +48,8 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             dependencies: .init(
                 scanningManager: appDependencies.scanningManager,
                 logger: appDependencies.logger,
-                locationManager: appDependencies.locationManager
+                locationManager: appDependencies.locationManager,
+                userLoginManager: appDependencies.userLoginManager
             ),
             delegate: self
         )
@@ -81,20 +84,28 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
             cameraViewController.modalPresentationStyle = .fullScreen
             navigationController?.present(cameraViewController, animated: true, completion: nil)
         } else {
-            self.featureUnavailable()
+            self.featureUnavailable(source: .text)
         }
     }
     
     func dismissCamera() {
         returnToHomeScreen()
     }
+    
+    func showOnboarding() {
+        // TODO: present Onboarding Controller when called
+        appDependencies.logger.log(message: "Onboarding tapped")
+    }
 }
 
 extension HomeFlowCoordinator {
-    func featureUnavailable() {
-        self.returnToHomeScreen()
+    func featureUnavailable(source: CodeSource) {
         appDependencies.logger.log(message: "feature unavailable")
-        self.showAlert(titleKey: "home.scan_error.feature_unavailable.title", messageKey: "home.scan_error.feature_unavailable.message")
+        self.showAlert(
+            titleKey: "home.scan_error.feature_unavailable.title",
+            messageKey: "home.scan_error.feature_unavailable.message",
+            completion: self.returnToHomeScreen
+        )
     }
     
     func onSuccess(source: CodeSource) {

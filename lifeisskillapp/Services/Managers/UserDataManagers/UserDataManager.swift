@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol UserData: Codable {
+protocol UserData: Codable, Identifiable {
     var id: String { get }
 }
 

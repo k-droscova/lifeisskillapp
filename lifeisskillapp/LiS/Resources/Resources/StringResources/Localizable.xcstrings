@@ -263,7 +263,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "jak na to?"
+            "value" : "Jak na to?"
           }
         },
         "de" : {
@@ -325,25 +325,25 @@
         }
       }
     },
-    "home.description.nfc" : {
+    "home.description" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bod se ti přičte přiblížením telefonu ke značce a načtením pomocí NFC. Můžeš použít také čtení QR kódu."
+            "value" : "Můžete použít NFC nebo QR kód k naskenování Life Is Skill štítků, nebo Fotoaparát k naskenování turistických značek. Stačí klepnout na příslušné tlačítko níže:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Halten Sie das NFC-Chip nahe an die obere Rückseite des Telefons und der Punkt wird gescannt. Sie können auch den QR-Scan verwenden."
+            "value" : "Sie können NFC oder QR-Code verwenden, um Life Is Skill-Tags zu scannen, oder die Kamera, um Touristenschilder zu scannen. Tippen Sie einfach auf die entsprechende Schaltfläche unten:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hold NFC chip close to the phone top back, and the point will be scanned. You can use the QR scan too."
+            "value" : "You can use NFC or QR code to scan Life Is Skill tags, or Camera to scan Tourist signs. Just tap the appropriate button below:"
           }
         }
       }
@@ -643,6 +643,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Again"
+          }
+        }
+      }
+    },
+    "home.scan_error.feature_unavailable.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato funkce není na vašem zařízení dostupná."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Funktion ist auf Ihrem Gerät nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This feature is not available on your device"
+          }
+        }
+      }
+    },
+    "home.scan_error.feature_unavailable.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funkce nedostupná"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funktion nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feature Unavailable"
           }
         }
       }

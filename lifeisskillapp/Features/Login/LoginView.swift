@@ -46,7 +46,6 @@ struct LoginView: View {
             Button(action: viewModel.login) {
                 Text("login.login")
             }
-            .loginButtonStyle()
             
             Spacer()
             
@@ -54,7 +53,6 @@ struct LoginView: View {
             Button(action: viewModel.register) {
                 Text("login.register")
             }
-            .registerButtonStyle()
         }
         .onAppear {
             viewModel.onAppear()

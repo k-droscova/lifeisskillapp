@@ -8,28 +8,27 @@
 import Foundation
 import Observation
 
-/// A protocol that defines the required methods for the HomeViewModel.
 protocol HomeViewModeling: BaseClass {
-    /// Initiates the process of loading with NFC.
+    var username: String { get }
     func loadWithNFC()
-    
-    /// Initiates the process of loading with QR code.
     func loadWithQRCode()
-    
-    /// Initiates the process of loading with the camera.
     func loadFromCamera()
-    
-    /// Dismisses the camera view.
     func dismissCamera()
+    func showOnboarding()
 }
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
 final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
-    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager {
+    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserLoginManager {
         let scanningManager: ScanningManaging
         let logger: LoggerServicing
         let locationManager: LocationManaging
+        let userLoginManager: UserLoginDataManaging
     }
+    
+    // MARK: - Public Properties
+    
+    var username: String { userDataManager.userName ?? "" }
     
     // MARK: - Private Properties
     
@@ -41,34 +40,38 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     private let scanningManager: ScanningManaging
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
+    private let userDataManager: UserLoginDataManaging
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
         self.locationManager = dependencies.locationManager
         self.scanningManager = dependencies.scanningManager
         self.logger = dependencies.logger
+        self.userDataManager = dependencies.userLoginManager
         self.delegate = delegate
     }
     
-    // MARK: - NFC
+    // MARK: - Public Interface
+    
     func loadWithNFC() {
         nfcVM = NfcViewModel(
             dependencies: Dependencies(
                 scanningManager: self.scanningManager,
                 logger: self.logger,
-                locationManager: self.locationManager
+                locationManager: self.locationManager,
+                userLoginManager: self.userDataManager
             ),
             delegate: self.delegate
         )
         nfcVM?.startScanning()
     }
     
-    // MARK: - QR
     func loadWithQRCode() {
         qrVM = QRViewModel(
             dependencies: Dependencies(
                 scanningManager: self.scanningManager,
                 logger: self.logger,
-                locationManager: self.locationManager
+                locationManager: self.locationManager,
+                userLoginManager: self.userDataManager
             ),
             delegate: self.delegate
         )
@@ -79,13 +82,13 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
         delegate?.loadFromQR(viewModel: qrVM)
     }
     
-    // MARK: - Camera
     func loadFromCamera() {
         ocrVM = OcrViewModel(
             dependencies: Dependencies(
                 scanningManager: self.scanningManager,
                 logger: self.logger,
-                locationManager: self.locationManager
+                locationManager: self.locationManager,
+                userLoginManager: self.userDataManager
             ),
             delegate: self.delegate
         )
@@ -98,5 +101,9 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     
     func dismissCamera() {
         delegate?.dismissCamera()
+    }
+    
+    func showOnboarding() {
+        delegate?.showOnboarding()
     }
 }

@@ -7,16 +7,20 @@
 
 import Foundation
 
-struct UserCategory: UserData {
+struct UserCategory: UserData, CustomStringConvertible {
     let id: String
     let name: String
-    let description: String
+    let detail: String
     let isPublic: Bool
 
     enum CodingKeys: String, CodingKey {
         case id = "catID"
         case name = "catName"
-        case description = "catDetail"
+        case detail = "catDetail"
         case isPublic = "public"
+    }
+    
+    var description: String {
+        name
     }
 }
