@@ -20,10 +20,10 @@ struct HomeView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             topBarView
             ScrollView {
-                VStack {
+                VStack(spacing: 16) {
                     imageView
                     instructionsView
                     // TODO: change button colors to match LiS
@@ -66,30 +66,34 @@ struct HomeView: View {
     }
     
     private var buttonsView: some View {
-        VStack {
-            Button(action: viewModel.loadWithNFC) {
-                Text("home.nfc.button")
-            }
-            .homeButtonStyle(background: .pink, text: .white)
-            .padding()
+        VStack(spacing: 24) {
+            HomeButton(
+                action: viewModel.loadWithNFC,
+                text: Text("home.nfc.button"),
+                background: .pink,
+                textColor: .white
+            )
             
-            Button(action: viewModel.loadWithQRCode) {
-                Text("home.qr.button")
-            }
-            .homeButtonStyle(background: .green, text: .white)
-            .padding()
+            HomeButton(
+                action: viewModel.loadWithQRCode,
+                text: Text("home.qr.button"),
+                background: .green,
+                textColor: .white
+            )
             
-            Button(action: viewModel.loadFromCamera) {
-                Text("home.camera.button")
-            }
-            .homeButtonStyle(background: .yellow, text: .black)
-            .padding()
+            HomeButton(
+                action: viewModel.loadFromCamera,
+                text: Text("home.camera.button"),
+                background: .yellow,
+                textColor: .black
+            )
             
-            Button(action: viewModel.showOnboarding) {
-                Text("home.button.how")
-            }
-            .homeButtonStyle(background: .clear, text: .secondary)
-            .padding()
+            HomeButton(
+                action: viewModel.showOnboarding,
+                text: Text("home.button.how"),
+                background: .clear,
+                textColor: .secondary
+            )
         }
     }
 }
