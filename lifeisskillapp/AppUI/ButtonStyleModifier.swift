@@ -34,8 +34,8 @@ struct LoginButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.headline)
-            .foregroundColor(.white)
+            .subheadline
+            .foregroundColor(Color.white)
             .padding()
             .padding(.horizontal, 20)
             .background(isEnabled ? enabledColor : disabledColor)
@@ -47,7 +47,7 @@ struct LoginButtonStyle: ButtonStyle {
 struct RegisterButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.body)
+            .body2Regular
             .frame(maxWidth: .infinity, maxHeight: 20)
             .foregroundColor(.red)
             .background(Color.white)
@@ -59,9 +59,9 @@ struct RegisterButtonStyle: ButtonStyle {
 struct LogoutButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.body)
+            .subheadline
             .frame(maxWidth: .infinity, maxHeight: 20)
-            .foregroundColor(.black)
+            .foregroundColor(Color.black)
             .background(Color.white)
             .cornerRadius(10)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
@@ -87,7 +87,7 @@ struct HomeButtonStyle: ButtonStyle {
         configuration.label
             .foregroundColor(textColor)
             .padding()
-            .font(.headline)
+            .headline3
             .background(color)
             .clipShape(Capsule())
             .shadow(color: color.opacity(0.3), radius: 10, x: 0, y: 5)

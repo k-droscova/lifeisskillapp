@@ -53,7 +53,7 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
 private extension LoginView {
     
     private var loginImageView: some View {
-        Image("loginScreen")
+        Image(CustomImages.Screens.login.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: LoginViewConstants.imageHeight)
@@ -119,9 +119,9 @@ enum LoginViewConstants {
     static let cornerRadius: CGFloat = 10
     
     enum Colors {
-        static let textFieldBackground = Color(.secondarySystemBackground)
-        static let enabledButton = Color("LisGreen")
-        static let disabledButton = Color("LisGreyTextFieldTitle")
+        static let textFieldBackground = Color.colorLisGrey
+        static let enabledButton = Color.colorLisGreen
+        static let disabledButton = Color.colorLisDarkGrey
     }
 }
 

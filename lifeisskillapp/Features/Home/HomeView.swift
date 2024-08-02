@@ -48,7 +48,7 @@ struct HomeView: View {
     }
     
     private var imageView: some View {
-        Image(CustomImages.home.rawValue)
+        Image(CustomImages.Screens.home.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: Constants.imageSize, height: Constants.imageSize)
@@ -67,29 +67,29 @@ struct HomeView: View {
             HomeButton(
                 action: viewModel.loadWithNFC,
                 text: Text("home.nfc.button"),
-                background: Constants.Colors.pink,
-                textColor: .white
+                background: Constants.Colors.nfc,
+                textColor: Constants.Colors.white
             )
             
             HomeButton(
                 action: viewModel.loadWithQRCode,
                 text: Text("home.qr.button"),
-                background: Constants.Colors.green,
-                textColor: .white
+                background: Constants.Colors.qr,
+                textColor: Constants.Colors.white
             )
             
             HomeButton(
                 action: viewModel.loadFromCamera,
                 text: Text("home.camera.button"),
-                background: Constants.Colors.yellow,
-                textColor: .black
+                background: Constants.Colors.camera,
+                textColor: Constants.Colors.black
             )
             
             HomeButton(
                 action: viewModel.showOnboarding,
                 text: Text("home.button.how"),
-                background: .clear,
-                textColor: .secondary
+                background: Constants.Colors.transparent,
+                textColor: Constants.Colors.help
             )
         }
     }
@@ -103,9 +103,13 @@ extension HomeView {
         static let buttonSpacing: CGFloat = 24
         
         enum Colors {
-            static let pink = Color.pink
-            static let green = Color.green
-            static let yellow = Color.yellow
+            static let nfc = Color.colorLisRose
+            static let qr = Color.colorLisGreen
+            static let camera = Color.colorLisOchre
+            static let white = Color.colorLisWhite
+            static let transparent = Color.transparent
+            static let help = Color.colorLisDarkGrey
+            static let black = Color.black
         }
     }
 }

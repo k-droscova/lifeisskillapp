@@ -13,7 +13,7 @@ public extension View {
     
     var headline1: some View {
         self.font(
-            AssetsFontFamily.Montserrat.bold(size: 28),
+            AssetsFontFamily.Roboto.black(size: 28),
             lineHeight: 36,
             textStyle: .title1
         )
@@ -21,7 +21,7 @@ public extension View {
     
     var headline2: some View {
         self.font(
-            AssetsFontFamily.Montserrat.bold(size: 22),
+            AssetsFontFamily.Roboto.black(size: 22),
             lineHeight: 26,
             textStyle: .title2
         )
@@ -29,7 +29,7 @@ public extension View {
     
     var headline3: some View {
         self.font(
-            AssetsFontFamily.Montserrat.semiBold(size: 20),
+            AssetsFontFamily.Roboto.medium(size: 20),
             lineHeight: 24,
             textStyle: .title3
         )
@@ -37,7 +37,7 @@ public extension View {
     
     var subheadline: some View {
         self.font(
-            AssetsFontFamily.Montserrat.regular(size: 17),
+            AssetsFontFamily.Roboto.regular(size: 17),
             lineHeight: 22,
             textStyle: .subheadline
         )
@@ -45,23 +45,23 @@ public extension View {
     
     var body1Regular: some View {
         self.font(
-            AssetsFontFamily.Montserrat.regular(size: 14),
-            lineHeight: 20,
+            AssetsFontFamily.Roboto.regular(size: 16),
+            lineHeight: 22,
             textStyle: .body
         )
     }
     
     var body2Regular: some View {
         self.font(
-            AssetsFontFamily.Montserrat.regular(size: 16),
-            lineHeight: 22,
+            AssetsFontFamily.Roboto.regular(size: 14),
+            lineHeight: 20,
             textStyle: .body
         )
     }
     
     var caption: some View {
         self.font(
-            AssetsFontFamily.Montserrat.regular(size: 12),
+            AssetsFontFamily.Roboto.regular(size: 12),
             lineHeight: 16,
             textStyle: .caption1
         )
@@ -69,7 +69,7 @@ public extension View {
     
     var footnote: some View {
         self.font(
-            AssetsFontFamily.Montserrat.regular(size: 13),
+            AssetsFontFamily.Roboto.regular(size: 13),
             lineHeight: 18,
             textStyle: .footnote
         )
@@ -77,7 +77,7 @@ public extension View {
     
     var largeTitle: some View {
         self.font(
-            AssetsFontFamily.Montserrat.bold(size: 34),
+            AssetsFontFamily.Roboto.black(size: 34),
             lineHeight: 41,
             textStyle: .largeTitle
         )

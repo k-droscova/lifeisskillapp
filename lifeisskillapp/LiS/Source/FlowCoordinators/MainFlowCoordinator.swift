@@ -55,8 +55,8 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("home.title", comment: ""),
-            image: UIImage(systemName: "house"),
-            selectedImage: UIImage(systemName: "house.fill")
+            image: Constants.TabBar.Home.unselected.icon,
+            selectedImage: Constants.TabBar.Home.selected.icon
         )
         
         // MARK: - SETUP TabBar
@@ -65,9 +65,59 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             debugVC,
             homeVC
         ]
-        tabVC.tabBar.tintColor = UIColor.theme.lisPink
         tabVC.selectedViewController = homeVC
         return tabVC
+    }
+}
+
+extension MainFlowCoordinator {
+    enum Constants {
+        enum TabBar {
+            enum Home {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Home.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Home.pink.rawValue)
+                    }
+                }
+            }
+            enum Rank {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Rank.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Rank.black.rawValue)
+                    }
+                }
+            }
+            enum Points {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Profile.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Profile.black.rawValue)
+                    }
+                }
+            }
+            enum Map {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Map.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Map.black.rawValue)
+                    }
+                }
+            }
+        }
     }
 }
 

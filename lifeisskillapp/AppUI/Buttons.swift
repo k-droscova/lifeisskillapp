@@ -27,11 +27,11 @@ struct FlashButton: View {
     var body: some View {
         Button(action: action) {
             flashOn ?
-            Image(CustomImages.flashOn.rawValue)
+            Image(CustomImages.CornerIcons.flashOn.rawValue)
                 .resizable()
                 .frame(width: 16, height: 24)
             :
-            Image(CustomImages.flashOff.rawValue)
+            Image(CustomImages.CornerIcons.flashOff.rawValue)
                 .resizable()
                 .frame(width: 16, height: 24)
         }
@@ -63,12 +63,13 @@ struct LoginButton: View {
     var body: some View {
         Button(action: action) {
             text
-                .foregroundColor(.white)
+                .foregroundColor(Color.colorLisWhite)
                 .padding()
                 .padding(.horizontal, 20)
                 .background(isEnabled ? enabledColor : disabledColor)
                 .cornerRadius(20)
         }
+        .subheadline
         .scaleEffect(isEnabled ? 1.0 : 0.95)
         .disabled(!isEnabled)
     }

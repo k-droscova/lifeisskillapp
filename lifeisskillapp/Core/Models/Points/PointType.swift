@@ -25,37 +25,41 @@ enum PointType: Int, Codable {
         return pointType
     }
     
-    /*var color: UIColor {
+    var color: Color {
         switch self {
         case .sport:
-            return UIColor.theme.pointSport
+            return Color.colorLisRose
         case .environment:
-            return UIColor.theme.pointEnvironment
+            return Color.colorLisGreen
         case .culture:
-            return UIColor.theme.pointCulture
+            return Color.colorLisBlue
+        case .tourist:
+            return Color.colorLisOchre
+        case .energySponsor:
+            return Color.colorLisRed
+        case .virtual:
+            return Color.lightBlueA200
+        case .unknown:
+            return Color.lighterGrey
         }
     }
-
+    
     var icon: Image {
         switch self {
         case .sport:
-            return Asset.Map.sportMarker.swiftUIImage
+            return SwiftUI.Image("Icons/Map/sport")
         case .environment:
-            return Asset.Map.environmentMarker.swiftUIImage
-        case.culture:
-            return Asset.Map.cultureMarker.swiftUIImage
+            return SwiftUI.Image("Icons/Map/nature")
+        case .culture:
+            return SwiftUI.Image("Icons/Map/culture")
+        case .tourist:
+            return SwiftUI.Image("Icons/Map/tourist")
+        case .energySponsor:
+            return SwiftUI.Image("Icons/Map/7en_green")
+        case .virtual:
+            return SwiftUI.Image("Icons/Map/virtual")
+        case .unknown:
+            return SwiftUI.Image("Icons/Map/unknown")
         }
     }
-
-    var listIcon: Image {
-        switch self {
-        case .sport:
-            return Asset.PointList.sportIcon.swiftUIImage
-        case .environment:
-            return Asset.PointList.environmentIcon.swiftUIImage
-        case.culture:
-            return Asset.PointList.cultureIcon.swiftUIImage
-        }
-    }
-     */
 }
