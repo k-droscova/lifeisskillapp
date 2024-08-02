@@ -53,14 +53,14 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     private func handleScannedPoint(_ pointID: String) {
         logger.log(message: "Point scanned from NFC: \(pointID)")
         let point = LoadPoint(code: pointID, codeSource: .nfc)
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
             do {
-                try await scanningManager.sendScannedPoint(point)
-                self.stopScanning()
-                delegate?.onSuccess(source: .nfc)
+                try await self?.scanningManager.sendScannedPoint(point)
+                self?.stopScanning()
+                self?.delegate?.onSuccess(source: .nfc)
             } catch {
-                self.stopScanning()
-                delegate?.onFailure(source: .nfc)
+                self?.stopScanning()
+                self?.delegate?.onFailure(source: .nfc)
             }
         }
     }
