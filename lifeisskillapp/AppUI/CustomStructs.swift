@@ -7,13 +7,17 @@
 
 import SwiftUI
 
-struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
-    @State private var selectedOption: T
-    private let options: [T]
+import SwiftUI
 
-    init(options: [T], defaultSelection: T) {
+struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
+    @Binding private var selectedOption: T?
+    private let options: [T]
+    private let placeholder: String
+
+    init(options: [T], selectedOption: Binding<T?>, placeholder: String = "Select an option") {
         self.options = options
-        self._selectedOption = State(initialValue: defaultSelection)
+        self._selectedOption = selectedOption
+        self.placeholder = placeholder
     }
 
     var body: some View {
@@ -27,7 +31,7 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
             }
         } label: {
             HStack {
-                Text(selectedOption.description)
+                Text(selectedOption?.description ?? placeholder)
                 Image(systemName: "chevron.down")
             }
             .padding(.horizontal)
