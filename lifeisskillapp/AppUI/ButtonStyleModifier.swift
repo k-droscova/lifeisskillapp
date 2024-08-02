@@ -28,13 +28,18 @@ struct CustomButtonStyle: ButtonStyle {
 
 // Specific Button Styles
 struct LoginButtonStyle: ButtonStyle {
+    var isEnabled: Bool
+    var enabledColor: Color
+    var disabledColor: Color
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.headline)
-            .frame(maxWidth: .infinity, maxHeight: 60)
             .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(10)
+            .padding()
+            .padding(.horizontal, 20)
+            .background(isEnabled ? enabledColor : disabledColor)
+            .cornerRadius(20)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }

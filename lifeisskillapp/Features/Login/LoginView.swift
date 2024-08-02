@@ -16,16 +16,15 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
             
             loginImageView
             
-            VStack(spacing: 16) {
+            VStack(spacing: LoginViewConstants.spacing) {
                 usernameTextField
                 passwordSecureField
             }
-          
-            .padding(.horizontal, 30)
+            .padding(.horizontal, LoginViewConstants.horizontalPadding)
             
             loginButton
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
+                .padding(.horizontal, LoginViewConstants.horizontalPadding)
+                .padding(.top, LoginViewConstants.topPadding)
             
             Spacer()
             
@@ -57,8 +56,8 @@ private extension LoginView {
         Image("loginScreen")
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(height: 200)
-            .padding(.bottom, 20)
+            .frame(height: LoginViewConstants.imageHeight)
+            .padding(.bottom, LoginViewConstants.imageBottomPadding)
     }
     
     private var usernameTextField: some View {
@@ -69,8 +68,8 @@ private extension LoginView {
         .autocapitalization(.none)
         .disableAutocorrection(true)
         .padding()
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(10)
+        .background(LoginViewConstants.Colors.textFieldBackground)
+        .cornerRadius(LoginViewConstants.cornerRadius)
     }
     
     private var passwordSecureField: some View {
@@ -79,19 +78,18 @@ private extension LoginView {
             text: $viewModel.password
         )
         .padding()
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(10)
+        .background(LoginViewConstants.Colors.textFieldBackground)
+        .cornerRadius(LoginViewConstants.cornerRadius)
     }
     
     private var loginButton: some View {
-        Button(action: viewModel.login) {
-            Text("login.login")
-                .foregroundColor(.white)
-                .padding()
-                .padding(.horizontal, 20)
-                .background(viewModel.isLoginEnabled ? Color("LisGreen") : Color("LisGreyTextFieldTitle"))
-                .cornerRadius(20)
-        }
+        LoginButton(
+            action: viewModel.login,
+            text: Text("login.login"),
+            enabledColor: LoginViewConstants.Colors.enabledButton,
+            disabledColor: LoginViewConstants.Colors.disabledButton,
+            isEnabled: viewModel.isLoginEnabled
+        )
         .disabled(!viewModel.isLoginEnabled)
     }
     
@@ -105,8 +103,25 @@ private extension LoginView {
                 Text("login.forgotPassword")
             }
         }
-        .padding(.horizontal, 30)
-        .padding(.bottom, 30)
+        .padding(.horizontal, LoginViewConstants.horizontalPadding)
+        .padding(.bottom, LoginViewConstants.bottomPadding)
+    }
+}
+
+// NOTE: constants are not in extension because static properties are not allowed in generic types
+enum LoginViewConstants {
+    static let spacing: CGFloat = 16
+    static let horizontalPadding: CGFloat = 30
+    static let topPadding: CGFloat = 20
+    static let bottomPadding: CGFloat = 30
+    static let imageHeight: CGFloat = 200
+    static let imageBottomPadding: CGFloat = 20
+    static let cornerRadius: CGFloat = 10
+    
+    enum Colors {
+        static let textFieldBackground = Color(.secondarySystemBackground)
+        static let enabledButton = Color("LisGreen")
+        static let disabledButton = Color("LisGreyTextFieldTitle")
     }
 }
 
