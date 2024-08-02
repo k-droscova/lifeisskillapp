@@ -86,8 +86,10 @@ private extension LoginView {
         LoginButton(
             action: viewModel.login,
             text: Text("login.login"),
-            enabledColor: LoginViewConstants.Colors.enabledButton,
-            disabledColor: LoginViewConstants.Colors.disabledButton,
+            enabledColorBackground: LoginViewConstants.Colors.enabledButton,
+            disabledColorBackground: LoginViewConstants.Colors.disabledButton,
+            enabledColorText: LoginViewConstants.Colors.enabledText,
+            disabledColorText: LoginViewConstants.Colors.disabledText,
             isEnabled: viewModel.isLoginEnabled
         )
         .disabled(!viewModel.isLoginEnabled)
@@ -95,12 +97,12 @@ private extension LoginView {
     
     private var bottomButtons: some View {
         HStack {
-            Button(action: viewModel.register) {
-                Text("login.register")
-            }
-            Spacer()
             Button(action: viewModel.forgotPassword) {
                 Text("login.forgotPassword")
+            }
+            Spacer()
+            Button(action: viewModel.register) {
+                Text("login.register")
             }
         }
         .padding(.horizontal, LoginViewConstants.horizontalPadding)
@@ -121,7 +123,9 @@ enum LoginViewConstants {
     enum Colors {
         static let textFieldBackground = Color.colorLisGrey
         static let enabledButton = Color.colorLisGreen
-        static let disabledButton = Color.colorLisDarkGrey
+        static let disabledButton = Color.colorLisGrey
+        static let enabledText = Color.white
+        static let disabledText = Color.colorLisDarkGrey
     }
 }
 

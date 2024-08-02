@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "bod turista new_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bod turista new.svg",
+      "filename" : "bod turista new_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "bod turista new_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

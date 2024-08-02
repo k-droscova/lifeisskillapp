@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "druhe_misto_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "druhe_misto.svg",
+      "filename" : "druhe_misto_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "druhe_misto_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

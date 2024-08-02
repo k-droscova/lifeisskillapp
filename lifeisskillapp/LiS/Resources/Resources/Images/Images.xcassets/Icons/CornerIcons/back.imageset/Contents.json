@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "zpet_cerna_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "zpet_cerna.svg",
+      "filename" : "zpet_cerna_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "zpet_cerna_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "menu_novinky_pink 1_2525.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "menu_novinky_pink 1.svg",
+      "filename" : "menu_novinky_pink 1_5050.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "menu_novinky_pink 1_7575.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

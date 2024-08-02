@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "prvni_misto_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "prvni_misto.svg",
+      "filename" : "prvni_misto_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "prvni_misto_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

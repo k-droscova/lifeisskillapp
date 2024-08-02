@@ -56,17 +56,19 @@ struct HomeButton: View {
 struct LoginButton: View {
     let action: () -> Void
     let text: Text
-    let enabledColor: Color
-    let disabledColor: Color
+    let enabledColorBackground: Color
+    let disabledColorBackground: Color
+    let enabledColorText: Color
+    let disabledColorText: Color
     let isEnabled: Bool
     
     var body: some View {
         Button(action: action) {
             text
-                .foregroundColor(Color.colorLisWhite)
+                .foregroundColor(isEnabled ? enabledColorText : disabledColorText)
                 .padding()
                 .padding(.horizontal, 20)
-                .background(isEnabled ? enabledColor : disabledColor)
+                .background(isEnabled ? enabledColorBackground : disabledColorBackground)
                 .cornerRadius(20)
         }
         .subheadline

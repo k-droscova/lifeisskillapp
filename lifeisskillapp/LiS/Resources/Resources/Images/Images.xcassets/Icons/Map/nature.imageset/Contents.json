@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "bod priroda_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bod priroda.svg",
+      "filename" : "bod priroda_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "bod priroda_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

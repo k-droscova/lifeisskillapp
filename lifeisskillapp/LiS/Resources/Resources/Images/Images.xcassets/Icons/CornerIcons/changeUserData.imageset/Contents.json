@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "zmena_udaju_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "zmena_udaju.svg",
+      "filename" : "zmena_udaju_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "zmena_udaju_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

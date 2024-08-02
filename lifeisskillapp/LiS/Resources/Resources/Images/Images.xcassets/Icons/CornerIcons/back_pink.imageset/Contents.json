@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "zpet_ruzova_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "zpet_ruzova.svg",
+      "filename" : "zpet_ruzova_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "zpet_ruzova_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

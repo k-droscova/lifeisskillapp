@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "menu_mapa_pink_2525.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "menu_mapa_pink.svg",
+      "filename" : "menu_mapa_pink_5050.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "menu_mapa_pink_7575.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

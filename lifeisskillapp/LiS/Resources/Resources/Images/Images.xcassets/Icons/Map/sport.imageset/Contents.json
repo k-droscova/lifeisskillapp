@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "bod sport_25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bod sport.svg",
+      "filename" : "bod sport_50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "bod sport_75.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
