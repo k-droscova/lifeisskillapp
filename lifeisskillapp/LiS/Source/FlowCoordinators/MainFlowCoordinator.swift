@@ -20,21 +20,21 @@ protocol MainFlowDelegate: NSObject {
 
 final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     weak var delegate: MainFlowCoordinatorDelegate?
-
+    
     override init() {
         super.init()
         appDependencies.userManager.delegate = self
         appDependencies.locationManager.delegate = self
     }
-
+    
     override func start() -> UIViewController {
         super.start()
-
+        
         let tabBarVC = setupTabBar()
         let navigationController = UINavigationController(rootViewController: tabBarVC)
         self.navigationController = navigationController
         rootViewController = tabBarVC
-
+        
         return navigationController
     }
     
@@ -66,7 +66,29 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             homeVC
         ]
         tabVC.selectedViewController = homeVC
+        customizeTabBarAppearance(tabBar: tabVC.tabBar)
         return tabVC
+    }
+    
+    private func customizeTabBarAppearance(tabBar: UITabBar) {
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = CustomColors.TabBar.background.color
+            
+            appearance.stackedLayoutAppearance.selected.iconColor = CustomColors.TabBar.selectedItem.color
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: CustomColors.TabBar.selectedItem.color]
+            
+            appearance.stackedLayoutAppearance.normal.iconColor = CustomColors.TabBar.unselectedItem.color
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: CustomColors.TabBar.unselectedItem.color]
+            
+            tabBar.standardAppearance = appearance
+            tabBar.scrollEdgeAppearance = appearance
+        } else {
+            tabBar.barTintColor = CustomColors.TabBar.background.color
+            tabBar.tintColor = CustomColors.TabBar.selectedItem.color
+            tabBar.unselectedItemTintColor = CustomColors.TabBar.unselectedItem.color
+        }
     }
 }
 
@@ -130,7 +152,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
         appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
         let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-
+            
         })
         rootViewController?.present(alert, animated: true, completion: nil)
     }
@@ -149,7 +171,7 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
             }
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-
+            
         })
         rootViewController?.present(alert, animated: true, completion: nil)
     }

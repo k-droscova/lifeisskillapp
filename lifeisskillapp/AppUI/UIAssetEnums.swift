@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum SFSSymbols: String {
     case camera = "xmark"
@@ -76,6 +77,24 @@ enum CustomImages: String {
         enum Rank: String {
             case pink = "Icons/TabBar/Rank/Pink"
             case black = "Icons/TabBar/Rank/Black"
+        }
+    }
+}
+
+enum CustomColors {
+    enum TabBar {
+        case background, unselectedItem, selectedItem, selectedBackground
+        var color: UIColor {
+            switch self {
+            case .background:
+                UIColor(.libBaseGray)
+            case .unselectedItem:
+                UIColor(.blackOverlay)
+            case .selectedItem:
+                UIColor(.colorPrimary)
+            case .selectedBackground:
+                UIColor(.libDarkerGray)
+            }
         }
     }
 }
