@@ -22,7 +22,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     private let scanningManager: ScanningManaging
     private var session: NFCReaderSession?
     
-    public var isNFCavailable: Bool { NFCNDEFReaderSession.readingAvailable }
+    public var isNfcAvailable: Bool { NFCNDEFReaderSession.readingAvailable }
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
@@ -32,7 +32,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     }
     
     func startScanning() {
-        guard isNFCavailable else {
+        guard isNfcAvailable else {
             delegate?.featureUnavailable(source: .nfc)
             return
         }
