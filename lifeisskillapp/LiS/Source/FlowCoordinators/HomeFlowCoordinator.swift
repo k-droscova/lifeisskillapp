@@ -58,6 +58,7 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         self.rootViewController = homeController
         let navController = UINavigationController(rootViewController: homeController)
         self.navigationController = navController
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         return navController
     }
 }

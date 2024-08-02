@@ -30,6 +30,7 @@ struct HomeView: View {
                 }
             }
         }
+        .edgesIgnoringSafeArea(.all)
     }
     
     private var topBarView: some View {

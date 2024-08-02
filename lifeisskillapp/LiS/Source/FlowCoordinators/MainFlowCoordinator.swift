@@ -32,6 +32,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         
         let tabBarVC = setupTabBar()
         let navigationController = UINavigationController(rootViewController: tabBarVC)
+        navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController = navigationController
         rootViewController = tabBarVC
         
