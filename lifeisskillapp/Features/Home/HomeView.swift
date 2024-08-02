@@ -16,17 +16,16 @@ struct HomeView: View {
     ]
     
     init(viewModel: HomeViewModeling) {
-        self.viewModel = viewModel
+        self._viewModel = State(initialValue: viewModel)
     }
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: Constants.vStackSpacing) {
             topBarView
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: Constants.vStackSpacing) {
                     imageView
                     instructionsView
-                    // TODO: change button colors to match LiS
                     buttonsView
                 }
             }
@@ -39,8 +38,6 @@ struct HomeView: View {
                 .padding()
                 .headline3
             Spacer()
-            // TODO: ask Martin if this should be implemented since the POST request for scanned point does not specify user category and hence it can be confusing for user (why is this here? can I choose which category this scanned point is going to count towards?)
-            // MARK: - if this is going to be kept, then homeviewmodel will need to provide the usercategory list for the drowdownmenu through property
             DropdownMenu(
                 options: userCategories,
                 defaultSelection: userCategories[0]
@@ -54,37 +51,37 @@ struct HomeView: View {
         Image(CustomImages.home.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: 200, height: 200)
+            .frame(width: Constants.imageSize, height: Constants.imageSize)
             .padding()
     }
     
     private var instructionsView: some View {
         Text("home.description")
             .body1Regular
-            .padding(.horizontal, 34)
+            .padding(.horizontal, Constants.horizontalPadding)
             .padding()
     }
     
     private var buttonsView: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: Constants.buttonSpacing) {
             HomeButton(
                 action: viewModel.loadWithNFC,
                 text: Text("home.nfc.button"),
-                background: .pink,
+                background: Constants.Colors.pink,
                 textColor: .white
             )
             
             HomeButton(
                 action: viewModel.loadWithQRCode,
                 text: Text("home.qr.button"),
-                background: .green,
+                background: Constants.Colors.green,
                 textColor: .white
             )
             
             HomeButton(
                 action: viewModel.loadFromCamera,
                 text: Text("home.camera.button"),
-                background: .yellow,
+                background: Constants.Colors.yellow,
                 textColor: .black
             )
             
@@ -94,6 +91,21 @@ struct HomeView: View {
                 background: .clear,
                 textColor: .secondary
             )
+        }
+    }
+}
+
+extension HomeView {
+    enum Constants {
+        static let vStackSpacing: CGFloat = 16
+        static let imageSize: CGFloat = 200
+        static let horizontalPadding: CGFloat = 32
+        static let buttonSpacing: CGFloat = 24
+        
+        enum Colors {
+            static let pink = Color.pink
+            static let green = Color.green
+            static let yellow = Color.yellow
         }
     }
 }
