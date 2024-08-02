@@ -8,12 +8,12 @@
 import ACKategories
 import SwiftUI
 
-final class LoginViewController: Base.ViewController {
-    let viewModel: LoginViewModeling
-
+final class LoginViewController<ViewModel: LoginViewModeling>: Base.ViewController {
+    let viewModel: ViewModel
+    
     // MARK: - Initialization
     
-    init(viewModel: LoginViewModeling) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -21,7 +21,7 @@ final class LoginViewController: Base.ViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Controller lifecycle
     
     override func loadView() {
