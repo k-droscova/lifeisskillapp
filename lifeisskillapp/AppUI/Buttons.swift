@@ -52,3 +52,24 @@ struct HomeButton: View {
         .buttonStyle(HomeButtonStyle(color: background, textColor: textColor))
     }
 }
+
+struct LoginButton: View {
+    let action: () -> Void
+    let text: Text
+    let enabledColor: Color
+    let disabledColor: Color
+    let isEnabled: Bool
+    
+    var body: some View {
+        Button(action: action) {
+            text
+                .foregroundColor(.white)
+                .padding()
+                .padding(.horizontal, 20)
+                .background(isEnabled ? enabledColor : disabledColor)
+                .cornerRadius(20)
+        }
+        .scaleEffect(isEnabled ? 1.0 : 0.95)
+        .disabled(!isEnabled)
+    }
+}
