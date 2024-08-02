@@ -8,6 +8,9 @@
 import SwiftUI
 
 public extension View {
+    
+    // MARK: - Fonts
+    
     var headline1: some View {
         self.font(
             AssetsFontFamily.Montserrat.bold(size: 28),
@@ -78,6 +81,16 @@ public extension View {
             lineHeight: 41,
             textStyle: .largeTitle
         )
+    }
+    
+    // MARK: - Foregrounds
+    
+    var foregroundsPrimary: some View {
+        foregroundColor(.primary) // TODO: implement colors based on resources Martin provided
+    }
+
+    var foregroundsSecondary: some View {
+        foregroundColor(.secondary)
     }
 }
 

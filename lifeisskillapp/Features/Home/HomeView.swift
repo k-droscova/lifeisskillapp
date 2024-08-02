@@ -46,8 +46,7 @@ struct HomeView: View {
                 defaultSelection: userCategories[0]
             )
             .subheadline
-            .foregroundColor(.secondary)
-            
+            .foregroundsSecondary
         }
     }
     
