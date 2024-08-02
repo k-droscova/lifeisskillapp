@@ -20,6 +20,7 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
                 usernameTextField
                 passwordSecureField
             }
+          
             .padding(.horizontal, 30)
             
             loginButton
@@ -30,7 +31,7 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
             
             bottomButtons
         }
-        .body2Login
+        .body2Regular
         .onAppear {
             viewModel.onAppear()
         }

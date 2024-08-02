@@ -263,7 +263,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "jak na to?"
+            "value" : "Jak na to?"
           }
         },
         "de" : {
@@ -280,25 +280,70 @@
         }
       }
     },
-    "home.description.nfc" : {
+    "home.camera.button" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bod se ti přičte přiblížením telefonu ke značce a načtením pomocí NFC. Můžeš použít také čtení QR kódu."
+            "state" : "needs_review",
+            "value" : "Načíst pomocí fotoaparátu"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Halten Sie das NFC-Chip nahe an die obere Rückseite des Telefons und der Punkt wird gescannt. Sie können auch den QR-Scan verwenden."
+            "state" : "needs_review",
+            "value" : "Punkt von Bild laden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hold NFC chip close to the phone top back, and the point will be scanned. You can use the QR scan too."
+            "value" : "Load from camera"
+          }
+        }
+      }
+    },
+    "home.camera.instructions" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenujte kód na pravém spodním rohu turistické značky. Kód se zvýrazní poté, co je detekován. Pro zpracování udržte kód zvýrazněn po dobu 2 sekund."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scannen Sie den Code in der unteren rechten Ecke des Touristenschildes. Der Code wird hervorgehoben, wenn er von der Kamera erfasst wird. Der Code wird verarbeitet, nachdem er 2 Sekunden lang ununterbrochen hervorgehoben wurde."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan the code in the bottom right corner of the Tourist Sign. Code gets highlighted when registered by camera. The code will get processed after being highlighted for 2 seconds straight. "
+          }
+        }
+      }
+    },
+    "home.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Můžete použít NFC nebo QR kód k naskenování Life Is Skill štítků, nebo Fotoaparát k naskenování turistických značek. Stačí klepnout na příslušné tlačítko níže:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können NFC oder QR-Code verwenden, um Life Is Skill-Tags zu scannen, oder die Kamera, um Touristenschilder zu scannen. Tippen Sie einfach auf die entsprechende Schaltfläche unten:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can use NFC or QR code to scan Life Is Skill tags, or Camera to scan Tourist signs. Just tap the appropriate button below:"
           }
         }
       }
@@ -349,7 +394,7 @@
         }
       }
     },
-    "home.nfc.aler_message" : {
+    "home.nfc.alert_message" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -371,9 +416,6 @@
           }
         }
       }
-    },
-    "home.nfc.alertMessage" : {
-
     },
     "home.nfc.button" : {
       "extractionState" : "manual",
@@ -417,29 +459,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hold NFC chip close to the phone top back."
-          }
-        }
-      }
-    },
-    "home.photo.button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Načíst z obrázku"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Punkt von Bild laden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Load from picture"
           }
         }
       }
@@ -628,6 +647,52 @@
         }
       }
     },
+    "home.scan_error.feature_unavailable.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato funkce není na vašem zařízení dostupná."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Funktion ist auf Ihrem Gerät nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This feature is not available on your device"
+          }
+        }
+      }
+    },
+    "home.scan_error.feature_unavailable.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funkce nedostupná"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funktion nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feature Unavailable"
+          }
+        }
+      }
+    },
     "home.scan_error.nfc.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -716,6 +781,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Request failed, please try again"
+          }
+        }
+      }
+    },
+    "home.scan_error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastala chyba během skenování bodu"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Scannen ist ein Fehler aufgetreten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error occurred while scanning"
           }
         }
       }
@@ -1175,6 +1263,9 @@
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "onboarding.description.activity" : {
       "extractionState" : "manual",

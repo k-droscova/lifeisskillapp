@@ -6,91 +6,104 @@
 //
 
 import Foundation
-import CoreNFC
 import Observation
 
-protocol HomeViewModeling: NFCNDEFReaderSessionDelegate {
-    func pointScanned(pointID: String, source: CodeSource)
+protocol HomeViewModeling: BaseClass {
+    var username: String { get }
     func loadWithNFC()
     func loadWithQRCode()
-    func loadFromPhoto()
+    func loadFromCamera()
+    func dismissCamera()
+    func showOnboarding()
 }
 
-final class HomeViewModel: NSObject, HomeViewModeling, ObservableObject {
-    typealias Dependencies = HasLoggerServicing & HasLocationManager
+/// The HomeViewModel class responsible for managing the home flow within the app.
+final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
+    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserLoginManager {
+        let scanningManager: ScanningManaging
+        let logger: LoggerServicing
+        let locationManager: LocationManaging
+        let userLoginManager: UserLoginDataManaging
+    }
+    
+    // MARK: - Public Properties
+    
+    var username: String { userDataManager.userName ?? "" }
+    
+    // MARK: - Private Properties
     
     private weak var delegate: HomeFlowDelegate?
-    private var session: NFCReaderSession?
-    private let locationManager: LocationManaging
+    private var nfcVM: NfcViewModeling?
+    private var ocrVM: OcrViewModeling?
+    private var qrVM: QRViewModeling?
+    
+    private let scanningManager: ScanningManaging
     private let logger: LoggerServicing
+    private let locationManager: LocationManaging
+    private let userDataManager: UserLoginDataManaging
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
         self.locationManager = dependencies.locationManager
+        self.scanningManager = dependencies.scanningManager
         self.logger = dependencies.logger
+        self.userDataManager = dependencies.userLoginManager
         self.delegate = delegate
     }
     
-    func pointScanned(pointID: String, source: CodeSource) {
-        logger.log(message: "Point scanned from \(source.rawValue): \(pointID)")
-        delegate?.loadingSuccessNFC()
-    }
+    // MARK: - Public Interface
     
     func loadWithNFC() {
-        logger.log(message: "Attempting to load point with NFC")
-        locationManager.checkLocationAuthorization()
-        session = NFCNDEFReaderSession(delegate: self, queue: DispatchQueue.main, invalidateAfterFirstRead: false)
-        session?.alertMessage = NSLocalizedString("home.nfc.alertMessage", comment: "")
-        session?.begin()
+        nfcVM = NfcViewModel(
+            dependencies: Dependencies(
+                scanningManager: self.scanningManager,
+                logger: self.logger,
+                locationManager: self.locationManager,
+                userLoginManager: self.userDataManager
+            ),
+            delegate: self.delegate
+        )
+        nfcVM?.startScanning()
     }
     
     func loadWithQRCode() {
-        
+        qrVM = QRViewModel(
+            dependencies: Dependencies(
+                scanningManager: self.scanningManager,
+                logger: self.logger,
+                locationManager: self.locationManager,
+                userLoginManager: self.userDataManager
+            ),
+            delegate: self.delegate
+        )
+        guard let qrVM else {
+            logger.log(message: "ERROR: QR ViewModel Init Failed")
+            return
+        }
+        delegate?.loadFromQR(viewModel: qrVM)
     }
     
-    func loadFromPhoto() {
-        
-    }
-}
-
-extension HomeViewModel {
-    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
-        do {
-            throw BaseError(
-                context: .system,
-                message: error.localizedDescription,
-                logger: logger
-            )
-        } catch {
-            delegate?.loadingFailureNFC()
+    func loadFromCamera() {
+        ocrVM = OcrViewModel(
+            dependencies: Dependencies(
+                scanningManager: self.scanningManager,
+                logger: self.logger,
+                locationManager: self.locationManager,
+                userLoginManager: self.userDataManager
+            ),
+            delegate: self.delegate
+        )
+        guard let ocrVM else {
+            logger.log(message: "ERROR: OCR ViewModel Init Failed")
+            return
         }
+        delegate?.loadFromCamera(viewModel: ocrVM)
     }
     
-    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
-        for message in messages {
-            for record in message.records {
-                // ensure correct format
-                guard let string = String(data: record.payload, encoding: .ascii) else {
-                    continue
-                }
-                //ensure that nfc is from LiS
-                guard string.contains("Life is Skill") else {
-                    continue
-                }
-                pointScanned(pointID: string.parseMessage(), source: .nfc)
-                /*
-                 Delay the session invalidation by 0.75 seconds to ensure smooth user experience and allow enough time for the pointScanned function to complete its processing.
-                 TODO: test that this is neccessary once developer licence is obtained
-                 */
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                    session.invalidate()
-                }
-                return
-            }
-        }
-        session.invalidate()
-        // TODO: test that this is neccessary once developer licence is obtained
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.delegate?.loadingFailureNFC()
-        }
+    func dismissCamera() {
+        delegate?.dismissCamera()
+    }
+    
+    func showOnboarding() {
+        delegate?.showOnboarding()
     }
 }

@@ -20,35 +20,30 @@ struct DebugView: View {
             Button(action: viewModel.logout) {
                 Text("settings.logout")
             }
-            .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printUserCategoryData) {
                 Text("User Category Data")
             }
-            .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printUserPointData) {
                 Text("User Point Data")
             }
-            .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printGenericPointData) {
                 Text("Generic Point Data")
             }
-            .logoutButtonStyle()
             
             Spacer()
             
             Button(action: viewModel.printUserRankData) {
                 Text("User Rank Data")
             }
-            .logoutButtonStyle()
         }
         .onAppear {
             viewModel.onAppear()

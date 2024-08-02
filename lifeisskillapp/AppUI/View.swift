@@ -7,15 +7,10 @@
 
 import SwiftUI
 
-/*
- MARK: This is an example of how this can be used, UI elements specifics related to LiS will be handled later
- */
 public extension View {
-    /// Headline 1
-    ///
-    /// * Font: `Montserrat.bold`
-    /// * Size: `28`
-    /// * Line height: `36`
+    
+    // MARK: - Fonts
+    
     var headline1: some View {
         self.font(
             AssetsFontFamily.Montserrat.bold(size: 28),
@@ -23,12 +18,7 @@ public extension View {
             textStyle: .title1
         )
     }
-
-    /// Headline 2
-    ///
-    /// * Font: `Montserrat.bold`
-    /// * Size: `22`
-    /// * Line height: `26`
+    
     var headline2: some View {
         self.font(
             AssetsFontFamily.Montserrat.bold(size: 22),
@@ -36,12 +26,23 @@ public extension View {
             textStyle: .title2
         )
     }
-
-    /// Body 1 - regular
-    ///
-    /// * Font: `Montserrat.regular`
-    /// * Size: `14`
-    /// * Line height: `20`
+    
+    var headline3: some View {
+        self.font(
+            AssetsFontFamily.Montserrat.semiBold(size: 20),
+            lineHeight: 24,
+            textStyle: .title3
+        )
+    }
+    
+    var subheadline: some View {
+        self.font(
+            AssetsFontFamily.Montserrat.regular(size: 17),
+            lineHeight: 22,
+            textStyle: .subheadline
+        )
+    }
+    
     var body1Regular: some View {
         self.font(
             AssetsFontFamily.Montserrat.regular(size: 14),
@@ -50,12 +51,46 @@ public extension View {
         )
     }
     
-    var body2Login: some View {
+    var body2Regular: some View {
         self.font(
             AssetsFontFamily.Montserrat.regular(size: 16),
             lineHeight: 22,
             textStyle: .body
         )
+    }
+    
+    var caption: some View {
+        self.font(
+            AssetsFontFamily.Montserrat.regular(size: 12),
+            lineHeight: 16,
+            textStyle: .caption1
+        )
+    }
+    
+    var footnote: some View {
+        self.font(
+            AssetsFontFamily.Montserrat.regular(size: 13),
+            lineHeight: 18,
+            textStyle: .footnote
+        )
+    }
+    
+    var largeTitle: some View {
+        self.font(
+            AssetsFontFamily.Montserrat.bold(size: 34),
+            lineHeight: 41,
+            textStyle: .largeTitle
+        )
+    }
+    
+    // MARK: - Foregrounds
+    
+    var foregroundsPrimary: some View {
+        foregroundColor(.primary) // TODO: implement colors based on resources Martin provided
+    }
+
+    var foregroundsSecondary: some View {
+        foregroundColor(.secondary)
     }
 }
 
@@ -63,7 +98,7 @@ struct CustomFontModifier: ViewModifier {
     var font: UIFont
     var lineHeight: CGFloat
     var textStyle: UIFont.TextStyle
-
+    
     func body(content: Content) -> some View {
         content
             .font(Font(font as CTFont))  // Convert UIFont to Font

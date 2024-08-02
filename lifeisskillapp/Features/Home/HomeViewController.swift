@@ -27,15 +27,11 @@ final class HomeViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = HomeView(viewModel: viewModel)
-        let vc = UIHostingController(rootView: rootView)
+        let vc = HomeView(viewModel: viewModel).hosting()
         embedController(vc)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "home.title"
     }
 }

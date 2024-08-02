@@ -174,11 +174,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await userPointManager.fetch()
             guard let newCheckSumUserPoints = userPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+                logger.log(
+                    message: "ERROR: User Point Checksum Is Null"
+                )
+                return
             }
             updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
         } catch {
-            logger.log(message: "fetch New User Points threw error")
+            logger.log(message: "ERROR: User Points Checksum Fetch Failed")
         }
     }
     
@@ -187,11 +190,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await userRankManager.fetch()
             guard let newCheckSumUserRank = userRankManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+                logger.log(
+                    message: "ERROR: User Rank Checksum Is Null"
+                )
+                return
             }
             updateCheckSum(newCheckSum: newCheckSumUserRank, type: CheckSumData.CheckSumType.rank)
         } catch {
-            logger.log(message: "fetch New User Rank threw error")
+            logger.log(message: "ERROR: User Rank Checksum Fetch Failed")
         }
     }
     
@@ -208,11 +214,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         do {
             try await genericPointManager.fetch()
             guard let newCheckSum = genericPointManager.data?.checkSum else {
-                throw BaseError(context: .system, code: .general(.missingConfigItem), logger: logger)
+                logger.log(
+                    message: "ERROR: Generic Point Checksum Is Null"
+                )
+                return
             }
             updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
         } catch {
-            logger.log(message: "fetch New Generic Points threw error")
+            logger.log(message: "ERROR: Generic Points Checksum Fetch Failed")
         }
     }
 }

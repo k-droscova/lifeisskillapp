@@ -13,7 +13,7 @@ typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper
 typealias HasAPIDependencies = HasRegisterAppAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService
 typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage
 typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager & HasUserLoginManager
-typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers
+typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager
 typealias HasLoggers = HasLoggerServicing
 
 
@@ -46,6 +46,7 @@ final class AppDependency {
     lazy var genericPointManager: any GenericPointManaging = GenericPointManager(dependencies: self)
     lazy var userRankManager: any UserRankManaging = UserRankManager(dependencies: self)
     lazy var userLoginManager: UserLoginDataManaging = UserLoginDataManager(dependencies: self)
+    lazy var scanningManager: ScanningManaging = ScanningManager(dependencies: self)
 }
 
 extension AppDependency: HasBaseNetwork {}

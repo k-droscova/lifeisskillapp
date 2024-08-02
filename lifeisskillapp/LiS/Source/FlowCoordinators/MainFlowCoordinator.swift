@@ -77,15 +77,12 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
     }
     func onDataError(_ error: Error) {
         // TODO: HANDLE ERROR BETTER
-        do {
-            throw BaseError(context: .system, message: error.localizedDescription, logger: appDependencies.logger)
-        } catch {
-            let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+        appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
+        let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
 
-            })
-            rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        })
+        rootViewController?.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -109,10 +106,5 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 }
 
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
-    func pointLoadingSuccess() {
-        print("Point loaded successfully")
-    }
-    func pointLoadingFailure() {
-        print("Point loading failed")
-    }
+    
 }

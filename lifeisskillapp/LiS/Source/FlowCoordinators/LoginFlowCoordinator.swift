@@ -20,7 +20,7 @@ protocol LoginFlowDelegate: NSObject {
     /// Called when the user taps the register button.
     ///
     func registerTapped()
-
+    
     /// Called when the login process is successful.
     ///
     func loginSuccessful()
@@ -30,15 +30,15 @@ protocol LoginFlowDelegate: NSObject {
 final class LoginFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of the login process.
     weak var delegate: LoginFlowCoordinatorDelegate?
-
+    
     /// Starts the login flow by presenting the login view controller.
     ///
     /// - Returns: The login view controller to be presented.
     override func start() -> UIViewController {
         let viewModel = LoginViewModel(dependencies: appDependencies, delegate: self)
-        let loginController = LoginViewController(viewModel: viewModel)
-        self.rootViewController = loginController
-        return loginController
+        let loginVC = LoginView(viewModel: viewModel).hosting()
+        self.rootViewController = loginVC
+        return loginVC
     }
 }
 
@@ -48,7 +48,7 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     func registerTapped() {
         print("Register Tapped")
     }
-
+    
     /// Handles the event when the login process is successful.
     ///
     func loginSuccessful() {

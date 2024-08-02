@@ -91,11 +91,9 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - manager: The location manager object that was unable to retrieve the location.
     ///   - error: The error object containing the reason for the failure.
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        do {
-            throw BaseError(context: .location, message: error.localizedDescription, logger: logger)
-        } catch {
-            logger.log(message: "CCLocationManager did fail with Error.")
-        }
+        logger.log(
+            message: "ERROR: CCLocationManager failed with Error: \(error.localizedDescription)"
+        )
     }
     
     /// Called when the location authorization status changes.

@@ -29,8 +29,7 @@ final class DebugViewController: Base.ViewController {
     override func loadView() {
         super.loadView()
         
-        let rootView = DebugView(viewModel: viewModel)
-        let vc = UIHostingController(rootView: rootView)
+        let vc = DebugView(viewModel: viewModel).hosting()
         embedController(vc)
     }
     
