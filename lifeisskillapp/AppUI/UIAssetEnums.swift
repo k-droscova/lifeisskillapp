@@ -89,7 +89,7 @@ enum CustomColors {
             case .background:
                 UIColor(.libBaseGray)
             case .unselectedItem:
-                UIColor(.blackOverlay)
+                UIColor(.libDarkerGray)
             case .selectedItem:
                 UIColor(.colorPrimary)
             case .selectedBackground:

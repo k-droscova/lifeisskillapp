@@ -20,6 +20,9 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
                 usernameTextField
                 passwordSecureField
             }
+            .body1Regular
+            .foregroundStyle(Color.colorLisDarkGrey)
+            .kerning(1.2)
             .padding(.horizontal, LoginViewConstants.horizontalPadding)
             
             loginButton
@@ -30,7 +33,6 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
             
             bottomButtons
         }
-        .body2Regular
         .onAppear {
             viewModel.onAppear()
         }
@@ -121,7 +123,7 @@ enum LoginViewConstants {
     static let cornerRadius: CGFloat = 10
     
     enum Colors {
-        static let textFieldBackground = Color.colorLisGrey
+        static let textFieldBackground = Color.lighterGrey
         static let enabledButton = Color.colorLisGreen
         static let disabledButton = Color.colorLisGrey
         static let enabledText = Color.white
