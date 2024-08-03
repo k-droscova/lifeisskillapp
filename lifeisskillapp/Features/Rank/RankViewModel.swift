@@ -14,19 +14,20 @@ protocol RankViewModeling: BaseClass, ObservableObject {
 }
 
 final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager
     
     // MARK: - Private Properties
     
     private weak var delegate: RankFlowDelegate?
     private let logger: LoggerServicing
+    private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
-    private var selectedCategory: UserCategory? {
-        userCategoryManager.selectedCategory
-    }
     private let userRankManager: any UserRankManaging
     private var userRankData: [UserRank] {
         fetchAllUserRankData()
+    }
+    private var selectedCategory: UserCategory? {
+        userCategoryManager.selectedCategory
     }
     
     // MARK: - Public Properties
@@ -40,6 +41,8 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
         self.userRankManager = dependencies.userRankManager
+        self.gameDataManager = dependencies.gameDataManager
+        gameDataManager.delegate = delegate
         self.delegate = delegate
     }
     
@@ -48,19 +51,20 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     func onAppear() {
         Task { @MainActor in
             isLoading = true
-            await fetchNewDataIfNeccessary()
-            getSelectedCategoryRanking()
+            await fetchData()
             isLoading = false
         }
     }
     
     // MARK: - Private Helpers
     
-    private func fetchNewDataIfNeccessary() async {
+    @MainActor
+    private func fetchData() async {
         do {
-            try await userRankManager.fetch()
+            try await userCategoryManager.fetch()
+            await gameDataManager.fetchNewDataIfNeccessary(endpoint: .rank)
+            getSelectedCategoryRanking()
         } catch {
-            logger.log(message: "ERROR: Unable to fetch new user rank data")
             delegate?.onError(error)
         }
     }
@@ -69,16 +73,20 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         userRankManager.getAll()
     }
     
+    private func fetchSelectedCategory() -> UserCategory? {
+        userCategoryManager.selectedCategory
+    }
+    
     private func getSelectedCategoryRanking() {
-        guard let selectedCategory = selectedCategory else {
-            logger.log(message: "No selected category found")
-            delegate?.selectCategoryPrompt()
-            return
-        }
-        
         guard userRankData.isNotEmpty else {
             logger.log(message: "No user rank data available")
             delegate?.onNoDataAvailable()
+            return
+        }
+        
+        guard let selectedCategory = selectedCategory else {
+            logger.log(message: "No selected category found")
+            delegate?.selectCategoryPrompt()
             return
         }
         

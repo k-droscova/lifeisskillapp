@@ -14,7 +14,7 @@ protocol RankFlowCoordinatorDelegate: NSObject {
     
 }
 
-protocol RankFlowDelegate: NSObject {
+protocol RankFlowDelegate: GameDataManagerFlowDelegate, NSObject {
     func onError(_ error: Error)
     func onNoDataAvailable()
     func selectCategoryPrompt()
