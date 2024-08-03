@@ -54,7 +54,7 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             delegate: self
         )
         self.homeVM = viewModel
-        let homeController = HomeViewController(viewModel: viewModel)
+        let homeController = HomeView(viewModel: viewModel).hosting()
         self.rootViewController = homeController
         let navController = UINavigationController(rootViewController: homeController)
         self.navigationController = navController
@@ -68,7 +68,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     // MARK: - QR Flow
     
     func loadFromQR(viewModel: QRViewModeling) {
-        let qrViewController = HomeQRViewController(viewModel: viewModel)
+        let qrViewController = HomeQRView(viewModel: viewModel).hosting()
         qrViewController.modalPresentationStyle = .fullScreen
         navigationController?.present(qrViewController, animated: true, completion: nil)
     }
@@ -81,7 +81,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     
     func loadFromCamera(viewModel: OcrViewModeling) {
         if #available(iOS 16.0, *) {
-            let cameraViewController = HomeCameraOCRViewController(viewModel: viewModel)
+            let cameraViewController = HomeCameraOCRView(viewModel: viewModel).hosting()
             cameraViewController.modalPresentationStyle = .fullScreen
             navigationController?.present(cameraViewController, animated: true, completion: nil)
         } else {
