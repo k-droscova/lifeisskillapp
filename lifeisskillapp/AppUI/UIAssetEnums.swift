@@ -79,6 +79,11 @@ enum CustomImages: String {
             case black = "Icons/TabBar/Rank/Black"
         }
     }
+    
+    enum Avatar: String {
+        case male = "pointListBoy"
+        case female = "pointListGirl"
+    }
 }
 
 enum CustomColors {

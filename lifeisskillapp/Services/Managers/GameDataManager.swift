@@ -17,7 +17,7 @@ protocol HasGameDataManager {
 
 protocol GameDataManaging {
     var delegate: GameDataManagerFlowDelegate? { get set }
-    func fetchNewDataIfNeccessary() async
+    func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint?) async
 }
 
 public final class GameDataManager: BaseClass, GameDataManaging {
@@ -59,7 +59,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     // MARK: - Public Interface
     
-    func fetchNewDataIfNeccessary() async {
+    func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint? = nil) async {
         do {
             try await userCategoryManager.fetch()
             try await checkCheckSumData()

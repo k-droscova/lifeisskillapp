@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld pts" : {
+
+    },
+    "%lld." : {
+
+    },
     "basic.attention" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1795,6 +1801,9 @@
           }
         }
       }
+    },
+    "rank.title" : {
+
     },
     "register.button.cancel" : {
       "extractionState" : "manual",
