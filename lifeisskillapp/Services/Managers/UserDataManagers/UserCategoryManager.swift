@@ -17,6 +17,7 @@ protocol HasUserCategoryManager {
 protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, DataContainer == UserCategoryData {
     var delegate: UserCategoryManagerFlowDelegate? { get set }
     func getMainCategory() -> UserCategory?
+    var selectedCategory: UserCategory? { get set }
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
@@ -50,6 +51,8 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         get { dataManager.token }
     }
     
+    var selectedCategory: UserCategory?
+    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
@@ -66,6 +69,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         do {
             let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
             data = response.data
+            selectedCategory = data?.main
             delegate?.onUpdate()
         } catch {
             throw BaseError(
