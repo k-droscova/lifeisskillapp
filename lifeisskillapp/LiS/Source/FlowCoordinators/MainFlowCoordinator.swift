@@ -43,7 +43,8 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     
     private func setupTabBar() -> UITabBarController{
         // MARK: DEBUG
-        let debugVC = DebugViewController()
+        let debugVM = DebugViewModel(dependencies: appDependencies)
+        let debugVC = DebugView(viewModel: debugVM).hosting()
         debugVC.tabBarItem = UITabBarItem(
             title: "debug",
             image: UIImage(systemName: "ladybug.circle"),
