@@ -18,8 +18,7 @@ struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
             Spacer()
             DropdownMenu(
                 options: viewModel.userCategories,
-                selectedOption: $viewModel.selectedCategory,
-                placeholder: "home.category_selector"
+                selectedOption: $viewModel.selectedCategory
             )
             .subheadline
             .foregroundsSecondary
@@ -36,21 +35,17 @@ final class MockCategorySelectorViewModel: BaseClass, ObservableObject, Category
     // MARK: - Public Properties
     @Published var selectedCategory: UserCategory?
     var username: String = "TestUser"
-    var userCategories: [UserCategory]
+    var userCategories: [UserCategory] = []
     func onAppear() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             print("mock fetching complete")
+            self.userCategories = [
+                UserCategory(id: "1", name: "Category 1", detail: "Description 1", isPublic: true),
+                UserCategory(id: "2", name: "Category 2", detail: "Description 2", isPublic: false),
+                UserCategory(id: "3", name: "Category 3", detail: "Description 3", isPublic: true)
+            ]
+            self.selectedCategory = self.userCategories.first
         }
-    }
-    
-    // MARK: - Initialization
-    override init() {
-        self.userCategories = [
-            UserCategory(id: "1", name: "Category 1", detail: "Description 1", isPublic: true),
-            UserCategory(id: "2", name: "Category 2", detail: "Description 2", isPublic: false),
-            UserCategory(id: "3", name: "Category 3", detail: "Description 3", isPublic: true)
-        ]
-        self.selectedCategory = userCategories.first
     }
 }
 

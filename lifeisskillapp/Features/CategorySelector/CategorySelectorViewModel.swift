@@ -32,9 +32,7 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
             updateSelectedCategory()
         }
     }
-    var userCategories: [UserCategory] {
-        getAllUserCategories()
-    }
+    @Published private(set) var userCategories: [UserCategory] = []
     
     // MARK: - Initialization
     
@@ -59,6 +57,7 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     private func fetchNewDataIfNeccessary() async {
         do {
             try await userCategoryManager.fetch()
+            self.userCategories = getAllUserCategories()
         } catch {
             logger.log(message: "ERROR: Unable to fetch new user category data")
         }
