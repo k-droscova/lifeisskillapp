@@ -23,11 +23,8 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userRankManager: any UserRankManaging
-    private var userRankData: [UserRank] {
-        fetchAllUserRankData()
-    }
     private var selectedCategory: UserCategory? {
-        userCategoryManager.selectedCategory
+        fetchSelectedCategory()
     }
     
     // MARK: - Public Properties
@@ -44,6 +41,9 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         self.gameDataManager = dependencies.gameDataManager
         gameDataManager.delegate = delegate
         self.delegate = delegate
+        
+        super.init()
+        self.setupBindings()
     }
     
     // MARK: - Public Interface
@@ -57,6 +57,14 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     }
     
     // MARK: - Private Helpers
+    
+    private func setupBindings() {
+        Task {
+            for await _ in userCategoryManager.selectedCategoryStream {
+                getSelectedCategoryRanking()
+            }
+        }
+    }
     
     @MainActor
     private func fetchData() async {
@@ -78,7 +86,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     }
     
     private func getSelectedCategoryRanking() {
-        guard userRankData.isNotEmpty else {
+        guard let data = userRankManager.data?.data, data.isNotEmpty else {
             logger.log(message: "No user rank data available")
             delegate?.onNoDataAvailable()
             return

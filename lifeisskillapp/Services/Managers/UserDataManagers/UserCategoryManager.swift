@@ -18,6 +18,7 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
     var delegate: UserCategoryManagerFlowDelegate? { get set }
     func getMainCategory() -> UserCategory?
     var selectedCategory: UserCategory? { get set }
+    var selectedCategoryStream: AsyncStream<UserCategory?> { get }
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
@@ -29,6 +30,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     private let logger: LoggerServicing
     private let dataManager: UserLoginDataManaging
     private let userDataAPIService: UserDataAPIServicing
+    private var selectedCategoryContinuation: AsyncStream<UserCategory?>.Continuation?
     
     // MARK: - Public Properties
     
@@ -51,7 +53,18 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         get { dataManager.token }
     }
     
-    var selectedCategory: UserCategory?
+    @Published var selectedCategory: UserCategory? {
+        didSet {
+            triggerAsyncStream()
+        }
+    }
+    
+    var selectedCategoryStream: AsyncStream<UserCategory?> {
+        AsyncStream { continuation in
+            self.selectedCategoryContinuation = continuation
+            continuation.yield(self.selectedCategory)
+        }
+    }
     
     // MARK: - Initialization
     
@@ -90,5 +103,13 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     func getMainCategory() -> UserCategory? {
         data?.main
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func triggerAsyncStream() {
+        DispatchQueue.main.async {
+            self.selectedCategoryContinuation?.yield(self.selectedCategory)
+        }
     }
 }
