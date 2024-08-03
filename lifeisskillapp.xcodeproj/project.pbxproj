@@ -29,7 +29,6 @@
 		27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B5C2C57C51A003D22C6 /* QRViewModel.swift */; };
 		27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B5E2C57CD78003D22C6 /* HomeQRView.swift */; };
 		27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B602C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift */; };
-		27187B632C57CE85003D22C6 /* HomeQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B622C57CE85003D22C6 /* HomeQRViewController.swift */; };
 		27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */; };
 		27187B672C57D866003D22C6 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B662C57D866003D22C6 /* Buttons.swift */; };
 		27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B682C57E310003D22C6 /* CameraViewModeling.swift */; };
@@ -37,7 +36,6 @@
 		271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F112C5406F600DF9DFD /* ScanningManager.swift */; };
 		271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F132C54124D00DF9DFD /* NFCViewModel.swift */; };
 		2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF252C513D40007B4E77 /* HomeViewModel.swift */; };
-		2720DF282C513D4B007B4E77 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF272C513D4B007B4E77 /* HomeViewController.swift */; };
 		2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */; };
 		2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2B2C514A0A007B4E77 /* HomeView.swift */; };
 		2720DF2E2C515906007B4E77 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2D2C515906007B4E77 /* String.swift */; };
@@ -53,7 +51,6 @@
 		2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */; };
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
-		274863282C5262A8008D8A3E /* HomeCameraOCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863272C5262A8008D8A3E /* HomeCameraOCRViewController.swift */; };
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
 		275457092C33254300F3B55A /* ACKategories in Frameworks */ = {isa = PBXBuildFile; productRef = 275457082C33254300F3B55A /* ACKategories */; };
@@ -63,14 +60,11 @@
 		275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457102C332CFD00F3B55A /* AppDependencies.swift */; };
 		275457142C332DAB00F3B55A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457132C332DAB00F3B55A /* LoginView.swift */; };
 		275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457152C332DB400F3B55A /* LoginViewModel.swift */; };
-		275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457172C332DBE00F3B55A /* LoginViewController.swift */; };
 		2754571F2C33324900F3B55A /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754571E2C33324900F3B55A /* UIViewController.swift */; };
 		275457232C3332BF00F3B55A /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* DebugView.swift */; };
 		275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* DebugViewModel.swift */; };
-		275457282C3332E000F3B55A /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* DebugViewController.swift */; };
 		275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */; };
 		275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472CF2C5D110400F5578F /* CategorySelectorView.swift */; };
-		275472D32C5D163700F5578F /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472D22C5D163700F5578F /* CategorySelectorViewController.swift */; };
 		275472DD2C5D6AED00F5578F /* roboto_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */; };
 		275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DB2C5D6AED00F5578F /* roboto_medium.ttf */; };
 		275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DC2C5D6AED00F5578F /* roboto_black.ttf */; };
@@ -164,7 +158,6 @@
 		27187B5C2C57C51A003D22C6 /* QRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewModel.swift; sourceTree = "<group>"; };
 		27187B5E2C57CD78003D22C6 /* HomeQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQRView.swift; sourceTree = "<group>"; };
 		27187B602C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQRViewControllerRepresentable.swift; sourceTree = "<group>"; };
-		27187B622C57CE85003D22C6 /* HomeQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQRViewController.swift; sourceTree = "<group>"; };
 		27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanningViewController.swift; sourceTree = "<group>"; };
 		27187B662C57D866003D22C6 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		27187B682C57E310003D22C6 /* CameraViewModeling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModeling.swift; sourceTree = "<group>"; };
@@ -172,7 +165,6 @@
 		271F1F112C5406F600DF9DFD /* ScanningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManager.swift; sourceTree = "<group>"; };
 		271F1F132C54124D00DF9DFD /* NFCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCViewModel.swift; sourceTree = "<group>"; };
 		2720DF252C513D40007B4E77 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		2720DF272C513D4B007B4E77 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowCoordinator.swift; sourceTree = "<group>"; };
 		2720DF2B2C514A0A007B4E77 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2720DF2D2C515906007B4E77 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -192,7 +184,6 @@
 		2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
 		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
-		274863272C5262A8008D8A3E /* HomeCameraOCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRViewController.swift; sourceTree = "<group>"; };
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		2754570A2C33259200F3B55A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -201,14 +192,11 @@
 		275457102C332CFD00F3B55A /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		275457132C332DAB00F3B55A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		275457152C332DB400F3B55A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		275457172C332DBE00F3B55A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2754571E2C33324900F3B55A /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		275457222C3332BF00F3B55A /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 		275457252C3332CE00F3B55A /* DebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewModel.swift; sourceTree = "<group>"; };
-		275457272C3332E000F3B55A /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewModel.swift; sourceTree = "<group>"; };
 		275472CF2C5D110400F5578F /* CategorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorView.swift; sourceTree = "<group>"; };
-		275472D22C5D163700F5578F /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
 		275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_regular.ttf; sourceTree = "<group>"; };
 		275472DB2C5D6AED00F5578F /* roboto_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_medium.ttf; sourceTree = "<group>"; };
 		275472DC2C5D6AED00F5578F /* roboto_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_black.ttf; sourceTree = "<group>"; };
@@ -361,7 +349,6 @@
 				27187B5C2C57C51A003D22C6 /* QRViewModel.swift */,
 				27187B5E2C57CD78003D22C6 /* HomeQRView.swift */,
 				27187B602C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift */,
-				27187B622C57CE85003D22C6 /* HomeQRViewController.swift */,
 				27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */,
 			);
 			path = QR;
@@ -374,7 +361,6 @@
 				271F1F0C2C54035300DF9DFD /* NFC */,
 				274863262C526293008D8A3E /* OCR */,
 				2720DF252C513D40007B4E77 /* HomeViewModel.swift */,
-				2720DF272C513D4B007B4E77 /* HomeViewController.swift */,
 				2720DF2B2C514A0A007B4E77 /* HomeView.swift */,
 				27187B682C57E310003D22C6 /* CameraViewModeling.swift */,
 			);
@@ -538,7 +524,6 @@
 			children = (
 				275457132C332DAB00F3B55A /* LoginView.swift */,
 				275457152C332DB400F3B55A /* LoginViewModel.swift */,
-				275457172C332DBE00F3B55A /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -622,7 +607,6 @@
 		274863262C526293008D8A3E /* OCR */ = {
 			isa = PBXGroup;
 			children = (
-				274863272C5262A8008D8A3E /* HomeCameraOCRViewController.swift */,
 				274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */,
 				2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */,
 				271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */,
@@ -635,7 +619,6 @@
 			children = (
 				275457222C3332BF00F3B55A /* DebugView.swift */,
 				275457252C3332CE00F3B55A /* DebugViewModel.swift */,
-				275457272C3332E000F3B55A /* DebugViewController.swift */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -653,7 +636,6 @@
 			children = (
 				275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */,
 				275472CF2C5D110400F5578F /* CategorySelectorView.swift */,
-				275472D22C5D163700F5578F /* CategorySelectorViewController.swift */,
 			);
 			path = CategorySelector;
 			sourceTree = "<group>";
@@ -963,7 +945,6 @@
 				27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */,
 				27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */,
 				27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */,
-				274863282C5262A8008D8A3E /* HomeCameraOCRViewController.swift in Sources */,
 				27C6197F2C398C570067498F /* LogSeverity.swift in Sources */,
 				27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */,
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
@@ -974,7 +955,6 @@
 				27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
-				275457282C3332E000F3B55A /* DebugViewController.swift in Sources */,
 				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
 				276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
@@ -985,8 +965,6 @@
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,
-				275472D32C5D163700F5578F /* CategorySelectorViewController.swift in Sources */,
-				275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */,
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
 				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
@@ -1004,7 +982,6 @@
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
-				27187B632C57CE85003D22C6 /* HomeQRViewController.swift in Sources */,
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
@@ -1020,7 +997,6 @@
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
-				2720DF282C513D4B007B4E77 /* HomeViewController.swift in Sources */,
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
 				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
