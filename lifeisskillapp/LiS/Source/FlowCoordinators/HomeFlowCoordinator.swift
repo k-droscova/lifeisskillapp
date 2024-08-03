@@ -33,11 +33,13 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: HomeViewModeling?
+    private let categorySelectorVC: UIViewController
     
     // MARK: - Initialization
     
-    init(delegate: HomeFlowCoordinatorDelegate? = nil) {
+    init(delegate: HomeFlowCoordinatorDelegate? = nil, categorySelectorVC: UIViewController) {
         self.delegate = delegate
+        self.categorySelectorVC = categorySelectorVC
     }
     
     /// Starts the home flow by presenting the home view controller.
@@ -54,7 +56,7 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             delegate: self
         )
         self.homeVM = viewModel
-        let homeController = HomeView(viewModel: viewModel).hosting()
+        let homeController = HomeView(viewModel: viewModel, categorySelectorVC: self.categorySelectorVC).hosting()
         self.rootViewController = homeController
         let navController = UINavigationController(rootViewController: homeController)
         self.navigationController = navController

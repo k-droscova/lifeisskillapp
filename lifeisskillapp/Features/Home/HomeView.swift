@@ -9,14 +9,19 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModeling
+    private let categorySelectorVC: UIViewController
     
-    init(viewModel: HomeViewModeling) {
+    init(viewModel: HomeViewModeling, categorySelectorVC: UIViewController) {
         self._viewModel = State(initialValue: viewModel)
+        self.categorySelectorVC = categorySelectorVC
     }
     
     var body: some View {
         VStack(spacing: Constants.vStackSpacing) {
-            // TODO: insert category selector
+            ViewControllerRepresentable(viewController: categorySelectorVC)                .frame(height: 100)
+            // TODO: figure out why deleting the frame fucks up layout???
+
+
             ScrollView {
                 VStack(spacing: Constants.vStackSpacing) {
                     imageView
@@ -25,7 +30,7 @@ struct HomeView: View {
                 }
             }
         }
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.top)
     }
     
     private var imageView: some View {
@@ -120,6 +125,8 @@ class MockHomeViewModel: BaseClass, HomeViewModeling {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(viewModel: MockHomeViewModel())
+        HomeView(viewModel: MockHomeViewModel(), categorySelectorVC:
+                    CategorySelectorView(viewModel: MockCategorySelectorViewModel()).hosting()
+        )
     }
 }
