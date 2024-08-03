@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
     @StateObject var viewModel: ViewModel
-
+    
     var body: some View {
         HStack {
             Text(viewModel.username)
@@ -24,16 +24,25 @@ struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
             .subheadline
             .foregroundsSecondary
         }
+        .onAppear(
+            perform: viewModel.onAppear
+        )
     }
 }
 
 // Mock CategorySelectorViewModeling
 final class MockCategorySelectorViewModel: BaseClass, ObservableObject, CategorySelectorViewModeling {
+    
     // MARK: - Public Properties
     @Published var selectedCategory: UserCategory?
     var username: String = "TestUser"
     var userCategories: [UserCategory]
-
+    func onAppear() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            print("mock fetching complete")
+        }
+    }
+    
     // MARK: - Initialization
     override init() {
         self.userCategories = [
