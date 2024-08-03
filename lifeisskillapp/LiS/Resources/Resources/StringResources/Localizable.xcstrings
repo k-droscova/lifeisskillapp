@@ -1201,19 +1201,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Email/uživatelské jméno"
+            "value" : "Uživatelské jméno / Email"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-Mail/Benutzername"
+            "value" : "Benutzername / E-Mail"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mail/username"
+            "value" : "Username / Email"
           }
         }
       }

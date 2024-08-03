@@ -33,7 +33,6 @@
 		27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */; };
 		27187B672C57D866003D22C6 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B662C57D866003D22C6 /* Buttons.swift */; };
 		27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B682C57E310003D22C6 /* CameraViewModeling.swift */; };
-		27187B6B2C57FA43003D22C6 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27187B6A2C57FA43003D22C6 /* Alerts.swift */; };
 		271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */; };
 		271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F112C5406F600DF9DFD /* ScanningManager.swift */; };
 		271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F132C54124D00DF9DFD /* NFCViewModel.swift */; };
@@ -69,6 +68,9 @@
 		275457232C3332BF00F3B55A /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457222C3332BF00F3B55A /* DebugView.swift */; };
 		275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457252C3332CE00F3B55A /* DebugViewModel.swift */; };
 		275457282C3332E000F3B55A /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457272C3332E000F3B55A /* DebugViewController.swift */; };
+		275472DD2C5D6AED00F5578F /* roboto_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */; };
+		275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DB2C5D6AED00F5578F /* roboto_medium.ttf */; };
+		275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DC2C5D6AED00F5578F /* roboto_black.ttf */; };
 		275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */; };
 		275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472CF2C5D110400F5578F /* CategorySelectorView.swift */; };
 		275472D32C5D163700F5578F /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472D22C5D163700F5578F /* CategorySelectorViewController.swift */; };
@@ -104,7 +106,6 @@
 		27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6198F2C3AAC1F0067498F /* APIResponseStructs.swift */; };
 		27C619932C3AAD260067498F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619922C3AAD260067498F /* User.swift */; };
 		27C619952C3AB0890067498F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619942C3AB0890067498F /* UserDefaults.swift */; };
-		27C619972C3AB5D50067498F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619962C3AB5D50067498F /* Theme.swift */; };
 		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
@@ -164,7 +165,6 @@
 		27187B642C57D2F5003D22C6 /* QRScanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanningViewController.swift; sourceTree = "<group>"; };
 		27187B662C57D866003D22C6 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		27187B682C57E310003D22C6 /* CameraViewModeling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModeling.swift; sourceTree = "<group>"; };
-		27187B6A2C57FA43003D22C6 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		271F1F112C5406F600DF9DFD /* ScanningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManager.swift; sourceTree = "<group>"; };
 		271F1F132C54124D00DF9DFD /* NFCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCViewModel.swift; sourceTree = "<group>"; };
@@ -203,6 +203,9 @@
 		275457222C3332BF00F3B55A /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 		275457252C3332CE00F3B55A /* DebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewModel.swift; sourceTree = "<group>"; };
 		275457272C3332E000F3B55A /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
+		275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_regular.ttf; sourceTree = "<group>"; };
+		275472DB2C5D6AED00F5578F /* roboto_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_medium.ttf; sourceTree = "<group>"; };
+		275472DC2C5D6AED00F5578F /* roboto_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_black.ttf; sourceTree = "<group>"; };
 		275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewModel.swift; sourceTree = "<group>"; };
 		275472CF2C5D110400F5578F /* CategorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorView.swift; sourceTree = "<group>"; };
 		275472D22C5D163700F5578F /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
@@ -238,7 +241,6 @@
 		27C6198F2C3AAC1F0067498F /* APIResponseStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStructs.swift; sourceTree = "<group>"; };
 		27C619922C3AAD260067498F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27C619942C3AB0890067498F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		27C619962C3AB5D50067498F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* LoadPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
@@ -296,6 +298,9 @@
 		2717AED12C42A72600A23F06 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				275472DC2C5D6AED00F5578F /* roboto_black.ttf */,
+				275472DB2C5D6AED00F5578F /* roboto_medium.ttf */,
+				275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */,
 				2717AF0D2C42ADB700A23F06 /* Montserrat-Black.otf */,
 				2717AF072C42ADB700A23F06 /* Montserrat-Bold.otf */,
 				2717AF082C42ADB700A23F06 /* Montserrat-ExtraBold.otf */,
@@ -476,10 +481,8 @@
 			children = (
 				278174872C4BFBB500138376 /* AssetFontFamily.swift */,
 				278174832C4BF96B00138376 /* View.swift */,
-				27C619962C3AB5D50067498F /* Theme.swift */,
 				278174892C4BFD6500138376 /* ButtonStyleModifier.swift */,
 				27187B662C57D866003D22C6 /* Buttons.swift */,
-				27187B6A2C57FA43003D22C6 /* Alerts.swift */,
 				27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */,
 				2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */,
 			);
@@ -886,14 +889,17 @@
 			files = (
 				2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */,
 				2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */,
+				275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */,
 				2717AF112C42ADB800A23F06 /* Montserrat-ExtraBold.otf in Resources */,
 				27274F872C3320F3003453E2 /* Assets.xcassets in Resources */,
 				2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */,
+				275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */,
 				2717AF132C42ADB800A23F06 /* Montserrat-SemiBold.otf in Resources */,
 				2717AF142C42ADB800A23F06 /* Montserrat-UltraLight.otf in Resources */,
 				2717AEFE2C42ACCD00A23F06 /* Images.xcassets in Resources */,
 				2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */,
 				27274F8A2C3320F3003453E2 /* Base in Resources */,
+				275472DD2C5D6AED00F5578F /* roboto_regular.ttf in Resources */,
 				2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */,
 				27EBADD42C592F3100F01CFB /* Colors.xcassets in Resources */,
 				2717AF122C42ADB800A23F06 /* Montserrat-Hairline.otf in Resources */,
@@ -957,7 +963,6 @@
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
 				2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
-				27C619972C3AB5D50067498F /* Theme.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,

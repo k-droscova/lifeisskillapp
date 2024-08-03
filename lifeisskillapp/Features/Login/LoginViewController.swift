@@ -33,8 +33,5 @@ final class LoginViewController<ViewModel: LoginViewModeling>: Base.ViewControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "login.title"
     }
 }

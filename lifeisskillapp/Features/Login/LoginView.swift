@@ -20,6 +20,9 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
                 usernameTextField
                 passwordSecureField
             }
+            .body1Regular
+            .foregroundStyle(Color.colorLisDarkGrey)
+            .kerning(1.2)
             .padding(.horizontal, LoginViewConstants.horizontalPadding)
             
             loginButton
@@ -30,7 +33,6 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
             
             bottomButtons
         }
-        .body2Regular
         .onAppear {
             viewModel.onAppear()
         }
@@ -53,7 +55,7 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
 private extension LoginView {
     
     private var loginImageView: some View {
-        Image("loginScreen")
+        Image(CustomImages.Screens.login.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: LoginViewConstants.imageHeight)
@@ -86,8 +88,10 @@ private extension LoginView {
         LoginButton(
             action: viewModel.login,
             text: Text("login.login"),
-            enabledColor: LoginViewConstants.Colors.enabledButton,
-            disabledColor: LoginViewConstants.Colors.disabledButton,
+            enabledColorBackground: LoginViewConstants.Colors.enabledButton,
+            disabledColorBackground: LoginViewConstants.Colors.disabledButton,
+            enabledColorText: LoginViewConstants.Colors.enabledText,
+            disabledColorText: LoginViewConstants.Colors.disabledText,
             isEnabled: viewModel.isLoginEnabled
         )
         .disabled(!viewModel.isLoginEnabled)
@@ -95,12 +99,12 @@ private extension LoginView {
     
     private var bottomButtons: some View {
         HStack {
-            Button(action: viewModel.register) {
-                Text("login.register")
-            }
-            Spacer()
             Button(action: viewModel.forgotPassword) {
                 Text("login.forgotPassword")
+            }
+            Spacer()
+            Button(action: viewModel.register) {
+                Text("login.register")
             }
         }
         .padding(.horizontal, LoginViewConstants.horizontalPadding)
@@ -119,9 +123,11 @@ enum LoginViewConstants {
     static let cornerRadius: CGFloat = 10
     
     enum Colors {
-        static let textFieldBackground = Color(.secondarySystemBackground)
-        static let enabledButton = Color("LisGreen")
-        static let disabledButton = Color("LisGreyTextFieldTitle")
+        static let textFieldBackground = Color.lighterGrey
+        static let enabledButton = Color.colorLisGreen
+        static let disabledButton = Color.colorLisGrey
+        static let enabledText = Color.white
+        static let disabledText = Color.colorLisDarkGrey
     }
 }
 

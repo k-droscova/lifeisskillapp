@@ -20,21 +20,22 @@ protocol MainFlowDelegate: NSObject {
 
 final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     weak var delegate: MainFlowCoordinatorDelegate?
-
+    
     override init() {
         super.init()
         appDependencies.userManager.delegate = self
         appDependencies.locationManager.delegate = self
     }
-
+    
     override func start() -> UIViewController {
         super.start()
-
+        
         let tabBarVC = setupTabBar()
         let navigationController = UINavigationController(rootViewController: tabBarVC)
+        navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController = navigationController
         rootViewController = tabBarVC
-
+        
         return navigationController
     }
     
@@ -55,8 +56,8 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("home.title", comment: ""),
-            image: UIImage(systemName: "house"),
-            selectedImage: UIImage(systemName: "house.fill")
+            image: Constants.TabBar.Home.unselected.icon,
+            selectedImage: Constants.TabBar.Home.selected.icon
         )
         
         // MARK: - SETUP TabBar
@@ -65,9 +66,81 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             debugVC,
             homeVC
         ]
-        tabVC.tabBar.tintColor = UIColor.theme.lisPink
         tabVC.selectedViewController = homeVC
+        customizeTabBarAppearance(tabBar: tabVC.tabBar)
         return tabVC
+    }
+    
+    private func customizeTabBarAppearance(tabBar: UITabBar) {
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = CustomColors.TabBar.background.color
+            
+            appearance.stackedLayoutAppearance.selected.iconColor = CustomColors.TabBar.selectedItem.color
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: CustomColors.TabBar.selectedItem.color]
+            
+            appearance.stackedLayoutAppearance.normal.iconColor = CustomColors.TabBar.unselectedItem.color
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: CustomColors.TabBar.unselectedItem.color]
+            
+            tabBar.standardAppearance = appearance
+            tabBar.scrollEdgeAppearance = appearance
+        } else {
+            tabBar.barTintColor = CustomColors.TabBar.background.color
+            tabBar.tintColor = CustomColors.TabBar.selectedItem.color
+            tabBar.unselectedItemTintColor = CustomColors.TabBar.unselectedItem.color
+        }
+    }
+}
+
+extension MainFlowCoordinator {
+    enum Constants {
+        enum TabBar {
+            enum Home {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Home.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Home.pink.rawValue)
+                    }
+                }
+            }
+            enum Rank {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Rank.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Rank.black.rawValue)
+                    }
+                }
+            }
+            enum Points {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Profile.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Profile.black.rawValue)
+                    }
+                }
+            }
+            enum Map {
+                case selected, unselected
+                var icon: UIImage? {
+                    switch self {
+                    case .selected:
+                        UIImage(named: CustomImages.TabBar.Map.pink.rawValue)
+                    case .unselected:
+                        UIImage(named: CustomImages.TabBar.Map.black.rawValue)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -80,7 +153,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
         appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
         let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-
+            
         })
         rootViewController?.present(alert, animated: true, completion: nil)
     }
@@ -99,7 +172,7 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
             }
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-
+            
         })
         rootViewController?.present(alert, animated: true, completion: nil)
     }
