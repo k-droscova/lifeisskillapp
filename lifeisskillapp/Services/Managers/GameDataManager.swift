@@ -7,19 +7,30 @@
 
 import Foundation
 
+/// Protocol defining the delegate methods for GameDataManager.
 protocol GameDataManagerFlowDelegate: NSObject {
+    /// Called when an error occurs during data fetching.
+    /// - Parameter error: The error that occurred.
     func onError(_ error: Error)
 }
 
+/// Protocol to access an instance of GameDataManager.
 protocol HasGameDataManager {
+    /// The instance of GameDataManager.
     var gameDataManager: GameDataManaging { get }
 }
 
+/// Protocol defining the methods for GameDataManager.
 protocol GameDataManaging {
+    /// The delegate to handle flow events.
     var delegate: GameDataManagerFlowDelegate? { get set }
+    
+    /// Fetches new data if necessary.
+    /// - Parameter endpoint: The optional endpoint to fetch data for. If nil, fetches data for all endpoints.
     func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint?) async
 }
 
+/// Class responsible for managing game data.
 public final class GameDataManager: BaseClass, GameDataManaging {
     typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasUserDefaultsStorage
     
@@ -39,14 +50,13 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     // MARK: - Public Properties
     
-    /*
-     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
-     Now it can be set from anywhere, needs to be handled with caution.
-     */
+    /// The delegate to handle flow events.
     weak var delegate: GameDataManagerFlowDelegate?
     
     // MARK: - Initialization
     
+    /// Initializes a new instance of GameDataManager with the provided dependencies.
+    /// - Parameter dependencies: The dependencies required by the GameDataManager.
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
@@ -59,10 +69,15 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     // MARK: - Public Interface
     
+    /// Fetches new data if necessary.
+    /// - Parameter endpoint: The optional endpoint to fetch data for. If nil, fetches data for all endpoints.
     func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint? = nil) async {
         do {
-            try await userCategoryManager.fetch()
-            try await checkCheckSumData()
+            if let endpoint = endpoint {
+                try await fetchData(for: endpoint)
+            } else {
+                await fetchAllDataIfNecessary()
+            }
         } catch {
             delegate?.onError(error)
         }
@@ -70,158 +85,173 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     // MARK: - Private Helpers
     
-    private func checkCheckSumData() async throws {
-        logger.log(message: "Checking Check Sums")
-        do {
-            // get new check sums for data from the server
-            let checkSum = try await fetchNewCheckSumData()
-            // if no data have changed since last data fetch then do nothing
-            if checkSum == checkSumData {
-                logger.log(message: "FETCHED CHECK SUM: \(String(describing: checkSum)) EQUALS OLD: \(String(describing: checkSumData))")
-                return
+    /// Fetches data for all endpoints if necessary.
+    private func fetchAllDataIfNecessary() async {
+        await withTaskGroup(of: Void.self) { group in
+            for endpoint in CheckSumAPIService.Endpoint.allCases {
+                group.addTask {
+                    do {
+                        try await self.fetchData(for: endpoint)
+                    } catch {
+                        self.delegate?.onError(error)
+                    }
+                }
             }
-            // else update
-            try await updateData(newCheckSum: checkSum)
         }
     }
     
-    private func fetchNewCheckSumData() async throws -> CheckSumData {
+    /// Fetches data for a specific endpoint.
+    /// - Parameter endpoint: The endpoint to fetch data for.
+    private func fetchData(for endpoint: CheckSumAPIService.Endpoint) async throws {
+        logger.log(message: "Fetching data for \(endpoint.path)")
+        
+        let checkSum = try await fetchNewCheckSumData(for: endpoint)
+        
+        if shouldFetchData(for: endpoint, newCheckSum: checkSum) {
+            switch endpoint {
+            case .userpoints:
+                await fetchNewUserPoints()
+            case .rank:
+                await fetchNewUserRank()
+            case .events:
+                await fetchNewUserEvents()
+            case .messages:
+                await fetchNewUserMessages()
+            case .points:
+                await fetchNewPoints()
+            }
+        }
+    }
+    
+    /// Fetches the new checksum data for a specific endpoint.
+    /// - Parameter endpoint: The endpoint to fetch the checksum data for.
+    /// - Returns: The new checksum string.
+    private func fetchNewCheckSumData(for endpoint: CheckSumAPIService.Endpoint) async throws -> String {
         do {
-            // Start calls on different threads
-            async let userPointsResponse = checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
-            async let rankResponse = checkSumAPI.getRank(baseURL: APIUrl.baseURL)
-            async let pointsPatchResponse = checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
-            async let messagePatchResponse = checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
-            async let eventsPatchResponse = checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
-            
-            // Initialize and return CheckSumData with await (waits for async thread results)
-            return try await CheckSumData(
-                userPoints: userPointsResponse.data.pointsProtect,
-                rank: rankResponse.data.rankProtect,
-                messages: messagePatchResponse.data.msgProtect,
-                events: eventsPatchResponse.data.eventsProtect,
-                points: pointsPatchResponse.data.pointsProtect
-            )
+            switch endpoint {
+            case .userpoints:
+                let response = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
+                return response.data.pointsProtect
+            case .rank:
+                let response = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL)
+                return response.data.rankProtect
+            case .events:
+                let response = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
+                return response.data.eventsProtect
+            case .messages:
+                let response = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
+                return response.data.msgProtect
+            case .points:
+                let response = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
+                return response.data.pointsProtect
+            }
         } catch {
             throw BaseError(
                 context: .system,
-                message: "Unable to fetch check sum data",
+                message: "Unable to fetch check sum data for \(endpoint.path)",
                 logger: logger
             )
         }
     }
     
-    private func updateData(newCheckSum: CheckSumData) async throws {
-        // if no data have been saved until now then fetch all user data
+    /// Determines whether data should be fetched for a specific endpoint based on the checksum.
+    /// - Parameters:
+    ///   - endpoint: The endpoint to check.
+    ///   - newCheckSum: The new checksum to compare with the stored checksum.
+    /// - Returns: A Boolean indicating whether data should be fetched.
+    private func shouldFetchData(for endpoint: CheckSumAPIService.Endpoint, newCheckSum: String) -> Bool {
         guard let currentData = checkSumData else {
             checkSumData = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
-            await fetchAllNewData()
-            return
+            return true
         }
-        /*
-         If there is data saved, we will dispatch different threads to handle different data.
-         The async let binding allows the fetchNewUserPoints() function to run concurrently with the other fetch functions. This should dramatically speed up the process of fetching data, especially if there have been changes in Generic Points which have a lot of data.
-         However, the fetch is performed only if the current checksum for that data is different than new checksum.
-         This ensures only the necessary data is fetched and updated.
-         */
-        async let userPoints: Void? = (currentData.userPoints != newCheckSum.userPoints) ? fetchNewUserPoints() : nil
-        async let events: Void? = (currentData.events != newCheckSum.events) ? fetchNewUserEvents() : nil
-        async let messages: Void? = (currentData.messages != newCheckSum.messages) ? fetchNewUserMessages() : nil
-        async let rank: Void? = (currentData.rank != newCheckSum.rank) ? fetchNewUserRank() : nil
-        async let points: Void? = (currentData.points != newCheckSum.points) ? fetchNewPoints() : nil
         
-        // Await all results
-        await userPoints
-        await events
-        await messages
-        await rank
-        await points
+        switch endpoint {
+        case .userpoints:
+            return currentData.userPoints != newCheckSum
+        case .rank:
+            return currentData.rank != newCheckSum
+        case .events:
+            return currentData.events != newCheckSum
+        case .messages:
+            return currentData.messages != newCheckSum
+        case .points:
+            return currentData.points != newCheckSum
+        }
     }
     
-    private func updateCheckSum(newCheckSum: String, type: CheckSumData.CheckSumType) {
-        switch type {
-        case .userPoints:
+    /// Updates the stored checksum for a specific endpoint.
+    /// - Parameters:
+    ///   - newCheckSum: The new checksum to store.
+    ///   - endpoint: The endpoint to update the checksum for.
+    private func updateCheckSum(newCheckSum: String, for endpoint: CheckSumAPIService.Endpoint) {
+        switch endpoint {
+        case .userpoints:
             checkSumData?.userPoints = newCheckSum
         case .rank:
             checkSumData?.rank = newCheckSum
-        case .messages:
-            checkSumData?.messages = newCheckSum
         case .events:
             checkSumData?.events = newCheckSum
+        case .messages:
+            checkSumData?.messages = newCheckSum
         case .points:
             checkSumData?.points = newCheckSum
         }
     }
     
-    private func fetchAllNewData() async {
-        // Run this concurrently on different threads
-        async let userPoints: () = fetchNewUserPoints()
-        async let events: () = fetchNewUserEvents()
-        async let rank: () = fetchNewUserRank()
-        async let messages: () = fetchNewUserMessages()
-        async let points: () = fetchNewPoints()
-        
-        // Await all results
-        await userPoints
-        await events
-        await messages
-        await rank
-        await points
-    }
-    
+    /// Fetches new user points data and updates the checksum.
     private func fetchNewUserPoints() async {
-        logger.log(message: "Updating userPointsData")
+        logger.log(message: "Updating user points data")
         do {
             try await userPointManager.fetch()
-            guard let newCheckSumUserPoints = userPointManager.data?.checkSum else {
-                logger.log(
-                    message: "ERROR: User Point Checksum Is Null"
-                )
+            guard let newCheckSum = userPointManager.data?.checkSum else {
+                logger.log(message: "ERROR: User points checksum is null")
                 return
             }
-            updateCheckSum(newCheckSum: newCheckSumUserPoints, type: CheckSumData.CheckSumType.userPoints)
+            updateCheckSum(newCheckSum: newCheckSum, for: .userpoints)
         } catch {
-            logger.log(message: "ERROR: User Points Checksum Fetch Failed")
+            logger.log(message: "ERROR: User points data fetch failed")
         }
     }
     
+    /// Fetches new user rank data and updates the checksum.
     private func fetchNewUserRank() async {
-        logger.log(message: "Updating user rank")
+        logger.log(message: "Updating user rank data")
         do {
             try await userRankManager.fetch()
-            guard let newCheckSumUserRank = userRankManager.data?.checkSum else {
-                logger.log(
-                    message: "ERROR: User Rank Checksum Is Null"
-                )
+            guard let newCheckSum = userRankManager.data?.checkSum else {
+                logger.log(message: "ERROR: User rank checksum is null")
                 return
             }
-            updateCheckSum(newCheckSum: newCheckSumUserRank, type: CheckSumData.CheckSumType.rank)
+            updateCheckSum(newCheckSum: newCheckSum, for: .rank)
         } catch {
-            logger.log(message: "ERROR: User Rank Checksum Fetch Failed")
+            logger.log(message: "ERROR: User rank data fetch failed")
         }
     }
     
+    /// Fetches new user messages data and updates the checksum.
     private func fetchNewUserMessages() async {
-        logger.log(message: "Updating user messages")
+        logger.log(message: "Updating user messages data")
+        // Add implementation for fetching messages data and updating checksum
     }
     
+    /// Fetches new user events data and updates the checksum.
     private func fetchNewUserEvents() async {
-        logger.log(message: "Updating user events")
+        logger.log(message: "Updating user events data")
+        // Add implementation for fetching events data and updating checksum
     }
     
+    /// Fetches new points data and updates the checksum.
     private func fetchNewPoints() async {
-        logger.log(message: "Updating generic points")
+        logger.log(message: "Updating points data")
         do {
             try await genericPointManager.fetch()
             guard let newCheckSum = genericPointManager.data?.checkSum else {
-                logger.log(
-                    message: "ERROR: Generic Point Checksum Is Null"
-                )
+                logger.log(message: "ERROR: Points checksum is null")
                 return
             }
-            updateCheckSum(newCheckSum: newCheckSum, type: CheckSumData.CheckSumType.points)
+            updateCheckSum(newCheckSum: newCheckSum, for: .points)
         } catch {
-            logger.log(message: "ERROR: Generic Points Checksum Fetch Failed")
+            logger.log(message: "ERROR: Points data fetch failed")
         }
     }
 }

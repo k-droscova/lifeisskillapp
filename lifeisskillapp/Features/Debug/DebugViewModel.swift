@@ -71,6 +71,6 @@ final class DebugViewModel: DebugViewModeling, ObservableObject {
     
     private func fetchData() async {
         locationManager.checkLocationAuthorization()
-        await gameDataManager.fetchNewDataIfNeccessary()
+        await gameDataManager.fetchNewDataIfNeccessary(endpoint: nil)
     }
 }
