@@ -9,7 +9,6 @@ import Foundation
 import Observation
 
 protocol HomeViewModeling: BaseClass {
-    var username: String { get }
     func loadWithNFC()
     func loadWithQRCode()
     func loadFromCamera()
@@ -25,10 +24,6 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
         let locationManager: LocationManaging
         let userLoginManager: UserLoginDataManaging
     }
-    
-    // MARK: - Public Properties
-    
-    var username: String { userDataManager.userName ?? "" }
     
     // MARK: - Private Properties
     

@@ -9,11 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModeling
-    private let userCategories = [
-        UserCategory(id: "1", name: "Category 1", detail: "Description 1", isPublic: true),
-        UserCategory(id: "2", name: "Category 2", detail: "Description 2", isPublic: false),
-        UserCategory(id: "3", name: "Category 3", detail: "Description 3", isPublic: true)
-    ]
     
     init(viewModel: HomeViewModeling) {
         self._viewModel = State(initialValue: viewModel)
@@ -21,7 +16,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: Constants.vStackSpacing) {
-            topBarView
+            // TODO: insert category selector
             ScrollView {
                 VStack(spacing: Constants.vStackSpacing) {
                     imageView
@@ -31,21 +26,6 @@ struct HomeView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
-    }
-    
-    private var topBarView: some View {
-        HStack {
-            Text(viewModel.username)
-                .padding()
-                .headline3
-            Spacer()
-            DropdownMenu(
-                options: userCategories,
-                defaultSelection: userCategories[0]
-            )
-            .subheadline
-            .foregroundsSecondary
-        }
     }
     
     private var imageView: some View {
@@ -116,7 +96,6 @@ extension HomeView {
 }
 
 class MockHomeViewModel: BaseClass, HomeViewModeling {
-    var username: String = "Test"
     
     func loadWithNFC() {
         print("I was tapped: loadWithNFC")

@@ -71,6 +71,9 @@
 		275472DD2C5D6AED00F5578F /* roboto_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */; };
 		275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DB2C5D6AED00F5578F /* roboto_medium.ttf */; };
 		275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DC2C5D6AED00F5578F /* roboto_black.ttf */; };
+		275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */; };
+		275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472CF2C5D110400F5578F /* CategorySelectorView.swift */; };
+		275472D32C5D163700F5578F /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275472D22C5D163700F5578F /* CategorySelectorViewController.swift */; };
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
@@ -203,6 +206,9 @@
 		275472DA2C5D6AEC00F5578F /* roboto_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_regular.ttf; sourceTree = "<group>"; };
 		275472DB2C5D6AED00F5578F /* roboto_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_medium.ttf; sourceTree = "<group>"; };
 		275472DC2C5D6AED00F5578F /* roboto_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_black.ttf; sourceTree = "<group>"; };
+		275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewModel.swift; sourceTree = "<group>"; };
+		275472CF2C5D110400F5578F /* CategorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorView.swift; sourceTree = "<group>"; };
+		275472D22C5D163700F5578F /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -437,6 +443,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				275472CC2C5D0D0D00F5578F /* CategorySelector */,
 				2720DF242C513D28007B4E77 /* Home */,
 				275457122C332D5500F3B55A /* Debug */,
 				27274FB62C3322A1003453E2 /* Login */,
@@ -631,6 +638,16 @@
 				27C619682C381F340067498F /* RequestResponse.swift */,
 			);
 			path = NetworkStructs;
+			sourceTree = "<group>";
+		};
+		275472CC2C5D0D0D00F5578F /* CategorySelector */ = {
+			isa = PBXGroup;
+			children = (
+				275472CD2C5D0D2A00F5578F /* CategorySelectorViewModel.swift */,
+				275472CF2C5D110400F5578F /* CategorySelectorView.swift */,
+				275472D22C5D163700F5578F /* CategorySelectorViewController.swift */,
+			);
+			path = CategorySelector;
 			sourceTree = "<group>";
 		};
 		27C619502C36E69C0067498F /* Mappers */ = {
@@ -949,10 +966,13 @@
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,
+				275472D32C5D163700F5578F /* CategorySelectorViewController.swift in Sources */,
 				275457182C332DBE00F3B55A /* LoginViewController.swift in Sources */,
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
 				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
+				275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */,
+				27187B6B2C57FA43003D22C6 /* Alerts.swift in Sources */,
 				27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */,
 				27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */,
 				27C619672C37069E0067498F /* APIResponseError.swift in Sources */,
@@ -994,6 +1014,7 @@
 				27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */,
 				2734DCA62C469442008030F3 /* UserPoint.swift in Sources */,
 				2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */,
+				275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */,
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
 				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,
 				2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */,
