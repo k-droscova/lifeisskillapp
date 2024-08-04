@@ -88,7 +88,7 @@ public extension View {
     var foregroundsPrimary: some View {
         foregroundColor(.primary) // TODO: implement colors based on resources Martin provided
     }
-
+    
     var foregroundsSecondary: some View {
         foregroundColor(.secondary)
     }
@@ -109,5 +109,12 @@ struct CustomFontModifier: ViewModifier {
 extension View {
     func font(_ font: UIFont, lineHeight: CGFloat, textStyle: UIFont.TextStyle) -> some View {
         self.modifier(CustomFontModifier(font: font, lineHeight: lineHeight, textStyle: textStyle))
+    }
+}
+
+extension View {
+    func squareFrame(size: CGFloat) -> some View {
+        self
+            .frame(width: size, height: size)
     }
 }

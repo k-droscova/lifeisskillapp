@@ -33,4 +33,13 @@ enum UserGender: String, Codable {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid gender value")
         }
     }
+    
+    var icon: String {
+        switch self {
+        case .male:
+            CustomImages.Avatar.male.rawValue
+        case .female:
+            CustomImages.Avatar.female.rawValue
+        }
+    }
 }

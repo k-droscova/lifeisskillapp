@@ -73,6 +73,9 @@
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
+		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
+		276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */; };
+		276CA9D22C5E6D3D001D6394 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9D12C5E6D3D001D6394 /* RankView.swift */; };
 		278174842C4BF96B00138376 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174832C4BF96B00138376 /* View.swift */; };
 		278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174872C4BFBB500138376 /* AssetFontFamily.swift */; };
 		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
@@ -204,6 +207,9 @@
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
+		276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankFlowCoordinator.swift; sourceTree = "<group>"; };
+		276CA9D12C5E6D3D001D6394 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		278174832C4BF96B00138376 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		278174872C4BFBB500138376 /* AssetFontFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
 		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
@@ -433,6 +439,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				276CA9CC2C5E5FAF001D6394 /* Rank */,
 				275472CC2C5D0D0D00F5578F /* CategorySelector */,
 				2720DF242C513D28007B4E77 /* Home */,
 				275457122C332D5500F3B55A /* Debug */,
@@ -512,6 +519,7 @@
 				2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */,
 				2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */,
 				273D46AD2C5EAE6500073EF1 /* CategorySelectorFlowCoordinator.swift */,
+				276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -635,6 +643,15 @@
 				275472CF2C5D110400F5578F /* CategorySelectorView.swift */,
 			);
 			path = CategorySelector;
+			sourceTree = "<group>";
+		};
+		276CA9CC2C5E5FAF001D6394 /* Rank */ = {
+			isa = PBXGroup;
+			children = (
+				276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */,
+				276CA9D12C5E6D3D001D6394 /* RankView.swift */,
+			);
+			path = Rank;
 			sourceTree = "<group>";
 		};
 		27C619502C36E69C0067498F /* Mappers */ = {
@@ -919,6 +936,7 @@
 				271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */,
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
+				276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
 				271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */,
 				27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */,
@@ -944,6 +962,7 @@
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
+				276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
@@ -989,6 +1008,7 @@
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
 				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
 				2720DF2E2C515906007B4E77 /* String.swift in Sources */,
+				276CA9D22C5E6D3D001D6394 /* RankView.swift in Sources */,
 				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,

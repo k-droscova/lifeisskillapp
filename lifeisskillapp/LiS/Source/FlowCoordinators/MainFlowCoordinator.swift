@@ -66,11 +66,22 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             selectedImage: Constants.TabBar.Home.selected.icon
         )
         
+        // MARK: RANK
+        let rankFC = RankFlowCoordinator()
+        addChild(rankFC)
+        let rankVC = rankFC.start()
+        rankVC.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("rank.title", comment: ""),
+            image: Constants.TabBar.Rank.unselected.icon,
+            selectedImage: Constants.TabBar.Rank.selected.icon
+        )
+        
         // MARK: - SETUP TabBar
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
             debugVC,
-            homeVC
+            homeVC,
+            rankVC
         ]
         tabVC.selectedViewController = homeVC
         customizeTabBarAppearance(tabBar: tabVC.tabBar)

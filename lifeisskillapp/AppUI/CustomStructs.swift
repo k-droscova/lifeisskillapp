@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
     @Binding private var selectedOption: T?
     private let options: [T]
@@ -43,5 +41,34 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
             .padding(.vertical, 8)
             .cornerRadius(8)
         }
+    }
+}
+
+struct CustomProgressView: View {
+    var body: some View {
+        ZStack {
+            CustomColors.ProgressView.background.color
+                .edgesIgnoringSafeArea(.all)
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .foregroundColor(CustomColors.ProgressView.foreground.color)
+        }
+    }
+}
+
+struct ListCard<Content: View>: View {
+    let content: () -> Content
+
+    var body: some View {
+        content()
+            .padding(.vertical, CustomSizes.ListCard.verticalPadding.size)
+            .background(CustomColors.ListCard.foreground.color)
+            .cornerRadius(CustomSizes.ListCard.cornerRadius.size)
+            .shadow(
+                color: CustomColors.ListCard.shadow.color,
+                radius: CustomSizes.ListCard.shadowRadius.size,
+                x: CustomSizes.ListCard.shadowX.size,
+                y: CustomSizes.ListCard.shadowY.size
+            )
     }
 }

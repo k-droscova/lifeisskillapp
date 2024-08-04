@@ -37,7 +37,7 @@ struct HomeView: View {
         Image(CustomImages.Screens.home.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: Constants.imageSize, height: Constants.imageSize)
+            .squareFrame(size: Constants.imageSize)
             .padding()
     }
     
