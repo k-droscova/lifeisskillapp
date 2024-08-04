@@ -44,7 +44,7 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
     }
 }
 
-struct ProgressView: View {
+struct CustomProgressView: View {
     var body: some View {
         ZStack {
             CustomColors.ProgressView.background.color

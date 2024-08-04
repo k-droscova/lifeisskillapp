@@ -16,7 +16,7 @@ struct RankView<ViewModel: RankViewModeling>: View {
             
             rankingsList
                 .padding(.horizontal, RankViewConstants.horizontalPadding)
-                
+            
         }
         .ignoresSafeArea()
         .onAppear {
@@ -25,13 +25,7 @@ struct RankView<ViewModel: RankViewModeling>: View {
         .overlay(
             Group {
                 if viewModel.isLoading {
-                    ZStack {
-                        Color.black.opacity(0.3)
-                            .edgesIgnoringSafeArea(.all)
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .foregroundColor(.white)
-                    }
+                    CustomProgressView()
                 }
             }
         )
@@ -50,7 +44,7 @@ private extension RankView {
     
     private var rankingsList: some View {
         ScrollView {
-            VStack(spacing: RankViewConstants.spacing) {
+            LazyVStack(spacing: RankViewConstants.spacing) {
                 ForEach(viewModel.categoryRankings) { ranking in
                     RankListItem(ranking: ranking)
                 }
@@ -64,40 +58,38 @@ struct RankListItem: View {
     let ranking: Ranking
     
     var body: some View {
-        HStack(spacing: RankListItemConstants.spacing) {
-            // Rank number
-            Text("\(ranking.rank).")
-                .headline2
-                .foregroundColor(.primary)
-                .frame(width: RankListItemConstants.rankWidth, alignment: .leading)
-                .padding(.leading, RankListItemConstants.leadingPadding)
-            
-            // User gender icon
-            Image(ranking.gender.icon)
-                .resizable()
-                .frame(width: RankListItemConstants.iconSize, height: RankListItemConstants.iconSize)
-            
-            // VStack with username and points
-            VStack(alignment: .leading, spacing: 4) {
-                Text(ranking.username)
-                    .headline3
-                Text("\(ranking.points) pts")
-                    .body1Regular
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            // Trophy image
-            if let trophyImage = ranking.trophyImage {
-                Image(trophyImage)
+        ListCard {
+            HStack(spacing: RankListItemConstants.spacing) {
+                // Rank number
+                Text("\(ranking.rank).")
+                    .headline2
+                    .foregroundColor(.primary)
+                    .frame(width: RankListItemConstants.rankWidth, alignment: .leading)
+                    .padding(.leading, RankListItemConstants.leadingPadding)
+                
+                // User gender icon
+                Image(ranking.gender.icon)
                     .resizable()
-                    .frame(width: RankListItemConstants.trophyImageSize, height: RankListItemConstants.trophyImageSize)
-                    .padding(.trailing, RankListItemConstants.trailingPadding)
+                    .squareFrame(size: RankListItemConstants.iconSize)
+                
+                // VStack with username and points
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(ranking.username)
+                        .headline3
+                    Text("\(ranking.points) pts")
+                        .body1Regular
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Trophy image
+                if let trophyImage = ranking.trophyImage {
+                    Image(trophyImage)
+                        .resizable()
+                        .squareFrame(size: RankListItemConstants.trophyImageSize)
+                        .padding(.trailing, RankListItemConstants.trailingPadding)
+                }
             }
         }
-        .padding(.vertical, RankListItemConstants.rowVerticalPadding)
-        .background(Color.white) // or any background color you prefer
-        .cornerRadius(RankListItemConstants.cornerRadius)
-        .shadow(color: Color.blackOverlay, radius: 5, x: 1, y: 2)
     }
     
     private enum RankListItemConstants {
@@ -107,8 +99,6 @@ struct RankListItem: View {
         static let leadingPadding: CGFloat = 16
         static let trailingPadding: CGFloat = 16
         static let rankWidth: CGFloat = 30
-        static let rowVerticalPadding: CGFloat = 10
-        static let cornerRadius: CGFloat = 8
     }
 }
 
@@ -121,8 +111,6 @@ enum RankViewConstants {
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
     static let imageBottomPadding: CGFloat = 20
-    static let rowVerticalPadding: CGFloat = 10
-    static let cornerRadius: CGFloat = 10
 }
 
 struct RankView_Previews: PreviewProvider {
