@@ -89,11 +89,11 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private func fetchAllDataIfNecessary() async {
         await withTaskGroup(of: Void.self) { group in
             for endpoint in CheckSumAPIService.Endpoint.allCases {
-                group.addTask {
+                group.addTask { [weak self] in
                     do {
-                        try await self.fetchData(for: endpoint)
+                        try await self?.fetchData(for: endpoint)
                     } catch {
-                        self.delegate?.onError(error)
+                        self?.delegate?.onError(error)
                     }
                 }
             }
