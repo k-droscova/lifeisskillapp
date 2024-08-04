@@ -59,8 +59,9 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     // MARK: - Private Helpers
     
     private func setupBindings() {
-        Task {
-            for await _ in userCategoryManager.selectedCategoryStream {
+        Task { [weak self] in
+            guard let self = self else { return }
+            for await _ in self.userCategoryManager.selectedCategoryStream {
                 getSelectedCategoryRanking()
             }
         }
