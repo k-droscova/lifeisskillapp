@@ -51,11 +51,11 @@ struct RankedUser: UserProtocol, Codable {
 }
 
 struct Ranking: Identifiable {
-    let id: String             // Unique identifier
-    let rank: Int              // User's rank
-    let username: String       // User's nickname
-    let points: Int            // User's points
-    let gender: UserGender     // User's gender
+    let id: String
+    let rank: Int
+    let username: String
+    let points: Int
+    let gender: UserGender     
     
     // Optional image of a trophy
     var trophyImage: String?
