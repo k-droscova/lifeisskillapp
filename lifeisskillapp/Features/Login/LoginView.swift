@@ -39,13 +39,7 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
         .overlay(
             Group {
                 if viewModel.isLoading {
-                    ZStack {
-                        Color.black.opacity(0.3)
-                            .edgesIgnoringSafeArea(.all)
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .foregroundColor(.white)
-                    }
+                    CustomProgressView()
                 }
             }
         )

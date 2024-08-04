@@ -78,11 +78,11 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - locations: An array of CLLocation objects representing the locations that were updated.
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        logger.log(message: "New location saved:\n"
+        /*logger.log(message: "New location saved:\n"
                    + "LAT: \(location.coordinate.latitude.description), "
                    + "LON: \(location.coordinate.longitude.description), "
                    + "ALT: \(location.altitude.description)"
-        )
+        )*/
         userDefaultsStorage.location = location.toUserLocation()
     }
     

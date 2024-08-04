@@ -18,42 +18,6 @@ protocol UserProtocol: UserData {
 // Extend the protocol for Codable to make it easy to decode
 extension UserProtocol where Self: Codable {}
 
-/// Model for user data from the Rank endpoint
-struct RankedUser: UserProtocol, Codable {
-    /// Unique identifier for the user
-    let userId: String
-    
-    /// User's email address
-    let email: String
-    
-    /// User's nickname
-    let nick: String
-    
-    /// User's sex
-    let sex: UserGender
-    
-    /// User's order in the ranking list
-    let order: String
-    
-    /// User's points
-    let points: String
-    
-    /// Last time the user was active
-    let lastTime: String
-    
-    /// Postal code
-    let psc: String
-    
-    /// Secondary email address
-    let emailr: String
-    
-    /// Mobile phone number
-    let mobil: String
-    
-    /// Secondary mobile phone number
-    let mobilr: String
-}
-
 /// Model for user data from the login endpoint. Saved using UserLoginDataManager, this data is retrieved throughout App UI 
 struct LoggedInUser: UserProtocol, Codable {
     /// Unique identifier for the user
