@@ -43,3 +43,32 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
         }
     }
 }
+
+struct ProgressView: View {
+    var body: some View {
+        ZStack {
+            CustomColors.ProgressView.background.color
+                .edgesIgnoringSafeArea(.all)
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .foregroundColor(CustomColors.ProgressView.foreground.color)
+        }
+    }
+}
+
+struct ListCard<Content: View>: View {
+    let content: () -> Content
+
+    var body: some View {
+        content()
+            .padding(.vertical, CustomSizes.ListCard.verticalPadding.size)
+            .background(CustomColors.ListCard.foreground.color)
+            .cornerRadius(CustomSizes.ListCard.cornerRadius.size)
+            .shadow(
+                color: CustomColors.ListCard.shadow.color,
+                radius: CustomSizes.ListCard.shadowRadius.size,
+                x: CustomSizes.ListCard.shadowX.size,
+                y: CustomSizes.ListCard.shadowY.size
+            )
+    }
+}

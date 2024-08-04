@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 enum SFSSymbols: String {
     case camera = "xmark"
@@ -99,6 +100,50 @@ enum CustomColors {
                 UIColor(.colorPrimary)
             case .selectedBackground:
                 UIColor(.libDarkerGray)
+            }
+        }
+    }
+    
+    enum ProgressView {
+        case foreground, background
+        var color: Color {
+            switch self {
+            case .foreground:
+                Color.white
+            case .background:
+                Color.blackOverlay
+            }
+        }
+    }
+    
+    enum ListCard {
+        case foreground, shadow
+        var color: Color {
+            switch self {
+            case .foreground:
+                Color.white
+            case .shadow:
+                Color.blackOverlay
+            }
+        }
+    }
+}
+
+enum CustomSizes {
+    enum ListCard {
+        case verticalPadding, cornerRadius, shadowRadius, shadowX, shadowY
+        var size: CGFloat {
+            switch self {
+            case .verticalPadding:
+                10
+            case .cornerRadius:
+                8
+            case .shadowRadius:
+                5
+            case .shadowX:
+                1
+            case .shadowY:
+                2
             }
         }
     }
