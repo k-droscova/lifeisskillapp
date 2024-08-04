@@ -24,7 +24,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     private let userCategoryManager: any UserCategoryManaging
     private let userRankManager: any UserRankManaging
     private var selectedCategory: UserCategory? {
-        fetchSelectedCategory()
+        getSelectedCategory()
     }
     
     // MARK: - Public Properties
@@ -79,11 +79,11 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         }
     }
     
-    private func fetchAllUserRankData() -> [UserRank] {
+    private func getAllUserRankData() -> [UserRank] {
         userRankManager.getAll()
     }
     
-    private func fetchSelectedCategory() -> UserCategory? {
+    private func getSelectedCategory() -> UserCategory? {
         userCategoryManager.selectedCategory
     }
     
