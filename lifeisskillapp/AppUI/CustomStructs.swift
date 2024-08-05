@@ -11,13 +11,13 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
     @Binding private var selectedOption: T?
     private let options: [T]
     private let placeholder: Text
-
+    
     init(options: [T], selectedOption: Binding<T?>, placeholder: Text = Text("home.category_selector")) {
         self.options = options
         self._selectedOption = selectedOption
         self.placeholder = placeholder
     }
-
+    
     var body: some View {
         Menu {
             ForEach(options) { option in
@@ -58,7 +58,7 @@ struct CustomProgressView: View {
 
 struct ListCard<Content: View>: View {
     let content: () -> Content
-
+    
     var body: some View {
         content()
             .padding(.vertical, CustomSizes.ListCard.verticalPadding.size)
@@ -92,5 +92,77 @@ struct CategorySelectorContainerView<Content: View>: View {
             content
         }
         .ignoresSafeArea()
+    }
+}
+
+struct PointListCard<Content: View>: View {
+    let content: () -> Content
+    var body: some View {
+        content()
+            .cornerRadius(CustomSizes.PointListCard.cornerRadius.size)
+            .shadow(radius: CustomSizes.PointListCard.shadowRadius.size)
+            .padding(.horizontal)
+    }
+}
+
+struct ExDivider: View {
+    let color: Color
+    let width: CGFloat
+    var body: some View {
+        Rectangle()
+            .fill(color)
+            .frame(height: width)
+            .edgesIgnoringSafeArea(.horizontal)
+    }
+}
+
+struct UserPointsTopLeftButtonsView: View {
+    @Binding var isMapShown: Bool
+    
+    enum ButtonType {
+        case map
+        case list
+    }
+    
+    let imageSize: CGFloat
+    let buttonNotPressed: Color
+    let buttonPressed: Color
+    var mapButtonAction: () -> Void
+    var listButtonAction: () -> Void
+    
+    internal init(isMapShown: Binding<Bool>, imageSize: CGFloat, buttonNotPressed: Color, buttonPressed: Color, mapButtonAction: @escaping () -> Void, listButtonAction: @escaping () -> Void) {
+        self._isMapShown = isMapShown
+        self.imageSize = imageSize
+        self.buttonNotPressed = buttonNotPressed
+        self.buttonPressed = buttonPressed
+        self.mapButtonAction = mapButtonAction
+        self.listButtonAction = listButtonAction
+    }
+    
+    var body: some View {
+        HStack {
+            Button(action: {
+                isMapShown = true
+                mapButtonAction()
+            }) {
+                Image(systemName: "map")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .squareFrame(size: imageSize)
+                    .foregroundColor(isMapShown ? buttonPressed : buttonNotPressed)
+                    .padding()
+            }
+            Button(action: {
+                isMapShown = false
+                listButtonAction()
+            }) {
+                Image(systemName: "list.bullet")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .squareFrame(size: imageSize)
+                    .foregroundColor(!isMapShown ? buttonPressed : buttonNotPressed)
+                    .padding()
+            }
+        }
     }
 }

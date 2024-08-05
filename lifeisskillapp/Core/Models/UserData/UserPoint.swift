@@ -107,3 +107,39 @@ extension UserPoint {
     }
 }
 
+struct Point: Identifiable {
+    let id: String
+    let name: String
+    let value: Int
+    let type: PointType
+    let time: Date
+    let location: UserLocation
+    let doesPointCount: Bool
+
+    // Internal initializer from UserPoint
+    internal init(from userPoint: UserPoint) {
+        self.id = userPoint.id
+        self.name = userPoint.pointName
+        self.value = userPoint.pointValue
+        self.type = userPoint.pointType
+        self.time = userPoint.pointTime
+        self.location = userPoint.location
+        self.doesPointCount = userPoint.doesPointCount
+    }
+    
+    internal init(id: String, name: String, value: Int, type: PointType, doesPointCount: Bool) {
+        self.id = id
+        self.name = name
+        self.value = value
+        self.type = type
+        self.time = Date()
+        self.location = UserLocation(
+            latitude: 49.14172200,
+            longitude: 20.21872200,
+            altitude: 760,
+            accuracy: 12.4,
+            timestamp: Calendar.current.date(byAdding: .hour, value: -48, to: self.time)!
+        )
+        self.doesPointCount = doesPointCount
+    }
+}

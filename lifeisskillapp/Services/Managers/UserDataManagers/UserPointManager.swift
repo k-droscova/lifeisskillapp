@@ -17,6 +17,7 @@ protocol HasUserPointManager {
 protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataContainer == UserPointData {
     var delegate: UserPointManagerFlowDelegate? { get set }
     func getPoints(byCategory categoryId: String) -> [UserPoint]
+    func getTotalPoints(byCategory categoryId: String) -> Int
 }
 
 public final class UserPointManager: BaseClass, UserPointManaging {
@@ -86,5 +87,9 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     func getPoints(byCategory categoryId: String) -> [UserPoint] {
         data?.data.filter { $0.pointCategory.contains(categoryId) } ?? []
+    }
+    
+    func getTotalPoints(byCategory categoryId: String) -> Int {
+        return getPoints(byCategory: categoryId).reduce(0) { $0 + $1.pointValue }
     }
 }
