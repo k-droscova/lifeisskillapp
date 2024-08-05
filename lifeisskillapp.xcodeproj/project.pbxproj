@@ -439,6 +439,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				27F67E952C61143600F1C63E /* Points */,
 				276CA9CC2C5E5FAF001D6394 /* Rank */,
 				275472CC2C5D0D0D00F5578F /* CategorySelector */,
 				2720DF242C513D28007B4E77 /* Home */,
@@ -778,6 +779,13 @@
 				27EBADD32C592F3100F01CFB /* Colors.xcassets */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		27F67E952C61143600F1C63E /* Points */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Points;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
