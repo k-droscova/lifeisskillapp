@@ -17,17 +17,15 @@ struct RankView<ViewModel: RankViewModeling>: View {
     }
     
     var body: some View {
-        VStack(spacing: RankViewConstants.imageBottomPadding) {
-            ViewControllerRepresentable(viewController: categorySelectorVC)                .frame(height: 100)
-            // TODO: figure out why deleting the frame fucks up layout???
-            
+        CategorySelectorContainerView(
+            categorySelectorVC: categorySelectorVC,
+            spacing: RankViewConstants.imageBottomPadding
+        ) {
             rankImageView
             
             rankingsList
                 .padding(.horizontal, RankViewConstants.horizontalPadding)
-            
         }
-        .ignoresSafeArea()
         .onAppear {
             viewModel.onAppear()
         }

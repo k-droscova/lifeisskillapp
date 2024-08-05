@@ -17,11 +17,10 @@ struct HomeView: View {
     }
     
     var body: some View {
-        VStack(spacing: Constants.vStackSpacing) {
-            ViewControllerRepresentable(viewController: categorySelectorVC)                .frame(height: 100)
-            // TODO: figure out why deleting the frame fucks up layout???
-
-
+        CategorySelectorContainerView(
+            categorySelectorVC: categorySelectorVC,
+            spacing: Constants.vStackSpacing
+        ) {
             ScrollView {
                 VStack(spacing: Constants.vStackSpacing) {
                     imageView
@@ -30,7 +29,6 @@ struct HomeView: View {
                 }
             }
         }
-        .edgesIgnoringSafeArea(.top)
     }
     
     private var imageView: some View {
