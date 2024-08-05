@@ -49,10 +49,10 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     // MARK: - Public Interface
     
     func onAppear() {
-        Task { @MainActor in
-            isLoading = true
-            await fetchData()
-            isLoading = false
+        Task { @MainActor [weak self] in
+            self?.isLoading = true
+            await self?.fetchData()
+            self?.isLoading = false
         }
     }
     
@@ -63,7 +63,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
             guard let stream = self?.userCategoryManager.selectedCategoryStream else { return }
             for await _ in stream {
                 guard let self = self else { return }
-                self.getSelectedCategoryRanking()
+                await self.getSelectedCategoryRanking()
             }
         }
     }
@@ -73,7 +73,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         do {
             try await userCategoryManager.fetch()
             await gameDataManager.fetchNewDataIfNeccessary(endpoint: .rank)
-            getSelectedCategoryRanking()
+            await getSelectedCategoryRanking()
         } catch {
             delegate?.onError(error)
         }
@@ -87,7 +87,8 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         userCategoryManager.selectedCategory
     }
     
-    private func getSelectedCategoryRanking() {
+    @MainActor
+    private func getSelectedCategoryRanking() async {
         guard let data = userRankManager.data?.data, data.isNotEmpty else {
             logger.log(message: "No user rank data available")
             delegate?.onNoDataAvailable()
@@ -104,7 +105,9 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         if let userRank = userRankManager.getById(id: selectedCategory.id) {
             // Convert RankedUser instances to Ranking instances
             let rankings = userRank.listUserRank.map { Ranking(from: $0) }
-            categoryRankings = rankings
+            await MainActor.run {
+                self.categoryRankings = rankings
+            }
         } else {
             logger.log(message: "No ranking data found for the selected category")
             delegate?.onNoDataAvailable()

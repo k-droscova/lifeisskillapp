@@ -26,7 +26,7 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     // MARK: - Public Properties
     
-    var username: String
+    @Published var username: String = ""
     @Published var selectedCategory: UserCategory? {
         didSet {
             updateSelectedCategory()
@@ -40,15 +40,13 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
         self.logger = dependencies.logger
         self.userDataManager = dependencies.userLoginManager
         self.userCategoryManager = dependencies.userCategoryManager
-        self.username = dependencies.userLoginManager.userName ?? ""
-        self.selectedCategory = dependencies.userCategoryManager.selectedCategory ?? dependencies.userCategoryManager.data?.data.first
     }
     
     // MARK: - Public Interface
     
     func onAppear() {
-        Task { @MainActor in
-            await fetchNewDataIfNeccessary()
+        Task { @MainActor [weak self] in
+            await self?.fetchNewDataIfNeccessary()
         }
     }
     
@@ -56,8 +54,16 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     private func fetchNewDataIfNeccessary() async {
         do {
+            // Make sure all updates to @Published properties are done on the main thread
+            await MainActor.run {
+                self.username = userDataManager.userName ?? ""
+            }
             try await userCategoryManager.fetch()
-            self.userCategories = getAllUserCategories()
+            let categories = getAllUserCategories()
+            await MainActor.run {
+                self.userCategories = categories
+                self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.data?.data.first
+            }
         } catch {
             logger.log(message: "ERROR: Unable to fetch new user category data")
         }

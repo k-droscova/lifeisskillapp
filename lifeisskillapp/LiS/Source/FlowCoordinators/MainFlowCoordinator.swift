@@ -51,8 +51,13 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             selectedImage: UIImage(systemName: "ladybug.circle.fill")
         )
         
+        // MARK: CATEGORY SELECTOR
+        let csFC = CategorySelectorCoordinator()
+        addChild(csFC)
+        let csVC = csFC.start()
+        
         // MARK: HOME
-        let homeFC = HomeFlowCoordinator(delegate: self)
+        let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVC: csVC)
         addChild(homeFC)
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
@@ -62,7 +67,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: RANK
-        let rankFC = RankFlowCoordinator()
+        let rankFC = RankFlowCoordinator(categorySelectorVC: csVC)
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
