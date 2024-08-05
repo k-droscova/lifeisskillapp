@@ -73,24 +73,30 @@ struct ListCard<Content: View>: View {
     }
 }
 
-struct CategorySelectorContainerView<Content: View>: View {
+struct CategorySelectorContainerView<TopLeftView: View, Content: View>: View {
     private let categorySelectorVC: UIViewController
+    private let topLeftView: TopLeftView
     private let spacing: CGFloat
     private let content: Content
     
-    init(categorySelectorVC: UIViewController, spacing: CGFloat, @ViewBuilder content: () -> Content) {
+    init(categorySelectorVC: UIViewController, topLeftView: TopLeftView, spacing: CGFloat, @ViewBuilder content: () -> Content) {
         self.categorySelectorVC = categorySelectorVC
+        self.topLeftView = topLeftView
         self.spacing = spacing
         self.content = content()
     }
     
     var body: some View {
         VStack(spacing: spacing) {
-            ViewControllerRepresentable(viewController: categorySelectorVC)
-                .frame(height: 100)
-            
+            HStack {
+                topLeftView
+                    .padding()
+                Spacer()
+                ViewControllerRepresentable(categorySelectorVC)
+                    .fixedSize()
+            }
+            .padding(.horizontal, 8)
             content
         }
-        .ignoresSafeArea()
     }
 }

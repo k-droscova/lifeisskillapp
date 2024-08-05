@@ -10,11 +10,12 @@ import Foundation
 protocol RankViewModeling: BaseClass, ObservableObject {
     var categoryRankings: [Ranking] { get }
     var isLoading: Bool { get }
+    var username: String { get }
     func onAppear()
 }
 
 final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager
     
     // MARK: - Private Properties
     
@@ -23,6 +24,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userRankManager: any UserRankManaging
+    private let userDataManager: any UserLoginDataManaging
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
@@ -31,6 +33,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     
     @Published private(set) var categoryRankings: [Ranking] = []
     @Published private(set) var isLoading: Bool = false
+    @Published var username: String = ""
     
     // MARK: - Initialization
     
@@ -39,6 +42,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         self.userCategoryManager = dependencies.userCategoryManager
         self.userRankManager = dependencies.userRankManager
         self.gameDataManager = dependencies.gameDataManager
+        self.userDataManager = dependencies.userLoginManager
         gameDataManager.delegate = delegate
         self.delegate = delegate
         
@@ -51,6 +55,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
+            self?.username = self?.userDataManager.userName ?? ""
             await self?.fetchData()
             self?.isLoading = false
         }

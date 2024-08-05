@@ -19,6 +19,7 @@ struct RankView<ViewModel: RankViewModeling>: View {
     var body: some View {
         CategorySelectorContainerView(
             categorySelectorVC: categorySelectorVC,
+            topLeftView: userNameText,
             spacing: RankViewConstants.imageBottomPadding
         ) {
             rankImageView
@@ -40,6 +41,10 @@ struct RankView<ViewModel: RankViewModeling>: View {
 }
 
 private extension RankView {
+    private var userNameText: some View {
+        Text(viewModel.username)
+            .headline3
+    }
     
     private var rankImageView: some View {
         Image(CustomImages.Screens.rank.rawValue)
@@ -130,6 +135,8 @@ struct RankView_Previews: PreviewProvider {
 
 // Mock ViewModel for preview
 class MockRankViewModel: BaseClass, RankViewModeling, ObservableObject {
+    var username: String = "TestUser"
+    
     @Published var categoryRankings: [Ranking] = [
         Ranking(id: "1", rank: 1, username: "User1", points: 100, gender: .male),
         Ranking(id: "2", rank: 2, username: "User2", points: 90, gender: .female),
@@ -139,7 +146,11 @@ class MockRankViewModel: BaseClass, RankViewModeling, ObservableObject {
     var isLoading: Bool = false
     
     func onAppear() {
-        // Mock onAppear behavior
-        print("Mock onAppear")
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            print("Mock onAppear")
+            self.username = "Mock done"
+        }
+        isLoading = false
     }
 }

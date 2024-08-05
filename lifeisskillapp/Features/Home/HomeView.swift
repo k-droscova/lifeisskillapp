@@ -7,98 +7,126 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    @State private var viewModel: HomeViewModeling
+struct HomeView<ViewModel: HomeViewModeling>: View {
+    @StateObject private var viewModel: ViewModel
     private let categorySelectorVC: UIViewController
     
-    init(viewModel: HomeViewModeling, categorySelectorVC: UIViewController) {
-        self._viewModel = State(initialValue: viewModel)
+    init(viewModel: ViewModel, categorySelectorVC: UIViewController) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
         self.categorySelectorVC = categorySelectorVC
     }
     
     var body: some View {
         CategorySelectorContainerView(
             categorySelectorVC: categorySelectorVC,
-            spacing: Constants.vStackSpacing
+            topLeftView: userNameText,
+            spacing: HomeViewConstants.vStackSpacing
         ) {
             ScrollView {
-                VStack(spacing: Constants.vStackSpacing) {
+                VStack(spacing: HomeViewConstants.vStackSpacing) {
                     imageView
                     instructionsView
                     buttonsView
                 }
             }
         }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .overlay(
+            Group {
+                if viewModel.isLoading {
+                    CustomProgressView()
+                }
+            }
+        )
+    }
+}
+
+private extension HomeView {
+    private var userNameText: some View {
+        Text(viewModel.username)
+            .headline3
     }
     
     private var imageView: some View {
         Image(CustomImages.Screens.home.rawValue)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .squareFrame(size: Constants.imageSize)
+            .squareFrame(size: HomeViewConstants.imageSize)
             .padding()
     }
     
     private var instructionsView: some View {
         Text("home.description")
             .body1Regular
-            .padding(.horizontal, Constants.horizontalPadding)
+            .padding(.horizontal, HomeViewConstants.horizontalPadding)
             .padding()
     }
     
     private var buttonsView: some View {
-        VStack(spacing: Constants.buttonSpacing) {
+        VStack(spacing: HomeViewConstants.buttonSpacing) {
             HomeButton(
                 action: viewModel.loadWithNFC,
                 text: Text("home.nfc.button"),
-                background: Constants.Colors.nfc,
-                textColor: Constants.Colors.white
+                background: HomeViewConstants.Colors.nfc,
+                textColor: HomeViewConstants.Colors.white
             )
             
             HomeButton(
                 action: viewModel.loadWithQRCode,
                 text: Text("home.qr.button"),
-                background: Constants.Colors.qr,
-                textColor: Constants.Colors.white
+                background: HomeViewConstants.Colors.qr,
+                textColor: HomeViewConstants.Colors.white
             )
             
             HomeButton(
                 action: viewModel.loadFromCamera,
                 text: Text("home.camera.button"),
-                background: Constants.Colors.camera,
-                textColor: Constants.Colors.black
+                background: HomeViewConstants.Colors.camera,
+                textColor: HomeViewConstants.Colors.black
             )
             
             HomeButton(
                 action: viewModel.showOnboarding,
                 text: Text("home.button.how"),
-                background: Constants.Colors.transparent,
-                textColor: Constants.Colors.help
+                background: HomeViewConstants.Colors.transparent,
+                textColor: HomeViewConstants.Colors.help
             )
         }
     }
 }
 
-extension HomeView {
-    enum Constants {
-        static let vStackSpacing: CGFloat = 16
-        static let imageSize: CGFloat = 200
-        static let horizontalPadding: CGFloat = 32
-        static let buttonSpacing: CGFloat = 24
-        
-        enum Colors {
-            static let nfc = Color.colorLisRose
-            static let qr = Color.colorLisGreen
-            static let camera = Color.colorLisOchre
-            static let white = Color.colorLisWhite
-            static let transparent = Color.transparent
-            static let help = Color.colorLisDarkGrey
-            static let black = Color.black
-        }
+enum HomeViewConstants {
+    static let vStackSpacing: CGFloat = 16
+    static let imageSize: CGFloat = 200
+    static let horizontalPadding: CGFloat = 32
+    static let buttonSpacing: CGFloat = 24
+    
+    enum Colors {
+        static let nfc = Color.colorLisRose
+        static let qr = Color.colorLisGreen
+        static let camera = Color.colorLisOchre
+        static let white = Color.colorLisWhite
+        static let transparent = Color.transparent
+        static let help = Color.colorLisDarkGrey
+        static let black = Color.black
     }
 }
 
 class MockHomeViewModel: BaseClass, HomeViewModeling {
+    var isLoading: Bool = false
+    
+    var username: String = "TestUser"
+    
+    func onAppear() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            print("Mock onAppear")
+            self.username = "Mock done"
+        }
+        isLoading = false
+    }
     
     func loadWithNFC() {
         print("I was tapped: loadWithNFC")

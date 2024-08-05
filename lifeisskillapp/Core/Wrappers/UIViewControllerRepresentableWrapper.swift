@@ -9,22 +9,18 @@ import SwiftUI
 import UIKit
 
 struct ViewControllerRepresentable: UIViewControllerRepresentable {
-    let viewController: UIViewController
+    let content: UIViewController
     
+    init(_ content: UIViewController) {
+        self.content = content
+    }
+        
     func makeUIViewController(context: Context) -> UIViewController {
-        return viewController
+        let size = content.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        content.preferredContentSize = size
+        return content
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        // Update the view controller if needed
-        if let parentView = uiViewController.view.superview {
-            uiViewController.view.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                uiViewController.view.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
-                uiViewController.view.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
-                uiViewController.view.topAnchor.constraint(equalTo: parentView.topAnchor),
-                uiViewController.view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor)
-            ])
-        }
     }
 }

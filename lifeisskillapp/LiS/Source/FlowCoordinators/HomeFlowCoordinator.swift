@@ -32,7 +32,7 @@ protocol HomeFlowDelegate: NSObject {
 final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
-    private weak var homeVM: HomeViewModeling?
+    private weak var homeVM: (any HomeViewModeling)?
     private let categorySelectorVC: UIViewController
     
     // MARK: - Initialization

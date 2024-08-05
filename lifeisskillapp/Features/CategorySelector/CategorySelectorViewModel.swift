@@ -9,7 +9,6 @@ import Foundation
 import Observation
 
 protocol CategorySelectorViewModeling: BaseClass, ObservableObject {
-    var username: String { get }
     var selectedCategory: UserCategory? { get set }
     var userCategories: [UserCategory] { get }
     func onAppear()
@@ -26,7 +25,6 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     // MARK: - Public Properties
     
-    @Published var username: String = ""
     @Published var selectedCategory: UserCategory? {
         didSet {
             updateSelectedCategory()
@@ -54,10 +52,6 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     private func fetchNewDataIfNeccessary() async {
         do {
-            // Make sure all updates to @Published properties are done on the main thread
-            await MainActor.run {
-                self.username = userDataManager.userName ?? ""
-            }
             try await userCategoryManager.fetch()
             let categories = getAllUserCategories()
             await MainActor.run {

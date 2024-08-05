@@ -8,7 +8,10 @@
 import Foundation
 import Observation
 
-protocol HomeViewModeling: BaseClass {
+protocol HomeViewModeling: BaseClass, ObservableObject {
+    var username: String { get }
+    var isLoading: Bool { get }
+    func onAppear()
     func loadWithNFC()
     func loadWithQRCode()
     func loadFromCamera()
@@ -37,6 +40,11 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     private let locationManager: LocationManaging
     private let userDataManager: UserLoginDataManaging
     
+    // MARK: - Published Properties
+    
+    @Published var username: String = ""
+    @Published private(set) var isLoading: Bool = false
+    
     init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
         self.locationManager = dependencies.locationManager
         self.scanningManager = dependencies.scanningManager
@@ -46,6 +54,14 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     }
     
     // MARK: - Public Interface
+    
+    func onAppear() {
+        Task { @MainActor [weak self] in
+            self?.isLoading = true
+            self?.username = self?.userDataManager.userName ?? ""
+            self?.isLoading = false
+        }
+    }
     
     func loadWithNFC() {
         nfcVM = NfcViewModel(
