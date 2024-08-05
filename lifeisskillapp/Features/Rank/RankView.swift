@@ -9,16 +9,14 @@ import SwiftUI
 
 struct RankView<ViewModel: RankViewModeling>: View {
     @StateObject var viewModel: ViewModel
-    private let categorySelectorVC: UIViewController
     
-    init(viewModel: ViewModel, categorySelectorVC: UIViewController) {
+    init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self.categorySelectorVC = categorySelectorVC
     }
     
     var body: some View {
         CategorySelectorContainerView(
-            categorySelectorVC: categorySelectorVC,
+            viewModel: self.viewModel.csViewModel,
             topLeftView: userNameText,
             spacing: RankViewConstants.imageBottomPadding
         ) {
@@ -26,6 +24,9 @@ struct RankView<ViewModel: RankViewModeling>: View {
             
             rankingsList
                 .padding(.horizontal, RankViewConstants.horizontalPadding)
+        }
+        .onAppear {
+            viewModel.onAppear()
         }
         .onAppear {
             viewModel.onAppear()
@@ -128,13 +129,17 @@ enum RankViewConstants {
 struct RankView_Previews: PreviewProvider {
     static var previews: some View {
         let mockViewModel = MockRankViewModel()
-        RankView(viewModel: mockViewModel, categorySelectorVC:
-                    CategorySelectorView(viewModel: MockCategorySelectorViewModel()).hosting())
+        RankView(viewModel: mockViewModel)
     }
 }
 
 // Mock ViewModel for preview
 class MockRankViewModel: BaseClass, RankViewModeling, ObservableObject {
+    typealias categorySelectorVM = MockCategorySelectorViewModel
+
+    @StateObject var csViewModel = MockCategorySelectorViewModel()
+
+    
     var username: String = "TestUser"
     
     @Published var categoryRankings: [Ranking] = [

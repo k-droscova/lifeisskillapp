@@ -8,13 +8,15 @@
 import Foundation
 
 protocol RankViewModeling: BaseClass, ObservableObject {
+    associatedtype categorySelectorVM: CategorySelectorViewModeling
     var categoryRankings: [Ranking] { get }
     var isLoading: Bool { get }
     var username: String { get }
+    var csViewModel: categorySelectorVM { get }
     func onAppear()
 }
 
-final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
+final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, ObservableObject, RankViewModeling {
     typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager
     
     // MARK: - Private Properties
@@ -34,10 +36,11 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
     @Published private(set) var categoryRankings: [Ranking] = []
     @Published private(set) var isLoading: Bool = false
     @Published var username: String = ""
+    var csViewModel: csVM
     
     // MARK: - Initialization
     
-    init(dependencies: Dependencies, delegate: RankFlowDelegate?) {
+    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: RankFlowDelegate?) {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
         self.userRankManager = dependencies.userRankManager
@@ -45,6 +48,7 @@ final class RankViewModel: BaseClass, ObservableObject, RankViewModeling {
         self.userDataManager = dependencies.userLoginManager
         gameDataManager.delegate = delegate
         self.delegate = delegate
+        self.csViewModel = categorySelectorVM
         
         super.init()
         self.setupBindings()

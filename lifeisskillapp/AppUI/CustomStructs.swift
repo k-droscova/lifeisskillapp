@@ -11,13 +11,13 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
     @Binding private var selectedOption: T?
     private let options: [T]
     private let placeholder: Text
-
+    
     init(options: [T], selectedOption: Binding<T?>, placeholder: Text = Text("home.category_selector")) {
         self.options = options
         self._selectedOption = selectedOption
         self.placeholder = placeholder
     }
-
+    
     var body: some View {
         Menu {
             ForEach(options) { option in
@@ -73,17 +73,17 @@ struct ListCard<Content: View>: View {
     }
 }
 
-struct CategorySelectorContainerView<TopLeftView: View, Content: View>: View {
-    private let categorySelectorVC: UIViewController
+struct CategorySelectorContainerView<TopLeftView: View, Content: View, ViewModel: CategorySelectorViewModeling>: View {
+    @StateObject private var viewModel: ViewModel
     private let topLeftView: TopLeftView
     private let spacing: CGFloat
-    private let content: Content
+    private let content: () -> Content
     
-    init(categorySelectorVC: UIViewController, topLeftView: TopLeftView, spacing: CGFloat, @ViewBuilder content: () -> Content) {
-        self.categorySelectorVC = categorySelectorVC
+    internal init(viewModel: ViewModel, topLeftView: TopLeftView, spacing: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
         self.topLeftView = topLeftView
         self.spacing = spacing
-        self.content = content()
+        self.content = content
     }
     
     var body: some View {
@@ -92,11 +92,10 @@ struct CategorySelectorContainerView<TopLeftView: View, Content: View>: View {
                 topLeftView
                     .padding()
                 Spacer()
-                ViewControllerRepresentable(categorySelectorVC)
-                    .fixedSize()
+                CategorySelectorView(viewModel: self.viewModel)
             }
             .padding(.horizontal, 8)
-            content
+            content()
         }
     }
 }

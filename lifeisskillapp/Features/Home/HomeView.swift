@@ -9,16 +9,14 @@ import SwiftUI
 
 struct HomeView<ViewModel: HomeViewModeling>: View {
     @StateObject private var viewModel: ViewModel
-    private let categorySelectorVC: UIViewController
     
-    init(viewModel: ViewModel, categorySelectorVC: UIViewController) {
+    init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self.categorySelectorVC = categorySelectorVC
     }
     
     var body: some View {
         CategorySelectorContainerView(
-            categorySelectorVC: categorySelectorVC,
+            viewModel: self.viewModel.csViewModel,
             topLeftView: userNameText,
             spacing: HomeViewConstants.vStackSpacing
         ) {
@@ -115,6 +113,10 @@ enum HomeViewConstants {
 }
 
 class MockHomeViewModel: BaseClass, HomeViewModeling {
+    typealias categorySelectorVM = MockCategorySelectorViewModel
+    
+    @StateObject var csViewModel = MockCategorySelectorViewModel()
+    
     var isLoading: Bool = false
     
     var username: String = "TestUser"
@@ -151,8 +153,6 @@ class MockHomeViewModel: BaseClass, HomeViewModeling {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(viewModel: MockHomeViewModel(), categorySelectorVC:
-                    CategorySelectorView(viewModel: MockCategorySelectorViewModel()).hosting()
-        )
+        HomeView(viewModel: MockHomeViewModel())
     }
 }

@@ -29,17 +29,17 @@ protocol HomeFlowDelegate: NSObject {
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
-final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling>: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: (any HomeViewModeling)?
-    private let categorySelectorVC: UIViewController
+    private var categorySelectorVM: csVM
     
     // MARK: - Initialization
     
-    init(delegate: HomeFlowCoordinatorDelegate? = nil, categorySelectorVC: UIViewController) {
+    init(delegate: HomeFlowCoordinatorDelegate? = nil, categorySelectorVM: csVM) {
         self.delegate = delegate
-        self.categorySelectorVC = categorySelectorVC
+        self.categorySelectorVM = categorySelectorVM
     }
     
     /// Starts the home flow by presenting the home view controller.
@@ -52,11 +52,12 @@ final class HomeFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
                 userLoginManager: appDependencies.userLoginManager
-            ),
+            ), 
+            categorySelectorVM: self.categorySelectorVM,
             delegate: self
         )
         self.homeVM = viewModel
-        let homeController = HomeView(viewModel: viewModel, categorySelectorVC: self.categorySelectorVC).hosting()
+        let homeController = HomeView(viewModel: viewModel).hosting()
         self.rootViewController = homeController
         let navController = UINavigationController(rootViewController: homeController)
         self.navigationController = navController

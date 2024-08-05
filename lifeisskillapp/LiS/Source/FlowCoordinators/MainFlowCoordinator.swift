@@ -52,12 +52,13 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: CATEGORY SELECTOR
+        let csVM = CategorySelectorViewModel(dependencies: appDependencies)
         let csFC = CategorySelectorCoordinator()
         addChild(csFC)
-        let csVC = csFC.start()
         
         // MARK: HOME
-        let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVC: csVC)
+        let homeFC = HomeFlowCoordinator(
+            delegate: self, categorySelectorVM: csVM)
         addChild(homeFC)
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
@@ -67,7 +68,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: RANK
-        let rankFC = RankFlowCoordinator(categorySelectorVC: csVC)
+        let rankFC = RankFlowCoordinator(categorySelectorVM: csVM)
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
