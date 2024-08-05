@@ -24,11 +24,13 @@ protocol RankFlowDelegate: GameDataManagerFlowDelegate, NSObject {
 final class RankFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: RankFlowCoordinatorDelegate?
+    private let categorySelectorVC: UIViewController
     
     // MARK: - Initialization
     
-    init(delegate: RankFlowCoordinatorDelegate? = nil) {
+    init(delegate: RankFlowCoordinatorDelegate? = nil, categorySelectorVC: UIViewController) {
         self.delegate = delegate
+        self.categorySelectorVC = categorySelectorVC
     }
     
     /// Starts the home flow by presenting the home view controller.
@@ -36,7 +38,7 @@ final class RankFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
         let viewModel = RankViewModel(dependencies: appDependencies, delegate: self)
-        let vc = RankView(viewModel: viewModel).hosting()
+        let vc = RankView(viewModel: viewModel, categorySelectorVC: self.categorySelectorVC).hosting()
         return vc
     }
 }

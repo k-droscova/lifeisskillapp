@@ -67,7 +67,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: RANK
-        let rankFC = RankFlowCoordinator()
+        let rankFC = RankFlowCoordinator(categorySelectorVC: csVC)
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(

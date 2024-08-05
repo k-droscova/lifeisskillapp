@@ -9,9 +9,18 @@ import SwiftUI
 
 struct RankView<ViewModel: RankViewModeling>: View {
     @StateObject var viewModel: ViewModel
+    private let categorySelectorVC: UIViewController
+    
+    init(viewModel: ViewModel, categorySelectorVC: UIViewController) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.categorySelectorVC = categorySelectorVC
+    }
     
     var body: some View {
         VStack(spacing: RankViewConstants.imageBottomPadding) {
+            ViewControllerRepresentable(viewController: categorySelectorVC)                .frame(height: 100)
+            // TODO: figure out why deleting the frame fucks up layout???
+            
             rankImageView
             
             rankingsList
@@ -116,7 +125,8 @@ enum RankViewConstants {
 struct RankView_Previews: PreviewProvider {
     static var previews: some View {
         let mockViewModel = MockRankViewModel()
-        RankView(viewModel: mockViewModel)
+        RankView(viewModel: mockViewModel, categorySelectorVC:
+                    CategorySelectorView(viewModel: MockCategorySelectorViewModel()).hosting())
     }
 }
 
