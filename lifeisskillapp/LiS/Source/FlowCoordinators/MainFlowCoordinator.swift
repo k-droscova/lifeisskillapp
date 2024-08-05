@@ -57,8 +57,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         addChild(csFC)
         
         // MARK: HOME
-        let homeFC = HomeFlowCoordinator(
-            delegate: self, categorySelectorVM: csVM)
+        let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVM: csVM)
         addChild(homeFC)
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
