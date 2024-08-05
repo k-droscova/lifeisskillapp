@@ -121,6 +121,7 @@
 		27F67E972C614CF700F1C63E /* PointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E962C614CF700F1C63E /* PointsViewModel.swift */; };
 		27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E982C615EAA00F1C63E /* PointsListView.swift */; };
 		27F67E9B2C61690800F1C63E /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9A2C61690800F1C63E /* PointsView.swift */; };
+		27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +261,7 @@
 		27F67E962C614CF700F1C63E /* PointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsViewModel.swift; sourceTree = "<group>"; };
 		27F67E982C615EAA00F1C63E /* PointsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsListView.swift; sourceTree = "<group>"; };
 		27F67E9A2C61690800F1C63E /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
+		27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsFlowCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -527,6 +529,7 @@
 				2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */,
 				273D46AD2C5EAE6500073EF1 /* CategorySelectorFlowCoordinator.swift */,
 				276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */,
+				27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -985,6 +988,7 @@
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
 				273D46AE2C5EAE6500073EF1 /* CategorySelectorFlowCoordinator.swift in Sources */,
 				2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */,
+				27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */,
 				27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,

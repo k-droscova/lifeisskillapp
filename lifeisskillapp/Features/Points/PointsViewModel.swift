@@ -7,15 +7,6 @@
 
 import Foundation
 
-protocol PointFlowDelegate: GameDataManagerFlowDelegate, NSObject {
-    func onError(_ error: Error)
-    func onNoDataAvailable()
-    func selectCategoryPrompt()
-    func categoryPointsMapButtonPressed()
-    func categoryListButtonPressed()
-    func pointMapButtonPressed(point: Point)
-}
-
 protocol PointsViewModeling: BaseClass, ObservableObject {
     associatedtype CategorySelectorVM: CategorySelectorViewModeling
     var csViewModel: CategorySelectorVM { get }
