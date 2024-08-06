@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol PointsViewModeling: BaseClass, ObservableObject {
     associatedtype CategorySelectorVM: CategorySelectorViewModeling
@@ -46,6 +47,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Public Properties
     
@@ -99,13 +101,16 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     // MARK: Private Helpers
     
     private func setupBindings() {
-        Task { [weak self] in
-            guard let stream = self?.userCategoryManager.selectedCategoryStream else { return }
-            for await _ in stream {
-                guard let self = self else { return }
-                await self.getSelectedCategoryPoints()
+        print("BINDINGS: Setting up bindings in PointsViewModel")
+        userCategoryManager.selectedCategoryPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] category in
+                print("BINDINGS: Received new category in PointsViewModel: \(String(describing: category?.id))")
+                Task { [weak self] in
+                    await self?.getSelectedCategoryPoints()
+                }
             }
-        }
+            .store(in: &cancellables)
     }
     
     private func getSelectedCategory() -> UserCategory? {
@@ -133,6 +138,10 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
         guard userPoints.isNotEmpty else {
             logger.log(message: "No point data found for the selected category")
             delegate?.onNoDataAvailable()
+            await MainActor.run {
+                self.categoryPoints = []
+                self.totalPoints = 0
+            }
             return
         }
         await MainActor.run {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol RankViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
@@ -30,6 +31,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Public Properties
     
@@ -68,13 +70,16 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
     // MARK: - Private Helpers
     
     private func setupBindings() {
-        Task { [weak self] in
-            guard let stream = self?.userCategoryManager.selectedCategoryStream else { return }
-            for await _ in stream {
-                guard let self = self else { return }
-                await self.getSelectedCategoryRanking()
+        print("BINDINGS: Setting up bindings in RankViewModel")
+        userCategoryManager.selectedCategoryPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] category in
+                print("BINDINGS: Received new category in RankViewModel: \(String(describing: category?.id))")
+                Task { [weak self] in
+                    await self?.getSelectedCategoryRanking()
+                }
             }
-        }
+            .store(in: &cancellables)
     }
     
     @MainActor
@@ -119,6 +124,9 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
             }
         } else {
             logger.log(message: "No ranking data found for the selected category")
+            await MainActor.run {
+                self.categoryRankings = []
+            }
             delegate?.onNoDataAvailable()
         }
     }
