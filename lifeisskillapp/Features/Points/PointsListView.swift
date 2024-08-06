@@ -60,7 +60,7 @@ struct PointListItem: View {
     
     private var dateView: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(point.time, style: .time)
+            Text(point.time.getTimeString())
             Text(point.time.getDayString())
             Text(point.time.getYearString())
         }
@@ -97,8 +97,8 @@ struct PointListItem: View {
     }
     
     private enum PointListItemConstants {
-        static let dateWidth: CGFloat = 80
-        static let pointsWidth: CGFloat = 80
+        static let dateWidth: CGFloat = 40
+        static let pointsWidth: CGFloat = 40
         static let mapIconSize: CGFloat = 20
         static let dividerHeight: CGFloat = 2.5
     }
@@ -107,7 +107,7 @@ struct PointListItem: View {
 struct PointsListView_Previews: PreviewProvider {
     static var previews: some View {
         PointsListView(points: [
-            Point(id: "1", name: "Point 1", value: 10, type: PointType.environment, doesPointCount: true),
+            Point(id: "1", name: "Turistický bod AB123", value: 10, type: PointType.environment, doesPointCount: true),
             Point(id: "2", name: "Point 2", value: 20, type: PointType.culture, doesPointCount: false)
         ], mapButtonAction: { point in
             print("Map button pressed for point: \(point.name)")
