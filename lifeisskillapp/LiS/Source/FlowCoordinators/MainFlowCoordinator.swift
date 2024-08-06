@@ -201,10 +201,7 @@ extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
 }
 
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
-    func logoutPressed() {
-        delegate?.reload()
-    }
-    
+    // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
     func settingsPressed() {
         print("Need to navigate to settings")
     }
