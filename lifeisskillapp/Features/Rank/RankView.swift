@@ -9,22 +9,24 @@ import SwiftUI
 
 struct RankView<ViewModel: RankViewModeling>: View {
     @StateObject var viewModel: ViewModel
-    private let categorySelectorVC: UIViewController
     
-    init(viewModel: ViewModel, categorySelectorVC: UIViewController) {
+    init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self.categorySelectorVC = categorySelectorVC
     }
     
     var body: some View {
         CategorySelectorContainerView(
-            categorySelectorVC: categorySelectorVC,
+            viewModel: self.viewModel.csViewModel,
+            topLeftView: userNameText,
             spacing: RankViewConstants.imageBottomPadding
         ) {
             rankImageView
             
             rankingsList
                 .padding(.horizontal, RankViewConstants.horizontalPadding)
+        }
+        .onAppear {
+            viewModel.onAppear()
         }
         .onAppear {
             viewModel.onAppear()
@@ -40,6 +42,10 @@ struct RankView<ViewModel: RankViewModeling>: View {
 }
 
 private extension RankView {
+    private var userNameText: some View {
+        Text(viewModel.username)
+            .headline3
+    }
     
     private var rankImageView: some View {
         Image(CustomImages.Screens.rank.rawValue)
@@ -57,7 +63,6 @@ private extension RankView {
                 }
             }
         }
-        .ignoresSafeArea()
     }
 }
 
@@ -113,7 +118,7 @@ struct RankListItem: View {
 
 enum RankViewConstants {
     static let spacing: CGFloat = 16
-    static let horizontalPadding: CGFloat = 30
+    static let horizontalPadding: CGFloat = 10
     static let topPadding: CGFloat = 20
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
@@ -123,13 +128,19 @@ enum RankViewConstants {
 struct RankView_Previews: PreviewProvider {
     static var previews: some View {
         let mockViewModel = MockRankViewModel()
-        RankView(viewModel: mockViewModel, categorySelectorVC:
-                    CategorySelectorView(viewModel: MockCategorySelectorViewModel()).hosting())
+        RankView(viewModel: mockViewModel)
     }
 }
 
 // Mock ViewModel for preview
 class MockRankViewModel: BaseClass, RankViewModeling, ObservableObject {
+    typealias categorySelectorVM = MockCategorySelectorViewModel
+
+    @StateObject var csViewModel = MockCategorySelectorViewModel()
+
+    
+    var username: String = "TestUser"
+    
     @Published var categoryRankings: [Ranking] = [
         Ranking(id: "1", rank: 1, username: "User1", points: 100, gender: .male),
         Ranking(id: "2", rank: 2, username: "User2", points: 90, gender: .female),
@@ -139,7 +150,11 @@ class MockRankViewModel: BaseClass, RankViewModeling, ObservableObject {
     var isLoading: Bool = false
     
     func onAppear() {
-        // Mock onAppear behavior
-        print("Mock onAppear")
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            print("Mock onAppear")
+            self.username = "Mock done"
+        }
+        isLoading = false
     }
 }

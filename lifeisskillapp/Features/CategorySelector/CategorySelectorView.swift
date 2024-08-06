@@ -11,18 +11,12 @@ struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
     @StateObject var viewModel: ViewModel
     
     var body: some View {
-        HStack {
-            Text(viewModel.username)
-                .padding()
-                .headline3
-            Spacer()
-            DropdownMenu(
-                options: viewModel.userCategories,
-                selectedOption: $viewModel.selectedCategory
-            )
-            .subheadline
-            .foregroundsSecondary
-        }
+        DropdownMenu(
+            options: viewModel.userCategories,
+            selectedOption: $viewModel.selectedCategory
+        )
+        .subheadline
+        .foregroundsSecondary
         .onAppear(
             perform: viewModel.onAppear
         )

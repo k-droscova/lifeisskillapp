@@ -8,7 +8,12 @@
 import Foundation
 import Observation
 
-protocol HomeViewModeling: BaseClass {
+protocol HomeViewModeling: BaseClass, ObservableObject {
+    associatedtype categorySelectorVM: CategorySelectorViewModeling
+    var username: String { get }
+    var isLoading: Bool { get }
+    var csViewModel: categorySelectorVM { get }
+    func onAppear()
     func loadWithNFC()
     func loadWithQRCode()
     func loadFromCamera()
@@ -17,7 +22,7 @@ protocol HomeViewModeling: BaseClass {
 }
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
-final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
+final class HomeViewModel<csVM: CategorySelectorViewModeling>: BaseClass, ObservableObject, HomeViewModeling {
     struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserLoginManager {
         let scanningManager: ScanningManaging
         let logger: LoggerServicing
@@ -37,15 +42,30 @@ final class HomeViewModel: BaseClass, ObservableObject, HomeViewModeling {
     private let locationManager: LocationManaging
     private let userDataManager: UserLoginDataManaging
     
-    init(dependencies: Dependencies, delegate: HomeFlowDelegate? = nil) {
+    // MARK: - Public Properties
+    
+    @Published var username: String = ""
+    @Published private(set) var isLoading: Bool = false
+    var csViewModel: csVM
+    
+    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: HomeFlowDelegate? = nil) {
         self.locationManager = dependencies.locationManager
         self.scanningManager = dependencies.scanningManager
         self.logger = dependencies.logger
         self.userDataManager = dependencies.userLoginManager
         self.delegate = delegate
+        self.csViewModel = categorySelectorVM
     }
     
     // MARK: - Public Interface
+    
+    func onAppear() {
+        Task { @MainActor [weak self] in
+            self?.isLoading = true
+            self?.username = self?.userDataManager.userName ?? ""
+            self?.isLoading = false
+        }
+    }
     
     func loadWithNFC() {
         nfcVM = NfcViewModel(
