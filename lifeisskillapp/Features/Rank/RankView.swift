@@ -63,7 +63,6 @@ private extension RankView {
                 }
             }
         }
-        .ignoresSafeArea()
     }
 }
 
@@ -119,7 +118,7 @@ struct RankListItem: View {
 
 enum RankViewConstants {
     static let spacing: CGFloat = 16
-    static let horizontalPadding: CGFloat = 30
+    static let horizontalPadding: CGFloat = 10
     static let topPadding: CGFloat = 20
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
