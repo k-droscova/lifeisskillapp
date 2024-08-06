@@ -15,19 +15,11 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
     }
     
     var body: some View {
-        /*
-         CategorySelectorContainerView(
-         viewModel: self.viewModel.csViewModel,
-         topLeftView: buttonsView,
-         spacing: PointsViewConstants.vStackSpacing
-         )
-         */
-        VStack(spacing: PointsViewConstants.vStackSpacing) {
-            HStack() {
-                buttonsView
-                    .padding()
-                Spacer()
-            }
+        CategorySelectorContainerView(
+            viewModel: self.viewModel.csViewModel,
+            topLeftView: buttonsView,
+            spacing: PointsViewConstants.vStackSpacing
+        ) {
             userInfoView
             PointsListView(
                 points: viewModel.categoryPoints
