@@ -53,8 +53,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         
         // MARK: CATEGORY SELECTOR
         let csVM = CategorySelectorViewModel(dependencies: appDependencies)
-        let csFC = CategorySelectorCoordinator()
-        addChild(csFC)
         
         // MARK: HOME
         let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVM: csVM)
