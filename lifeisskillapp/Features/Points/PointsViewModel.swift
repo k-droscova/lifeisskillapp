@@ -135,8 +135,10 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
             delegate?.onNoDataAvailable()
             return
         }
-        self.categoryPoints = userPoints.map { Point(from: $0) }
-        self.totalPoints = userPointManager.getTotalPoints(byCategory: selectedCategory.id)
+        await MainActor.run {
+            self.categoryPoints = userPoints.map { Point(from: $0) }
+            self.totalPoints = userPointManager.getTotalPoints(byCategory: selectedCategory.id)
+        }
     }
     
     @MainActor
