@@ -65,7 +65,10 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: RANK
-        let rankFC = RankFlowCoordinator(categorySelectorVM: csVM)
+        let rankFC = RankFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            settingsDelegate: self,
+            categorySelectorVM: csVM
+        )
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
@@ -195,4 +198,22 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
     
+}
+
+extension MainFlowCoordinator: SettingsBarFlowDelegate {
+    func logoutPressed() {
+        delegate?.reload()
+    }
+    
+    func settingsPressed() {
+        print("Need to navigate to settings")
+    }
+    
+    func cameraPressed() {
+        print("need to open camera")
+    }
+    
+    func onboardingPressed() {
+        print("need to open onboarding")
+    }
 }

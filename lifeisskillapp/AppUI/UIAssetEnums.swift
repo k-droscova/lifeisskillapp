@@ -127,6 +127,20 @@ enum CustomColors {
             }
         }
     }
+    
+    enum LocationStatusBar {
+        case statusOn, statusOff, foreground
+        var color: Color {
+            switch self {
+            case .statusOn:
+                Color.colorLisGreen
+            case .statusOff:
+                Color.colorLisRed
+            case .foreground:
+                Color.colorLisDarkGrey
+            }
+        }
+    }
 }
 
 enum CustomSizes {

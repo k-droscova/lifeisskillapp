@@ -9,15 +9,17 @@ import Foundation
 
 protocol RankViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
+    associatedtype settingBarVM: SettingsBarViewModeling
     var categoryRankings: [Ranking] { get }
     var isLoading: Bool { get }
     var username: String { get }
     var csViewModel: categorySelectorVM { get }
+    var settingsViewModel: settingBarVM { get }
     func onAppear()
 }
 
-final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, ObservableObject, RankViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager
+final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, RankViewModeling {
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager
     
     // MARK: - Private Properties
     
@@ -37,10 +39,16 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
     @Published private(set) var isLoading: Bool = false
     @Published var username: String = ""
     var csViewModel: csVM
+    var settingsViewModel: settingBarVM
     
     // MARK: - Initialization
     
-    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: RankFlowDelegate?) {
+    init(
+        dependencies: Dependencies,
+        categorySelectorVM: csVM,
+        delegate: RankFlowDelegate?,
+        settingsDelegate: SettingsBarFlowDelegate?
+    ) {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
         self.userRankManager = dependencies.userRankManager
@@ -49,6 +57,10 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
         gameDataManager.delegate = delegate
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
+        self.settingsViewModel = settingBarVM.init(
+            dependencies: dependencies,
+            delegate: settingsDelegate
+        )
         
         super.init()
         self.setupBindings()

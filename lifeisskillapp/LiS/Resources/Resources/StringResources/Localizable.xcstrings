@@ -297,8 +297,8 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Punkt von Bild laden"
+            "state" : "translated",
+            "value" : "Punkt von Camera laden"
           }
         },
         "en" : {
@@ -995,6 +995,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1. Go to Settings > Privacy > Location Services. \n2.Make sure that Location Services is on \n.3. Scroll down to find the app."
+          }
+        }
+      }
+    },
+    "locationStatusBar.waiting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Čekám na gps data..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warten auf GPS-Daten…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for gps data..."
           }
         }
       }
@@ -3043,6 +3066,28 @@
         }
       }
     },
+    "settings.onboarding" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak na to?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie geht das?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to?"
+          }
+        }
+      }
+    },
     "settings.section.main" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3089,6 +3134,28 @@
         }
       }
     },
+    "settings.settings" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
     "settings.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3131,6 +3198,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rank: %d."
+          }
+        }
+      }
+    },
+    "statusBar.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life Is Skill"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life Is Skill"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life Is Skill"
           }
         }
       }

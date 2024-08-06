@@ -16,6 +16,7 @@ protocol UserDefaultsStoraging {
     var appId: String? { get set }
     var location: UserLocation? { get set }
     var checkSumData: CheckSumData? { get set }
+    var locationStream: AsyncStream<UserLocation?> { get }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
@@ -24,6 +25,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
+    private var locationContinuation: AsyncStream<UserLocation?>.Continuation?
     
     // MARK: - Public Properties
     
@@ -42,6 +44,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
         set {
             UserDefaults.standard.location = newValue
+            triggerLocationAsyncStream()
         }
     }
     
@@ -54,9 +57,26 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
     }
     
+    // MARK: - Async Streams
+    
+    var locationStream: AsyncStream<UserLocation?> {
+        AsyncStream { continuation in
+            self.locationContinuation = continuation
+            continuation.yield(self.location)
+        }
+    }
+    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func triggerLocationAsyncStream() {
+        DispatchQueue.main.async {
+            self.locationContinuation?.yield(self.location)
+        }
     }
 }

@@ -99,3 +99,43 @@ struct CategorySelectorContainerView<TopLeftView: View, Content: View, ViewModel
         }
     }
 }
+
+struct StatusView: View {
+    @Binding var status: Bool
+    private let textOn: String
+    private let textOff: String
+    private let colorOn: Color
+    private let colorOff: Color
+
+    internal init(status: Binding<Bool>, textOn: String, textOff: String, colorOn: Color, colorOff: Color) {
+        self._status = status
+        self.textOn = textOn
+        self.textOff = textOff
+        self.colorOn = colorOn
+        self.colorOff = colorOff
+    }
+
+    var body: some View {
+        Text(status ? textOn : textOff)
+            .foregroundColor(status ? colorOn : colorOff)
+    }
+}
+
+struct StatusBarContainerView<Content: View, ViewModel: SettingsBarViewModeling>: View {
+    @StateObject private var viewModel: ViewModel
+    private let spacing: CGFloat
+    private let content: () -> Content
+    
+    internal init(viewModel: ViewModel, spacing: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.spacing = spacing
+        self.content = content
+    }
+    
+    var body: some View {
+        VStack(spacing: spacing) {
+            SettingsBarView(viewModel: viewModel)
+            content()
+        }
+    }
+}

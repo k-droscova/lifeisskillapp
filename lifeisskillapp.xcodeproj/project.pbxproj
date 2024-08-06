@@ -45,6 +45,10 @@
 		27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F942C3320F3003453E2 /* lifeisskillappTests.swift */; };
 		27274F9F2C3320F3003453E2 /* lifeisskillappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F9E2C3320F3003453E2 /* lifeisskillappUITests.swift */; };
 		27274FA12C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274FA02C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift */; };
+		273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730222F2C624C6B00F9D572 /* SettingsBarViewModel.swift */; };
+		273022332C624DBE00F9D572 /* LocationStatusBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273022322C624DBE00F9D572 /* LocationStatusBarViewModel.swift */; };
+		273022352C62577800F9D572 /* LocationStatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273022342C62577800F9D572 /* LocationStatusBarView.swift */; };
+		273022372C626DCA00F9D572 /* SettingsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273022362C626DCA00F9D572 /* SettingsBarView.swift */; };
 		2734DCA62C469442008030F3 /* UserPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCA52C469442008030F3 /* UserPoint.swift */; };
 		2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */; };
 		2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */; };
@@ -179,6 +183,10 @@
 		27274F9A2C3320F3003453E2 /* lifeisskillappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F9E2C3320F3003453E2 /* lifeisskillappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappUITests.swift; sourceTree = "<group>"; };
 		27274FA02C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2730222F2C624C6B00F9D572 /* SettingsBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBarViewModel.swift; sourceTree = "<group>"; };
+		273022322C624DBE00F9D572 /* LocationStatusBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatusBarViewModel.swift; sourceTree = "<group>"; };
+		273022342C62577800F9D572 /* LocationStatusBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatusBarView.swift; sourceTree = "<group>"; };
+		273022362C626DCA00F9D572 /* SettingsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBarView.swift; sourceTree = "<group>"; };
 		2734DCA52C469442008030F3 /* UserPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPoint.swift; sourceTree = "<group>"; };
 		2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryManager.swift; sourceTree = "<group>"; };
 		2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIService.swift; sourceTree = "<group>"; };
@@ -437,6 +445,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2730222E2C624B1B00F9D572 /* SettingsBar */,
 				276CA9CC2C5E5FAF001D6394 /* Rank */,
 				275472CC2C5D0D0D00F5578F /* CategorySelector */,
 				2720DF242C513D28007B4E77 /* Home */,
@@ -578,6 +587,25 @@
 				27F528FF2C5A8A380042F537 /* ViewExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2730222E2C624B1B00F9D572 /* SettingsBar */ = {
+			isa = PBXGroup;
+			children = (
+				273022312C624DA800F9D572 /* LocationStatusBar */,
+				2730222F2C624C6B00F9D572 /* SettingsBarViewModel.swift */,
+				273022362C626DCA00F9D572 /* SettingsBarView.swift */,
+			);
+			path = SettingsBar;
+			sourceTree = "<group>";
+		};
+		273022312C624DA800F9D572 /* LocationStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				273022322C624DBE00F9D572 /* LocationStatusBarViewModel.swift */,
+				273022342C62577800F9D572 /* LocationStatusBarView.swift */,
+			);
+			path = LocationStatusBar;
 			sourceTree = "<group>";
 		};
 		2734DCA42C4693C4008030F3 /* UserData */ = {
@@ -955,10 +983,12 @@
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
+				273022372C626DCA00F9D572 /* SettingsBarView.swift in Sources */,
 				27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
+				273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */,
 				276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
@@ -971,6 +1001,7 @@
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
 				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
+				273022332C624DBE00F9D572 /* LocationStatusBarViewModel.swift in Sources */,
 				275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */,
 				27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */,
 				27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */,
@@ -983,6 +1014,7 @@
 				27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
+				273022352C62577800F9D572 /* LocationStatusBarView.swift in Sources */,
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
