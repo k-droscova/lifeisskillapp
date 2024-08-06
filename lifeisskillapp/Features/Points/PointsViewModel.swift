@@ -37,7 +37,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     
     // MARK: - Private Properties
     
-    private weak var delegate: PointFlowDelegate?
+    private weak var delegate: PointsFlowDelegate?
     private let logger: LoggerServicing
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
@@ -59,7 +59,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     
     // MARK: - Initialization
     
-    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: PointFlowDelegate?) {
+    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: PointsFlowDelegate?) {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
@@ -86,17 +86,14 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     func mapButtonPressed() {
         logger.log(message: "map button pressed")
         self.showCategoryPointsOnMap()
-        delegate?.categoryPointsMapButtonPressed()
     }
     
     func listButtonPressed() {
         logger.log(message: "list button pressed")
-        delegate?.categoryListButtonPressed()
     }
     
     func showPointOnMap(point: Point) {
         logger.log(message: "showing map for point: \(point.name)")
-        delegate?.pointMapButtonPressed(point: point)
     }
     
     // MARK: Private Helpers
