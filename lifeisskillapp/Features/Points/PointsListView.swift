@@ -37,7 +37,7 @@ struct PointListItem: View {
     }
     
     private var contentView: some View {
-        VStack(spacing: 0) {
+        VStack {
             pointInfoView
             ExDivider(
                 color: CustomColors.ListPointCard.foreground.color,
@@ -99,7 +99,7 @@ struct PointListItem: View {
     private enum PointListItemConstants {
         static let dateWidth: CGFloat = 80
         static let pointsWidth: CGFloat = 80
-        static let mapIconSize: CGFloat = 24
+        static let mapIconSize: CGFloat = 20
         static let dividerHeight: CGFloat = 2.5
     }
 }

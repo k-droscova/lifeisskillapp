@@ -106,7 +106,6 @@ struct PointListCard<Content: View>: View {
         content()
             .cornerRadius(CustomSizes.PointListCard.cornerRadius.size)
             .shadow(radius: CustomSizes.PointListCard.shadowRadius.size)
-            .padding(.horizontal)
     }
 }
 
