@@ -119,13 +119,13 @@
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */; };
-		27E9D5FF2C63D9480098CB96 /* CheckSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D5FE2C63D9480098CB96 /* CheckSum.swift */; };
-		27E9D6012C63DFEC0098CB96 /* LoginDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6002C63DFEB0098CB96 /* LoginDetails.swift */; };
-		27E9D6032C63E04A0098CB96 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6022C63E04A0098CB96 /* User.swift */; };
-		27E9D6062C63E35E0098CB96 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6052C63E35E0098CB96 /* Category.swift */; };
-		27E9D6082C63E3810098CB96 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6072C63E3810098CB96 /* Ranking.swift */; };
-		27E9D60A2C63E7860098CB96 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6092C63E7860098CB96 /* Point.swift */; };
-		27E9D60C2C63E8B90098CB96 /* PointScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D60B2C63E8B90098CB96 /* PointScan.swift */; };
+		27E9D5FF2C63D9480098CB96 /* RealmCheckSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D5FE2C63D9480098CB96 /* RealmCheckSum.swift */; };
+		27E9D6012C63DFEC0098CB96 /* RealmLoginDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6002C63DFEB0098CB96 /* RealmLoginDetails.swift */; };
+		27E9D6032C63E04A0098CB96 /* RealmUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6022C63E04A0098CB96 /* RealmUser.swift */; };
+		27E9D6062C63E35E0098CB96 /* RealmCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6052C63E35E0098CB96 /* RealmCategory.swift */; };
+		27E9D6082C63E3810098CB96 /* RealmRanking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6072C63E3810098CB96 /* RealmRanking.swift */; };
+		27E9D60A2C63E7860098CB96 /* RealmPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6092C63E7860098CB96 /* RealmPoint.swift */; };
+		27E9D60C2C63E8B90098CB96 /* RealmPointScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D60B2C63E8B90098CB96 /* RealmPointScan.swift */; };
 		27E9D60F2C63EB8E0098CB96 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D60E2C63EB8E0098CB96 /* LoginRepository.swift */; };
 		27E9D6112C63EC010098CB96 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6102C63EC010098CB96 /* Repository.swift */; };
 		27E9D6132C63F3B60098CB96 /* RealmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6122C63F3B60098CB96 /* RealmStorage.swift */; };
@@ -135,6 +135,7 @@
 		27E9D61B2C63F9150098CB96 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D61A2C63F9150098CB96 /* RankingRepository.swift */; };
 		27E9D61D2C63F9410098CB96 /* PointScanRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D61C2C63F9410098CB96 /* PointScanRepository.swift */; };
 		27E9D61F2C63F9770098CB96 /* PointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D61E2C63F9770098CB96 /* PointRepository.swift */; };
+		27E9D6222C63FE7E0098CB96 /* RealmDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6212C63FE7E0098CB96 /* RealmDependencies.swift */; };
 		27EBADD42C592F3100F01CFB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27EBADD32C592F3100F01CFB /* Colors.xcassets */; };
 		27F27A412C4CFA8600928388 /* UserRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A402C4CFA8600928388 /* UserRank.swift */; };
 		27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A422C4CFEFC00928388 /* UserRankManager.swift */; };
@@ -292,13 +293,13 @@
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
-		27E9D5FE2C63D9480098CB96 /* CheckSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSum.swift; sourceTree = "<group>"; };
-		27E9D6002C63DFEB0098CB96 /* LoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetails.swift; sourceTree = "<group>"; };
-		27E9D6022C63E04A0098CB96 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		27E9D6052C63E35E0098CB96 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		27E9D6072C63E3810098CB96 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
-		27E9D6092C63E7860098CB96 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
-		27E9D60B2C63E8B90098CB96 /* PointScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointScan.swift; sourceTree = "<group>"; };
+		27E9D5FE2C63D9480098CB96 /* RealmCheckSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCheckSum.swift; sourceTree = "<group>"; };
+		27E9D6002C63DFEB0098CB96 /* RealmLoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmLoginDetails.swift; sourceTree = "<group>"; };
+		27E9D6022C63E04A0098CB96 /* RealmUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUser.swift; sourceTree = "<group>"; };
+		27E9D6052C63E35E0098CB96 /* RealmCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCategory.swift; sourceTree = "<group>"; };
+		27E9D6072C63E3810098CB96 /* RealmRanking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRanking.swift; sourceTree = "<group>"; };
+		27E9D6092C63E7860098CB96 /* RealmPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPoint.swift; sourceTree = "<group>"; };
+		27E9D60B2C63E8B90098CB96 /* RealmPointScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPointScan.swift; sourceTree = "<group>"; };
 		27E9D60E2C63EB8E0098CB96 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		27E9D6102C63EC010098CB96 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		27E9D6122C63F3B60098CB96 /* RealmStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorage.swift; sourceTree = "<group>"; };
@@ -308,6 +309,7 @@
 		27E9D61A2C63F9150098CB96 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		27E9D61C2C63F9410098CB96 /* PointScanRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointScanRepository.swift; sourceTree = "<group>"; };
 		27E9D61E2C63F9770098CB96 /* PointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRepository.swift; sourceTree = "<group>"; };
+		27E9D6212C63FE7E0098CB96 /* RealmDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDependencies.swift; sourceTree = "<group>"; };
 		27EBADD32C592F3100F01CFB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = lifeisskillapp/LiS/Resources/Resources/Colors/Colors.xcassets; sourceTree = SOURCE_ROOT; };
 		27F27A402C4CFA8600928388 /* UserRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRank.swift; sourceTree = "<group>"; };
 		27F27A422C4CFEFC00928388 /* UserRankManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManager.swift; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 			isa = PBXGroup;
 			children = (
 				275457102C332CFD00F3B55A /* AppDependencies.swift */,
+				27E9D6212C63FE7E0098CB96 /* RealmDependencies.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -886,13 +889,13 @@
 		27E9D5FD2C63D9370098CB96 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				27E9D5FE2C63D9480098CB96 /* CheckSum.swift */,
-				27E9D6002C63DFEB0098CB96 /* LoginDetails.swift */,
-				27E9D6022C63E04A0098CB96 /* User.swift */,
-				27E9D6052C63E35E0098CB96 /* Category.swift */,
-				27E9D6072C63E3810098CB96 /* Ranking.swift */,
-				27E9D6092C63E7860098CB96 /* Point.swift */,
-				27E9D60B2C63E8B90098CB96 /* PointScan.swift */,
+				27E9D5FE2C63D9480098CB96 /* RealmCheckSum.swift */,
+				27E9D6002C63DFEB0098CB96 /* RealmLoginDetails.swift */,
+				27E9D6022C63E04A0098CB96 /* RealmUser.swift */,
+				27E9D6052C63E35E0098CB96 /* RealmCategory.swift */,
+				27E9D6072C63E3810098CB96 /* RealmRanking.swift */,
+				27E9D6092C63E7860098CB96 /* RealmPoint.swift */,
+				27E9D60B2C63E8B90098CB96 /* RealmPointScan.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1087,7 +1090,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */,
-				27E9D6012C63DFEC0098CB96 /* LoginDetails.swift in Sources */,
+				27E9D6012C63DFEC0098CB96 /* RealmLoginDetails.swift in Sources */,
 				27E9D6152C63F8A10098CB96 /* CheckSumRepository.swift in Sources */,
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
@@ -1104,7 +1107,7 @@
 				27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */,
 				2754570D2C3328B300F3B55A /* AppFlowCoordinator.swift in Sources */,
 				27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */,
-				27E9D5FF2C63D9480098CB96 /* CheckSum.swift in Sources */,
+				27E9D5FF2C63D9480098CB96 /* RealmCheckSum.swift in Sources */,
 				27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */,
 				27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */,
 				27C6197F2C398C570067498F /* LogSeverity.swift in Sources */,
@@ -1114,9 +1117,9 @@
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				27E9D6192C63F8EC0098CB96 /* CategoryRepository.swift in Sources */,
-				27E9D6032C63E04A0098CB96 /* User.swift in Sources */,
+				27E9D6032C63E04A0098CB96 /* RealmUser.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
-				27E9D6082C63E3810098CB96 /* Ranking.swift in Sources */,
+				27E9D6082C63E3810098CB96 /* RealmRanking.swift in Sources */,
 				27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */,
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
@@ -1137,7 +1140,7 @@
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
 				275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */,
 				27E9D6132C63F3B60098CB96 /* RealmStorage.swift in Sources */,
-				27E9D60A2C63E7860098CB96 /* Point.swift in Sources */,
+				27E9D60A2C63E7860098CB96 /* RealmPoint.swift in Sources */,
 				27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */,
 				27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */,
 				27C619672C37069E0067498F /* APIResponseError.swift in Sources */,
@@ -1178,16 +1181,17 @@
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,
 				27F528FE2C5A6FB50042F537 /* UIAssetEnums.swift in Sources */,
+				27E9D6222C63FE7E0098CB96 /* RealmDependencies.swift in Sources */,
 				27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */,
 				27E9D6172C63F8C20098CB96 /* UserRepository.swift in Sources */,
 				273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */,
 				2734DCA62C469442008030F3 /* UserPoint.swift in Sources */,
 				2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */,
 				275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */,
-				27E9D60C2C63E8B90098CB96 /* PointScan.swift in Sources */,
+				27E9D60C2C63E8B90098CB96 /* RealmPointScan.swift in Sources */,
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
 				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,
-				27E9D6062C63E35E0098CB96 /* Category.swift in Sources */,
+				27E9D6062C63E35E0098CB96 /* RealmCategory.swift in Sources */,
 				2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */,
 				27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */,
 				27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */,

@@ -28,13 +28,15 @@ protocol UserLoginDataManaging {
 }
 
 public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
-    typealias Dependencies = HasLoggerServicing & HasLoginAPIService & HasUserDataStorage & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasLoginAPIService & HasUserDataStorage & HasUserManager & HasRepositoryContainer
     
     // MARK: - Private Properties
     
     private var userDataStorage: UserDataStoraging
     private let logger: LoggerServicing
     private let loginAPI: LoginAPIServicing
+    private var realmLoginRepo: any RealmLoginRepositoring
+    private var realmUserRepo: any RealmUserRepositoring
     
     // MARK: - Public Properties
     
@@ -75,6 +77,8 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
         self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
         self.loginAPI = dependencies.loginAPI
+        self.realmLoginRepo = dependencies.container.realmLoginRepository
+        self.realmUserRepo = dependencies.container.realmUserRepository
     }
     
     // MARK: - Public Interface

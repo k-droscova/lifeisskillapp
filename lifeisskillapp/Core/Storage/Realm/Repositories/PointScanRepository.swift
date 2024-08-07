@@ -14,7 +14,7 @@ protocol HasRealmPointScanRepository {
 
 protocol RealmPointScanRepositoring: RealmRepositoring where Entity == RealmPointScan {}
 
-public final class RealmPointScanRepository: RealmPointScanRepositoring, HasRealmStoraging, HasLoggers {
+public class RealmPointScanRepository: BaseClass, RealmPointScanRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmPointScan
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

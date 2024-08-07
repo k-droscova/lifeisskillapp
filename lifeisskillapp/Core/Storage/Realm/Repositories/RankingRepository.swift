@@ -14,7 +14,7 @@ protocol HasRealmRankingRepository {
 
 protocol RealmRankingRepositoring: RealmRepositoring where Entity == RealmRanking {}
 
-public final class RealmRankingRepository: RealmRankingRepositoring, HasRealmStoraging, HasLoggers {
+public class RealmRankingRepository: BaseClass, RealmRankingRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmRanking
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

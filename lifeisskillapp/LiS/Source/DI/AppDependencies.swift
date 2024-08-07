@@ -15,7 +15,7 @@ typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage
 typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager & HasUserLoginManager
 typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager
 typealias HasLoggers = HasLoggerServicing
-
+typealias HasRealm = HasRealmStoraging & HasRepositoryContainer
 
 final class AppDependency {
     // MARK: logger
@@ -35,7 +35,11 @@ final class AppDependency {
     
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
     lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
+    
+    // MARK: realm
+    
     lazy var realmStorage: RealmStoraging = RealmStorage(dependencies: self)
+    lazy var container: HasRealmRepositories = RepositoryContainer()
     
     // MARK: user and data managers
     
@@ -55,6 +59,6 @@ extension AppDependency: HasAPIDependencies {}
 extension AppDependency: HasManagers {}
 extension AppDependency: HasLoggers {}
 extension AppDependency: HasStorage {}
-extension AppDependency: HasRealmStoraging {}
+extension AppDependency: HasRealm {}
 
 

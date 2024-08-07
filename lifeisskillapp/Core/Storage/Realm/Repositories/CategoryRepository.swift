@@ -14,7 +14,7 @@ protocol HasRealmCategoryRepository {
 
 protocol RealmCategoryRepositoring: RealmRepositoring where Entity == RealmCategory {}
 
-public final class RealmCategoryRepository: RealmCategoryRepositoring, HasRealmStoraging, HasLoggers {
+public class RealmCategoryRepository: BaseClass, RealmCategoryRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmCategory
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

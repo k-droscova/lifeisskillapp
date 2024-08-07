@@ -14,7 +14,7 @@ protocol HasRealmCheckSumRepository {
 
 protocol RealmCheckSumRepositoring: RealmRepositoring where Entity == RealmCheckSumData {}
 
-public final class RealmCheckSumRepository: RealmCheckSumRepositoring, HasRealmStoraging, HasLoggers {
+public class RealmCheckSumRepository: BaseClass, RealmCheckSumRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmCheckSumData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
