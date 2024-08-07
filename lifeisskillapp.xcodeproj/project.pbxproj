@@ -52,6 +52,14 @@
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
+		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
+		27414D862C63A08B00C19F8C /* .realm-cocoa.version in Resources */ = {isa = PBXBuildFile; fileRef = 27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */; };
+		27414D892C63A08B00C19F8C /* realm-cocoa in Resources */ = {isa = PBXBuildFile; fileRef = 27414D812C63A08B00C19F8C /* realm-cocoa */; };
+		27414D8A2C63A08B00C19F8C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 27414D842C63A08B00C19F8C /* Cartfile.resolved */; };
+		27414D8E2C63A15200C19F8C /* Realm.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7E2C63A08B00C19F8C /* Realm.xcframework */; };
+		27414D8F2C63A15200C19F8C /* Realm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7E2C63A08B00C19F8C /* Realm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		27414D902C63A15300C19F8C /* RealmSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */; };
+		27414D912C63A15300C19F8C /* RealmSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
 		275457092C33254300F3B55A /* ACKategories in Frameworks */ = {isa = PBXBuildFile; productRef = 275457082C33254300F3B55A /* ACKategories */; };
@@ -136,6 +144,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		27414D8D2C63A15000C19F8C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				27414D912C63A15300C19F8C /* RealmSwift.xcframework in Embed Frameworks */,
+				27414D8F2C63A15200C19F8C /* Realm.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		27066A892C45580D0092B499 /* UserCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategory.swift; sourceTree = "<group>"; };
 		27066A8B2C455FFB0092B499 /* UserGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGender.swift; sourceTree = "<group>"; };
@@ -186,6 +209,13 @@
 		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
 		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
+		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		27414D7B2C63A08B00C19F8C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".realm-cocoa.version"; sourceTree = "<group>"; };
+		27414D7E2C63A08B00C19F8C /* Realm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Realm.xcframework; sourceTree = "<group>"; };
+		27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RealmSwift.xcframework; sourceTree = "<group>"; };
+		27414D812C63A08B00C19F8C /* realm-cocoa */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "realm-cocoa"; sourceTree = "<group>"; };
+		27414D842C63A08B00C19F8C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		2754570A2C33259200F3B55A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -259,7 +289,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27414D8E2C63A15200C19F8C /* Realm.xcframework in Frameworks */,
 				275457092C33254300F3B55A /* ACKategories in Frameworks */,
+				27414D902C63A15300C19F8C /* RealmSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +404,9 @@
 		27274F712C3320F2003453E2 = {
 			isa = PBXGroup;
 			children = (
+				27414D842C63A08B00C19F8C /* Cartfile.resolved */,
+				27414D792C639ED800C19F8C /* Cartfile */,
+				27414D832C63A08B00C19F8C /* Carthage */,
 				2720DF2F2C516619007B4E77 /* lifeisskillapp.entitlements */,
 				27274F7C2C3320F2003453E2 /* lifeisskillapp */,
 				27274F932C3320F3003453E2 /* lifeisskillappTests */,
@@ -606,6 +641,42 @@
 			path = UserDataManagers;
 			sourceTree = "<group>";
 		};
+		27414D7C2C63A08B00C19F8C /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				27414D7B2C63A08B00C19F8C /* Realm.framework */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		27414D802C63A08B00C19F8C /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				27414D7C2C63A08B00C19F8C /* iOS */,
+				27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */,
+				27414D7E2C63A08B00C19F8C /* Realm.xcframework */,
+				27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */,
+			);
+			path = Build;
+			sourceTree = "<group>";
+		};
+		27414D822C63A08B00C19F8C /* Checkouts */ = {
+			isa = PBXGroup;
+			children = (
+				27414D812C63A08B00C19F8C /* realm-cocoa */,
+			);
+			path = Checkouts;
+			sourceTree = "<group>";
+		};
+		27414D832C63A08B00C19F8C /* Carthage */ = {
+			isa = PBXGroup;
+			children = (
+				27414D802C63A08B00C19F8C /* Build */,
+				27414D822C63A08B00C19F8C /* Checkouts */,
+			);
+			path = Carthage;
+			sourceTree = "<group>";
+		};
 		274863262C526293008D8A3E /* OCR */ = {
 			isa = PBXGroup;
 			children = (
@@ -787,6 +858,7 @@
 				27274F762C3320F2003453E2 /* Sources */,
 				27274F772C3320F2003453E2 /* Frameworks */,
 				27274F782C3320F2003453E2 /* Resources */,
+				27414D8D2C63A15000C19F8C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -889,7 +961,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27414D7A2C639ED800C19F8C /* Cartfile in Resources */,
+				27414D8A2C63A08B00C19F8C /* Cartfile.resolved in Resources */,
 				2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */,
+				27414D892C63A08B00C19F8C /* realm-cocoa in Resources */,
+				27414D862C63A08B00C19F8C /* .realm-cocoa.version in Resources */,
 				2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */,
 				275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */,
 				2717AF112C42ADB800A23F06 /* Montserrat-ExtraBold.otf in Resources */,
@@ -1195,6 +1271,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 84HX6FUFDK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1224,6 +1304,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 84HX6FUFDK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
