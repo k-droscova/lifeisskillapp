@@ -109,6 +109,7 @@ extension UserPoint {
 
 struct Point: Identifiable {
     let id: String
+    let pointId: String
     let name: String
     let value: Int
     let type: PointType
@@ -118,7 +119,8 @@ struct Point: Identifiable {
 
     // Internal initializer from UserPoint
     internal init(from userPoint: UserPoint) {
-        self.id = userPoint.id
+        self.id = userPoint.recordKey
+        self.pointId = userPoint.id
         self.name = userPoint.pointName
         self.value = userPoint.pointValue
         self.type = userPoint.pointType
@@ -128,7 +130,8 @@ struct Point: Identifiable {
     }
     
     internal init(id: String, name: String, value: Int, type: PointType, doesPointCount: Bool) {
-        self.id = id
+        self.id = UUID().uuidString
+        self.pointId = id
         self.name = name
         self.value = value
         self.type = type

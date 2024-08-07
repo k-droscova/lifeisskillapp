@@ -90,7 +90,9 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     }
     
     func getTotalPoints(byCategory categoryId: String) -> Int {
-        // TODO: disregard not valid points
-        return getPoints(byCategory: categoryId).reduce(0) { $0 + $1.pointValue }
+        // returns total for user points that are valid
+        return getPoints(byCategory: categoryId)
+            .filter { $0.doesPointCount }
+            .reduce(0) { $0 + $1.pointValue }
     }
 }
