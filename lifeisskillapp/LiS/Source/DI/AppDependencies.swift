@@ -35,6 +35,7 @@ final class AppDependency {
     
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
     lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
+    lazy var realmStorage: RealmStoraging = RealmStorage(dependencies: self)
     
     // MARK: user and data managers
     
@@ -54,5 +55,6 @@ extension AppDependency: HasAPIDependencies {}
 extension AppDependency: HasManagers {}
 extension AppDependency: HasLoggers {}
 extension AppDependency: HasStorage {}
+extension AppDependency: HasRealmStoraging {}
 
 
