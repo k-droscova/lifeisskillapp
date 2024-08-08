@@ -104,9 +104,7 @@ extension LocationManager: CLLocationManagerDelegate {
         userDefaultsStorage.location = location.toUserLocation()
         
         // Update gps status only if the last value has been false
-        if gpsSubject.value {
-            return
-        }
+        guard !gpsSubject.value else { return }
         gpsSubject.send(true)
         triggerGpsAsyncStream()
     }
@@ -120,9 +118,7 @@ extension LocationManager: CLLocationManagerDelegate {
             message: "ERROR: CCLocationManager failed with Error: \(error.localizedDescription)"
         )
         // Update gps status only if the last value has been true
-        if !gpsSubject.value {
-            return
-        }
+        guard gpsSubject.value else { return }
         gpsSubject.send(false)
         triggerGpsAsyncStream()
     }
