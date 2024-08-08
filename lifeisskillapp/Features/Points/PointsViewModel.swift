@@ -139,22 +139,17 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
             return
         }
         
-        // Find the user points for the selected category
         let userPoints = userPointManager.getPoints(byCategory: selectedCategory.id)
-        
         guard userPoints.isNotEmpty else {
             logger.log(message: "No point data found for the selected category")
             delegate?.onNoDataAvailable()
-            await MainActor.run {
-                self.categoryPoints = []
-                self.totalPoints = 0
-            }
+            self.categoryPoints = []
+            self.totalPoints = 0
             return
         }
-        await MainActor.run {
-            self.categoryPoints = userPoints.map { Point(from: $0) }
-            self.totalPoints = userPointManager.getTotalPoints(byCategory: selectedCategory.id)
-        }
+
+        self.categoryPoints = userPoints.map { Point(from: $0) }
+        self.totalPoints = userPointManager.getTotalPoints(byCategory: selectedCategory.id)
     }
     
     @MainActor

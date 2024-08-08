@@ -122,18 +122,12 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
             return
         }
         
-        // Find the user rank for the selected category
         if let userRank = userRankManager.getById(id: selectedCategory.id) {
-            // Convert RankedUser instances to Ranking instances
             let rankings = userRank.listUserRank.map { Ranking(from: $0) }
-            await MainActor.run {
-                self.categoryRankings = rankings
-            }
+            self.categoryRankings = rankings
         } else {
             logger.log(message: "No ranking data found for the selected category")
-            await MainActor.run {
-                self.categoryRankings = []
-            }
+            self.categoryRankings = []
             delegate?.onNoDataAvailable()
         }
     }
