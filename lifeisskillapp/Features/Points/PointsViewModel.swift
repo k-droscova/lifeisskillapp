@@ -74,6 +74,13 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
         self.setupBindings()
     }
     
+    // MARK: - Deinitialization
+    
+    deinit {
+        cancellables.forEach { $0.cancel() }
+        logger.log(message: "PointsViewModel deinitialized and cancellables invalidated")
+    }
+    
     // MARK: Public Interface
     
     func onAppear() {
