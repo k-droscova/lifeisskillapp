@@ -56,6 +56,13 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
         self.setupBindings()
     }
     
+    // MARK: - Deinitialization
+    
+    deinit {
+        cancellables.forEach { $0.cancel() }
+        logger.log(message: "RankViewModel deinitialized and cancellables invalidated")
+    }
+    
     // MARK: - Public Interface
     
     func onAppear() {
