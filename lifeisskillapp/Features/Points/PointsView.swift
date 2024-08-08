@@ -76,14 +76,14 @@ enum PointsViewConstants {
 }
 
 class MockPointsViewModel: BaseClass, PointsViewModeling, ObservableObject {
-    @Published var csViewModel: MockCategorySelectorViewModel = MockCategorySelectorViewModel()
+    var csViewModel: MockCategorySelectorViewModel = MockCategorySelectorViewModel()
     
-    @Published var isLoading: Bool = false
+    var isLoading: Bool = false
     @Published var isMapButtonPressed: Bool = false
-    @Published var username: String = "TestUser"
-    @Published var userGender: UserGender = .male
-    @Published var totalPoints: Int = 0
-    @Published var categoryPoints: [Point] = []
+    var username: String = "TestUser"
+    var userGender: UserGender = .male
+    var totalPoints: Int = 0
+    var categoryPoints: [Point] = []
     
     func onAppear() {
         // Simulate network loading
