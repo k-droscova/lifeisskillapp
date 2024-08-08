@@ -137,8 +137,10 @@ struct StatusBarContainerView<Content: View, ViewModel: SettingsBarViewModeling>
             SettingsBarView(viewModel: viewModel)
             content()
         }
-      
-      struct PointListCard<Content: View>: View {
+    }
+}
+
+struct PointListCard<Content: View>: View {
     let content: () -> Content
     var body: some View {
         content()

@@ -225,6 +225,7 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     func onboardingPressed() {
         print("need to open onboarding")
     }
+}
 
 extension MainFlowCoordinator: RankFlowCoordinatorDelegate {
 }

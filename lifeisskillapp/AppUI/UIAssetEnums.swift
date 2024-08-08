@@ -138,6 +138,9 @@ enum CustomColors {
                 Color.colorLisRed
             case .foreground:
                 Color.colorLisDarkGrey
+            }
+        }
+    }
 
    enum ListPointCard {
         case foreground, invalidPoint, shadow
