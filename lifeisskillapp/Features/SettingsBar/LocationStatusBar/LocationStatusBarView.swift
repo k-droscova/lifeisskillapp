@@ -28,13 +28,12 @@ struct LocationStatusBarView<ViewModel: LocationStatusBarViewModeling>: View {
         .padding([.leading, .trailing])
     }
     
+    @ViewBuilder
     private var locationText: some View {
-        Group {
-            if let location = viewModel.userLocation, viewModel.isGpsOk {
-                Text(location.description)
-            } else {
-                Text("locationStatusBar.waiting")
-            }
+        if let location = viewModel.userLocation, viewModel.isGpsOk {
+            Text(location.description)
+        } else {
+            Text("locationStatusBar.waiting")
         }
     }
     
