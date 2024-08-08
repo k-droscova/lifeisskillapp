@@ -114,11 +114,11 @@ struct PointListItem: View {
 
 struct PointsListView_Previews: PreviewProvider {
     static var previews: some View {
-        PointsListView(points: [
-            Point(id: "1", name: "Turistický bod AB123", value: 10, type: PointType.environment, doesPointCount: true),
-            Point(id: "2", name: "Point 2", value: 20, type: PointType.culture, doesPointCount: false)
-        ], mapButtonAction: { point in
-            print("Map button pressed for point: \(point.name)")
-        })
+        PointsListView(
+            points: [Point.MockPoint1, Point.MockPoint2],
+            mapButtonAction: { point in
+                print("Map button pressed for point: \(point.name)")
+            }
+        )
     }
 }

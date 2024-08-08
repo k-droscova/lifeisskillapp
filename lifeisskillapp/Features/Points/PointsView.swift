@@ -44,7 +44,7 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
             isMapShown: $viewModel.isMapButtonPressed,
             imageSize: PointsViewConstants.topButtonSize,
             buttonNotPressed: Color.black,
-            buttonPressed: Color.colorLisBlue,            
+            buttonPressed: Color.colorLisBlue,
             mapButtonAction: viewModel.mapButtonPressed,
             listButtonAction: viewModel.listButtonPressed
         )
@@ -89,12 +89,9 @@ class MockPointsViewModel: BaseClass, PointsViewModeling, ObservableObject {
         // Simulate network loading
         isLoading = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.isLoading = false
             self?.totalPoints = 100
-            self?.categoryPoints = [
-                Point(id: "1", name: "Point 1", value: 10, type: .environment, doesPointCount: true),
-                Point(id: "2", name: "Point 2", value: 20, type: .culture, doesPointCount: false)
-            ]
+            self?.categoryPoints = [Point.MockPoint1, Point.MockPoint2]
+            self?.isLoading = false
         }
     }
     

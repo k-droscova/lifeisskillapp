@@ -117,8 +117,11 @@ struct Point: Identifiable {
     let location: UserLocation
     let doesPointCount: Bool
 
-    // Internal initializer from UserPoint
     internal init(from userPoint: UserPoint) {
+        /*
+         Note that id is record key in this case, since one specific point can be scanned multiple times (across multiple days).
+         Record key is the "id" of the scanned point instance, hence is unique for the user point.
+         */
         self.id = userPoint.recordKey
         self.pointId = userPoint.id
         self.name = userPoint.pointName
@@ -128,9 +131,12 @@ struct Point: Identifiable {
         self.location = userPoint.location
         self.doesPointCount = userPoint.doesPointCount
     }
-    
-    internal init(id: String, name: String, value: Int, type: PointType, doesPointCount: Bool) {
-        self.id = UUID().uuidString
+}
+
+extension Point {
+    // solely for previews
+    private init(id: String, name: String, value: Int, type: PointType, doesPointCount: Bool) {
+        self.id = UUID().uuidString // ensures unique id for all points, didnt want to initialize mocks with record keys
         self.pointId = id
         self.name = name
         self.value = value
@@ -145,4 +151,6 @@ struct Point: Identifiable {
         )
         self.doesPointCount = doesPointCount
     }
+    static let MockPoint1 = Point(id: "1", name: "Turistický bod AB123", value: 10, type: PointType.tourist, doesPointCount: true)
+    static let MockPoint2 = Point(id: "2", name: "Point 2", value: 20, type: PointType.culture, doesPointCount: false)
 }
