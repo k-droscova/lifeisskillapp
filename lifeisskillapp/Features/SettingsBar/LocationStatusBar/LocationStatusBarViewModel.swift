@@ -51,26 +51,26 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
             guard let stream = self?.locationManager.gpsStream else { return }
             for await _ in stream {
                 guard let self = self else { return }
-                await self.getGpsStatus()
+                self.getGpsStatus()
             }
         }
         
         Task { [weak self] in
             guard let self = self else { return }
             for await location in self.userDefaultsStorage.locationStream {
-                await self.updateLocation(location)
+                self.updateLocation(location)
             }
         }
     }
     
-    private func getGpsStatus() async {
-        await MainActor.run {
+    private func getGpsStatus() {
+        Task { @MainActor in
             self.isGpsOk = locationManager.gpsStatus
         }
     }
     
-    private func updateLocation(_ location: UserLocation?) async {
-        await MainActor.run {
+    private func updateLocation(_ location: UserLocation?) {
+        Task { @MainActor in
             self.userLocation = location
         }
     }
