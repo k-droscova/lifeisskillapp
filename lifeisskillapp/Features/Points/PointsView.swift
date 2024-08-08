@@ -41,7 +41,7 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
     
     private var buttonsView: some View {
         UserPointsTopLeftButtonsView(
-            isMapShown: $viewModel.isMapShown,
+            isMapShown: $viewModel.isMapButtonPressed,
             imageSize: PointsViewConstants.topButtonSize,
             buttonNotPressed: Color.black,
             buttonPressed: Color.colorLisBlue,            mapButtonAction: {
@@ -82,7 +82,7 @@ class MockPointsViewModel: BaseClass, PointsViewModeling, ObservableObject {
     @Published var csViewModel: MockCategorySelectorViewModel = MockCategorySelectorViewModel()
     
     @Published var isLoading: Bool = false
-    @Published var isMapShown: Bool = false
+    @Published var isMapButtonPressed: Bool = false
     @Published var username: String = "TestUser"
     @Published var userGender: UserGender = .male
     @Published var totalPoints: Int = 0

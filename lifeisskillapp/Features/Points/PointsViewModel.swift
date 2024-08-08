@@ -16,7 +16,7 @@ protocol PointsViewModeling: BaseClass, ObservableObject {
     var isLoading: Bool { get }
     
     // View state
-    var isMapShown: Bool { get set }
+    var isMapButtonPressed: Bool { get set }
     
     // User information
     var username: String { get }
@@ -52,7 +52,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     // MARK: - Public Properties
     
     @Published var isLoading: Bool = false
-    @Published var isMapShown: Bool = false
+    @Published var isMapButtonPressed: Bool = false
     @Published var username: String = ""
     @Published var userGender: UserGender
     @Published var totalPoints: Int = 0
