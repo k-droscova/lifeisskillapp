@@ -27,6 +27,9 @@ struct PointsListView: View {
 struct PointListItem: View {
     let point: Point
     let mapButtonAction: () -> Void
+    var pointValue: String {
+        "\(point.value)"
+    }
     
     var body: some View {
         PointListCard {
@@ -76,7 +79,7 @@ struct PointListItem: View {
     }
     
     private var pointsView: some View {
-        Text("\(point.value)")
+        Text(pointValue)
             .headline2
             .foregroundColor(point.doesPointCount ? CustomColors.ListPointCard.foreground.color : CustomColors.ListPointCard.invalidPoint.color)
             .frame(width: PointListItemConstants.pointsWidth, alignment: .trailing)

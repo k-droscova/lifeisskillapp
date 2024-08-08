@@ -100,17 +100,14 @@ class MockPointsViewModel: BaseClass, PointsViewModeling, ObservableObject {
     
     
     func mapButtonPressed() {
-        // Mock map button pressed behavior
         print("Mock map button pressed")
     }
     
     func listButtonPressed() {
-        // Mock list button pressed behavior
         print("Mock list button pressed")
     }
     
     func showPointOnMap(point: Point) {
-        // Mock show point on map behavior
         print("Mock showing map for point: \(point.name)")
     }
 }
