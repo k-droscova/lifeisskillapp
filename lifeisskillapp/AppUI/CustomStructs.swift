@@ -58,7 +58,7 @@ struct CustomProgressView: View {
 
 struct ListCard<Content: View>: View {
     let content: () -> Content
-
+    
     var body: some View {
         content()
             .padding(.vertical, CustomSizes.ListCard.verticalPadding.size)
@@ -136,6 +136,77 @@ struct StatusBarContainerView<Content: View, ViewModel: SettingsBarViewModeling>
         VStack(spacing: spacing) {
             SettingsBarView(viewModel: viewModel)
             content()
+        }
+      
+      struct PointListCard<Content: View>: View {
+    let content: () -> Content
+    var body: some View {
+        content()
+            .cornerRadius(CustomSizes.PointListCard.cornerRadius.size)
+            .shadow(radius: CustomSizes.PointListCard.shadowRadius.size)
+            .padding(.horizontal, CustomSizes.PointListCard.paddingHorizontal.size)
+            .padding(.vertical, CustomSizes.PointListCard.paddingVertical.size)
+    }
+}
+
+struct ExDivider: View {
+    let color: Color
+    let height: CGFloat
+    var body: some View {
+        Rectangle()
+            .fill(color)
+            .frame(height: height)
+            .edgesIgnoringSafeArea(.horizontal)
+    }
+}
+
+struct UserPointsTopLeftButtonsView: View {
+    @Binding var isMapShown: Bool
+    
+    enum ButtonType {
+        case map
+        case list
+    }
+    
+    let imageSize: CGFloat
+    let buttonNotPressed: Color
+    let buttonPressed: Color
+    var mapButtonAction: () -> Void
+    var listButtonAction: () -> Void
+    
+    internal init(isMapShown: Binding<Bool>, imageSize: CGFloat, buttonNotPressed: Color, buttonPressed: Color, mapButtonAction: @escaping () -> Void, listButtonAction: @escaping () -> Void) {
+        self._isMapShown = isMapShown
+        self.imageSize = imageSize
+        self.buttonNotPressed = buttonNotPressed
+        self.buttonPressed = buttonPressed
+        self.mapButtonAction = mapButtonAction
+        self.listButtonAction = listButtonAction
+    }
+    
+    var body: some View {
+        HStack {
+            Button(action: {
+                isMapShown = true
+                mapButtonAction()
+            }) {
+                Image(systemName: "map")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .squareFrame(size: imageSize)
+                    .foregroundColor(isMapShown ? buttonPressed : buttonNotPressed)
+                    .padding()
+            }
+            Button(action: {
+                isMapShown = false
+                listButtonAction()
+            }) {
+                Image(systemName: "list.bullet")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .squareFrame(size: imageSize)
+                    .foregroundColor(!isMapShown ? buttonPressed : buttonNotPressed)
+                    .padding()
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol UserCategoryManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
@@ -18,7 +19,7 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
     var delegate: UserCategoryManagerFlowDelegate? { get set }
     func getMainCategory() -> UserCategory?
     var selectedCategory: UserCategory? { get set }
-    var selectedCategoryStream: AsyncStream<UserCategory?> { get }
+    var selectedCategoryPublisher: AnyPublisher<UserCategory?, Never> { get }
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
@@ -30,7 +31,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     private let logger: LoggerServicing
     private let dataManager: UserLoginDataManaging
     private let userDataAPIService: UserDataAPIServicing
-    private var selectedCategoryContinuation: AsyncStream<UserCategory?>.Continuation?
+    private var selectedCategorySubject = CurrentValueSubject<UserCategory?, Never>(nil)
     
     // MARK: - Public Properties
     
@@ -55,15 +56,12 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     @Published var selectedCategory: UserCategory? {
         didSet {
-            triggerAsyncStream()
+            publishSelectedCategory()
         }
     }
     
-    var selectedCategoryStream: AsyncStream<UserCategory?> {
-        AsyncStream { continuation in
-            self.selectedCategoryContinuation = continuation
-            continuation.yield(self.selectedCategory)
-        }
+    var selectedCategoryPublisher: AnyPublisher<UserCategory?, Never> {
+        selectedCategorySubject.eraseToAnyPublisher()
     }
     
     // MARK: - Initialization
@@ -73,6 +71,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         self.logger = dependencies.logger
         self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
+        super.init()
     }
     
     // MARK: - Public Interface
@@ -107,9 +106,9 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     // MARK: - Private Helpers
     
-    private func triggerAsyncStream() {
+    private func publishSelectedCategory() {
         DispatchQueue.main.async {
-            self.selectedCategoryContinuation?.yield(self.selectedCategory)
+            self.selectedCategorySubject.send(self.selectedCategory)
         }
     }
 }
