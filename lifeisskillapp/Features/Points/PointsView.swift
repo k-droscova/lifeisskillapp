@@ -44,12 +44,9 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
             isMapShown: $viewModel.isMapButtonPressed,
             imageSize: PointsViewConstants.topButtonSize,
             buttonNotPressed: Color.black,
-            buttonPressed: Color.colorLisBlue,            mapButtonAction: {
-                viewModel.mapButtonPressed()
-            },
-            listButtonAction: {
-                viewModel.listButtonPressed()
-            }
+            buttonPressed: Color.colorLisBlue,            
+            mapButtonAction: viewModel.mapButtonPressed,
+            listButtonAction: viewModel.listButtonPressed
         )
     }
     
