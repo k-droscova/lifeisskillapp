@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol RankViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
@@ -30,6 +31,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Public Properties
     
@@ -54,6 +56,13 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
         self.setupBindings()
     }
     
+    // MARK: - Deinitialization
+    
+    deinit {
+        cancellables.forEach { $0.cancel() }
+        logger.log(message: "RankViewModel deinitialized and cancellables invalidated")
+    }
+    
     // MARK: - Public Interface
     
     func onAppear() {
@@ -68,13 +77,16 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
     // MARK: - Private Helpers
     
     private func setupBindings() {
-        Task { [weak self] in
-            guard let stream = self?.userCategoryManager.selectedCategoryStream else { return }
-            for await _ in stream {
-                guard let self = self else { return }
-                await self.getSelectedCategoryRanking()
+        print("BINDINGS: Setting up bindings in RankViewModel")
+        userCategoryManager.selectedCategoryPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] category in
+                print("BINDINGS: Received new category in RankViewModel: \(String(describing: category?.id))")
+                Task { [weak self] in
+                    await self?.getSelectedCategoryRanking()
+                }
             }
-        }
+            .store(in: &cancellables)
     }
     
     @MainActor
@@ -110,15 +122,12 @@ final class RankViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
             return
         }
         
-        // Find the user rank for the selected category
         if let userRank = userRankManager.getById(id: selectedCategory.id) {
-            // Convert RankedUser instances to Ranking instances
             let rankings = userRank.listUserRank.map { Ranking(from: $0) }
-            await MainActor.run {
-                self.categoryRankings = rankings
-            }
+            self.categoryRankings = rankings
         } else {
             logger.log(message: "No ranking data found for the selected category")
+            self.categoryRankings = []
             delegate?.onNoDataAvailable()
         }
     }

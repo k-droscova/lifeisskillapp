@@ -125,6 +125,10 @@
 		27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A462C4D334F00928388 /* UserLoginDataManager.swift */; };
 		27F528FE2C5A6FB50042F537 /* UIAssetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */; };
 		27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FF2C5A8A380042F537 /* ViewExtension.swift */; };
+		27F67E972C614CF700F1C63E /* PointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E962C614CF700F1C63E /* PointsViewModel.swift */; };
+		27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E982C615EAA00F1C63E /* PointsListView.swift */; };
+		27F67E9B2C61690800F1C63E /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9A2C61690800F1C63E /* PointsView.swift */; };
+		27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -282,6 +286,10 @@
 		27F27A462C4D334F00928388 /* UserLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginDataManager.swift; sourceTree = "<group>"; };
 		27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAssetEnums.swift; sourceTree = "<group>"; };
 		27F528FF2C5A8A380042F537 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		27F67E962C614CF700F1C63E /* PointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsViewModel.swift; sourceTree = "<group>"; };
+		27F67E982C615EAA00F1C63E /* PointsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsListView.swift; sourceTree = "<group>"; };
+		27F67E9A2C61690800F1C63E /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
+		27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsFlowCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,6 +480,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				27F67E952C61143600F1C63E /* Points */,
 				276CA9CC2C5E5FAF001D6394 /* Rank */,
 				275472CC2C5D0D0D00F5578F /* CategorySelector */,
 				2720DF242C513D28007B4E77 /* Home */,
@@ -552,6 +561,7 @@
 				2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */,
 				2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */,
 				276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */,
+				27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -848,6 +858,16 @@
 			path = Colors;
 			sourceTree = "<group>";
 		};
+		27F67E952C61143600F1C63E /* Points */ = {
+			isa = PBXGroup;
+			children = (
+				27F67E962C614CF700F1C63E /* PointsViewModel.swift */,
+				27F67E982C615EAA00F1C63E /* PointsListView.swift */,
+				27F67E9A2C61690800F1C63E /* PointsView.swift */,
+			);
+			path = Points;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1040,6 +1060,8 @@
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
 				2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */,
+				27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */,
+				27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
@@ -1090,11 +1112,13 @@
 				2734DCA62C469442008030F3 /* UserPoint.swift in Sources */,
 				2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */,
 				275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */,
+				27F67E9B2C61690800F1C63E /* PointsView.swift in Sources */,
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
 				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,
 				2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */,
 				27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */,
 				27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */,
+				27F67E972C614CF700F1C63E /* PointsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

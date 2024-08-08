@@ -54,6 +54,16 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         // MARK: CATEGORY SELECTOR
         let csVM = CategorySelectorViewModel(dependencies: appDependencies)
         
+        // MARK: POINTS
+        let pointsFC = PointsFlowCoordinator(delegate: self, categorySelectorVM: csVM)
+        addChild(pointsFC)
+        let pointsVC = pointsFC.start()
+        pointsVC.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("points.title", comment: ""),
+            image: Constants.TabBar.Points.unselected.icon,
+            selectedImage: Constants.TabBar.Points.selected.icon
+        )
+        
         // MARK: HOME
         let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVM: csVM)
         addChild(homeFC)
@@ -65,7 +75,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: RANK
-        let rankFC = RankFlowCoordinator(categorySelectorVM: csVM)
+        let rankFC = RankFlowCoordinator(delegate: self, categorySelectorVM: csVM)
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
@@ -78,6 +88,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
             debugVC,
+            pointsVC,
             homeVC,
             rankVC
         ]
@@ -195,4 +206,10 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
     
+}
+
+extension MainFlowCoordinator: RankFlowCoordinatorDelegate {
+}
+
+extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {
 }

@@ -127,6 +127,20 @@ enum CustomColors {
             }
         }
     }
+    
+    enum ListPointCard {
+        case foreground, invalidPoint, shadow
+        var color: Color {
+            switch self {
+            case .foreground:
+                Color.white
+            case .invalidPoint:
+                Color.colorLisDarkGrey
+            case .shadow:
+                Color.blackOverlay
+            }
+        }
+    }
 }
 
 enum CustomSizes {
@@ -144,6 +158,22 @@ enum CustomSizes {
                 1
             case .shadowY:
                 2
+            }
+        }
+    }
+    
+    enum PointListCard {
+        case cornerRadius, shadowRadius, paddingVertical, paddingHorizontal
+        var size: CGFloat {
+            switch self {
+            case .cornerRadius:
+                10
+            case .shadowRadius:
+                2
+            case .paddingVertical:
+                4
+            case .paddingHorizontal:
+                24
             }
         }
     }
