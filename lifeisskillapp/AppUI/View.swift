@@ -115,6 +115,6 @@ extension View {
 extension View {
     func squareFrame(size: CGFloat) -> some View {
         self
-            .frame(width: size, height: size)
+            .frame(width: size, height: size, alignment: .center)
     }
 }

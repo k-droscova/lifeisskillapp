@@ -13,7 +13,7 @@ struct PointsListView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 16) {
+            LazyVStack() {
                 ForEach(points) { point in
                     PointListItem(point: point, mapButtonAction: {
                         mapButtonAction(point)
@@ -40,7 +40,7 @@ struct PointListItem: View {
             pointInfoView
             ExDivider(
                 color: CustomColors.ListPointCard.foreground.color,
-                width: PointListItemConstants.dividerHeight
+                height: PointListItemConstants.dividerHeight
             )
             mapIconView
         }
@@ -54,11 +54,11 @@ struct PointListItem: View {
             Spacer()
             pointsView
         }
-        .padding()
+        .padding(PointListItemConstants.topBarHorizontalPadding)
     }
     
     private var dateView: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading) {
             Text(point.time.getTimeString())
             Text(point.time.getDayString())
             Text(point.time.getYearString())
@@ -90,7 +90,9 @@ struct PointListItem: View {
                     .resizable()
                     .squareFrame(size: PointListItemConstants.mapIconSize)
                     .foregroundStyle(CustomColors.ListPointCard.foreground.color)
-                    .padding()
+                    .padding(.horizontal, PointListItemConstants.bottomBarHorizontalPadding)
+                    .padding(.top, PointListItemConstants.bottomBarTopPadding)
+                    .padding(.bottom, PointListItemConstants.bottomBarBottomPadding)
             }
         }
     }
@@ -100,6 +102,10 @@ struct PointListItem: View {
         static let pointsWidth: CGFloat = 40
         static let mapIconSize: CGFloat = 20
         static let dividerHeight: CGFloat = 2.5
+        static let topBarHorizontalPadding: CGFloat = 12
+        static let bottomBarBottomPadding: CGFloat = 12
+        static let bottomBarTopPadding: CGFloat = 4
+        static let bottomBarHorizontalPadding: CGFloat = 12
     }
 }
 

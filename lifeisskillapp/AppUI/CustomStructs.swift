@@ -113,11 +113,11 @@ struct PointListCard<Content: View>: View {
 
 struct ExDivider: View {
     let color: Color
-    let width: CGFloat
+    let height: CGFloat
     var body: some View {
         Rectangle()
             .fill(color)
-            .frame(height: width)
+            .frame(height: height)
             .edgesIgnoringSafeArea(.horizontal)
     }
 }
