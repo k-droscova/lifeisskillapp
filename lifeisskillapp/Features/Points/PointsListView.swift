@@ -20,7 +20,6 @@ struct PointsListView: View {
                     })
                 }
             }
-            .padding()
         }
     }
 }

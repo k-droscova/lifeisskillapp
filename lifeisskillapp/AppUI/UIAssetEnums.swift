@@ -163,13 +163,17 @@ enum CustomSizes {
     }
     
     enum PointListCard {
-        case cornerRadius, shadowRadius
+        case cornerRadius, shadowRadius, paddingVertical, paddingHorizontal
         var size: CGFloat {
             switch self {
             case .cornerRadius:
                 10
             case .shadowRadius:
                 2
+            case .paddingVertical:
+                4
+            case .paddingHorizontal:
+                24
             }
         }
     }

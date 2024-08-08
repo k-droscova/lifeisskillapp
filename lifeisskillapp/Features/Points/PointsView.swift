@@ -72,7 +72,7 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
 }
 
 enum PointsViewConstants {
-    static let vStackSpacing: CGFloat = 8
+    static let vStackSpacing: CGFloat = 16
     static let topButtonSize: CGFloat = 20
     static let imageSize: CGFloat = 200
     static let horizontalPadding: CGFloat = 4
