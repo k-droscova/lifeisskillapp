@@ -65,7 +65,7 @@ struct LocationStatusBarViewConstants {
     static let locationTextWidth: CGFloat = 180
 }
 
-class MockLocationStatusBarViewModel: BaseClass, LocationStatusBarViewModeling, ObservableObject {
+/*class MockLocationStatusBarViewModel: BaseClass, LocationStatusBarViewModeling, ObservableObject {
     required init(dependencies: any HasUserDefaultsStorage & HasLoggers & HasLocationManager) {
         // Mock implementation - no actual initialization needed for dependencies
         super.init()
@@ -128,3 +128,4 @@ class MockLocationManager: LocationManaging {
         // Mock implementation
     }
 }
+*/

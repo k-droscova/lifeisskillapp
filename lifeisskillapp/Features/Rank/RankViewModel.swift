@@ -20,7 +20,7 @@ protocol RankViewModeling: BaseClass, ObservableObject {
 }
 
 final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, RankViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     

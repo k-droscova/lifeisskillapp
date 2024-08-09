@@ -21,12 +21,12 @@ protocol SettingsBarViewModeling: BaseClass, ObservableObject {
     func cameraPressed()
     func settingsPressed()
     func onboardingPressed()
-    init(dependencies: any HasUserDefaultsStorage & HasLoggers & HasLocationManager & HasUserManager, delegate: SettingsBarFlowDelegate?)
+    init(dependencies: any HasUserDefaultsStorage & HasLoggers & HasLocationManager & HasUserManager & HasNetworkMonitor, delegate: SettingsBarFlowDelegate?)
 
 }
 
 final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: BaseClass, ObservableObject, SettingsBarViewModeling {
-    typealias Dependencies = HasUserDefaultsStorage & HasLoggers & HasLocationManager & HasUserManager
+    typealias Dependencies = HasUserDefaultsStorage & HasLoggers & HasLocationManager & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
