@@ -25,6 +25,7 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
                 spacing: PointsViewConstants.vStackSpacing
             ) {
                 userInfoView
+                
                 PointsListView(
                     points: viewModel.categoryPoints
                 ) { point in

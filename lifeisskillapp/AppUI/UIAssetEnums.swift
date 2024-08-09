@@ -31,7 +31,7 @@ enum CustomImages: String {
         case backPink = "Icons/CornerIcons/back_pink"
         case backBlack = "Icons/CornerIcons/back"
         case changeUserData =
-        "Icons/CornerIcons/changeUserData"
+                "Icons/CornerIcons/changeUserData"
         case flashOn = "Icons/CornerIcons/flashOn"
         case flashOff = "Icons/CornerIcons/flashOff"
         case message = "Icons/CornerIcons/message"
@@ -141,8 +141,8 @@ enum CustomColors {
             }
         }
     }
-
-   enum ListPointCard {
+    
+    enum ListPointCard {
         case foreground, invalidPoint, shadow
         var color: Color {
             switch self {
@@ -188,6 +188,18 @@ enum CustomSizes {
                 4
             case .paddingHorizontal:
                 24
+            }
+        }
+    }
+    
+    enum UserPointsTopLeftButtonsView {
+        case horizontalPadding, referenceUserNameTextHeight
+        var size: CGFloat {
+            switch self {
+            case .horizontalPadding:
+                24
+            case .referenceUserNameTextHeight:
+                24 // MARK: should always equal to the lineHeight of the selcted font for userName Text used in top left corner of home and rank screens
             }
         }
     }
