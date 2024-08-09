@@ -43,7 +43,7 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
     
     private var buttons: some View {
         HStack(spacing: 24) {
-            cameraButton
+            // cameraButton MARK: not implemented at the moment
             menuButton
         }
         .padding(.trailing, 4)

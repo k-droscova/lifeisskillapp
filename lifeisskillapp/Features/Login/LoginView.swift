@@ -11,27 +11,11 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
     @StateObject var viewModel: ViewModel
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            loginImageView
-            
-            VStack(spacing: LoginViewConstants.spacing) {
-                usernameTextField
-                passwordSecureField
-            }
-            .body1Regular
-            .foregroundStyle(Color.colorLisDarkGrey)
-            .kerning(1.2)
-            .padding(.horizontal, LoginViewConstants.horizontalPadding)
-            
-            loginButton
-                .padding(.horizontal, LoginViewConstants.horizontalPadding)
-                .padding(.top, LoginViewConstants.topPadding)
-            
-            Spacer()
-            
-            bottomButtons
+        StatusBarContainerView(
+            viewModel: self.viewModel.settingsViewModel,
+            spacing: 0
+        ) {
+            contentView
         }
         .onAppear {
             viewModel.onAppear()
@@ -47,6 +31,23 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
 }
 
 private extension LoginView {
+    private var contentView: some View {
+        VStack {
+            Spacer()
+            
+            loginImageView
+            
+            textFields
+            
+            loginButton
+                .padding(.horizontal, LoginViewConstants.horizontalPadding)
+                .padding(.top, LoginViewConstants.topPadding)
+            
+            Spacer()
+            
+            bottomButtons
+        }
+    }
     
     private var loginImageView: some View {
         Image(CustomImages.Screens.login.rawValue)
@@ -66,6 +67,17 @@ private extension LoginView {
         .padding()
         .background(LoginViewConstants.Colors.textFieldBackground)
         .cornerRadius(LoginViewConstants.cornerRadius)
+    }
+    
+    private var textFields: some View {
+        VStack(spacing: LoginViewConstants.spacing) {
+            usernameTextField
+            passwordSecureField
+        }
+        .body1Regular
+        .foregroundStyle(Color.colorLisDarkGrey)
+        .kerning(1.2)
+        .padding(.horizontal, LoginViewConstants.horizontalPadding)
     }
     
     private var passwordSecureField: some View {
@@ -124,54 +136,55 @@ enum LoginViewConstants {
         static let disabledText = Color.colorLisDarkGrey
     }
 }
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockViewModel = MockLoginViewModel()
-        LoginView(viewModel: mockViewModel)
-    }
-}
-
-class MockLoginViewModel: BaseClass, LoginViewModeling, ObservableObject {
-    @Published var username: String = "dc" {
-        didSet {
-            shouldEnableLoginButton()
-        }
-    }
-    @Published var password: String = "csdc" {
-        didSet {
-            shouldEnableLoginButton()
-        }
-    }
-    @Published var isLoginEnabled: Bool = false
-    @Published var isLoading: Bool = false
-    
-    func login() {
-        // Mock loading behavior
-        isLoading = true
-        print("Login started")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.isLoading = false
-            print("Login finished")
-        }
-    }
-    
-    func onAppear() {
-        // Mock onAppear behavior
-        print("Mock onAppear")
-    }
-    
-    func register() {
-        // Mock register behavior
-        print("Mock register")
-    }
-    
-    func forgotPassword() {
-        // Mock forgotPassword behavior
-        print("Mock forgotPassword")
-    }
-    
-    private func shouldEnableLoginButton() {
-        isLoginEnabled = username.isNotEmpty && password.isNotEmpty
-    }
-}
+/*
+ struct LoginView_Previews: PreviewProvider {
+ static var previews: some View {
+ let mockViewModel = MockLoginViewModel()
+ LoginView(viewModel: mockViewModel)
+ }
+ }
+ 
+ class MockLoginViewModel: BaseClass, LoginViewModeling, ObservableObject {
+ @Published var username: String = "dc" {
+ didSet {
+ shouldEnableLoginButton()
+ }
+ }
+ @Published var password: String = "csdc" {
+ didSet {
+ shouldEnableLoginButton()
+ }
+ }
+ @Published var isLoginEnabled: Bool = false
+ @Published var isLoading: Bool = false
+ 
+ func login() {
+ // Mock loading behavior
+ isLoading = true
+ print("Login started")
+ DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+ self.isLoading = false
+ print("Login finished")
+ }
+ }
+ 
+ func onAppear() {
+ // Mock onAppear behavior
+ print("Mock onAppear")
+ }
+ 
+ func register() {
+ // Mock register behavior
+ print("Mock register")
+ }
+ 
+ func forgotPassword() {
+ // Mock forgotPassword behavior
+ print("Mock forgotPassword")
+ }
+ 
+ private func shouldEnableLoginButton() {
+ isLoginEnabled = username.isNotEmpty && password.isNotEmpty
+ }
+ }
+ */

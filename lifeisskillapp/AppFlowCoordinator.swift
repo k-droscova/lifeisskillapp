@@ -41,8 +41,9 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     }
 
     private func showLogin() {
-        let loginFC = LoginFlowCoordinator()
-        loginFC.delegate = self
+        let loginFC = LoginFlowCoordinator<SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self
+        )
         addChild(loginFC)
         let loginVC = loginFC.start()
         
