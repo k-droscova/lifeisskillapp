@@ -56,21 +56,20 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
     
     private func setupBindings() {
         // GPS Status Binding
-        Task { [weak self] in
-            guard let stream = self?.locationManager.gpsStream else { return }
-            for await _ in stream {
-                guard let self = self else { return }
-                self.getGpsStatus()
+        locationManager.gpsStatusPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isGpsOk in
+                self?.updateGpsStatus(status: isGpsOk)
             }
-        }
+            .store(in: &cancellables)
         
         // Location Binding
-        Task { [weak self] in
-            guard let self = self else { return }
-            for await location in self.userDefaultsStorage.locationStream {
-                self.updateLocation(location)
+        userDefaultsStorage.locationPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] location in
+                self?.updateLocation(location)
             }
-        }
+            .store(in: &cancellables)
         
         // Network Status Binding
         networkMonitor.onlineStatusPublisher
@@ -81,11 +80,9 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
             .store(in: &cancellables)
     }
     
-    // MARK: - Private Helpers
-    
-    private func getGpsStatus() {
+    private func updateGpsStatus(status: Bool) {
         Task { @MainActor in
-            self.isGpsOk = locationManager.gpsStatus
+            self.isGpsOk = status
         }
     }
     

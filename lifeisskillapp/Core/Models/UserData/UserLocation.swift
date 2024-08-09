@@ -27,6 +27,6 @@ struct UserLocation: Codable {
     }
     
     var description: String {
-        String(format: "%.6f, %.6f, %.2f, %.2f", latitude, longitude, altitude, accuracy)
+        String(format: "%.5f, %.5f, %.2f, %.2f", latitude, longitude, altitude, accuracy)
     }
 }

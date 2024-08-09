@@ -74,7 +74,6 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
     
     private func handleNetworkChange(path: NWPath) {
         let status = path.status == .satisfied
-        logger.log(message: "Network status changed: \(status)")
         updateOnlineStatus(status: status)
         guard !status else { return }
         delegate?.onNoInternetConnection()

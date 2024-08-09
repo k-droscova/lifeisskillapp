@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import Combine
 
 protocol HasUserDefaultsStorage {
     var userDefaultsStorage: UserDefaultsStoraging { get set }
@@ -16,7 +17,7 @@ protocol UserDefaultsStoraging {
     var appId: String? { get set }
     var location: UserLocation? { get set }
     var checkSumData: CheckSumData? { get set }
-    var locationStream: AsyncStream<UserLocation?> { get }
+    var locationPublisher: AnyPublisher<UserLocation?, Never> { get }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
@@ -25,7 +26,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private var locationContinuation: AsyncStream<UserLocation?>.Continuation?
+    private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil)
     
     // MARK: - Public Properties
     
@@ -44,7 +45,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
         set {
             UserDefaults.standard.location = newValue
-            triggerLocationAsyncStream()
+            triggerLocationPublisher()
         }
     }
     
@@ -57,26 +58,24 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
     }
     
-    // MARK: - Async Streams
+    // MARK: - Publisher
     
-    var locationStream: AsyncStream<UserLocation?> {
-        AsyncStream { continuation in
-            self.locationContinuation = continuation
-            continuation.yield(self.location)
-        }
+    var locationPublisher: AnyPublisher<UserLocation?, Never> {
+        return locationSubject.eraseToAnyPublisher()
     }
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
+        self.locationSubject.send(self.location) // Initialize with the current location
     }
     
     // MARK: - Private Helpers
     
-    private func triggerLocationAsyncStream() {
-        DispatchQueue.main.async {
-            self.locationContinuation?.yield(self.location)
+    private func triggerLocationPublisher() {
+        Task { @MainActor in
+            self.locationSubject.send(self.location)
         }
     }
 }
