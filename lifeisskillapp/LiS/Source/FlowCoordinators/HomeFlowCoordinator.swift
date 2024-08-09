@@ -29,16 +29,22 @@ protocol HomeFlowDelegate: NSObject {
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
-final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling>: Base.FlowCoordinatorNoDeepLink {
+final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: (any HomeViewModeling)?
+    private weak var settingsDelegate: SettingsBarFlowDelegate?
     private var categorySelectorVM: csVM
     
     // MARK: - Initialization
     
-    init(delegate: HomeFlowCoordinatorDelegate? = nil, categorySelectorVM: csVM) {
+    init(
+        delegate: HomeFlowCoordinatorDelegate? = nil,
+        settingsDelegate: SettingsBarFlowDelegate? = nil,
+        categorySelectorVM: csVM
+    ) {
         self.delegate = delegate
+        self.settingsDelegate = settingsDelegate
         self.categorySelectorVM = categorySelectorVM
     }
     
@@ -46,15 +52,19 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling>: Base.FlowCo
     ///
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
-        let viewModel = HomeViewModel(
+        let viewModel = HomeViewModel<csVM, statusBarVM>(
             dependencies: .init(
                 scanningManager: appDependencies.scanningManager,
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
-                userLoginManager: appDependencies.userLoginManager
-            ), 
+                userLoginManager: appDependencies.userLoginManager,
+                userDefaultsStorage: appDependencies.userDefaultsStorage,
+                userManager: appDependencies.userManager,
+                networkMonitor: appDependencies.networkMonitor
+            ),
             categorySelectorVM: self.categorySelectorVM,
-            delegate: self
+            delegate: self,
+            settingsDelegate: self.settingsDelegate
         )
         self.homeVM = viewModel
         let homeController = HomeView(viewModel: viewModel).hosting()

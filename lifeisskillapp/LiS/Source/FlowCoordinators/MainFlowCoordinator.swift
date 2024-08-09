@@ -55,7 +55,11 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         let csVM = CategorySelectorViewModel(dependencies: appDependencies)
         
         // MARK: POINTS
-        let pointsFC = PointsFlowCoordinator(delegate: self, categorySelectorVM: csVM)
+        let pointsFC = PointsFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
+            settingsDelegate: self,
+            categorySelectorVM: csVM
+        )
         addChild(pointsFC)
         let pointsVC = pointsFC.start()
         pointsVC.tabBarItem = UITabBarItem(
@@ -65,7 +69,11 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: HOME
-        let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVM: csVM)
+        let homeFC = HomeFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
+            settingsDelegate: self,
+            categorySelectorVM: csVM
+        )
         addChild(homeFC)
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
