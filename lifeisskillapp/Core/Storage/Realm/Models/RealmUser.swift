@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmUser: Object {
-    @objc dynamic var userId: String = ""
+    @objc dynamic var userID: String = ""
     @objc dynamic var email: String = ""
     @objc dynamic var nick: String = ""
     @objc dynamic var sexRaw: String = ""
@@ -17,7 +17,7 @@ class RealmUser: Object {
     let rankings = List<RealmRanking>()
 
     override static func primaryKey() -> String? {
-        "userId"
+        "userID"
     }
 
     var sex: UserGender {

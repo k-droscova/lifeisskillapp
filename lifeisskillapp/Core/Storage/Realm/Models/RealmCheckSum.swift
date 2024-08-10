@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmCheckSumData: Object {
-    @objc dynamic var id: String = "checksum" // Single instance identified by a constant ID
+    @objc dynamic var checkSumID: String = "checksum" // Single instance identified by a constant ID
     @objc dynamic var userPoints: String = ""
     @objc dynamic var rank: String = ""
     @objc dynamic var messages: String = ""
@@ -17,7 +17,7 @@ class RealmCheckSumData: Object {
     @objc dynamic var points: String = ""
 
     override static func primaryKey() -> String? {
-        "id"
+        "checkSumID"
     }
 
     override required init() {

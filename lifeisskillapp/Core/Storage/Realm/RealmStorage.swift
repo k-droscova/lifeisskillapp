@@ -55,12 +55,24 @@ public final class RealmStorage: BaseClass, RealmStoraging {
         configurations.fileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent("LifeIsSkill.realm")
         
         // Set the schema version. This must be incremented whenever schema changes
-        configurations.schemaVersion = 1
+        configurations.schemaVersion = 2 // first migration -> renamind *Id to *ID
         
         // Set the migration block
         configurations.migrationBlock = { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
-                // Perform migrations if needed
+                // do nothing
+            }
+            if oldSchemaVersion < 2 {
+                migration.renameProperty(onType: RealmCheckSumData.className(), from: "id", to: "checkSumID")
+                migration.renameProperty(onType: RealmLoginDetails.className(), from: "userId", to: "userID")
+                migration.renameProperty(onType: RealmUser.className(), from: "userId", to: "userID")
+                migration.renameProperty(onType: RealmCategory.className(), from: "categoryId", to: "categoryID")
+                migration.renameProperty(onType: RealmRanking.className(), from: "rankingId", to: "rankingID")
+                migration.renameProperty(onType: RealmRanking.className(), from: "userId", to: "userID")
+                migration.renameProperty(onType: RealmRanking.className(), from: "categoryId", to: "categoryID")
+                migration.renameProperty(onType: RealmPoint.className(), from: "pointId", to: "pointID")
+                migration.renameProperty(onType: RealmPoint.className(), from: "sponsorId", to: "sponsorID")
+                migration.renameProperty(onType: RealmPointScan.className(), from: "scanId", to: "scanID")
             }
         }
         

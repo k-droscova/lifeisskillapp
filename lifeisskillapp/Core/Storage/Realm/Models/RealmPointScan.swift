@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmPointScan: Object {
-    @objc dynamic var scanId: String = ""
+    @objc dynamic var scanID: String = ""
     @objc dynamic var recordKey: String = ""
     @objc dynamic var pointTime: Date = Date()
     @objc dynamic var accuracy: Double = 0.0
@@ -20,7 +20,7 @@ class RealmPointScan: Object {
     @objc dynamic var duration: TimeInterval = 0.0
 
     override static func primaryKey() -> String? {
-        "scanId"
+        "scanID"
     }
 
     override required init() {

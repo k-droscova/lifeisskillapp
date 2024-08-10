@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmLoginDetails: Object {
-    @objc dynamic var userId: String = ""
+    @objc dynamic var userID: String = ""
     @objc dynamic var rights: Int = 0
     @objc dynamic var rightsCoded: String = ""
     @objc dynamic var token: String = ""
@@ -18,7 +18,7 @@ class RealmLoginDetails: Object {
     @objc dynamic var user: RealmUser?
 
     override static func primaryKey() -> String? {
-        "userId"
+        "userID"
     }
 
     override required init() {

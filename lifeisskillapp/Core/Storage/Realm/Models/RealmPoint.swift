@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmPoint: Object {
-    @objc dynamic var pointId: String = ""
+    @objc dynamic var pointID: String = ""
     @objc dynamic var pointLat: Double = 0.0
     @objc dynamic var pointLng: Double = 0.0
     @objc dynamic var pointAlt: Double = 0.0
@@ -18,13 +18,13 @@ class RealmPoint: Object {
     @objc dynamic var pointType: Int = 0
     @objc dynamic var cluster: String = ""
     @objc dynamic var pointSpec: Int = 0
-    @objc dynamic var sponsorId: String = ""
+    @objc dynamic var sponsorID: String = ""
     @objc dynamic var hasDetail: Bool = false
     @objc dynamic var active: Bool = false
     @objc dynamic var param: RealmPointParam?
 
     override static func primaryKey() -> String? {
-        "pointId"
+        "pointID"
     }
 
     override required init() {

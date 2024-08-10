@@ -9,13 +9,13 @@ import Foundation
 import RealmSwift
 
 class RealmCategory: Object {
-    @objc dynamic var categoryId: String = ""
+    @objc dynamic var categoryID: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var detail: String = ""
     @objc dynamic var isPublic: Bool = false
 
     override static func primaryKey() -> String? {
-        "categoryId"
+        "categoryID"
     }
 
     override required init() {
