@@ -10,9 +10,11 @@ import Observation
 
 protocol HomeViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
+    associatedtype settingBarVM: SettingsBarViewModeling
     var username: String { get }
     var isLoading: Bool { get }
     var csViewModel: categorySelectorVM { get }
+    var settingsViewModel: settingBarVM { get }
     func onAppear()
     func loadWithNFC()
     func loadWithQRCode()
@@ -22,12 +24,15 @@ protocol HomeViewModeling: BaseClass, ObservableObject {
 }
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
-final class HomeViewModel<csVM: CategorySelectorViewModeling>: BaseClass, ObservableObject, HomeViewModeling {
-    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserLoginManager {
+final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, HomeViewModeling {
+    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserLoginManager & SettingsBarViewModel.Dependencies {
         let scanningManager: ScanningManaging
         let logger: LoggerServicing
         let locationManager: LocationManaging
         let userLoginManager: UserLoginDataManaging
+        var userDefaultsStorage: UserDefaultsStoraging
+        let userManager: UserManaging
+        let networkMonitor: NetworkMonitoring
     }
     
     // MARK: - Private Properties
@@ -41,20 +46,36 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
     private let userDataManager: UserLoginDataManaging
+    private var userDefaultsStorage: UserDefaultsStoraging
+    private let userManager: UserManaging
+    private let networkMonitor: NetworkMonitoring
     
     // MARK: - Public Properties
     
     @Published var username: String = ""
     @Published private(set) var isLoading: Bool = false
     var csViewModel: csVM
+    var settingsViewModel: settingBarVM
     
-    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: HomeFlowDelegate? = nil) {
+    init(
+        dependencies: Dependencies,
+        categorySelectorVM: csVM,
+        delegate: HomeFlowDelegate? = nil,
+        settingsDelegate: SettingsBarFlowDelegate?
+    ) {
         self.locationManager = dependencies.locationManager
         self.scanningManager = dependencies.scanningManager
         self.logger = dependencies.logger
         self.userDataManager = dependencies.userLoginManager
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
+        self.userManager = dependencies.userManager
+        self.networkMonitor = dependencies.networkMonitor
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
+        self.settingsViewModel = settingBarVM.init(
+            dependencies: dependencies,
+            delegate: settingsDelegate
+        )
     }
     
     // MARK: - Public Interface
@@ -73,7 +94,10 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
                 scanningManager: self.scanningManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userLoginManager: self.userDataManager
+                userLoginManager: self.userDataManager,
+                userDefaultsStorage: self.userDefaultsStorage,
+                userManager: self.userManager,
+                networkMonitor: self.networkMonitor
             ),
             delegate: self.delegate
         )
@@ -86,7 +110,10 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
                 scanningManager: self.scanningManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userLoginManager: self.userDataManager
+                userLoginManager: self.userDataManager,
+                userDefaultsStorage: self.userDefaultsStorage,
+                userManager: self.userManager,
+                networkMonitor: self.networkMonitor
             ),
             delegate: self.delegate
         )
@@ -103,7 +130,10 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Observ
                 scanningManager: self.scanningManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userLoginManager: self.userDataManager
+                userLoginManager: self.userDataManager,
+                userDefaultsStorage: self.userDefaultsStorage,
+                userManager: self.userManager,
+                networkMonitor: self.networkMonitor
             ),
             delegate: self.delegate
         )

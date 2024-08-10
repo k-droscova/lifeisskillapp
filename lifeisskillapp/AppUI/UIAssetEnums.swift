@@ -31,7 +31,7 @@ enum CustomImages: String {
         case backPink = "Icons/CornerIcons/back_pink"
         case backBlack = "Icons/CornerIcons/back"
         case changeUserData =
-        "Icons/CornerIcons/changeUserData"
+                "Icons/CornerIcons/changeUserData"
         case flashOn = "Icons/CornerIcons/flashOn"
         case flashOff = "Icons/CornerIcons/flashOff"
         case message = "Icons/CornerIcons/message"
@@ -127,6 +127,34 @@ enum CustomColors {
             }
         }
     }
+    
+    enum LocationStatusBar {
+        case statusOn, statusOff, foreground
+        var color: Color {
+            switch self {
+            case .statusOn:
+                Color.colorLisGreen
+            case .statusOff:
+                Color.colorLisRed
+            case .foreground:
+                Color.colorLisDarkGrey
+            }
+        }
+    }
+    
+    enum ListPointCard {
+        case foreground, invalidPoint, shadow
+        var color: Color {
+            switch self {
+            case .foreground:
+                Color.white
+            case .invalidPoint:
+                Color.colorLisDarkGrey
+            case .shadow:
+                Color.blackOverlay
+            }
+        }
+    }
 }
 
 enum CustomSizes {
@@ -144,6 +172,34 @@ enum CustomSizes {
                 1
             case .shadowY:
                 2
+            }
+        }
+    }
+    
+    enum PointListCard {
+        case cornerRadius, shadowRadius, paddingVertical, paddingHorizontal
+        var size: CGFloat {
+            switch self {
+            case .cornerRadius:
+                10
+            case .shadowRadius:
+                2
+            case .paddingVertical:
+                4
+            case .paddingHorizontal:
+                24
+            }
+        }
+    }
+    
+    enum UserPointsTopLeftButtonsView {
+        case horizontalPadding, referenceUserNameTextHeight
+        var size: CGFloat {
+            switch self {
+            case .horizontalPadding:
+                24
+            case .referenceUserNameTextHeight:
+                24 // MARK: should always equal to the lineHeight of the selcted font for userName Text used in top left corner of home and rank screens
             }
         }
     }

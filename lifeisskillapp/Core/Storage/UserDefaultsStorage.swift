@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import Combine
 
 protocol HasUserDefaultsStorage {
     var userDefaultsStorage: UserDefaultsStoraging { get set }
@@ -16,6 +17,7 @@ protocol UserDefaultsStoraging {
     var appId: String? { get set }
     var location: UserLocation? { get set }
     var checkSumData: CheckSumData? { get set }
+    var locationPublisher: AnyPublisher<UserLocation?, Never> { get }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
@@ -24,6 +26,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
+    private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil)
     
     // MARK: - Public Properties
     
@@ -42,6 +45,7 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
         set {
             UserDefaults.standard.location = newValue
+            triggerLocationPublisher()
         }
     }
     
@@ -54,9 +58,24 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
     }
     
+    // MARK: - Publisher
+    
+    var locationPublisher: AnyPublisher<UserLocation?, Never> {
+        return locationSubject.eraseToAnyPublisher()
+    }
+    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
+        self.locationSubject.send(self.location) // Initialize with the current location
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func triggerLocationPublisher() {
+        Task { @MainActor [weak self] in
+            self?.locationSubject.send(self?.location)
+        }
     }
 }

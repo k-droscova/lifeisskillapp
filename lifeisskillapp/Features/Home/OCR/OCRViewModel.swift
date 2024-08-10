@@ -64,12 +64,12 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     private func sendScannedPointToAPI(_ code: String) {
         locationManager.checkLocationAuthorization()
         let point = LoadPoint(code: code, codeSource: .text)
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
             do {
-                try await scanningManager.sendScannedPoint(point)
-                self.delegate?.onSuccess(source: .text)
+                try await self?.scanningManager.sendScannedPoint(point)
+                self?.delegate?.onSuccess(source: .text)
             } catch {
-                self.delegate?.onFailure(source: .text)
+                self?.delegate?.onFailure(source: .text)
             }
         }
     }

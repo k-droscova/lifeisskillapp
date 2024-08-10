@@ -67,6 +67,14 @@ public extension View {
         )
     }
     
+    var locationCaption: some View {
+        self.font(
+            AssetsFontFamily.Roboto.regular(size: 8),
+            lineHeight: 12,
+            textStyle: .caption1
+        )
+    }
+    
     var footnote: some View {
         self.font(
             AssetsFontFamily.Roboto.regular(size: 13),
@@ -115,6 +123,6 @@ extension View {
 extension View {
     func squareFrame(size: CGFloat) -> some View {
         self
-            .frame(width: size, height: size)
+            .frame(width: size, height: size, alignment: .center)
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import Combine
 
 /// Protocol for the flow delegate to handle location updates and errors. This is handled by AppFlowCoordinator
 protocol LocationManagerFlowDelegate: NSObject {
@@ -22,6 +23,8 @@ protocol HasLocationManager {
 /// Protocol defining the interface for managing location services.
 protocol LocationManaging {
     var delegate: LocationManagerFlowDelegate? { get set }
+    var gpsStatusPublisher: AnyPublisher<Bool, Never> { get }
+    var gpsStatus: Bool { get }
     /// Checks the location authorization status and requests permission if needed.
     func checkLocationAuthorization()
 }
@@ -35,10 +38,17 @@ public final class LocationManager: BaseClass, LocationManaging {
     private let locationManager = CLLocationManager()
     private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
+    private let gpsSubject = CurrentValueSubject<Bool, Never>(true)
     
     // MARK: - Public Properties
     
     weak var delegate: LocationManagerFlowDelegate?
+    var gpsStatusPublisher: AnyPublisher<Bool, Never> {
+            return gpsSubject.eraseToAnyPublisher()
+    }
+    var gpsStatus: Bool {
+        gpsSubject.value
+    }
     
     // MARK: - Initialization
     
@@ -78,12 +88,11 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - locations: An array of CLLocation objects representing the locations that were updated.
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        /*logger.log(message: "New location saved:\n"
-                   + "LAT: \(location.coordinate.latitude.description), "
-                   + "LON: \(location.coordinate.longitude.description), "
-                   + "ALT: \(location.altitude.description)"
-        )*/
         userDefaultsStorage.location = location.toUserLocation()
+        
+        // Update gps status only if the last value has been false
+        guard !gpsSubject.value else { return }
+        gpsSubject.send(true)
     }
     
     /// Called when the location manager fails to update locations.
@@ -94,6 +103,9 @@ extension LocationManager: CLLocationManagerDelegate {
         logger.log(
             message: "ERROR: CCLocationManager failed with Error: \(error.localizedDescription)"
         )
+        // Update gps status only if the last value has been true
+        guard gpsSubject.value else { return }
+        gpsSubject.send(false)
     }
     
     /// Called when the location authorization status changes.

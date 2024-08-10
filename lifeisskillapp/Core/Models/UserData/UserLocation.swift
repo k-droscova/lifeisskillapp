@@ -13,7 +13,7 @@ struct UserLocation: Codable {
     let altitude: Double
     let accuracy: Double
     let timestamp: Date
-
+    
     func toCLLocation() -> CLLocation {
         return CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
@@ -24,5 +24,9 @@ struct UserLocation: Codable {
             speed: -1, // Placeholder since speed is omitted
             timestamp: timestamp
         )
+    }
+    
+    var description: String {
+        String(format: "%.5f, %.5f, %.2f, %.2f", latitude, longitude, altitude, accuracy)
     }
 }

@@ -54,8 +54,26 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         // MARK: CATEGORY SELECTOR
         let csVM = CategorySelectorViewModel(dependencies: appDependencies)
         
+        // MARK: POINTS
+        let pointsFC = PointsFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
+            settingsDelegate: self,
+            categorySelectorVM: csVM
+        )
+        addChild(pointsFC)
+        let pointsVC = pointsFC.start()
+        pointsVC.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("points.title", comment: ""),
+            image: Constants.TabBar.Points.unselected.icon,
+            selectedImage: Constants.TabBar.Points.selected.icon
+        )
+        
         // MARK: HOME
-        let homeFC = HomeFlowCoordinator(delegate: self, categorySelectorVM: csVM)
+        let homeFC = HomeFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
+            settingsDelegate: self,
+            categorySelectorVM: csVM
+        )
         addChild(homeFC)
         let homeVC = homeFC.start()
         homeVC.tabBarItem = UITabBarItem(
@@ -65,7 +83,11 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         )
         
         // MARK: RANK
-        let rankFC = RankFlowCoordinator(categorySelectorVM: csVM)
+        let rankFC = RankFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            settingsDelegate: self,
+            categorySelectorVM: csVM
+        )
+
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
@@ -78,6 +100,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
             debugVC,
+            pointsVC,
             homeVC,
             rankVC
         ]
@@ -195,4 +218,25 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
     
+}
+
+extension MainFlowCoordinator: SettingsBarFlowDelegate {
+    // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
+    func settingsPressed() {
+        print("Need to navigate to settings")
+    }
+    
+    func cameraPressed() {
+        print("need to open camera")
+    }
+    
+    func onboardingPressed() {
+        print("need to open onboarding")
+    }
+}
+
+extension MainFlowCoordinator: RankFlowCoordinatorDelegate {
+}
+
+extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {
 }
