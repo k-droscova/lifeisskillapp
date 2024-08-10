@@ -67,6 +67,14 @@ public extension View {
         )
     }
     
+    var locationCaption: some View {
+        self.font(
+            AssetsFontFamily.Roboto.regular(size: 8),
+            lineHeight: 12,
+            textStyle: .caption1
+        )
+    }
+    
     var footnote: some View {
         self.font(
             AssetsFontFamily.Roboto.regular(size: 13),

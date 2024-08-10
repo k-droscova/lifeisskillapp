@@ -15,17 +15,16 @@ struct HomeView<ViewModel: HomeViewModeling>: View {
     }
     
     var body: some View {
-        CategorySelectorContainerView(
-            viewModel: self.viewModel.csViewModel,
-            topLeftView: userNameText,
-            spacing: HomeViewConstants.vStackSpacing
+        StatusBarContainerView(
+            viewModel: self.viewModel.settingsViewModel,
+            spacing: 0
         ) {
-            ScrollView {
-                VStack(spacing: HomeViewConstants.vStackSpacing) {
-                    imageView
-                    instructionsView
-                    buttonsView
-                }
+            CategorySelectorContainerView(
+                viewModel: self.viewModel.csViewModel,
+                topLeftView: userNameText,
+                spacing: HomeViewConstants.vStackSpacing
+            ) {
+                contentView
             }
         }
         .onAppear {
@@ -42,6 +41,16 @@ struct HomeView<ViewModel: HomeViewModeling>: View {
 }
 
 private extension HomeView {
+    private var contentView: some View {
+        ScrollView {
+            VStack(spacing: HomeViewConstants.vStackSpacing) {
+                imageView
+                instructionsView
+                buttonsView
+            }
+        }
+    }
+    
     private var userNameText: some View {
         Text(viewModel.username)
             .headline3
@@ -112,7 +121,7 @@ enum HomeViewConstants {
     }
 }
 
-class MockHomeViewModel: BaseClass, HomeViewModeling {
+/*class MockHomeViewModel: BaseClass, HomeViewModeling {
     typealias categorySelectorVM = MockCategorySelectorViewModel
     
     @StateObject var csViewModel = MockCategorySelectorViewModel()
@@ -156,3 +165,4 @@ struct HomeView_Previews: PreviewProvider {
         HomeView(viewModel: MockHomeViewModel())
     }
 }
+*/

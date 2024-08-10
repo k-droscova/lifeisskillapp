@@ -65,12 +65,12 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     func handleScannedQRCode(_ code: String) {
         locationManager.checkLocationAuthorization()
         let point = LoadPoint(code: code, codeSource: .text)
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
             do {
-                try await scanningManager.sendScannedPoint(point)
-                self.delegate?.onSuccess(source: .qr)
+                try await self?.scanningManager.sendScannedPoint(point)
+                self?.delegate?.onSuccess(source: .qr)
             } catch {
-                self.delegate?.onFailure(source: .qr)
+                self?.delegate?.onFailure(source: .qr)
             }
         }
     }

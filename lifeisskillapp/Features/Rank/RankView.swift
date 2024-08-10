@@ -15,15 +15,20 @@ struct RankView<ViewModel: RankViewModeling>: View {
     }
     
     var body: some View {
-        CategorySelectorContainerView(
-            viewModel: self.viewModel.csViewModel,
-            topLeftView: userNameText,
-            spacing: RankViewConstants.imageBottomPadding
+        StatusBarContainerView(
+            viewModel: self.viewModel.settingsViewModel,
+            spacing: 0
         ) {
-            rankImageView
-            
-            rankingsList
-                .padding(.horizontal, RankViewConstants.horizontalPadding)
+            CategorySelectorContainerView(
+                viewModel: self.viewModel.csViewModel,
+                topLeftView: userNameText,
+                spacing: RankViewConstants.imageBottomPadding
+            ) {
+                rankImageView
+                
+                rankingsList
+                    .padding(.horizontal, RankViewConstants.horizontalPadding)
+            }
         }
         .onAppear {
             viewModel.onAppear()
@@ -123,38 +128,4 @@ enum RankViewConstants {
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
     static let imageBottomPadding: CGFloat = 20
-}
-
-struct RankView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockViewModel = MockRankViewModel()
-        RankView(viewModel: mockViewModel)
-    }
-}
-
-// Mock ViewModel for preview
-class MockRankViewModel: BaseClass, RankViewModeling, ObservableObject {
-    typealias categorySelectorVM = MockCategorySelectorViewModel
-
-    @StateObject var csViewModel = MockCategorySelectorViewModel()
-
-    
-    var username: String = "TestUser"
-    
-    @Published var categoryRankings: [Ranking] = [
-        Ranking(id: "1", rank: 1, username: "User1", points: 100, gender: .male),
-        Ranking(id: "2", rank: 2, username: "User2", points: 90, gender: .female),
-        Ranking(id: "3", rank: 3, username: "User3", points: 80, gender: .male)
-    ]
-    
-    var isLoading: Bool = false
-    
-    func onAppear() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            print("Mock onAppear")
-            self.username = "Mock done"
-        }
-        isLoading = false
-    }
 }

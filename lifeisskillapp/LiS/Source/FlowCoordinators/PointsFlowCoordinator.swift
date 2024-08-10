@@ -19,22 +19,29 @@ protocol PointsFlowDelegate: GameDataManagerFlowDelegate, NSObject {
     func selectCategoryPrompt()
 }
 
-final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling>: Base.FlowCoordinatorNoDeepLink {
+final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink {
     private weak var delegate: PointsFlowCoordinatorDelegate?
+    private weak var settingsDelegate: SettingsBarFlowDelegate?
     private var categorySelectorVM: csVM
     
     // MARK: - Initialization
     
-    init(delegate: PointsFlowCoordinatorDelegate? = nil, categorySelectorVM: csVM) {
+    init(
+        delegate: PointsFlowCoordinatorDelegate? = nil,
+        settingsDelegate: SettingsBarFlowDelegate? = nil,
+        categorySelectorVM: csVM
+    ) {
         self.delegate = delegate
+        self.settingsDelegate = settingsDelegate
         self.categorySelectorVM = categorySelectorVM
     }
     
     override func start() -> UIViewController {
-        let viewModel = PointsViewModel(
+        let viewModel = PointsViewModel<csVM, statusBarVM>(
             dependencies: appDependencies,
             categorySelectorVM: self.categorySelectorVM,
-            delegate: self
+            delegate: self,
+            settingsDelegate: self.settingsDelegate
         )
         let vc = PointsView(viewModel: viewModel).hosting()
         return vc

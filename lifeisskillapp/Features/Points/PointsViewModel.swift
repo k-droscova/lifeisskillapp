@@ -10,7 +10,9 @@ import Combine
 
 protocol PointsViewModeling: BaseClass, ObservableObject {
     associatedtype CategorySelectorVM: CategorySelectorViewModeling
+    associatedtype settingBarVM: SettingsBarViewModeling
     var csViewModel: CategorySelectorVM { get }
+    var settingsViewModel: settingBarVM { get }
     
     // Loading state
     var isLoading: Bool { get }
@@ -33,8 +35,8 @@ protocol PointsViewModeling: BaseClass, ObservableObject {
     func showPointOnMap(point: Point)
 }
 
-final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager
+final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies
     
     // MARK: - Private Properties
     
@@ -58,16 +60,26 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling>: BaseClass, Obse
     @Published var totalPoints: Int = 0
     @Published var categoryPoints: [Point] = []
     var csViewModel: csVM
+    var settingsViewModel: settingBarVM
     
     // MARK: - Initialization
     
-    init(dependencies: Dependencies, categorySelectorVM: csVM, delegate: PointsFlowDelegate?) {
+    init(
+        dependencies: Dependencies,
+        categorySelectorVM: csVM,
+        delegate: PointsFlowDelegate?,
+        settingsDelegate: SettingsBarFlowDelegate?
+    ) {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
         self.gameDataManager = dependencies.gameDataManager
         self.userDataManager = dependencies.userLoginManager
         self.csViewModel = categorySelectorVM
+        self.settingsViewModel = settingBarVM.init(
+            dependencies: dependencies,
+            delegate: settingsDelegate
+        )
         self.userGender = userDataManager.data?.user.sex ?? .male
         self.delegate = delegate
         super.init()

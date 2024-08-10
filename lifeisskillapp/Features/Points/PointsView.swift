@@ -15,16 +15,22 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
     }
     
     var body: some View {
-        CategorySelectorContainerView(
-            viewModel: self.viewModel.csViewModel,
-            topLeftView: buttonsView,
-            spacing: PointsViewConstants.vStackSpacing
+        StatusBarContainerView(
+            viewModel: self.viewModel.settingsViewModel,
+            spacing: 0
         ) {
-            userInfoView
-            PointsListView(
-                points: viewModel.categoryPoints
-            ) { point in
-                viewModel.showPointOnMap(point: point)
+            CategorySelectorContainerView(
+                viewModel: self.viewModel.csViewModel,
+                topLeftView: buttonsView,
+                spacing: PointsViewConstants.vStackSpacing
+            ) {
+                userInfoView
+                
+                PointsListView(
+                    points: viewModel.categoryPoints
+                ) { point in
+                    viewModel.showPointOnMap(point: point)
+                }
             }
         }
         .onAppear {
@@ -38,6 +44,9 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
             }
         )
     }
+}
+
+private extension PointsView {
     
     private var buttonsView: some View {
         UserPointsTopLeftButtonsView(
@@ -75,43 +84,44 @@ enum PointsViewConstants {
     static let horizontalPadding: CGFloat = 4
 }
 
-class MockPointsViewModel: BaseClass, PointsViewModeling, ObservableObject {
-    var csViewModel: MockCategorySelectorViewModel = MockCategorySelectorViewModel()
-    
-    var isLoading: Bool = false
-    @Published var isMapButtonPressed: Bool = false
-    var username: String = "TestUser"
-    var userGender: UserGender = .male
-    var totalPoints: Int = 0
-    var categoryPoints: [Point] = []
-    
-    func onAppear() {
-        // Simulate network loading
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.totalPoints = 100
-            self?.categoryPoints = [Point.MockPoint1, Point.MockPoint2]
-            self?.isLoading = false
-        }
-    }
-    
-    
-    func mapButtonPressed() {
-        print("Mock map button pressed")
-    }
-    
-    func listButtonPressed() {
-        print("Mock list button pressed")
-    }
-    
-    func showPointOnMap(point: Point) {
-        print("Mock showing map for point: \(point.name)")
-    }
-}
-
-// Example usage with mock data
-struct PointsView_Previews: PreviewProvider {
-    static var previews: some View {
-        PointsView(viewModel: MockPointsViewModel())
-    }
-}
+/*class MockPointsViewModel: BaseClass, PointsViewModeling, ObservableObject {
+ var csViewModel: MockCategorySelectorViewModel = MockCategorySelectorViewModel()
+ 
+ var isLoading: Bool = false
+ @Published var isMapButtonPressed: Bool = false
+ var username: String = "TestUser"
+ var userGender: UserGender = .male
+ var totalPoints: Int = 0
+ var categoryPoints: [Point] = []
+ 
+ func onAppear() {
+ // Simulate network loading
+ isLoading = true
+ DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+ self?.totalPoints = 100
+ self?.categoryPoints = [Point.MockPoint1, Point.MockPoint2]
+ self?.isLoading = false
+ }
+ }
+ 
+ 
+ func mapButtonPressed() {
+ print("Mock map button pressed")
+ }
+ 
+ func listButtonPressed() {
+ print("Mock list button pressed")
+ }
+ 
+ func showPointOnMap(point: Point) {
+ print("Mock showing map for point: \(point.name)")
+ }
+ }
+ 
+ // Example usage with mock data
+ struct PointsView_Previews: PreviewProvider {
+ static var previews: some View {
+ PointsView(viewModel: MockPointsViewModel())
+ }
+ }
+ */

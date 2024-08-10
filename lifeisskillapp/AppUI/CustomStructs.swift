@@ -100,6 +100,46 @@ struct CategorySelectorContainerView<TopLeftView: View, Content: View, ViewModel
     }
 }
 
+struct StatusView: View {
+    @Binding var status: Bool
+    private let textOn: String
+    private let textOff: String
+    private let colorOn: Color
+    private let colorOff: Color
+
+    internal init(status: Binding<Bool>, textOn: String, textOff: String, colorOn: Color, colorOff: Color) {
+        self._status = status
+        self.textOn = textOn
+        self.textOff = textOff
+        self.colorOn = colorOn
+        self.colorOff = colorOff
+    }
+
+    var body: some View {
+        Text(status ? textOn : textOff)
+            .foregroundColor(status ? colorOn : colorOff)
+    }
+}
+
+struct StatusBarContainerView<Content: View, ViewModel: SettingsBarViewModeling>: View {
+    @StateObject private var viewModel: ViewModel
+    private let spacing: CGFloat
+    private let content: () -> Content
+    
+    internal init(viewModel: ViewModel, spacing: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.spacing = spacing
+        self.content = content
+    }
+    
+    var body: some View {
+        VStack(spacing: spacing) {
+            SettingsBarView(viewModel: viewModel)
+            content()
+        }
+    }
+}
+
 struct PointListCard<Content: View>: View {
     let content: () -> Content
     var body: some View {
@@ -131,6 +171,8 @@ struct UserPointsTopLeftButtonsView: View {
     }
     
     let imageSize: CGFloat
+    var padding: CGFloat = 0
+    let userNameTextHeight: CGFloat = CustomSizes.UserPointsTopLeftButtonsView.referenceUserNameTextHeight.size
     let buttonNotPressed: Color
     let buttonPressed: Color
     var mapButtonAction: () -> Void
@@ -143,10 +185,12 @@ struct UserPointsTopLeftButtonsView: View {
         self.buttonPressed = buttonPressed
         self.mapButtonAction = mapButtonAction
         self.listButtonAction = listButtonAction
+        
+        self.padding = self.calculatePadding(imageSize: imageSize, usernameTextSize: userNameTextHeight)
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: CustomSizes.UserPointsTopLeftButtonsView.horizontalPadding.size) {
             Button(action: {
                 isMapShown = true
                 mapButtonAction()
@@ -156,7 +200,6 @@ struct UserPointsTopLeftButtonsView: View {
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)
                     .foregroundColor(isMapShown ? buttonPressed : buttonNotPressed)
-                    .padding()
             }
             Button(action: {
                 isMapShown = false
@@ -167,8 +210,15 @@ struct UserPointsTopLeftButtonsView: View {
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)
                     .foregroundColor(!isMapShown ? buttonPressed : buttonNotPressed)
-                    .padding()
             }
         }
+        .padding(self.padding)
+    }
+    
+    // Ensures padding that fits into the line Height of UserName Text Height in home/rank screens so that the category selector appears always in the same position
+    private func calculatePadding(imageSize: CGFloat, usernameTextSize: CGFloat) -> CGFloat {
+        guard usernameTextSize > imageSize else { return 0}
+        let result = (usernameTextSize - imageSize) / 2.0
+        return result
     }
 }
