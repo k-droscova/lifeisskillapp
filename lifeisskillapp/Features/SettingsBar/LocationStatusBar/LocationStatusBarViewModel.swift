@@ -29,7 +29,7 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
     
     // MARK: - Public Properties
     
-    @Published var appVersion: String = "DEBUG" // TODO: store real up version in user defaults
+    @Published var appVersion: String = "DEBUG" // TODO: fetch from environment
     @Published var isOnline: Bool = true
     @Published var isGpsOk: Bool = true
     @Published var userLocation: UserLocation?
