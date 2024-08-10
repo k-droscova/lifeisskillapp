@@ -63,16 +63,17 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     // MARK: - Public Interface
     
     func login() {
-        Task { @MainActor in
-            isLoading = true
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
             do {
-                try await userManager.login(loginCredentials: .init(username: username, password: password))
-                isLoading = false
+                try await self.userManager.login(loginCredentials: .init(username: username, password: password))
+                self.isLoading = false
                 if userManager.isLoggedIn {
-                    delegate?.loginSuccessful()
+                    self.delegate?.loginSuccessful()
                 }
             } catch {
-                isLoading = false
+                self.isLoading = false
                 // Handle the error appropriately on the main thread
                 print("Login failed with error: \(error)")
             }

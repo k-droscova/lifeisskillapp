@@ -74,8 +74,8 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     // MARK: - Private Helpers
     
     private func triggerLocationPublisher() {
-        Task { @MainActor in
-            self.locationSubject.send(self.location)
+        Task { @MainActor [weak self] in
+            self?.locationSubject.send(self?.location)
         }
     }
 }

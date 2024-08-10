@@ -81,20 +81,20 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
     }
     
     private func updateGpsStatus(status: Bool) {
-        Task { @MainActor in
-            self.isGpsOk = status
+        Task { @MainActor [weak self] in
+            self?.isGpsOk = status
         }
     }
     
     private func updateLocation(_ location: UserLocation?) {
-        Task { @MainActor in
-            self.userLocation = location
+        Task { @MainActor [weak self] in
+            self?.userLocation = location
         }
     }
     
     private func updateOnlineStatus(status: Bool) {
-        Task { @MainActor in
-            self.isOnline = status
+        Task { @MainActor [weak self] in
+            self?.isOnline = status
         }
     }
 }

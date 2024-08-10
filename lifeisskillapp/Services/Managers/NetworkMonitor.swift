@@ -80,9 +80,9 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
     }
     
     private func updateOnlineStatus(status: Bool) {
-        Task { @MainActor in
-            self.isOnline = status
-            self.onlineStatusSubject.send(status)
+        Task { @MainActor [weak self] in
+            self?.isOnline = status
+            self?.onlineStatusSubject.send(status)
         }
     }
 }
