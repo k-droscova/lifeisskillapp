@@ -11,7 +11,6 @@ import RealmSwift
 class RealmRanking: Object {
     @objc dynamic var rankingID: String = ""
     @objc dynamic var userID: String = ""
-    @objc dynamic var categoryID: String = ""
     @objc dynamic var rank: Int = 1
     @objc dynamic var points: Int = 0
 

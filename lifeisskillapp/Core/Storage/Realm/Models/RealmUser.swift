@@ -14,7 +14,7 @@ class RealmUser: Object {
     @objc dynamic var nick: String = ""
     @objc dynamic var sexRaw: String = ""
     @objc dynamic var mainCategory: String = ""
-    let rankings = List<RealmRanking>()
+    let categories = List<RealmCategory>()
 
     override static func primaryKey() -> String? {
         "userID"

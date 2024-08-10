@@ -54,6 +54,7 @@
 		2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */; };
 		2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */; };
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
+		2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
@@ -237,6 +238,7 @@
 		2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIService.swift; sourceTree = "<group>"; };
 		2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
 		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
+		2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDataStorage.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
 		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
 		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -920,6 +922,7 @@
 		27E9D5FC2C63D9020098CB96 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */,
 				27E9D6122C63F3B60098CB96 /* RealmStorage.swift */,
 				27E9D60D2C63EB720098CB96 /* Repositories */,
 				27E9D5FD2C63D9370098CB96 /* Models */,
@@ -1180,6 +1183,7 @@
 				273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */,
 				276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
+				2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */,
 				2754571F2C33324900F3B55A /* UIViewController.swift in Sources */,
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
 				2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */,

@@ -114,6 +114,11 @@ struct UserCategoryData: DataProtocol {
         self.main = mainCategory
         self.data = allUserCategories
     }
+    
+    internal init(main: UserCategory, data: [UserCategory]) {
+        self.main = main
+        self.data = data
+    }
 }
 
 struct UserPointData: DataProtocol {

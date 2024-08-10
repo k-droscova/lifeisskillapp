@@ -29,3 +29,9 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
         self.realmStorage = dependencies.realmStorage
     }
 }
+
+extension RealmLoginRepositoring {
+    func getLoggedInUserID() -> String? {
+        return getAll()?.first?.userID
+    }
+}

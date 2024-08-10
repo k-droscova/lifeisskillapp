@@ -111,5 +111,4 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
         }
         return []
     }
-    
 }
