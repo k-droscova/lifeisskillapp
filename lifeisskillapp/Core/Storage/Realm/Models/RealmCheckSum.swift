@@ -17,7 +17,7 @@ class RealmCheckSumData: Object {
     @objc dynamic var points: String = ""
 
     override static func primaryKey() -> String? {
-        return "id"
+        "id"
     }
 
     override required init() {

@@ -24,7 +24,7 @@ class RealmPoint: Object {
     @objc dynamic var param: RealmPointParam?
 
     override static func primaryKey() -> String? {
-        return "pointId"
+        "pointId"
     }
 
     override required init() {

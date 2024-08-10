@@ -17,7 +17,7 @@ class RealmUser: Object {
     let rankings = List<RealmRanking>()
 
     override static func primaryKey() -> String? {
-        return "userId"
+        "userId"
     }
 
     var sex: UserGender {

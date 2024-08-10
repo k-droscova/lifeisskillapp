@@ -15,7 +15,7 @@ class RealmCategory: Object {
     @objc dynamic var isPublic: Bool = false
 
     override static func primaryKey() -> String? {
-        return "categoryId"
+        "categoryId"
     }
 
     override required init() {

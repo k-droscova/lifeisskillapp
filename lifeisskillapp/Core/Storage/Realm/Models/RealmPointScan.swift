@@ -20,7 +20,7 @@ class RealmPointScan: Object {
     @objc dynamic var duration: TimeInterval = 0.0
 
     override static func primaryKey() -> String? {
-        return "scanId"
+        "scanId"
     }
 
     override required init() {

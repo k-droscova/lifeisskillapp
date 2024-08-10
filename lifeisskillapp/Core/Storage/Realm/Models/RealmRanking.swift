@@ -16,7 +16,7 @@ class RealmRanking: Object {
     @objc dynamic var points: Int = 0
 
     override static func primaryKey() -> String? {
-        return "rankingId"
+        "rankingId"
     }
 
     override required init() {

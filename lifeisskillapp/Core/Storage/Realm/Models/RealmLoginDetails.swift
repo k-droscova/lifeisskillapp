@@ -18,7 +18,7 @@ class RealmLoginDetails: Object {
     @objc dynamic var user: RealmUser?
 
     override static func primaryKey() -> String? {
-        return "userId"
+        "userId"
     }
 
     override required init() {
