@@ -13,8 +13,8 @@ protocol HasRealmUserRepository {
 }
 
 protocol RealmUserRepositoring: RealmRepositoring where Entity == RealmUser {
-    func clearUserCategories(forUser user: RealmUser) throws
-    func updateUserCategories(forUser user: RealmUser, categories: [String], mainCategory: String?) throws
+    func clear(forUser user: RealmUser) throws
+    func update(forUser user: RealmUser, categories: [String], mainCategory: String?) throws
 }
 
 public class RealmUserRepository: BaseClass, RealmUserRepositoring, HasRealmStoraging, HasLoggers {
@@ -29,7 +29,7 @@ public class RealmUserRepository: BaseClass, RealmUserRepositoring, HasRealmStor
         self.realmStorage = dependencies.realmStorage
     }
     
-    func clearUserCategories(forUser user: RealmUser) throws {
+    func clear(forUser user: RealmUser) throws {
         guard let realm = realmStorage.getRealm() else {
             throw BaseError(context: .database, message: "Failed to get realm", logger: logger)
         }
@@ -41,7 +41,7 @@ public class RealmUserRepository: BaseClass, RealmUserRepositoring, HasRealmStor
         }
     }
     
-    func updateUserCategories(forUser user: RealmUser, categories: [String], mainCategory: String? = nil) throws {
+    func update(forUser user: RealmUser, categories: [String], mainCategory: String? = nil) throws {
         guard let realm = realmStorage.getRealm() else {
             throw BaseError(context: .database, message: "Failed to get realm", logger: logger)
         }

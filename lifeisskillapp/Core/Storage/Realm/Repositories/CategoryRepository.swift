@@ -14,7 +14,7 @@ protocol HasRealmCategoryRepository {
 
 protocol RealmCategoryRepositoring: RealmRepositoring where Entity == RealmCategory {
     func getRankingsForCategory(byCategoryID categoryID: String) -> [RealmRanking]?
-    func updateCategories(categories: [RealmCategory]) throws
+    func update(categories: [RealmCategory]) throws
 }
 
 public class RealmCategoryRepository: BaseClass, RealmCategoryRepositoring, HasRealmStoraging, HasLoggers {
@@ -34,15 +34,12 @@ public class RealmCategoryRepository: BaseClass, RealmCategoryRepositoring, HasR
         return Array(category.rankings)
     }
     
-    func updateCategories(categories: [RealmCategory]) throws {
+    func update(categories: [RealmCategory]) throws {
         guard let realm = realmStorage.getRealm() else {
-            logger.log(message: "Failed to get Realm instance")
-            return
+            throw BaseError(context: .database, message: "Failed to get Realm instance", logger: logger)
         }
         try realm.write {
-            for category in categories {
-                realm.add(category, update: .modified)
-            }
+            realm.add(categories, update: .modified)
         }
     }
 }

@@ -8,7 +8,19 @@
 import Foundation
 import RealmSwift
 
-public final class RealmUserDataStorage: UserDataStoraging {
+enum PersistentDataType {
+    case userPoints, genericPoints, ranks, login
+}
+
+protocol HasPersistentUserDataStoraging {
+    var storage: PersistentUserDataStoraging { get }
+}
+
+protocol PersistentUserDataStoraging: UserDataStoraging {
+    func loadFromRepository(forData: PersistentDataType) async
+}
+
+public final class RealmUserDataStorage: PersistentUserDataStoraging {
     typealias Dependencies = HasLoggers & HasRealmRepositories
     
     // MARK: - Private Properties
@@ -27,7 +39,9 @@ public final class RealmUserDataStorage: UserDataStoraging {
     
     var userCategoryData: UserCategoryData? {
         didSet {
-            setUserCategories(data: userCategoryData)
+            Task { [weak self] in
+                await self?.setUserCategories(data: self?.userCategoryData)
+            }
         }
     }
     var userPointData: UserPointData?
@@ -46,55 +60,24 @@ public final class RealmUserDataStorage: UserDataStoraging {
         self.rankingRepo = dependencies.realmRankingRepository
         self.pointRepo = dependencies.realmPointRepository
         self.pointScanRepo = dependencies.realmPointScanRepository
-        
-        Task {
-            await self.loadData()
-        }
     }
     
-    // MARK: - Private Helpers
+    // MARK: - Public Interface
     
-    private func loadData() async {
-        // Run the data loading functions concurrently
-        async let categories: () = loadCategoriesFromRepo()
-        async let points: () = loadUserPoints()
-        async let genericPoints: () = loadGenericPoints()
-        async let ranks: () = loadUserRanks()
-        async let login: () = loadLoginData()
-        
-        // Await the results
-        await categories
-        await points
-        await genericPoints
-        await ranks
-        await login
+    func loadFromRepository(forData: PersistentDataType) async {
+        switch forData {
+        case .userPoints:
+            await loadUserPoints()
+        case .genericPoints:
+            await loadGenericPoints()
+        case .ranks:
+            await loadUserRanks()
+        case .login:
+            await loadLoginData()
+        }
     }
     
     // MARK: - getters
-    
-    private func loadCategoriesFromRepo() async {
-        guard let userID = getLoggedInUserId() else {
-            return
-        }
-        guard let user = getUserInfo(userID) else {
-            return
-        }
-        // create new categories
-        let categories: [UserCategory] = user.categories.map { realmCategory in
-            return UserCategory(
-                id: realmCategory.categoryID,
-                name: realmCategory.name,
-                detail: realmCategory.detail,
-                isPublic: realmCategory.isPublic
-            )
-        }
-        // find the users maincategory
-        if let mainCategory = categories.first(where: { $0.id == user.mainCategory }) {
-            self.userCategoryData = UserCategoryData(main: mainCategory, data: categories)
-        } else {
-            logger.log(message: "No matching main category found for user ID: \(userID)")
-        }
-    }
     
     private func loadUserPoints() async {
         
@@ -114,36 +97,68 @@ public final class RealmUserDataStorage: UserDataStoraging {
     
     // MARK: - setters
     
-    private func setUserCategories(data: UserCategoryData?) {
-        guard let userID = getLoggedInUserId() else {
-            return
-        }
-        guard let user = getUserInfo(userID) else {
-            return
-        }
-        
-        do {
-            // handle case when new data is nil
-            guard let newData = data else {
-                logger.log(message: "Deleting user categories for \(userID)")
-                try userRepo.clearUserCategories(forUser: user)
+    private func setUserCategories(data: UserCategoryData?) async {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            guard let userID = self.getLoggedInUserId() else {
                 return
             }
-            // Convert UserCategory data to RealmCategory instances
-            let realmCategories = newData.data.map { RealmCategory(from: $0) }
+            guard let user = self.getUserInfo(userID) else {
+                return
+            }
             
-            // Ensure all categories exist
-            try categoryRepo.updateCategories(categories: realmCategories)
-            
-            // Update user categories
-            let categoryIDs = realmCategories.map { $0.categoryID }
-            try userRepo.updateUserCategories(forUser: user, categories: categoryIDs, mainCategory: newData.main.id)
-            
-        } catch {
-            logger.log(message: "ERROR while setting new value for user categories.")
+            do {
+                // Handle case when new data is nil
+                guard let newData = data else {
+                    self.logger.log(message: "Deleting user categories for \(userID)")
+                    try self.userRepo.clear(forUser: user)
+                    return
+                }
+                
+                // Convert UserCategory data to RealmCategory instances
+                let realmCategories = newData.data.map { RealmCategory(from: $0) }
+                
+                // Ensure all categories exist
+                try self.categoryRepo.update(categories: realmCategories)
+                
+                // Update user categories
+                let categoryIDs = realmCategories.map { $0.categoryID }
+                try self.userRepo.update(forUser: user, categories: categoryIDs, mainCategory: newData.main.id)
+            } catch {
+                self.logger.log(message: "ERROR while setting new value for user categories.")
+            }
         }
     }
     
+    private func setUserPoints(data: UserPointData?) async {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            guard let userID = self.getLoggedInUserId() else {
+                return
+            }
+            guard let user = self.getUserInfo(userID) else {
+                return
+            }
+            do {
+                guard let newData = data else {
+                    self.logger.log(message: "No user points data provided.")
+                    try self.pointScanRepo.clear(forUser: user)
+                    return
+                }
+                let realmPoints = newData.data.map { RealmPoint(from: $0) }
+                let realmPointScans = newData.data.map { RealmPointScan(from: $0, userID: userID) }
+                try self.pointRepo.update(realmPoints)
+                try self.pointScanRepo.update(realmPointScans)
+            } catch {
+                self.logger.log(message: "ERROR while setting new value for user points: \(error.localizedDescription)")
+            }
+        }
+    }
+}
+
+
+// MARK: - Other Helpers
+extension RealmUserDataStorage {
     private func getLoggedInUserId() -> String? {
         guard let userID = loginRepo.getLoggedInUserID() else {
             logger.log(message: "No logged-in user found in Realm")

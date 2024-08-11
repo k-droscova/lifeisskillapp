@@ -20,22 +20,35 @@ class RealmPoint: Object {
     @objc dynamic var pointSpec: Int = 0
     @objc dynamic var sponsorID: String = ""
     @objc dynamic var hasDetail: Bool = false
-    @objc dynamic var active: Bool = false
+    @objc dynamic var active: Bool = true
     @objc dynamic var param: RealmPointParam?
-
+    
     override static func primaryKey() -> String? {
         "pointID"
     }
-
+    
     override required init() {
         super.init()
+    }
+    
+    // Custom initializer
+    internal init(from userPoint: UserPoint) {
+        super.init()
+        self.pointID = userPoint.id
+        self.pointLat = userPoint.pointLat
+        self.pointLng = userPoint.pointLng
+        self.pointAlt = userPoint.pointAlt
+        self.pointName = userPoint.pointName
+        self.pointValue = userPoint.pointValue
+        self.pointType = userPoint.pointType.rawValue
+        self.pointSpec = userPoint.pointSpec
     }
 }
 
 class RealmPointParam: Object {
     @objc dynamic var timer: RealmTimerParam?
     @objc dynamic var status: RealmStatusParam?
-
+    
     override required init() {
         super.init()
     }
@@ -47,7 +60,7 @@ class RealmTimerParam: Object {
     @objc dynamic var maxTime: Int = 0
     @objc dynamic var minTime: Int = 0
     @objc dynamic var distance: Int = 0
-
+    
     override required init() {
         super.init()
     }
@@ -56,7 +69,7 @@ class RealmTimerParam: Object {
 class RealmStatusParam: Object {
     @objc dynamic var color: String = ""
     @objc dynamic var isValid: Bool = false
-
+    
     override required init() {
         super.init()
     }
