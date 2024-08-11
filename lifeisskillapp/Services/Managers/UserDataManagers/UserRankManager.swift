@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol UserRankManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
@@ -19,14 +20,16 @@ protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataCont
 }
 
 public final class UserRankManager: BaseClass, UserRankManaging {    
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserLoginManager
     
     // MARK: - Private Properties
     
-    private var userDataStorage: UserDataStoraging
+    private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
     private let dataManager: UserLoginDataManaging
     private let userDataAPIService: UserDataAPIServicing
+    private var cancellables = Set<AnyCancellable>()
+    private var checkSum: String?
     
     // MARK: - Public Properties
     
@@ -38,10 +41,10 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     var data: UserRankData? {
         get {
-            userDataStorage.userRankData
+            storage.userRankData
         }
         set {
-            userDataStorage.userRankData = newValue
+            storage.userRankData = newValue
         }
     }
     
@@ -52,10 +55,14 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
+        self.storage = dependencies.storage
         self.logger = dependencies.logger
         self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
+        
+        super.init()
+        self.load()
+        self.setupBindings()
     }
     
     // MARK: - Public Interface
@@ -81,5 +88,30 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     func getAll() -> [UserRank] {
         data?.data ?? []
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .rankings)
+        }
+    }
+    
+    private func setupBindings() {
+        storage.checkSumDataPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] checkSumData in
+                self?.update(newCheckSum: checkSumData?.rank)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func update(newCheckSum: String?) {
+        self.checkSum = newCheckSum
+        guard let newCheckSum else { return }
+        Task { @MainActor [weak self] in
+            try await self?.fetch()
+        }
     }
 }

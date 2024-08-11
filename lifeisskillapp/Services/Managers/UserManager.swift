@@ -38,11 +38,6 @@ final class UserManager: BaseClass, UserManaging {
     private var userDefaultsStorage: UserDefaultsStoraging
     private let registerAppAPI: RegisterAppAPIServicing
     private let userLoginDataManager: any UserLoginDataManaging
-    // TODO: CAN BE DELETED once we have persitent data storage
-    private var checkSumData: CheckSumData? {
-        get { userDefaultsStorage.checkSumData }
-        set { userDefaultsStorage.checkSumData = newValue }
-    }
     
     // MARK: - Public Properties
     
@@ -92,7 +87,6 @@ final class UserManager: BaseClass, UserManaging {
     
     func logout() {
         logger.log(message: "Logging out")
-        userDefaultsStorage.checkSumData = nil // MARK: This will not be done once we have persitent data storage
         userLoginDataManager.logout()
         delegate?.onLogout()
     }

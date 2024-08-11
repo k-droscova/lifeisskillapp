@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol UserPointManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
@@ -21,14 +22,16 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
 }
 
 public final class UserPointManager: BaseClass, UserPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserLoginManager
     
     // MARK: - Private Properties
     
-    private var userDataStorage: UserDataStoraging
+    private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
     private let dataManager: UserLoginDataManaging
     private let userDataAPIService: UserDataAPIServicing
+    private var cancellables = Set<AnyCancellable>()
+    private var checkSum: String?
     
     // MARK: - Public Properties
     
@@ -40,10 +43,10 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     var data: UserPointData? {
         get {
-            userDataStorage.userPointData
+            storage.userPointData
         }
         set {
-            userDataStorage.userPointData = newValue
+            storage.userPointData = newValue
         }
     }
     
@@ -54,10 +57,21 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
+        self.storage = dependencies.storage
         self.logger = dependencies.logger
         self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
+        self.checkSum = storage.checkSumData?.userPoints
+        
+        super.init()
+        self.load()
+        self.setupBindings()
+    }
+    
+    // MARK: - deinit
+    
+    deinit {
+        cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Public Interface
@@ -94,5 +108,30 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         return getPoints(byCategory: categoryId)
             .filter { $0.doesPointCount }
             .reduce(0) { $0 + $1.pointValue }
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .userPoints)
+        }
+    }
+    
+    private func setupBindings() {
+        storage.checkSumDataPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] checkSumData in
+                self?.update(newCheckSum: checkSumData?.userPoints)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func update(newCheckSum: String?) {
+        self.checkSum = newCheckSum
+        guard let newCheckSum else { return }
+        Task { @MainActor [weak self] in
+            try await self?.fetch()
+        }
     }
 }

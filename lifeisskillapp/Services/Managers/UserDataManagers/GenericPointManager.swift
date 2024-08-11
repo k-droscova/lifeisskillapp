@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol GenericPointManagerFlowDelegate: UserDataManagerFlowDelegate {
 }
@@ -19,14 +20,16 @@ protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, 
 }
 
 public final class GenericPointManager: BaseClass, GenericPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserLoginManager
     
     // MARK: - Private Properties
     
-    private var userDataStorage: UserDataStoraging
+    private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
     private let dataManager: UserLoginDataManaging
     private let userDataAPIService: UserDataAPIServicing
+    private var cancellables = Set<AnyCancellable>()
+    private var checkSum: String?
     
     // MARK: - Public Properties
     
@@ -38,10 +41,10 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     var data: GenericPointData? {
         get {
-            userDataStorage.genericPointData
+            storage.genericPointData
         }
         set {
-            userDataStorage.genericPointData = newValue
+            storage.genericPointData = newValue
         }
     }
     
@@ -52,10 +55,20 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
+        self.storage = dependencies.storage
         self.logger = dependencies.logger
         self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
+        
+        super.init()
+        self.load()
+        self.setupBindings()
+    }
+    
+    // MARK: - deinit
+    
+    deinit {
+        cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Public Interface
@@ -81,5 +94,30 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     func getAll() -> [GenericPoint] {
         data?.data ?? []
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func setupBindings() {
+        storage.checkSumDataPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] checkSumData in
+                self?.update(newCheckSum: checkSumData?.points)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func update(newCheckSum: String?) {
+        self.checkSum = newCheckSum
+        guard let newCheckSum else { return }
+        Task { @MainActor [weak self] in
+            try await self?.fetch()
+        }
+    }
+    
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .userPoints)
+        }
     }
 }

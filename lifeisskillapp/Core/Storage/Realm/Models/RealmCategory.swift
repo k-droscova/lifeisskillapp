@@ -32,9 +32,14 @@ class RealmCategory: Object {
 }
 
 class RealmUserCategoryData: Object {
+    @objc dynamic var dataID: String = "UserCategoryData"
     @objc dynamic var mainCategory: RealmCategory?
     let allCategories = List<RealmCategory>()
 
+    override static func primaryKey() -> String? {
+        "dataID"
+    }
+    
     override required init() {
         super.init()
     }

@@ -9,8 +9,13 @@ import Foundation
 import RealmSwift
 
 class RealmUserPointData: Object {
+    @objc dynamic var dataID: String = "UserPointData"
     @objc dynamic var checkSum: String = ""
     let data = List<RealmPointScan>()
+    
+    override static func primaryKey() -> String? {
+        "dataID"
+    }
     
     override required init() {
         super.init()

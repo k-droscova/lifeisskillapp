@@ -16,7 +16,6 @@ protocol HasUserDefaultsStorage {
 protocol UserDefaultsStoraging {
     var appId: String? { get set }
     var location: UserLocation? { get set }
-    var checkSumData: CheckSumData? { get set }
     var locationPublisher: AnyPublisher<UserLocation?, Never> { get }
 }
 
@@ -29,15 +28,6 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil)
     
     // MARK: - Public Properties
-    
-    var checkSumData: CheckSumData? {
-        get {
-            UserDefaults.standard.checkSumData // uses UserDefaults extension for custom key
-        }
-        set {
-            UserDefaults.standard.checkSumData = newValue
-        }
-    }
     
     var location: UserLocation? {
         get {

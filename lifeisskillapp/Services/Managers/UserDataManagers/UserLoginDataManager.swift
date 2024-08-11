@@ -33,11 +33,10 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     
     // MARK: - Private Properties
     
-    private var userDataStorage: UserDataStoraging
     private let logger: LoggerServicing
     private let loginAPI: LoginAPIServicing
     private var realmLoginRepo: any RealmLoginRepositoring
-    private var persistentStorage: PersistentUserDataStoraging
+    private var storage: PersistentUserDataStoraging
     
     // MARK: - Public Properties
     
@@ -70,14 +69,13 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
         self.logger = dependencies.logger
         self.loginAPI = dependencies.loginAPI
         self.realmLoginRepo = dependencies.container.realmLoginRepository
-        self.persistentStorage = dependencies.storage
+        self.storage = dependencies.storage
         
         super.init()
-        self.loadLoginData()
+        self.load()
     }
     
     // MARK: - Public Interface
@@ -91,7 +89,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
             if let existingUser = try realmLoginRepo.getLoggedInUser(), existingUser.userID != loggedInUser.userId {
                 // If the existing user's ID is different from the new user's ID, clear all user data
                 logger.log(message: "Different user detected. Clearing all related data.")
-                try await persistentStorage.clearAllUserData()
+                try await storage.clearAllUserData()
             }
             try realmLoginRepo.saveLoginUser(loggedInUser)
             data = response.data
@@ -128,9 +126,9 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     
     // MARK: - Private Helpers
     
-    private func loadLoginData() {
+    private func load() {
         Task { @MainActor [weak self] in
-            await self?.persistentStorage.loadFromRepository(for: .login)
+            await self?.storage.loadFromRepository(for: .login)
             self?.updateLoginData()
         }
     }

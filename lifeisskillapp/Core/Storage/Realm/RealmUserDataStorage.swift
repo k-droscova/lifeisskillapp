@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 enum PersistentDataType {
     case categories, userPoints, genericPoints, rankings, login, checkSum
@@ -17,6 +18,7 @@ protocol HasPersistentUserDataStoraging {
 }
 
 protocol PersistentUserDataStoraging: UserDataStoraging {
+    func load()
     func loadFromRepository(for data: PersistentDataType) async
     func saveUserCategories(data: UserCategoryData?) async
     func saveUserPoints(data: UserPointData?) async
@@ -25,6 +27,7 @@ protocol PersistentUserDataStoraging: UserDataStoraging {
     func saveLoginData(data: LoginUserData?) async
     func saveCheckSumData(data: CheckSumData?) async
     func clearAllUserData() async throws
+    var checkSumDataPublisher: AnyPublisher<CheckSumData?, Never> { get }
 }
 
 public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
@@ -40,14 +43,94 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var genericPointRepo: any RealmGenericPointRepositoring
     private var userPointRepo: any RealmUserPointRepositoring
     
+    private var _userCategoryData: UserCategoryData?
+    private var _userPointData: UserPointData?
+    private var _genericPointData: GenericPointData?
+    private var _userRankData: UserRankData?
+    private var _loginData: LoginUserData?
+    private var _checkSumData: CheckSumData?
+    
+    private var checkSumSubject = CurrentValueSubject<CheckSumData?, Never>(nil)
+    
     // MARK: - Public Properties
     
-    var userCategoryData: UserCategoryData?
-    var userPointData: UserPointData?
-    var genericPointData: GenericPointData?
-    var userRankData: UserRankData?
-    var loginData: LoginUserData?
-    var checkSumData: CheckSumData?
+    var userCategoryData: UserCategoryData? {
+        get {
+            _userCategoryData
+        }
+        set {
+            _userCategoryData = newValue
+            Task {
+                await saveUserCategories(data: newValue)
+            }
+        }
+    }
+    
+    var userPointData: UserPointData? {
+        get {
+            _userPointData
+        }
+        set {
+            _userPointData = newValue
+            Task {
+                await saveUserPoints(data: newValue)
+            }
+        }
+    }
+    
+    var genericPointData: GenericPointData? {
+        get {
+            _genericPointData
+        }
+        set {
+            _genericPointData = newValue
+            Task {
+                await saveGenericPoints(data: newValue)
+            }
+        }
+    }
+    
+    var userRankData: UserRankData? {
+        get {
+            _userRankData
+        }
+        set {
+            _userRankData = newValue
+            Task {
+                await saveUserRanks(data: newValue)
+            }
+        }
+    }
+    
+    var loginData: LoginUserData? {
+        get {
+            _loginData
+        }
+        set {
+            _loginData = newValue
+            Task {
+                await saveLoginData(data: newValue)
+            }
+        }
+    }
+    
+    var checkSumData: CheckSumData? {
+        get {
+            _checkSumData
+        }
+        set {
+            _checkSumData = newValue
+            checkSumSubject.send(newValue)
+            Task {
+                await saveCheckSumData(data: newValue)
+            }
+        }
+    }
+    
+    // MARK: - Public Combine Publishers
+    var checkSumDataPublisher: AnyPublisher<CheckSumData?, Never> {
+        checkSumSubject.eraseToAnyPublisher()
+    }
     
     // MARK: - Initialization
     
@@ -59,9 +142,26 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         self.rankingRepo = dependencies.realmUserRankRepository
         self.genericPointRepo = dependencies.realmPointRepository
         self.userPointRepo = dependencies.realmUserPointRepository
+        
+        super.init()
+        self.load()
     }
     
     // MARK: - Public Interface
+    
+    func load() {
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { await self.loadCategories() }
+                group.addTask { await self.loadUserPoints() }
+                group.addTask { await self.loadGenericPoints() }
+                group.addTask { await self.loadUserRanks() }
+                group.addTask { await self.loadLoginData() }
+                group.addTask { await self.loadCheckSumData() }
+            }
+            logger.log(message: "All data loaded concurrently.")
+        }
+    }
     
     func clearAllUserData() async throws {
         // Perform the delete operations concurrently using `async let`
@@ -197,7 +297,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmCategoryData = try categoryRepo.getAll().first
             if let realmCategoryData = realmCategoryData {
-                userCategoryData = realmCategoryData.toUserCategoryData()
+                _userCategoryData = realmCategoryData.toUserCategoryData()
                 logger.log(message: "User categories loaded successfully.")
             } else {
                 logger.log(message: "No user categories found in the repository.")
@@ -211,7 +311,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmUserPoints = try userPointRepo.getAll().first
             if let realmUserPoints = realmUserPoints {
-                userPointData = realmUserPoints.toUserPointData()
+                _userPointData = realmUserPoints.toUserPointData()
                 logger.log(message: "User points loaded successfully.")
             } else {
                 logger.log(message: "No user points found in the repository.")
@@ -225,7 +325,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmGenericPoints = try genericPointRepo.getAll().first
             if let realmGenericPoints = realmGenericPoints {
-                genericPointData = realmGenericPoints.toGenericPointData()
+                _genericPointData = realmGenericPoints.toGenericPointData()
                 logger.log(message: "Generic points loaded successfully.")
             } else {
                 logger.log(message: "No generic points found in the repository.")
@@ -239,7 +339,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmUserRanks = try rankingRepo.getAll().first
             if let realmUserRanks = realmUserRanks {
-                userRankData = realmUserRanks.toUserRankData()
+                _userRankData = realmUserRanks.toUserRankData()
                 logger.log(message: "User ranks loaded successfully.")
             } else {
                 logger.log(message: "No user ranks found in the repository.")
@@ -253,7 +353,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmLoginDetails = try loginRepo.getAll().first
             if let realmLoginDetails = realmLoginDetails {
-                loginData = realmLoginDetails.toLoginData()
+                _loginData = realmLoginDetails.toLoginData()
                 logger.log(message: "Login data loaded successfully.")
             } else {
                 logger.log(message: "No login data found in the repository.")
@@ -267,7 +367,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmCheckSumData = try checkSumRepo.getAll().first
             if let realmCheckSumData = realmCheckSumData {
-                checkSumData = realmCheckSumData.toCheckSumData()
+                _checkSumData = realmCheckSumData.toCheckSumData()
                 logger.log(message: "CheckSum data loaded successfully.")
             } else {
                 logger.log(message: "No CheckSum data found in the repository.")

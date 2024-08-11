@@ -32,20 +32,19 @@ protocol GameDataManaging {
 
 /// Class responsible for managing game data.
 public final class GameDataManager: BaseClass, GameDataManaging {
-    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasUserDefaultsStorage
+    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private var userDefaultsStorage: UserDefaultsStoraging
+    private var storage: PersistentUserDataStoraging
     private let checkSumAPI: CheckSumAPIServicing
-    private let userCategoryManager: any UserCategoryManaging
     private let userPointManager: any UserPointManaging
     private let genericPointManager: any GenericPointManaging
     private let userRankManager: any UserRankManaging
     private var checkSumData: CheckSumData? {
-        get { userDefaultsStorage.checkSumData }
-        set { userDefaultsStorage.checkSumData = newValue }
+        get { storage.checkSumData }
+        set { storage.checkSumData = newValue }
     }
     
     // MARK: - Public Properties
@@ -59,12 +58,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     /// - Parameter dependencies: The dependencies required by the GameDataManager.
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
-        self.userDefaultsStorage = dependencies.userDefaultsStorage
+        self.storage = dependencies.storage
         self.checkSumAPI = dependencies.checkSumAPI
-        self.userCategoryManager = dependencies.userCategoryManager
         self.genericPointManager = dependencies.genericPointManager
         self.userPointManager = dependencies.userPointManager
         self.userRankManager = dependencies.userRankManager
+        
+        super.init()
+        self.load()
     }
     
     // MARK: - Public Interface
@@ -252,6 +253,12 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             updateCheckSum(newCheckSum: newCheckSum, for: .points)
         } catch {
             logger.log(message: "ERROR: Points data fetch failed")
+        }
+    }
+    
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .checkSum)
         }
     }
 }

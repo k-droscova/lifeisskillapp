@@ -54,17 +54,8 @@ public final class RealmStorage: BaseClass, RealmStoraging {
         // Set the file URL for the default Realm
         configurations.fileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent("LifeIsSkill.realm")
         
-        // Set the schema version. This must be incremented whenever schema changes
-        configurations.schemaVersion = 1
-        
-        // Set the migration block
-        configurations.migrationBlock = { migration, oldSchemaVersion in
-            if oldSchemaVersion < 1 {
-                // do nothing
-            }
-        }
-        
-        configurations.objectTypes = [
+        // define object types in database
+        let objectTypes = [
             RealmCheckSumData.self,
             RealmLoginDetails.self,
             RealmCategory.self,
@@ -80,5 +71,22 @@ public final class RealmStorage: BaseClass, RealmStoraging {
             RealmUserPointData.self,
             RealmPointScan.self
         ]
+        
+        // Set the schema version. This must be incremented whenever schema changes
+        configurations.schemaVersion = 2 // Increment this whenever you update your schema
+        
+        // Set the migration block
+        configurations.migrationBlock = { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                // do nothing
+            }
+            if oldSchemaVersion < 2 {
+                for objectType in objectTypes {
+                    migration.deleteData(forType: objectType.className())
+                }
+            }
+        }
+        
+        configurations.objectTypes = objectTypes
     }
 }

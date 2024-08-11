@@ -23,11 +23,11 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDataStorage & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserLoginManager
     
     // MARK: - Private Properties
     
-    private var userDataStorage: UserDataStoraging
+    private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
     private let dataManager: UserLoginDataManaging
     private let userDataAPIService: UserDataAPIServicing
@@ -43,10 +43,10 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     var data: UserCategoryData? {
         get {
-            userDataStorage.userCategoryData
+            storage.userCategoryData
         }
         set {
-            userDataStorage.userCategoryData = newValue
+            storage.userCategoryData = newValue
         }
     }
     
@@ -67,11 +67,13 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
-        self.userDataStorage = dependencies.userDataStorage
+        self.storage = dependencies.storage
         self.logger = dependencies.logger
         self.dataManager = dependencies.userLoginManager
         self.userDataAPIService = dependencies.userDataAPI
+        
         super.init()
+        self.load()
     }
     
     // MARK: - Public Interface
@@ -105,6 +107,13 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     }
     
     // MARK: - Private Helpers
+    
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .categories)
+            self?.selectedCategory = self?.data?.main
+        }
+    }
     
     private func publishSelectedCategory() {
         DispatchQueue.main.async {
