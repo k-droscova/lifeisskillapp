@@ -15,6 +15,7 @@ protocol HasRealmPointScanRepository {
 protocol RealmPointScanRepositoring: RealmRepositoring where Entity == RealmPointScan {
     func update(_ pointScans: [RealmPointScan]) throws
     func clear(forUser user: RealmUser) throws
+    func getAll(forUser user: RealmUser) throws -> Results<RealmPointScan>
 }
 
 public class RealmPointScanRepository: BaseClass, RealmPointScanRepositoring, HasRealmStoraging, HasLoggers {
@@ -46,5 +47,12 @@ public class RealmPointScanRepository: BaseClass, RealmPointScanRepositoring, Ha
             let userPoints = realm.objects(RealmPointScan.self).filter("userID == %@", user.userID)
             realm.delete(userPoints)
         }
+    }
+    
+    func getAll(forUser user: RealmUser) throws -> Results<RealmPointScan> {
+        guard let realm = realmStorage.getRealm() else {
+            throw BaseError(context: .database, message: "Failed to get Realm instance", logger: logger)
+        }
+        return realm.objects(RealmPointScan.self).filter("userID == %@", user.userID)
     }
 }

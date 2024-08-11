@@ -19,4 +19,6 @@ enum CodeSource: String, Codable {
 
     /// Loaded from tourist signs
     case text = "TEXT"
+    
+    case unknown = "UNKNOWN"
 }

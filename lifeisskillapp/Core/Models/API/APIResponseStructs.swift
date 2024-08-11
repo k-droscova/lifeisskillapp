@@ -135,6 +135,11 @@ struct UserPointData: DataProtocol {
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserPoint].self, forKey: .data)
     }
+    
+    internal init(checkSum: String, data: [UserPoint]) {
+        self.checkSum = checkSum
+        self.data = data
+    }
 }
 
 struct GenericPointData: DataProtocol {
@@ -150,6 +155,11 @@ struct GenericPointData: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([GenericPoint].self, forKey: .data)
+    }
+    
+    internal init(checkSum: String, data: [GenericPoint]) {
+        self.checkSum = checkSum
+        self.data = data
     }
 }
 

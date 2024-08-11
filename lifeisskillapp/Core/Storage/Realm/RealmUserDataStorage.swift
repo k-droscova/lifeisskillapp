@@ -44,10 +44,17 @@ public final class RealmUserDataStorage: PersistentUserDataStoraging {
             }
         }
     }
-    var userPointData: UserPointData?
+    var userPointData: UserPointData? {
+        didSet {
+            Task { [weak self] in
+                await self?.setUserPoints(data: self?.userPointData)
+            }
+        }
+    }
     var genericPointData: GenericPointData?
     var userRankData: UserRankData?
     var loginData: LoginUserData?
+    var checkSumData: CheckSumData?
     
     // MARK: - Initialization
     
@@ -80,11 +87,87 @@ public final class RealmUserDataStorage: PersistentUserDataStoraging {
     // MARK: - getters
     
     private func loadUserPoints() async {
-        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            guard let checkSum = self.checkSumData?.userPoints else {
+                self.logger.log(message: "ERROR: cannot load user points when check sum is nil:\n \(checkSumData.debugDescription).")
+                return
+            }
+            guard let userID = self.getLoggedInUserId() else {
+                return
+            }
+            guard let user = self.getUserInfo(userID) else {
+                return
+            }
+            
+            do {
+                // Step 1: Fetch all point scans for the user
+                let pointScans = try self.pointScanRepo.getAll(forUser: user)
+                
+                // Step 2: Create UserPoint objects by fetching corresponding RealmPoint objects
+                let userPoints = Array(
+                    pointScans.compactMap { realmPointScan -> UserPoint? in
+                        let pointID = realmPointScan.pointID
+                        guard let realmPoint = self.pointRepo.getById(pointID) else {
+                            self.logger.log(message: "ERROR: Could not find RealmPoint for pointID: \(realmPointScan.pointID)")
+                            return nil
+                        }
+                        
+                        return UserPoint(
+                            id: realmPointScan.scanID,
+                            recordKey: realmPointScan.scanID,
+                            pointTime: realmPointScan.pointTime,
+                            pointName: realmPoint.pointName,
+                            pointValue: realmPoint.pointValue,
+                            pointType: PointType(rawValue: realmPoint.pointType) ?? .unknown,
+                            pointSpec: realmPoint.pointSpec,
+                            pointLat: realmPoint.pointLat,
+                            pointLng: realmPoint.pointLng,
+                            pointAlt: realmPoint.pointAlt,
+                            accuracy: realmPointScan.accuracy,
+                            codeSource: CodeSource(rawValue: realmPointScan.codeSource) ?? .unknown,
+                            pointCategory: Array(realmPointScan.pointCategory),
+                            duration: realmPointScan.duration,
+                            doesPointCount: realmPointScan.doesPointCount
+                        )
+                    }
+                )
+                
+                // Step 3: Set the userPointData property
+                let userPointData = UserPointData(checkSum: checkSum, data: userPoints)
+                DispatchQueue.main.async {
+                    self.userPointData = userPointData
+                }
+                
+            } catch {
+                self.logger.log(message: "ERROR while loading user points: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func loadGenericPoints() async {
-        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            guard let checkSum = self.checkSumData?.points else {
+                self.logger.log(message: "ERROR: cannot load generic points when check sum is nil:\n \(self.checkSumData.debugDescription).")
+                return
+            }
+            
+            // Step 1: Fetch all generic points from the repository
+            guard let realmPoints = self.pointRepo.getAll() else {
+                self.logger.log(message: "There are no generic points to load")
+                return
+            }
+            
+            // Step 2: Convert the RealmPoint objects to GenericPoint objects
+            let genericPoints = Array( realmPoints.map { GenericPoint(from: $0) } )
+
+            // Step 3: Set the genericPointData property
+            let genericPointData = GenericPointData(checkSum: checkSum, data: genericPoints)
+            DispatchQueue.main.async {
+                self.genericPointData = genericPointData
+            }
+        }
     }
     
     private func loadUserRanks() async {

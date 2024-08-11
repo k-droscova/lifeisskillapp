@@ -70,6 +70,41 @@ struct GenericPoint: UserData {
         active = try container.decode(Bool.self, forKey: .active)
         param = try container.decodeIfPresent(PointParam.self, forKey: .param)
     }
+    
+    // Internal initializer to create GenericPoint from RealmPoint
+    internal init(from realmPoint: RealmPoint) {
+        self.pointLat = realmPoint.pointLat
+        self.pointLng = realmPoint.pointLng
+        self.pointAlt = realmPoint.pointAlt
+        self.pointName = realmPoint.pointName
+        self.pointValue = realmPoint.pointValue
+        self.pointType = PointType(rawValue: realmPoint.pointType) ?? .unknown
+        self.id = realmPoint.pointID
+        self.cluster = realmPoint.cluster
+        self.pointSpec = realmPoint.pointSpec
+        self.sponsorId = realmPoint.sponsorID
+        self.hasDetail = realmPoint.hasDetail
+        self.active = realmPoint.active
+        
+        // Convert RealmPointParam to PointParam
+        if let realmParam = realmPoint.param {
+            self.param = PointParam(
+                timer: realmParam.timer.map { TimerParam(
+                    base: $0.base,
+                    done: $0.done,
+                    maxTime: $0.maxTime,
+                    minTime: $0.minTime,
+                    distance: $0.distance
+                )},
+                status: realmParam.status.map { StatusParam(
+                    color: $0.color,
+                    isValid: $0.isValid
+                )}
+            )
+        } else {
+            self.param = nil
+        }
+    }
 }
 
 struct PointParam: Codable {
