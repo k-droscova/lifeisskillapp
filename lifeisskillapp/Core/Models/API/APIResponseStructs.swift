@@ -68,6 +68,10 @@ public struct LoginAPIResponse: DataProtocol {
         try container.encode(user.mainCategory, forKey: .mainCategory)
         try container.encode(user.fullActivation, forKey: .fullActivation)
     }
+    
+    internal init(from user: LoggedInUser) {
+        self.user = user
+    }
 }
 
 public struct CheckSumUserPointsData: DataProtocol {
@@ -176,5 +180,10 @@ struct UserRankData: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserRank].self, forKey: .data)
+    }
+    
+    internal init(checkSum: String, data: [UserRank]) {
+        self.checkSum = checkSum
+        self.data = data
     }
 }

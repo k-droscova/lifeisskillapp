@@ -9,16 +9,13 @@ import Foundation
 import RealmSwift
 
 protocol HasRealmCategoryRepository {
-    var realmCategoryRepository: any RealmCategoryRepositoring { get set }
+    var realmCategoryRepository: any RealmUserCategoryRepositoring { get set }
 }
 
-protocol RealmCategoryRepositoring: RealmRepositoring where Entity == RealmCategory {
-    func getRankingsForCategory(byCategoryID categoryID: String) -> [RealmRanking]?
-    func update(categories: [RealmCategory]) throws
-}
+protocol RealmUserCategoryRepositoring: RealmRepositoring where Entity == RealmUserCategoryData {}
 
-public class RealmCategoryRepository: BaseClass, RealmCategoryRepositoring, HasRealmStoraging, HasLoggers {
-    typealias Entity = RealmCategory
+public class RealmUserCategoryRepository: BaseClass, RealmUserCategoryRepositoring, HasRealmStoraging, HasLoggers {
+    typealias Entity = RealmUserCategoryData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
     public let logger: LoggerServicing
@@ -27,19 +24,5 @@ public class RealmCategoryRepository: BaseClass, RealmCategoryRepositoring, HasR
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.realmStorage = dependencies.realmStorage
-    }
-    
-    func getRankingsForCategory(byCategoryID categoryID: String) -> [RealmRanking]? {
-        guard let category = getById(categoryID) else { return nil }
-        return Array(category.rankings)
-    }
-    
-    func update(categories: [RealmCategory]) throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(context: .database, message: "Failed to get Realm instance", logger: logger)
-        }
-        try realm.write {
-            realm.add(categories, update: .modified)
-        }
     }
 }

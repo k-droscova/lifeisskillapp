@@ -8,14 +8,14 @@
 import Foundation
 import RealmSwift
 
-protocol HasRealmRankingRepository {
-    var realmRankingRepository: any RealmRankingRepositoring { get set }
+protocol HasRealmUserRankRepository {
+    var realmUserRankRepository: any RealmUserRankRepositoring { get set }
 }
 
-protocol RealmRankingRepositoring: RealmRepositoring where Entity == RealmRanking {}
+protocol RealmUserRankRepositoring: RealmRepositoring where Entity == RealmUserRankData {}
 
-public class RealmRankingRepository: BaseClass, RealmRankingRepositoring, HasRealmStoraging, HasLoggers {
-    typealias Entity = RealmRanking
+public class RealmUserRankRepository: BaseClass, RealmUserRankRepositoring, HasRealmStoraging, HasLoggers {
+    typealias Entity = RealmUserRankData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
     public let logger: LoggerServicing

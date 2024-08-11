@@ -154,6 +154,8 @@ extension HomeFlowCoordinator {
             self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
         case .text:
             self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
+        case .unknown:
+            self.showAlert(titleKey: "", messageKey: "")
         }
     }
 }

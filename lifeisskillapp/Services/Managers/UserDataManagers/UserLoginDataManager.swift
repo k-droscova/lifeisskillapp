@@ -36,7 +36,6 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     private let logger: LoggerServicing
     private let loginAPI: LoginAPIServicing
     private var realmLoginRepo: any RealmLoginRepositoring
-    private var realmUserRepo: any RealmUserRepositoring
     
     // MARK: - Public Properties
     
@@ -78,7 +77,6 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
         self.logger = dependencies.logger
         self.loginAPI = dependencies.loginAPI
         self.realmLoginRepo = dependencies.container.realmLoginRepository
-        self.realmUserRepo = dependencies.container.realmUserRepository
     }
     
     // MARK: - Public Interface

@@ -7,18 +7,17 @@
 
 import Foundation
 
-typealias HasRealmRepositories = HasRealmUserRepository & HasRealmLoginRepository & HasRealmPointRepository & HasRealmRankingRepository & HasRealmCategoryRepository & HasRealmCheckSumRepository & HasRealmPointScanRepository
+typealias HasRealmRepositories = HasRealmLoginRepository & HasRealmCategoryRepository & HasRealmCheckSumRepository & HasRealmUserRankRepository & HasRealmUserPointRepository & HasRealmGenericPointRepository
 
 protocol HasRepositoryContainer {
     var container: HasRealmRepositories { get set }
 }
 
 final class RepositoryContainer: HasRealmRepositories {
-    lazy var realmLoginRepository: any RealmLoginRepositoring = RealmLoginRepository(dependencies: appDependencies)
-    lazy var realmUserRepository: any RealmUserRepositoring = RealmUserRepository(dependencies: appDependencies)
-    lazy var realmCheckSumRepository: any RealmCheckSumRepositoring = RealmCheckSumRepository(dependencies: appDependencies)
-    lazy var realmPointRepository: any RealmPointRepositoring = RealmPointRepository(dependencies: appDependencies)
-    lazy var realmRankingRepository: any RealmRankingRepositoring = RealmRankingRepository(dependencies: appDependencies)
-    lazy var realmCategoryRepository: any RealmCategoryRepositoring = RealmCategoryRepository(dependencies: appDependencies)
-    lazy var realmPointScanRepository: any RealmPointScanRepositoring = RealmPointScanRepository(dependencies: appDependencies)
+    var realmLoginRepository: any RealmLoginRepositoring = RealmLoginRepository(dependencies: appDependencies)
+    var realmCategoryRepository: any RealmUserCategoryRepositoring = RealmUserCategoryRepository(dependencies: appDependencies)
+    var realmCheckSumRepository: any RealmCheckSumRepositoring = RealmCheckSumRepository(dependencies: appDependencies)
+    var realmUserRankRepository: any RealmUserRankRepositoring = RealmUserRankRepository(dependencies: appDependencies)
+    var realmUserPointRepository: any RealmUserPointRepositoring = RealmUserPointRepository(dependencies: appDependencies)
+    var realmPointRepository: any RealmGenericPointRepositoring = RealmGenericPointRepository(dependencies: appDependencies)
 }

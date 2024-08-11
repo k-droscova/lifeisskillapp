@@ -15,12 +15,25 @@ class RealmCheckSumData: Object {
     @objc dynamic var messages: String = ""
     @objc dynamic var events: String = ""
     @objc dynamic var points: String = ""
-
+    
     override static func primaryKey() -> String? {
         "checkSumID"
     }
-
+    
     override required init() {
         super.init()
+    }
+    // Internal initializer to create RealmCheckSumData from CheckSumData
+    internal init(from checkSumData: CheckSumData) {
+        super.init()
+        self.userPoints = checkSumData.userPoints
+        self.rank = checkSumData.rank
+        self.messages = checkSumData.messages
+        self.events = checkSumData.events
+        self.points = checkSumData.points
+    }
+    
+    func toCheckSumData() -> CheckSumData? {
+        return CheckSumData(from: self)
     }
 }

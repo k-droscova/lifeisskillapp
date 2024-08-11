@@ -1,5 +1,5 @@
 //
-//  PointRepository.swift
+//  PointScanRepository.swift
 //  lifeisskillapp
 //
 //  Created by Karolína Droscová on 07.08.2024.
@@ -8,14 +8,14 @@
 import Foundation
 import RealmSwift
 
-protocol HasRealmGenericPointRepository {
-    var realmPointRepository: any RealmGenericPointRepositoring { get set }
+protocol HasRealmUserPointRepository {
+    var realmUserPointRepository: any RealmUserPointRepositoring { get set }
 }
 
-protocol RealmGenericPointRepositoring: RealmRepositoring where Entity == RealmGenericPointData {}
+protocol RealmUserPointRepositoring: RealmRepositoring where Entity == RealmUserPointData {}
 
-public class RealmGenericPointRepository: BaseClass, RealmGenericPointRepositoring, HasRealmStoraging, HasLoggers {
-    typealias Entity = RealmGenericPointData
+public class RealmUserPointRepository: BaseClass, RealmUserPointRepositoring, HasRealmStoraging, HasLoggers {
+    typealias Entity = RealmUserPointData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
     public let logger: LoggerServicing

@@ -71,8 +71,8 @@ struct GenericPoint: UserData {
         param = try container.decodeIfPresent(PointParam.self, forKey: .param)
     }
     
-    // Internal initializer to create GenericPoint from RealmPoint
-    internal init(from realmPoint: RealmPoint) {
+    // Internal initializer to create GenericPoint from RealmGenericPoint
+    internal init(from realmPoint: RealmGenericPoint) {
         self.pointLat = realmPoint.pointLat
         self.pointLng = realmPoint.pointLng
         self.pointAlt = realmPoint.pointAlt

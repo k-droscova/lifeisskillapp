@@ -18,20 +18,11 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
     typealias Entity = RealmLoginDetails
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    // MARK: - Public Properties
-    
     public let logger: LoggerServicing
     var realmStorage: RealmStoraging
     
-    // MARK: - Initialization
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.realmStorage = dependencies.realmStorage
-    }
-}
-
-extension RealmLoginRepositoring {
-    func getLoggedInUserID() -> String? {
-        return getAll()?.first?.userID
     }
 }

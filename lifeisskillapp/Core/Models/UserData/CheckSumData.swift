@@ -21,4 +21,21 @@ struct CheckSumData: Codable, Equatable {
         case events = 4
         case points = 5
     }
+    
+    // Internal initializer to create CheckSumData from RealmCheckSumData
+    internal init(from realmCheckSum: RealmCheckSumData) {
+        self.userPoints = realmCheckSum.userPoints
+        self.rank = realmCheckSum.rank
+        self.messages = realmCheckSum.messages
+        self.events = realmCheckSum.events
+        self.points = realmCheckSum.points
+    }
+    
+    internal init(userPoints: String, rank: String, messages: String, events: String, points: String) {
+        self.userPoints = userPoints
+        self.events = events
+        self.messages = messages
+        self.points = points
+        self.rank = rank
+    }
 }
