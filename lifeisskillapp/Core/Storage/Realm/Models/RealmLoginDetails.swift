@@ -21,6 +21,7 @@ class RealmLoginDetails: Object {
     @objc dynamic var distance: Int = 0
     @objc dynamic var mainCategory: String = ""
     @objc dynamic var fullActivation: Bool = false
+    @objc dynamic var isLoggedIn: Bool = false
 
     // Primary key
     override static func primaryKey() -> String? {

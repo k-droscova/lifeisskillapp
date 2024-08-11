@@ -24,9 +24,10 @@ protocol PersistentUserDataStoraging: UserDataStoraging {
     func saveUserRanks(data: UserRankData?) async
     func saveLoginData(data: LoginUserData?) async
     func saveCheckSumData(data: CheckSumData?) async
+    func clearAllUserData() async throws
 }
 
-public final class RealmUserDataStorage: PersistentUserDataStoraging {
+public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     typealias Dependencies = HasLoggers & HasRealmRepositories
     
     // MARK: - Private Properties
@@ -62,6 +63,27 @@ public final class RealmUserDataStorage: PersistentUserDataStoraging {
     
     // MARK: - Public Interface
     
+    func clearAllUserData() async throws {
+        // Perform the delete operations concurrently using `async let`
+        async let loginDeletion = Task { try loginRepo.deleteAll() }
+        async let checkSumDeletion = Task { try checkSumRepo.deleteAll() }
+        async let categoryDeletion = Task { try categoryRepo.deleteAll() }
+        async let rankingDeletion = Task { try rankingRepo.deleteAll() }
+        async let genericPointDeletion = Task { try genericPointRepo.deleteAll() }
+        async let userPointDeletion = Task { try userPointRepo.deleteAll() }
+        
+        // Await all deletions to finish
+        try await loginDeletion.value
+        try await checkSumDeletion.value
+        try await categoryDeletion.value
+        try await rankingDeletion.value
+        try await genericPointDeletion.value
+        try await userPointDeletion.value
+        
+        // Log the data clearing process
+        logger.log(message: "All related user data has been cleared.")
+    }
+    
     func loadFromRepository(for data: PersistentDataType) async {
         switch data {
         case .userPoints:
@@ -78,7 +100,7 @@ public final class RealmUserDataStorage: PersistentUserDataStoraging {
             await loadCategories()
         }
     }
-
+    
     func saveUserCategories(data: UserCategoryData?) async {
         do {
             if let data = data {
@@ -168,7 +190,7 @@ public final class RealmUserDataStorage: PersistentUserDataStoraging {
             logger.log(message: "Failed to save/delete CheckSum data: \(error.localizedDescription)")
         }
     }
-
+    
     // MARK: - Private Helpers
     
     private func loadCategories() async {
@@ -184,7 +206,7 @@ public final class RealmUserDataStorage: PersistentUserDataStoraging {
             logger.log(message: "Failed to load user categories: \(error.localizedDescription)")
         }
     }
-
+    
     private func loadUserPoints() async {
         do {
             let realmUserPoints = try userPointRepo.getAll().first

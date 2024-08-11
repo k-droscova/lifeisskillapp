@@ -15,7 +15,7 @@ typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage
 typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager & HasUserLoginManager
 typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager
 typealias HasLoggers = HasLoggerServicing
-typealias HasRealm = HasRealmStoraging & HasRepositoryContainer
+typealias HasRealm = HasRealmStoraging & HasRepositoryContainer & HasPersistentUserDataStoraging
 
 final class AppDependency {
     // MARK: logger
@@ -41,6 +41,10 @@ final class AppDependency {
     
     lazy var realmStorage: RealmStoraging = RealmStorage(dependencies: self)
     lazy var container: HasRealmRepositories = RepositoryContainer()
+    lazy var storage: any PersistentUserDataStoraging = {
+        let realmDependencies = RealmUserDataStorageDependencies(container: self.container, logger: self.logger)
+        return RealmUserDataStorage(dependencies: realmDependencies)
+    }()
     
     // MARK: user and data managers
     

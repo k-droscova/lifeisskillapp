@@ -21,3 +21,23 @@ final class RepositoryContainer: HasRealmRepositories {
     var realmUserPointRepository: any RealmUserPointRepositoring = RealmUserPointRepository(dependencies: appDependencies)
     var realmPointRepository: any RealmGenericPointRepositoring = RealmGenericPointRepository(dependencies: appDependencies)
 }
+
+final class RealmUserDataStorageDependencies: HasLoggers, HasRealmRepositories {
+    let logger: LoggerServicing
+    var realmLoginRepository: any RealmLoginRepositoring
+    var realmCategoryRepository: any RealmUserCategoryRepositoring
+    var realmCheckSumRepository: any RealmCheckSumRepositoring
+    var realmUserRankRepository: any RealmUserRankRepositoring
+    var realmUserPointRepository: any RealmUserPointRepositoring
+    var realmPointRepository: any RealmGenericPointRepositoring
+    
+    init(container: HasRealmRepositories, logger: LoggerServicing) {
+        self.logger = logger
+        self.realmLoginRepository = container.realmLoginRepository
+        self.realmCategoryRepository = container.realmCategoryRepository
+        self.realmCheckSumRepository = container.realmCheckSumRepository
+        self.realmUserRankRepository = container.realmUserRankRepository
+        self.realmUserPointRepository = container.realmUserPointRepository
+        self.realmPointRepository = container.realmPointRepository
+    }
+}
