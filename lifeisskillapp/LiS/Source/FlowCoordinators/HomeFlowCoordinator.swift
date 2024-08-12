@@ -11,7 +11,7 @@ import ACKategories
 import SwiftUI
 
 protocol HomeFlowCoordinatorDelegate: NSObject {
-    
+    func onboardingPressed()
 }
 
 protocol HomeFlowDelegate: NSObject {
@@ -107,8 +107,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     }
     
     func showOnboarding() {
-        // TODO: present Onboarding Controller when called
-        appDependencies.logger.log(message: "Onboarding tapped")
+        delegate?.onboardingPressed()
     }
 }
 

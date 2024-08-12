@@ -106,7 +106,7 @@ struct StatusView: View {
     private let textOff: String
     private let colorOn: Color
     private let colorOff: Color
-
+    
     internal init(status: Binding<Bool>, textOn: String, textOff: String, colorOn: Color, colorOff: Color) {
         self._status = status
         self.textOn = textOn
@@ -114,7 +114,7 @@ struct StatusView: View {
         self.colorOn = colorOn
         self.colorOff = colorOff
     }
-
+    
     var body: some View {
         Text(status ? textOn : textOff)
             .foregroundColor(status ? colorOn : colorOff)
@@ -233,21 +233,23 @@ struct OnboardingPageView: View {
     }
     
     var body: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 64) {
             imageView
             textView
         }
-        .padding()
+        .padding(.horizontal, 32)
     }
     
     private var imageView: some View {
         image
             .resizable()
-            .frame(height: 200)
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 300)
     }
     
     private var textView: some View {
         text
-            .body2Regular
+            .body1Regular
+            .multilineTextAlignment(.center)
     }
 }
