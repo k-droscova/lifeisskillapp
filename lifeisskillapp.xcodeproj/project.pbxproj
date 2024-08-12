@@ -490,6 +490,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2750BBF82C6A4A2400F82A04 /* Onboarding */,
 				2730222E2C624B1B00F9D572 /* SettingsBar */,
 				27F67E952C61143600F1C63E /* Points */,
 				276CA9CC2C5E5FAF001D6394 /* Rank */,
@@ -726,6 +727,13 @@
 				271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */,
 			);
 			path = OCR;
+			sourceTree = "<group>";
+		};
+		2750BBF82C6A4A2400F82A04 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		275457122C332D5500F3B55A /* Debug */ = {

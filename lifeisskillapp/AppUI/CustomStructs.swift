@@ -222,3 +222,32 @@ struct UserPointsTopLeftButtonsView: View {
         return result
     }
 }
+
+struct OnboardingPageView: View {
+    let image: Image
+    let text: Text
+    
+    init(image: Image, text: Text) {
+        self.image = image
+        self.text = text
+    }
+    
+    var body: some View {
+        VStack(spacing: 32) {
+            imageView
+            textView
+        }
+        .padding()
+    }
+    
+    private var imageView: some View {
+        image
+            .resizable()
+            .frame(height: 200)
+    }
+    
+    private var textView: some View {
+        text
+            .body2Regular
+    }
+}
