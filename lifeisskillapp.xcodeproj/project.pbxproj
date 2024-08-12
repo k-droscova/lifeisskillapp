@@ -54,6 +54,7 @@
 		2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */; };
 		2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */; };
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
+		2736FA482C6A76D500B03B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27274F882C3320F3003453E2 /* LaunchScreen.storyboard */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
@@ -1021,6 +1022,7 @@
 				275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */,
 				2717AF112C42ADB800A23F06 /* Montserrat-ExtraBold.otf in Resources */,
 				27274F872C3320F3003453E2 /* Assets.xcassets in Resources */,
+				2736FA482C6A76D500B03B9B /* LaunchScreen.storyboard in Resources */,
 				2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */,
 				275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */,
 				2717AF132C42ADB800A23F06 /* Montserrat-SemiBold.otf in Resources */,
