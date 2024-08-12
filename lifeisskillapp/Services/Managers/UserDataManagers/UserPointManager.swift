@@ -65,7 +65,6 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         
         super.init()
         self.load()
-        self.setupBindings()
     }
     
     // MARK: - deinit
@@ -115,23 +114,6 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     private func load() {
         Task { @MainActor [weak self] in
             await self?.storage.loadFromRepository(for: .userPoints)
-        }
-    }
-    
-    private func setupBindings() {
-        storage.checkSumDataPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] checkSumData in
-                self?.update(newCheckSum: checkSumData?.userPoints)
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func update(newCheckSum: String?) {
-        self.checkSum = newCheckSum
-        guard let newCheckSum else { return }
-        Task { @MainActor [weak self] in
-            try await self?.fetch()
         }
     }
 }

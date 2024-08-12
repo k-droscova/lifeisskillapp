@@ -27,7 +27,6 @@ protocol PersistentUserDataStoraging: UserDataStoraging {
     func saveLoginData(data: LoginUserData?) async
     func saveCheckSumData(data: CheckSumData?) async
     func clearAllUserData() async throws
-    var checkSumDataPublisher: AnyPublisher<CheckSumData?, Never> { get }
 }
 
 public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
@@ -49,9 +48,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var _userRankData: UserRankData?
     private var _loginData: LoginUserData?
     private var _checkSumData: CheckSumData?
-    
-    private var checkSumSubject = CurrentValueSubject<CheckSumData?, Never>(nil)
-    
+        
     // MARK: - Public Properties
     
     var userCategoryData: UserCategoryData? {
@@ -120,16 +117,10 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         }
         set {
             _checkSumData = newValue
-            checkSumSubject.send(newValue)
             Task {
                 await saveCheckSumData(data: newValue)
             }
         }
-    }
-    
-    // MARK: - Public Combine Publishers
-    var checkSumDataPublisher: AnyPublisher<CheckSumData?, Never> {
-        checkSumSubject.eraseToAnyPublisher()
     }
     
     // MARK: - Initialization

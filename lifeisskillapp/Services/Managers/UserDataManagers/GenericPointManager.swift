@@ -62,7 +62,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         
         super.init()
         self.load()
-        self.setupBindings()
     }
     
     // MARK: - deinit
@@ -97,23 +96,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     }
     
     // MARK: - Private Helpers
-    
-    private func setupBindings() {
-        storage.checkSumDataPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] checkSumData in
-                self?.update(newCheckSum: checkSumData?.points)
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func update(newCheckSum: String?) {
-        self.checkSum = newCheckSum
-        guard let newCheckSum else { return }
-        Task { @MainActor [weak self] in
-            try await self?.fetch()
-        }
-    }
     
     private func load() {
         Task { @MainActor [weak self] in

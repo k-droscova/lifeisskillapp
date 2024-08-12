@@ -62,7 +62,6 @@ public final class UserRankManager: BaseClass, UserRankManaging {
         
         super.init()
         self.load()
-        self.setupBindings()
     }
     
     // MARK: - Public Interface
@@ -95,23 +94,6 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     private func load() {
         Task { @MainActor [weak self] in
             await self?.storage.loadFromRepository(for: .rankings)
-        }
-    }
-    
-    private func setupBindings() {
-        storage.checkSumDataPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] checkSumData in
-                self?.update(newCheckSum: checkSumData?.rank)
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func update(newCheckSum: String?) {
-        self.checkSum = newCheckSum
-        guard let newCheckSum else { return }
-        Task { @MainActor [weak self] in
-            try await self?.fetch()
         }
     }
 }
