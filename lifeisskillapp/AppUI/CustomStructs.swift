@@ -233,18 +233,18 @@ struct OnboardingPageView: View {
     }
     
     var body: some View {
-        VStack(spacing: 64) {
+        VStack(spacing: CustomSizes.OnboardingPageView.verticalSpacing.size) {
             imageView
             textView
         }
-        .padding(.horizontal, 32)
+        .padding(.horizontal, CustomSizes.OnboardingPageView.horizontalPadding.size)
     }
     
     private var imageView: some View {
         image
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(height: 300)
+            .frame(height: CustomSizes.OnboardingPageView.frameHeight.size)
     }
     
     private var textView: some View {

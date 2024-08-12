@@ -34,42 +34,42 @@ extension OnboardingView {
 extension OnboardingView {
     private var page1: some View {
         OnboardingPageView(
-            image: Image("Ilustrations/howTo1"),
+            image: Image(CustomImages.Screens.howTo1.rawValue),
             text: Text("onboarding.description.find")
         )
     }
     
     private var page2: some View {
         OnboardingPageView(
-            image: Image("Ilustrations/messages_news"),
+            image: Image(CustomImages.Screens.messagesNews.rawValue),
             text: Text("onboarding.description.web")
         )
     }
     
     private var page3: some View {
         OnboardingPageView(
-            image: Image("Ilustrations/howTo2"),
+            image: Image(CustomImages.Screens.howTo2.rawValue),
             text: Text("onboarding.description.activity")
         )
     }
     
     private var page4: some View {
         OnboardingPageView(
-            image: Image("Ilustrations/home"),
+            image: Image(CustomImages.Screens.home.rawValue),
             text: Text("onboarding.description.point")
         )
     }
     
     private var page5: some View {
         OnboardingPageView(
-            image: Image("Ilustrations/ranking"),
+            image: Image(CustomImages.Screens.rank.rawValue),
             text: Text("onboarding.description.prizes")
         )
     }
     
     private var page6: some View {
         OnboardingPageView(
-            image: Image("Ilustrations/helpDesk"),
+            image: Image(CustomImages.Screens.helpDesk.rawValue),
             text: Text("onboarding.description.problems")
         )
     }
