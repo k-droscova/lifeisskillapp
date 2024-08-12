@@ -356,7 +356,7 @@ extension Network {
                 throw BaseError(
                     context: .api,
                     message: apiError.message,
-                    code: .statusCode(statusCode),
+                    code: .genericStatusCode(statusCode),
                     url: url,
                     meta: dataResponse.description(sensitiveData: sensitiveRequestBodyData),
                     logger: loggerService)

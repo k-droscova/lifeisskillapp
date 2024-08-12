@@ -13,7 +13,8 @@ import Foundation
 /// API response errors (400 and 500) are mapped to `statusCode`.
 public enum ErrorCodes {
     case `default`
-    case statusCode(Int)
+    case genericStatusCode(Int)
+    case specificStatusCode(SpecificStatusCodes)
     case general(GeneralCodes)
     case networking(NetworkCodes)
     
@@ -21,10 +22,16 @@ public enum ErrorCodes {
     var code: Int {
         switch self {
         case .default: return 1
-        case .statusCode(let code): return code
+        case .specificStatusCode(let code): return code.rawValue
+        case .genericStatusCode(let code): return code
         case .general(let code): return code.rawValue
         case .networking(let code): return code.rawValue
         }
+    }
+    
+    public enum SpecificStatusCodes: Int {
+        case invalidToken = 401
+        case invalidUserPoint = 470
     }
     
     /// Enum representing general error codes with a prefix of `5xxx`.

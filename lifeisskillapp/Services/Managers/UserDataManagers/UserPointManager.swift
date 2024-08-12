@@ -80,8 +80,12 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         do {
             let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
             data = response.data
-            delegate?.onUpdate()
-        } catch {
+        } catch let error as BaseError {
+            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                delegate?.onInvalidToken()
+            }
+        }
+        catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to load user points",

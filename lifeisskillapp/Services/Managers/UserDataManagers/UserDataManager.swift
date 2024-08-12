@@ -12,7 +12,7 @@ protocol UserData: Codable, Identifiable {
 }
 
 protocol UserDataManagerFlowDelegate: NSObject {
-    func onUpdate()
+    func onInvalidToken()
 }
 
 protocol UserDataManaging {

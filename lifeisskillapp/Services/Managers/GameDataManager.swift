@@ -8,7 +8,7 @@
 import Foundation
 
 /// Protocol defining the delegate methods for GameDataManager.
-protocol GameDataManagerFlowDelegate: NSObject {
+protocol GameDataManagerFlowDelegate: UserDataManagerFlowDelegate {
     /// Called when an error occurs during data fetching.
     /// - Parameter error: The error that occurred.
     func onError(_ error: Error)
@@ -79,7 +79,12 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             } else {
                 await fetchAllDataIfNecessary()
             }
-        } catch {
+        } catch let error as BaseError {
+            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                delegate?.onInvalidToken()
+            }
+        }
+        catch {
             delegate?.onError(error)
         }
     }

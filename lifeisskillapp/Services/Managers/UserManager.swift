@@ -37,7 +37,8 @@ final class UserManager: BaseClass, UserManaging {
     private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
     private let registerAppAPI: RegisterAppAPIServicing
-    private let userLoginDataManager: any UserLoginDataManaging
+    private var userLoginDataManager: any UserLoginDataManaging
+
     
     // MARK: - Public Properties
     
@@ -57,6 +58,9 @@ final class UserManager: BaseClass, UserManaging {
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
         self.userLoginDataManager = dependencies.userLoginManager
+        
+        super.init()
+        self.userLoginDataManager.delegate = self
     }
     
     // MARK: - Public interface
@@ -80,7 +84,6 @@ final class UserManager: BaseClass, UserManaging {
         }
     }
     
-    // MARK: - Public Interface
     func login(loginCredentials: LoginCredentials) async throws {
         try await userLoginDataManager.login(credentials: loginCredentials)
     }
@@ -89,5 +92,14 @@ final class UserManager: BaseClass, UserManaging {
         logger.log(message: "Logging out")
         userLoginDataManager.logout()
         delegate?.onLogout()
+    }
+    
+    // MARK: - Private Helpers
+}
+
+extension UserManager: UserLoginManagerFlowDelegate {
+    func onInvalidToken() {
+        //
+        self.logout()
     }
 }

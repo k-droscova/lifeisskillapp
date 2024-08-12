@@ -41,7 +41,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     // MARK: - Public Properties
     
     /*
-     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate) or if delegate is even necessary as it is not called anywhere.
+     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onInvalidToken())
      Now it can be set from anywhere, needs to be handled with caution.
      */
     weak var delegate: UserLoginManagerFlowDelegate?
@@ -93,7 +93,12 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
             }
             try realmLoginRepo.saveLoginUser(loggedInUser)
             data = response.data
-        } catch {
+        } catch let error as BaseError {
+            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                delegate?.onInvalidToken()
+            }
+        }
+        catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to login",
