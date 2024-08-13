@@ -15,6 +15,7 @@ public enum ErrorCodes {
     case `default`
     case genericStatusCode(Int)
     case specificStatusCode(SpecificStatusCodes)
+    case login(LoginCodes)
     case general(GeneralCodes)
     case networking(NetworkCodes)
     
@@ -24,6 +25,7 @@ public enum ErrorCodes {
         case .default: return 1
         case .specificStatusCode(let code): return code.rawValue
         case .genericStatusCode(let code): return code
+        case .login(let code): return code.rawValue
         case .general(let code): return code.rawValue
         case .networking(let code): return code.rawValue
         }
@@ -46,6 +48,11 @@ public enum ErrorCodes {
         case missingConfigItem = 5200
         /// Config authorization token is missing - `5201`
         case missingToken = 5201
+    }
+    
+    public enum LoginCodes: Int {
+        case onlineInvalidCredentials = 1000
+        case offlineInvalidCredentials = 1001
     }
     
     /// Enum representing networking error codes with a prefix of `6xxx`.

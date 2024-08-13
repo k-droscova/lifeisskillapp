@@ -155,6 +155,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
             throw BaseError(
                 context: .system,
                 message: "Offline login failed: credentials do not match.",
+                code: .login(.offlineInvalidCredentials),
                 logger: logger
             )
         }
