@@ -15,6 +15,7 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     override func start(in window: UIWindow) {
         self.window = window
         super.start(in: window)
+        appDependencies.networkMonitor.delegate = self // present alert if connection lost on all screens
         prepareWindow()
     }
     
@@ -66,5 +67,15 @@ extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.prepareWindow()
         }
+    }
+}
+
+extension AppFlowCoordinator: NetworkManagerFlowDelegate {
+    func onNoInternetConnection() {
+        let alert = UIAlertController(title: "Internet Connection Lost", message: "Please be aware that the network is not available. Only most recently logged in user can log in again. You can scan points as usual, but if you log out before accessing network, all scanned points will be lost.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            
+        })
+        rootViewController?.present(alert, animated: true, completion: nil)
     }
 }
