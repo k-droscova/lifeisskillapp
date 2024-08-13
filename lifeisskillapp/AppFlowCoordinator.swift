@@ -74,19 +74,22 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
     
     func onForceLogout() {
         self.reload()
-        let alert = UIAlertController(title: "Forced logout", message: "It was detected that you have logged in on another device. It is not permitted to be logged in on multiple devices, hence we logged you out on this device.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        Task { @MainActor [weak self] in
+            let alert = UIAlertController(title: "Forced logout", message: "It was detected that you have logged in on another device. It is not permitted to be logged in on multiple devices, hence we logged you out on this device.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
+            self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
-extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
-}
+extension AppFlowCoordinator: MainFlowCoordinatorDelegate {}
 
 extension AppFlowCoordinator: NetworkManagerFlowDelegate {
     func onNoInternetConnection() {
-        let alert = UIAlertController(title: "Internet Connection Lost", message: "Please be aware that the network is not available. Only most recently logged in user can log in again. You can scan points as usual, but if you log out before accessing network, all scanned points will be lost.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        Task { @MainActor [weak self] in
+            let alert = UIAlertController(title: "Internet Connection Lost", message: "Please be aware that the network is not available. Only most recently logged in user can log in again. You can scan points as usual, but if you log out before accessing network, all scanned points will be lost.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
+            self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
 }

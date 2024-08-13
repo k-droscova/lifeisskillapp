@@ -71,6 +71,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
                 self.isLoading = false
                 self.delegate?.loginSuccessful()
             } catch let error as BaseError {
+                self.isLoading = false
                 if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
                     delegate?.offlineLoginFailed()
                 }
