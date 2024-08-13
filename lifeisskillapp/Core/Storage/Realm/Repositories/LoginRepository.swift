@@ -17,6 +17,7 @@ protocol RealmLoginRepositoring: RealmRepositoring where Entity == RealmLoginDet
     func getLoggedInUser() throws -> RealmLoginDetails?
     func saveLoginUser(_ user: LoggedInUser) throws
     func markUserAsLoggedOut() throws
+    func markUserAsLoggedIn() throws
 }
 
 public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmStoraging, HasLoggers {
@@ -63,6 +64,29 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
         
         try realm.write {
             loggedInUser.isLoggedIn = false
+            realm.add(loggedInUser, update: .modified)
+        }
+    }
+    
+    func markUserAsLoggedIn() throws {
+        guard let loggedInUser = try getSavedLoginDetails() else {
+            throw BaseError(
+                context: .database,
+                message: "No user is currently logged in.",
+                logger: logger
+            )
+        }
+        
+        guard let realm = realmStorage.getRealm() else {
+            throw BaseError(
+                context: .database,
+                message: "Failed to get Realm instance",
+                logger: logger
+            )
+        }
+        
+        try realm.write {
+            loggedInUser.isLoggedIn = true
             realm.add(loggedInUser, update: .modified)
         }
     }

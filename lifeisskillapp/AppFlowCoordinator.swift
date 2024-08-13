@@ -53,23 +53,17 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         rootViewController = window?.rootViewController
         window?.makeKeyAndVisible()
     }
-}
-
-extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
-    func loginDidSucceed() {
+    
+    private func reload() {
         DispatchQueue.main.async { [weak self] in
             self?.prepareWindow()
         }
     }
-    
-    func loginDidFail() {
-        let alert = UIAlertController(title: "Login Failed", message: "Please check that you used the correct username and password. If you forgot your password, click the button below to reset it.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.prepareWindow()
-            self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
+}
+
+extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
+    func loginDidSucceed() {
+        self.reload()
     }
 }
 
@@ -87,11 +81,6 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
 }
 
 extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
-    func reload() {
-        DispatchQueue.main.async { [weak self] in
-            self?.prepareWindow()
-        }
-    }
 }
 
 extension AppFlowCoordinator: NetworkManagerFlowDelegate {

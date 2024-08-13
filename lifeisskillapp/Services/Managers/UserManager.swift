@@ -201,19 +201,27 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
-        guard let storedLoginData = try realmLoginRepo.getSavedLoginDetails(), !storedLoginData.isLoggedIn else {
+        guard let storedLoginData = try realmLoginRepo.getSavedLoginDetails() else {
             throw BaseError(
                 context: .system,
                 message: "Offline login failed: unable to retrieve realm data.",
                 logger: logger
             )
         }
+        guard !storedLoginData.isLoggedIn else {
+            throw BaseError(
+                context: .system,
+                message: "Offline login failed: user is supposedly already logged in in realm database.",
+                logger: logger
+            )
+        }
+        try realmLoginRepo.markUserAsLoggedIn()
         self.data = storedLoginData.toLoginData()
     }
 }
 
 extension UserManager: UserDataManagerFlowDelegate {
     func onInvalidToken() {
-        self.logout()
+        self.forceLogout()
     }
 }

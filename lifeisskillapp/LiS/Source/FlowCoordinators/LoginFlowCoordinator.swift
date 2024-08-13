@@ -11,7 +11,6 @@ import ACKategories
 
 protocol LoginFlowCoordinatorDelegate: NSObject {
     func loginDidSucceed()
-    func loginDidFail()
 }
 
 protocol LoginFlowDelegate: NSObject {
@@ -19,6 +18,7 @@ protocol LoginFlowDelegate: NSObject {
     func forgotPasswordTapped()
     func loginSuccessful()
     func loginFailed()
+    func offlineLoginFailed()
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
@@ -63,6 +63,19 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         delegate?.loginDidSucceed()
     }
     func loginFailed() {
-        delegate?.loginDidFail()
+        let alert = UIAlertController(title: "Login Failed", message: "Please check that you used the correct username and password. If you forgot your password, click the button below to reset it.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+    }
+    func offlineLoginFailed() {
+        let alert = UIAlertController(title: "Login Failed", message: "You are offline. Only the most recently logged in user can log in in offline mode. Ensure you used the correct credentials for log in.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
 }

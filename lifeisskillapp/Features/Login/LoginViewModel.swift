@@ -70,7 +70,12 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
                 try await self.userManager.login(credentials: .init(username: username, password: password))
                 self.isLoading = false
                 self.delegate?.loginSuccessful()
-            } catch {
+            } catch let error as BaseError {
+                if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
+                    delegate?.offlineLoginFailed()
+                }
+            }
+            catch {
                 self.isLoading = false
                 print("Login failed with error: \(error)")
                 self.delegate?.loginFailed()
