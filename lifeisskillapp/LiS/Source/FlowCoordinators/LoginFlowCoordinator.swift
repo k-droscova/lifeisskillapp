@@ -9,21 +9,16 @@ import Foundation
 import UIKit
 import ACKategories
 
-/// A delegate protocol to handle events from the LoginFlowCoordinator.
 protocol LoginFlowCoordinatorDelegate: NSObject {
-    /// Called when the login process succeeds. This is called on AppFlowCoordinator to setup TabBar
     func loginDidSucceed()
+    func loginDidFail()
 }
 
-/// A delegate protocol to handle actions within the LoginViewController.
 protocol LoginFlowDelegate: NSObject {
-    /// Called when the user taps the register button.
-    ///
     func registerTapped()
-    
-    /// Called when the login process is successful.
-    ///
+    func forgotPasswordTapped()
     func loginSuccessful()
+    func loginFailed()
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
@@ -58,15 +53,16 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
 }
 
 extension LoginFlowCoordinator: LoginFlowDelegate {
-    /// Handles the event when the register button is tapped.
-    ///
     func registerTapped() {
         print("Register Tapped")
     }
-    
-    /// Handles the event when the login process is successful.
-    ///
+    func forgotPasswordTapped() {
+        print("Forgot Password Tapped")
+    }
     func loginSuccessful() {
         delegate?.loginDidSucceed()
+    }
+    func loginFailed() {
+        delegate?.loginDidFail()
     }
 }

@@ -26,7 +26,7 @@ protocol UserLoginDataManaging {
 }
 
 public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
-    typealias Dependencies = HasLoggerServicing & HasLoginAPIService & HasUserDataStorage & HasUserManager & HasRepositoryContainer & HasPersistentUserDataStoraging
+    typealias Dependencies = HasLoggerServicing & HasLoginAPIService & HasUserDataStorage & HasUserManager & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -34,6 +34,8 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
     private let loginAPI: LoginAPIServicing
     private var realmLoginRepo: any RealmLoginRepositoring
     private var storage: PersistentUserDataStoraging
+    private let networkMonitor: NetworkMonitoring
+    private var isOnline: Bool { networkMonitor.onlineStatus }
     
     // MARK: - Public Properties
     
@@ -70,6 +72,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
         self.loginAPI = dependencies.loginAPI
         self.realmLoginRepo = dependencies.container.realmLoginRepository
         self.storage = dependencies.storage
+        self.networkMonitor = dependencies.networkMonitor
         
         super.init()
         self.load()
