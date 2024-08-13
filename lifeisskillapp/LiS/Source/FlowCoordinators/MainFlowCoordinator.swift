@@ -12,10 +12,7 @@ import SwiftUI
 
 protocol MainFlowCoordinatorDelegate: NSObject {
     func reload()
-}
-
-protocol MainFlowDelegate: NSObject {
-    
+    func onForceLogout()
 }
 
 final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
@@ -183,6 +180,9 @@ extension MainFlowCoordinator {
 }
 
 extension MainFlowCoordinator: UserManagerFlowDelegate {
+    func onForceLogout() {
+        delegate?.onForceLogout()
+    }
     func onLogout() {
         delegate?.reload()
     }
@@ -235,8 +235,8 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     }
 }
 
-extension MainFlowCoordinator: RankFlowCoordinatorDelegate {
-}
-
-extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {
+extension MainFlowCoordinator: RankFlowCoordinatorDelegate, PointsFlowCoordinatorDelegate {
+    func onInvalidToken() {
+        delegate?.onForceLogout()
+    }
 }

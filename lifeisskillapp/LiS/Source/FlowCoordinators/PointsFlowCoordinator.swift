@@ -9,11 +9,9 @@ import Foundation
 import ACKategories
 import UIKit
 
-protocol PointsFlowCoordinatorDelegate: NSObject {
+protocol PointsFlowCoordinatorDelegate: NSObject {}
 
-}
-
-protocol PointsFlowDelegate: GameDataManagerFlowDelegate, NSObject {
+protocol PointsFlowDelegate: NSObject {
     func onError(_ error: Error)
     func onNoDataAvailable()
     func selectCategoryPrompt()
@@ -49,7 +47,6 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
 }
 
 extension PointsFlowCoordinator: PointsFlowDelegate {
-    
     // TODO: present approppriate alerts
 
     func onError(_ error: any Error) {

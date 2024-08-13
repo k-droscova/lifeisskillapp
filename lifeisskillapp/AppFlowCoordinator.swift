@@ -69,6 +69,13 @@ extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
 }
 
 extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
+    func onForceLogout() {
+        self.reload()
+        let alert = UIAlertController(title: "Forced logout", message: "It was detected that you have logged in on another device. It is not permitted to be logged in on multiple devices, hence we logged you out on this device.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
+        rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
     func reload() {
         DispatchQueue.main.async { [weak self] in
             self?.prepareWindow()

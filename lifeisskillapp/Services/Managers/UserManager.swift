@@ -9,6 +9,7 @@ import Foundation
 
 protocol UserManagerFlowDelegate: NSObject {
     func onLogout()
+    func onForceLogout()
     func onDataError(_ error: Error)
 }
 
@@ -30,12 +31,13 @@ protocol UserManaging {
 }
 
 final class UserManager: BaseClass, UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasPersistentUserDataStoraging
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
     private var userDefaultsStorage: UserDefaultsStoraging
+    private var storage: PersistentUserDataStoraging
     private let registerAppAPI: RegisterAppAPIServicing
     private var userLoginDataManager: any UserLoginDataManaging
 
@@ -54,6 +56,7 @@ final class UserManager: BaseClass, UserManaging {
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
         self.userLoginDataManager = dependencies.userLoginManager
+        self.storage = dependencies.storage
         
         super.init()
     }
@@ -90,6 +93,11 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     // MARK: - Private Helpers
+    
+    func forceLogout() {
+        logger.log(message: "Forced logout")
+        userLoginDataManager.logout()
+    }
 }
 
 extension UserManager: UserDataManagerFlowDelegate {

@@ -10,11 +10,9 @@ import UIKit
 import ACKategories
 import SwiftUI
 
-protocol RankFlowCoordinatorDelegate: NSObject {
-    
-}
+protocol RankFlowCoordinatorDelegate: NSObject {}
 
-protocol RankFlowDelegate: GameDataManagerFlowDelegate, NSObject {
+protocol RankFlowDelegate: NSObject {
     func onError(_ error: Error)
     func onNoDataAvailable()
     func selectCategoryPrompt()
@@ -55,7 +53,6 @@ final class RankFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
 }
 
 extension RankFlowCoordinator: RankFlowDelegate {
-    
     // TODO: present approppriate alerts
     
     func onError(_ error: any Error) {

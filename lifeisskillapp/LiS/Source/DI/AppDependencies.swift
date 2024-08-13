@@ -11,7 +11,8 @@ let appDependencies = AppDependency()
 
 typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper & HasNetworkMonitor
 typealias HasAPIDependencies = HasRegisterAppAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService
-typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage
+typealias HasKeychain = HasKeychainHelper & HasKeychainStorage
+typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage & HasKeychainHelper & HasKeychain
 typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager & HasUserLoginManager
 typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager
 typealias HasLoggers = HasLoggerServicing
@@ -36,6 +37,8 @@ final class AppDependency {
     
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
     lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
+    lazy var keychainHelper: KeychainHelping = KeychainHelper(dependencies: self)
+    lazy var keychainStorage: KeychainStoraging = KeychainStorage(dependencies: self)
     
     // MARK: realm
     

@@ -10,9 +10,7 @@ import UIKit
 import ACKategories
 import SwiftUI
 
-protocol HomeFlowCoordinatorDelegate: NSObject {
-    
-}
+protocol HomeFlowCoordinatorDelegate: NSObject {}
 
 protocol HomeFlowDelegate: NSObject {
     // MARK: - scanning flow

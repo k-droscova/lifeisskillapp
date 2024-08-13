@@ -32,7 +32,7 @@ protocol GameDataManaging {
 
 /// Class responsible for managing game data.
 public final class GameDataManager: BaseClass, GameDataManaging {
-    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging
+    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager
     
     // MARK: - Private Properties
     
@@ -46,6 +46,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         get { storage.checkSumData }
         set { storage.checkSumData = newValue }
     }
+    private let userManager: UserManaging
     
     // MARK: - Public Properties
     
@@ -63,6 +64,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         self.genericPointManager = dependencies.genericPointManager
         self.userPointManager = dependencies.userPointManager
         self.userRankManager = dependencies.userRankManager
+        self.userManager = dependencies.userManager
         
         super.init()
         self.load()
@@ -81,6 +83,12 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             }
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                do {
+                    try await storage.clearAllUserData()
+                } catch {
+                    logger.log(message: "Force logout failed")
+                    return
+                }
                 delegate?.onInvalidToken()
             }
         }
