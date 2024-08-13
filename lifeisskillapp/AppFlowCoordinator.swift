@@ -64,7 +64,11 @@ extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidFail() {
         let alert = UIAlertController(title: "Login Failed", message: "Please check that you used the correct username and password. If you forgot your password, click the button below to reset it.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.prepareWindow()
+            self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

@@ -31,7 +31,7 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
     }
     
     func getLoggedInUser() throws -> RealmLoginDetails? {
-        return try getAll().first(where: { $0.isLoggedIn })
+        return try getAll().first
     }
     
     func saveLoginUser(_ user: LoggedInUser) throws {

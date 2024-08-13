@@ -56,7 +56,6 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         self.userRankManager = dependencies.userRankManager
         self.gameDataManager = dependencies.gameDataManager
         self.userDataManager = dependencies.userLoginManager
-        gameDataManager.delegate = delegate
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(

@@ -83,6 +83,7 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
     private func updateOnlineStatus(status: Bool) {
         Task { @MainActor [weak self] in
             self?.onlineStatus = status
+            self?.logger.log(message: "New network status: \(status)")
             self?.onlineStatusSubject.send(status)
         }
     }

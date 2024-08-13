@@ -69,15 +69,12 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
             do {
                 try await self.userManager.login(loginCredentials: .init(username: username, password: password))
                 self.isLoading = false
-                guard userManager.isLoggedIn else {
-                    self.delegate?.loginFailed()
-                    return
-                }
                 self.delegate?.loginSuccessful()
             } catch {
                 self.isLoading = false
-                // Handle the error appropriately on the main thread
                 print("Login failed with error: \(error)")
+                self.delegate?.loginFailed()
+                return
             }
         }
     }
