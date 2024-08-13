@@ -47,7 +47,6 @@ final class UserManager: BaseClass, UserManaging {
     private var userDefaultsStorage: UserDefaultsStoraging
     private var storage: PersistentUserDataStoraging
     private let registerAppAPI: RegisterAppAPIServicing
-    //private var userLoginDataManager: any UserLoginDataManaging
     private let loginAPI: LoginAPIServicing
     private var realmLoginRepo: any RealmLoginRepositoring
     private let networkMonitor: NetworkMonitoring
@@ -116,7 +115,6 @@ final class UserManager: BaseClass, UserManaging {
     func logout() {
         logger.log(message: "Logging out")
         do {
-            // Mark the user as logged out in persistent storage
             try realmLoginRepo.markUserAsLoggedOut()
         } catch {
             logger.log(message: "Failed to mark user as logged out: \(error.localizedDescription)")
@@ -149,7 +147,7 @@ final class UserManager: BaseClass, UserManaging {
     private func checkIfUserIsLoggedIn() {
         do {
             // if the user hasn't logged out then I use that data
-            if let storedLoginData = try realmLoginRepo.getLoggedInUser(), storedLoginData.isLoggedIn {
+            if let storedLoginData = try realmLoginRepo.getSavedLoginDetails(), storedLoginData.isLoggedIn {
                 self.data = storedLoginData.toLoginData() // gives signal to show main page
             } else {
                 self.data = nil // gives signal to show login page
@@ -166,7 +164,7 @@ final class UserManager: BaseClass, UserManaging {
             let loggedInUser = response.data.user
             
             // check if there is logged in user data
-            guard let existingUser = try realmLoginRepo.getLoggedInUser() else {
+            guard let existingUser = try realmLoginRepo.getSavedLoginDetails() else {
                 try keychainStorage.save(credentials: credentials) // save new credentials to keychain
                 try realmLoginRepo.saveLoginUser(loggedInUser) // save new data to realm
                 data = response.data // give signal of successfull login
@@ -203,7 +201,7 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
-        guard let storedLoginData = try realmLoginRepo.getLoggedInUser(), !storedLoginData.isLoggedIn else {
+        guard let storedLoginData = try realmLoginRepo.getSavedLoginDetails(), !storedLoginData.isLoggedIn else {
             throw BaseError(
                 context: .system,
                 message: "Offline login failed: unable to retrieve realm data.",

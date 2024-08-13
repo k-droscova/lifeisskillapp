@@ -13,6 +13,7 @@ protocol HasRealmLoginRepository {
 }
 
 protocol RealmLoginRepositoring: RealmRepositoring where Entity == RealmLoginDetails {
+    func getSavedLoginDetails() throws -> RealmLoginDetails?
     func getLoggedInUser() throws -> RealmLoginDetails?
     func saveLoginUser(_ user: LoggedInUser) throws
     func markUserAsLoggedOut() throws
@@ -30,8 +31,12 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
         self.realmStorage = dependencies.realmStorage
     }
     
-    func getLoggedInUser() throws -> RealmLoginDetails? {
+    func getSavedLoginDetails() throws -> RealmLoginDetails? {
         return try getAll().first
+    }
+    
+    func getLoggedInUser() throws -> RealmLoginDetails? {
+        return try getAll().first(where: { $0.isLoggedIn } )
     }
     
     func saveLoginUser(_ user: LoggedInUser) throws {
@@ -40,7 +45,7 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
     }
     
     func markUserAsLoggedOut() throws {
-        guard let loggedInUser = try getLoggedInUser() else {
+        guard let loggedInUser = try getSavedLoginDetails() else {
             throw BaseError(
                 context: .database,
                 message: "No user is currently logged in.",
