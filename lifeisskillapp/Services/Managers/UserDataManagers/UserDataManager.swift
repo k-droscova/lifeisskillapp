@@ -19,6 +19,7 @@ protocol UserDataManaging {
     associatedtype DataType: UserData
     associatedtype DataContainer: DataProtocol
     
+    var delegate: UserDataManagerFlowDelegate? { get set }
     var data: DataContainer? { get set }
     var token: String? { get }
     func fetch() async throws

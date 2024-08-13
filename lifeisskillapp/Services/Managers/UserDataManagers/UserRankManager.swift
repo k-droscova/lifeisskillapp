@@ -8,15 +8,11 @@
 import Foundation
 import Combine
 
-protocol UserRankManagerFlowDelegate: UserDataManagerFlowDelegate {
-}
-
 protocol HasUserRankManager {
     var userRankManager: any UserRankManaging { get }
 }
 
 protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataContainer == UserRankData {
-    var delegate: UserRankManagerFlowDelegate? { get set }
 }
 
 public final class UserRankManager: BaseClass, UserRankManaging {    
@@ -37,7 +33,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
      TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
      Now it can be set from anywhere, needs to be handled with caution.
      */
-    weak var delegate: UserRankManagerFlowDelegate?
+    weak var delegate: UserDataManagerFlowDelegate?
     
     var data: UserRankData? {
         get {

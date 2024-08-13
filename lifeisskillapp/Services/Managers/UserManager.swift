@@ -97,9 +97,8 @@ final class UserManager: BaseClass, UserManaging {
     // MARK: - Private Helpers
 }
 
-extension UserManager: UserLoginManagerFlowDelegate {
+extension UserManager: UserDataManagerFlowDelegate {
     func onInvalidToken() {
-        //
         self.logout()
     }
 }

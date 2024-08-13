@@ -8,15 +8,11 @@
 import Foundation
 import Combine
 
-protocol UserPointManagerFlowDelegate: UserDataManagerFlowDelegate {
-}
-
 protocol HasUserPointManager {
     var userPointManager: any UserPointManaging { get }
 }
 
 protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataContainer == UserPointData {
-    var delegate: UserPointManagerFlowDelegate? { get set }
     func getPoints(byCategory categoryId: String) -> [UserPoint]
     func getTotalPoints(byCategory categoryId: String) -> Int
 }
@@ -39,7 +35,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
      TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
      Now it can be set from anywhere, needs to be handled with caution.
      */
-    weak var delegate: UserPointManagerFlowDelegate?
+    weak var delegate: UserDataManagerFlowDelegate?
     
     var data: UserPointData? {
         get {

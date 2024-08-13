@@ -7,16 +7,13 @@
 
 import Foundation
 
-protocol UserLoginManagerFlowDelegate: UserDataManagerFlowDelegate {
-}
-
 protocol HasUserLoginManager {
     var userLoginManager: any UserLoginDataManaging { get }
 }
 
 protocol UserLoginDataManaging {
-    var delegate: UserLoginManagerFlowDelegate? { get set }
     var data: LoginUserData? { get set }
+    var delegate: UserDataManagerFlowDelegate? { get set }
     
     var userId: String? { get }
     var token: String? { get }
@@ -44,7 +41,7 @@ public final class UserLoginDataManager: BaseClass, UserLoginDataManaging {
      TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onInvalidToken())
      Now it can be set from anywhere, needs to be handled with caution.
      */
-    weak var delegate: UserLoginManagerFlowDelegate?
+    weak var delegate: UserDataManagerFlowDelegate?
     
     var isLoggedIn: Bool { data != nil }
     
