@@ -36,7 +36,7 @@ protocol PointsViewModeling: BaseClass, ObservableObject {
 }
 
 final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserManager & SettingsBarViewModel.Dependencies
     
     // MARK: - Private Properties
     
@@ -45,7 +45,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userPointManager: any UserPointManaging
-    private let userDataManager: any UserLoginDataManaging
+    private let userManager: UserManaging
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
@@ -74,13 +74,13 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
         self.gameDataManager = dependencies.gameDataManager
-        self.userDataManager = dependencies.userLoginManager
+        self.userManager = dependencies.userManager
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
             delegate: settingsDelegate
         )
-        self.userGender = userDataManager.data?.user.sex ?? .male
+        self.userGender = userManager.userGender ?? .male
         self.delegate = delegate
         super.init()
         self.setupBindings()
@@ -98,7 +98,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
-            self?.username = self?.userDataManager.userName ?? ""
+            self?.username = self?.userManager.userName ?? ""
             await self?.fetchData()
             self?.isLoading = false
         }

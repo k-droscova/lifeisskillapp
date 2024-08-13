@@ -25,11 +25,10 @@ protocol HomeViewModeling: BaseClass, ObservableObject {
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
 final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, HomeViewModeling {
-    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserLoginManager & SettingsBarViewModel.Dependencies {
+    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserManager & SettingsBarViewModel.Dependencies {
         let scanningManager: ScanningManaging
         let logger: LoggerServicing
         let locationManager: LocationManaging
-        let userLoginManager: UserLoginDataManaging
         var userDefaultsStorage: UserDefaultsStoraging
         let userManager: UserManaging
         let networkMonitor: NetworkMonitoring
@@ -45,7 +44,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     private let scanningManager: ScanningManaging
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
-    private let userDataManager: UserLoginDataManaging
     private var userDefaultsStorage: UserDefaultsStoraging
     private let userManager: UserManaging
     private let networkMonitor: NetworkMonitoring
@@ -66,9 +64,8 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         self.locationManager = dependencies.locationManager
         self.scanningManager = dependencies.scanningManager
         self.logger = dependencies.logger
-        self.userDataManager = dependencies.userLoginManager
-        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.userManager = dependencies.userManager
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.networkMonitor = dependencies.networkMonitor
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
@@ -83,7 +80,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
-            self?.username = self?.userDataManager.userName ?? ""
+            self?.username = self?.userManager.userName ?? ""
             self?.isLoading = false
         }
     }
@@ -94,7 +91,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
                 scanningManager: self.scanningManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userLoginManager: self.userDataManager,
                 userDefaultsStorage: self.userDefaultsStorage,
                 userManager: self.userManager,
                 networkMonitor: self.networkMonitor
@@ -110,7 +106,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
                 scanningManager: self.scanningManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userLoginManager: self.userDataManager,
                 userDefaultsStorage: self.userDefaultsStorage,
                 userManager: self.userManager,
                 networkMonitor: self.networkMonitor
@@ -130,7 +125,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
                 scanningManager: self.scanningManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userLoginManager: self.userDataManager,
                 userDefaultsStorage: self.userDefaultsStorage,
                 userManager: self.userManager,
                 networkMonitor: self.networkMonitor

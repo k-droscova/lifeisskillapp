@@ -16,6 +16,7 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         self.window = window
         super.start(in: window)
         appDependencies.networkMonitor.delegate = self // present alert if connection lost on all screens
+        appDependencies.userManager.delegate = self
         prepareWindow()
     }
     
@@ -72,14 +73,20 @@ extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     }
 }
 
-extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
+extension AppFlowCoordinator: UserManagerFlowDelegate {
+    func onLogout() {
+        self.reload()
+    }
+    
     func onForceLogout() {
         self.reload()
         let alert = UIAlertController(title: "Forced logout", message: "It was detected that you have logged in on another device. It is not permitted to be logged in on multiple devices, hence we logged you out on this device.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
         rootViewController?.present(alert, animated: true, completion: nil)
     }
-    
+}
+
+extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
     func reload() {
         DispatchQueue.main.async { [weak self] in
             self?.prepareWindow()

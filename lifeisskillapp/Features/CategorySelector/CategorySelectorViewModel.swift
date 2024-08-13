@@ -15,12 +15,11 @@ protocol CategorySelectorViewModeling: BaseClass, ObservableObject {
 }
 
 final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySelectorViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserLoginManager & HasUserCategoryManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private let userDataManager: UserLoginDataManaging
     private var userCategoryManager: any UserCategoryManaging
     
     // MARK: - Public Properties
@@ -36,7 +35,6 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
-        self.userDataManager = dependencies.userLoginManager
         self.userCategoryManager = dependencies.userCategoryManager
     }
     

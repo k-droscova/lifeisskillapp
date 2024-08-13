@@ -67,7 +67,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
             guard let self = self else { return }
             self.isLoading = true
             do {
-                try await self.userManager.login(loginCredentials: .init(username: username, password: password))
+                try await self.userManager.login(credentials: .init(username: username, password: password))
                 self.isLoading = false
                 self.delegate?.loginSuccessful()
             } catch {

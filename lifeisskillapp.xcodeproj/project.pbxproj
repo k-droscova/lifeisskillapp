@@ -146,7 +146,6 @@
 		27EBADD42C592F3100F01CFB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27EBADD32C592F3100F01CFB /* Colors.xcassets */; };
 		27F27A412C4CFA8600928388 /* UserRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A402C4CFA8600928388 /* UserRank.swift */; };
 		27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A422C4CFEFC00928388 /* UserRankManager.swift */; };
-		27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F27A462C4D334F00928388 /* UserLoginDataManager.swift */; };
 		27F528FE2C5A6FB50042F537 /* UIAssetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */; };
 		27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F528FF2C5A8A380042F537 /* ViewExtension.swift */; };
 		27F67E972C614CF700F1C63E /* PointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E962C614CF700F1C63E /* PointsViewModel.swift */; };
@@ -331,7 +330,6 @@
 		27EBADD32C592F3100F01CFB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = lifeisskillapp/LiS/Resources/Resources/Colors/Colors.xcassets; sourceTree = SOURCE_ROOT; };
 		27F27A402C4CFA8600928388 /* UserRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRank.swift; sourceTree = "<group>"; };
 		27F27A422C4CFEFC00928388 /* UserRankManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManager.swift; sourceTree = "<group>"; };
-		27F27A462C4D334F00928388 /* UserLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginDataManager.swift; sourceTree = "<group>"; };
 		27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAssetEnums.swift; sourceTree = "<group>"; };
 		27F528FF2C5A8A380042F537 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		27F67E962C614CF700F1C63E /* PointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsViewModel.swift; sourceTree = "<group>"; };
@@ -716,7 +714,6 @@
 				27E32DE72C493BF900E69C58 /* UserDataManager.swift */,
 				27E32DE92C49504100E69C58 /* GenericPointManager.swift */,
 				27F27A422C4CFEFC00928388 /* UserRankManager.swift */,
-				27F27A462C4D334F00928388 /* UserLoginDataManager.swift */,
 			);
 			path = UserDataManagers;
 			sourceTree = "<group>";
@@ -1229,7 +1226,6 @@
 				27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */,
 				278174842C4BF96B00138376 /* View.swift in Sources */,
 				27E9D61F2C63F9770098CB96 /* PointRepository.swift in Sources */,
-				27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				273022352C62577800F9D572 /* LocationStatusBarView.swift in Sources */,

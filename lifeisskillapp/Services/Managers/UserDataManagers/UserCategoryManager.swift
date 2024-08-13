@@ -19,13 +19,13 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
-    private let dataManager: UserLoginDataManaging
+    private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
     private var selectedCategorySubject = CurrentValueSubject<UserCategory?, Never>(nil)
     
@@ -47,7 +47,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     }
     
     var token: String? {
-        get { dataManager.token }
+        get { userManager.token }
     }
     
     @Published var selectedCategory: UserCategory? {
@@ -65,7 +65,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
-        self.dataManager = dependencies.userLoginManager
+        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
         
         super.init()
@@ -82,7 +82,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
             selectedCategory = data?.main
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                delegate?.onInvalidToken()
+                userManager.forceLogout()
             }
         }
         catch {

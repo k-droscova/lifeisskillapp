@@ -20,7 +20,7 @@ protocol RankViewModeling: BaseClass, ObservableObject {
 }
 
 final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, RankViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -29,7 +29,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userRankManager: any UserRankManaging
-    private let userDataManager: any UserLoginDataManaging
+    private let userManager: UserManaging
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
@@ -55,7 +55,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         self.userCategoryManager = dependencies.userCategoryManager
         self.userRankManager = dependencies.userRankManager
         self.gameDataManager = dependencies.gameDataManager
-        self.userDataManager = dependencies.userLoginManager
+        self.userManager = dependencies.userManager
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
@@ -79,7 +79,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
-            self?.username = self?.userDataManager.userName ?? ""
+            self?.username = self?.userManager.userName ?? ""
             await self?.fetchData()
             self?.isLoading = false
         }

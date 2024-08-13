@@ -55,7 +55,6 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
                 scanningManager: appDependencies.scanningManager,
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
-                userLoginManager: appDependencies.userLoginManager,
                 userDefaultsStorage: appDependencies.userDefaultsStorage,
                 userManager: appDependencies.userManager,
                 networkMonitor: appDependencies.networkMonitor

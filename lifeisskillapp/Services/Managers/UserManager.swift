@@ -10,7 +10,6 @@ import Foundation
 protocol UserManagerFlowDelegate: NSObject {
     func onLogout()
     func onForceLogout()
-    func onDataError(_ error: Error)
 }
 
 protocol HasUserManager {
@@ -25,13 +24,22 @@ protocol UserManaging {
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
     
+    // MARK: LOGGED IN USER PROPERTIES
+    
+    var userId: String? { get }
+    var token: String? { get }
+    var userName: String? { get }
+    var userMainCategory: String? { get }
+    var userGender: UserGender? { get }
+    
     func initializeAppId() async throws
-    func login(loginCredentials: LoginCredentials) async throws
+    func login(credentials: LoginCredentials) async throws
     func logout()
+    func forceLogout()
 }
 
 final class UserManager: BaseClass, UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasPersistentUserDataStoraging
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage
     
     // MARK: - Private Properties
     
@@ -39,15 +47,26 @@ final class UserManager: BaseClass, UserManaging {
     private var userDefaultsStorage: UserDefaultsStoraging
     private var storage: PersistentUserDataStoraging
     private let registerAppAPI: RegisterAppAPIServicing
-    private var userLoginDataManager: any UserLoginDataManaging
+    //private var userLoginDataManager: any UserLoginDataManaging
+    private let loginAPI: LoginAPIServicing
+    private var realmLoginRepo: any RealmLoginRepositoring
+    private let networkMonitor: NetworkMonitoring
+    private let keychainStorage: KeychainStoraging
+    
+    private var data: LoginUserData?
+    private var isOnline: Bool { networkMonitor.onlineStatus }
 
     
     // MARK: - Public Properties
     
     weak var delegate: UserManagerFlowDelegate?
-    
-    var isLoggedIn: Bool { userLoginDataManager.isLoggedIn }
+    var isLoggedIn: Bool { data != nil }
     var hasAppId: Bool { userDefaultsStorage.appId != nil }
+    var userId: String? { self.data?.user.id }
+    var token: String? { self.data?.user.token }
+    var userName: String? { self.data?.user.nick }
+    var userMainCategory: String? { self.data?.user.mainCategory }
+    var userGender: UserGender? { self.data?.user.sex }
     
     // MARK: - Initialization
     
@@ -55,8 +74,11 @@ final class UserManager: BaseClass, UserManaging {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
-        self.userLoginDataManager = dependencies.userLoginManager
+        self.loginAPI = dependencies.loginAPI
+        self.realmLoginRepo = dependencies.container.realmLoginRepository
         self.storage = dependencies.storage
+        self.networkMonitor = dependencies.networkMonitor
+        self.keychainStorage = dependencies.keychainStorage
         
         super.init()
     }
@@ -82,21 +104,113 @@ final class UserManager: BaseClass, UserManaging {
         }
     }
     
-    func login(loginCredentials: LoginCredentials) async throws {
-        try await userLoginDataManager.login(credentials: loginCredentials)
+    func login(credentials: LoginCredentials) async throws {
+        logger.log(message: "Login User: " + credentials.username)
+        if isOnline {
+            try await performOnlineLogin(credentials: credentials)
+        } else {
+            try performOfflineLogin(credentials: credentials)
+        }
     }
     
     func logout() {
         logger.log(message: "Logging out")
-        userLoginDataManager.logout()
+        do {
+            // Mark the user as logged out in persistent storage
+            try realmLoginRepo.markUserAsLoggedOut()
+        } catch {
+            logger.log(message: "Failed to mark user as logged out: \(error.localizedDescription)")
+        }
+        data = nil
         delegate?.onLogout()
+    }
+    
+    func forceLogout() {
+        logger.log(message: "Forced logout")
+        do {
+            // Mark the user as logged out in persistent storage
+            try realmLoginRepo.markUserAsLoggedOut()
+        } catch {
+            logger.log(message: "Failed to mark user as logged out: \(error.localizedDescription)")
+        }
+        data = nil
+        delegate?.onForceLogout()
     }
     
     // MARK: - Private Helpers
     
-    func forceLogout() {
-        logger.log(message: "Forced logout")
-        userLoginDataManager.logout()
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .login) // load the login data from repo to storage login property
+            self?.checkIfUserIsLoggedIn() // check if the user has logged out before, or is still logged in
+        }
+    }
+    
+    private func checkIfUserIsLoggedIn() {
+        do {
+            // if the user hasn't logged out then I use that data
+            if let storedLoginData = try realmLoginRepo.getLoggedInUser(), storedLoginData.isLoggedIn {
+                self.data = storedLoginData.toLoginData() // gives signal to show main page
+            } else {
+                self.data = nil // gives signal to show login page
+            }
+        } catch {
+            logger.log(message: "Failed to load login data: \(error.localizedDescription)")
+            self.data = nil // gives signal to show login page
+        }
+    }
+    
+    private func performOnlineLogin(credentials: LoginCredentials) async throws {
+        do {
+            let response = try await loginAPI.login(loginCredentials: credentials, baseURL: APIUrl.baseURL)
+            let loggedInUser = response.data.user
+            
+            // check if there is logged in user data
+            guard let existingUser = try realmLoginRepo.getLoggedInUser() else {
+                try keychainStorage.save(credentials: credentials) // save new credentials to keychain
+                try realmLoginRepo.saveLoginUser(loggedInUser) // save new data to realm
+                data = response.data // give signal of successfull login
+                return
+            }
+            // if the newly logged in user is different then we clear all data in realm
+            if loggedInUser.userId != existingUser.userID {
+                logger.log(message: "Different user detected. Clearing all related data.")
+                try await storage.clearAllUserData() // clear all data
+                try keychainStorage.delete() // delete previous credentials
+                try keychainStorage.save(credentials: credentials) // save new credentials in keychain
+            }
+            
+            try realmLoginRepo.saveLoginUser(loggedInUser) // save the new login data, more specifically the new token
+            data = response.data // give signal of successfull login
+        } catch {
+            throw BaseError(
+                context: .system,
+                message: "Unable to login",
+                logger: logger
+            )
+        }
+    }
+    
+    private func performOfflineLogin(credentials: LoginCredentials) throws {
+        guard let storedUsername = keychainStorage.username,
+              let storedPassword = keychainStorage.password,
+              storedUsername == credentials.username,
+              storedPassword == credentials.password else {
+            throw BaseError(
+                context: .system,
+                message: "Offline login failed: credentials do not match.",
+                code: .login(.offlineInvalidCredentials),
+                logger: logger
+            )
+        }
+        guard let storedLoginData = try realmLoginRepo.getLoggedInUser(), !storedLoginData.isLoggedIn else {
+            throw BaseError(
+                context: .system,
+                message: "Offline login failed: unable to retrieve realm data.",
+                logger: logger
+            )
+        }
+        self.data = storedLoginData.toLoginData()
     }
 }
 

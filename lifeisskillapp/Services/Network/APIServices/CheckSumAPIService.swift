@@ -24,20 +24,20 @@ protocol CheckSumAPIServicing {
 }
 
 public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
-    typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserLoginManager
+    typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserManager
     
     private let loggerService: LoggerServicing
-    private let dataManager: UserLoginDataManaging
+    private let userManager: UserManaging
     private let network: Networking
     
     private var token: String? {
-        dataManager.token
+        userManager.token
     }
     
     init(dependencies: Dependencies) {
         self.loggerService = dependencies.logger
         self.network = dependencies.network
-        self.dataManager = dependencies.userLoginManager
+        self.userManager = dependencies.userManager
     }
     
     func getUserPoints(baseURL: URL) async throws -> APIResponse<CheckSumUserPointsData> {

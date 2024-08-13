@@ -16,27 +16,28 @@ protocol ScanningManaging {
 }
 
 public final class ScanningManager: ScanningManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserManager
 
     // MARK: - Private properties
     
     private let logger: LoggerServicing
     private let userDataAPI: UserDataAPIServicing
-    private let dataManager: UserLoginDataManaging
+    private let userManager: UserManaging
+    private var token: String? { userManager.token }
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDataAPI = dependencies.userDataAPI
-        self.dataManager = dependencies.userLoginManager
+        self.userManager = dependencies.userManager
     }
     
     // MARK: - Public Interface
     
     func sendScannedPoint(_ point: LoadPoint) async throws {
         logger.log(message: "Sending scanned point: \(point.code)")
-        guard let token = dataManager.token else {
+        guard let token else {
             throw BaseError(
                 context: .system,
                 message: "Cannot send data to API, no access to userToken",

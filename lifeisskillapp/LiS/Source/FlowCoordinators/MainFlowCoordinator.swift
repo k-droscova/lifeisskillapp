@@ -10,17 +10,13 @@ import UIKit
 import ACKategories
 import SwiftUI
 
-protocol MainFlowCoordinatorDelegate: NSObject {
-    func reload()
-    func onForceLogout()
-}
+protocol MainFlowCoordinatorDelegate: NSObject {}
 
 final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     weak var delegate: MainFlowCoordinatorDelegate?
     
     override init() {
         super.init()
-        appDependencies.userManager.delegate = self
         appDependencies.locationManager.delegate = self
     }
     
@@ -179,24 +175,6 @@ extension MainFlowCoordinator {
     }
 }
 
-extension MainFlowCoordinator: UserManagerFlowDelegate {
-    func onForceLogout() {
-        delegate?.onForceLogout()
-    }
-    func onLogout() {
-        delegate?.reload()
-    }
-    func onDataError(_ error: Error) {
-        // TODO: HANDLE ERROR BETTER
-        appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
-        let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            
-        })
-        rootViewController?.present(alert, animated: true, completion: nil)
-    }
-}
-
 extension MainFlowCoordinator: LocationManagerFlowDelegate {
     func onLocationUnsuccess() {
         showLocationAccessAlert()
@@ -216,9 +194,7 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
     }
 }
 
-extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
-    
-}
+extension MainFlowCoordinator: HomeFlowCoordinatorDelegate, PointsFlowCoordinatorDelegate, RankFlowCoordinatorDelegate {}
 
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
     // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
@@ -232,11 +208,5 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     
     func onboardingPressed() {
         print("need to open onboarding")
-    }
-}
-
-extension MainFlowCoordinator: RankFlowCoordinatorDelegate, PointsFlowCoordinatorDelegate {
-    func onInvalidToken() {
-        delegate?.onForceLogout()
     }
 }

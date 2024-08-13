@@ -16,13 +16,13 @@ protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataCont
 }
 
 public final class UserRankManager: BaseClass, UserRankManaging {    
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserLoginManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
-    private let dataManager: UserLoginDataManaging
+    private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
     private var cancellables = Set<AnyCancellable>()
     private var checkSum: String?
@@ -45,7 +45,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     }
     
     var token: String? {
-        get { dataManager.token }
+        get { userManager.token }
     }
     
     // MARK: - Initialization
@@ -53,7 +53,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
-        self.dataManager = dependencies.userLoginManager
+        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
         
         super.init()
@@ -69,7 +69,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
             data = response.data
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                delegate?.onInvalidToken()
+                userManager.forceLogout()
             }
         }
         catch {
