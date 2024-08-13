@@ -44,12 +44,8 @@ final class UserManager: BaseClass, UserManaging {
     
     weak var delegate: UserManagerFlowDelegate?
     
-    var isLoggedIn: Bool {
-        userLoginDataManager.data != nil
-    }
-    var hasAppId: Bool {
-        userDefaultsStorage.appId != nil
-    }
+    var isLoggedIn: Bool { userLoginDataManager.isLoggedIn }
+    var hasAppId: Bool { userDefaultsStorage.appId != nil }
     
     // MARK: - Initialization
     
@@ -60,7 +56,6 @@ final class UserManager: BaseClass, UserManaging {
         self.userLoginDataManager = dependencies.userLoginManager
         
         super.init()
-        self.userLoginDataManager.delegate = self
     }
     
     // MARK: - Public interface
