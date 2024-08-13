@@ -122,6 +122,9 @@
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
 		27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD78C2C4EC72F00612375 /* CLLocation.swift */; };
+		27D569282C6B7074003EF5D9 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D569272C6B7074003EF5D9 /* KeychainStorage.swift */; };
+		27D5692A2C6B7170003EF5D9 /* StorageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D569292C6B7170003EF5D9 /* StorageConstants.swift */; };
+		27D5692D2C6B728A003EF5D9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D5692C2C6B728A003EF5D9 /* KeychainHelper.swift */; };
 		27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE72C493BF900E69C58 /* UserDataManager.swift */; };
 		27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E32DE92C49504100E69C58 /* GenericPointManager.swift */; };
 		27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */; };
@@ -303,6 +306,9 @@
 		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
 		27CBD78C2C4EC72F00612375 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
+		27D569272C6B7074003EF5D9 /* KeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
+		27D569292C6B7170003EF5D9 /* StorageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstants.swift; sourceTree = "<group>"; };
+		27D5692C2C6B728A003EF5D9 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		27E32DE72C493BF900E69C58 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
 		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -892,6 +898,7 @@
 			isa = PBXGroup;
 			children = (
 				27C619882C3AA3A00067498F /* API.swift */,
+				27D569292C6B7170003EF5D9 /* StorageConstants.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -905,12 +912,30 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		27D569262C6B7050003EF5D9 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				27D5692B2C6B727B003EF5D9 /* KeyChain */,
+				27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		27D5692B2C6B727B003EF5D9 /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				27D569272C6B7074003EF5D9 /* KeychainStorage.swift */,
+				27D5692C2C6B728A003EF5D9 /* KeychainHelper.swift */,
+			);
+			path = KeyChain;
+			sourceTree = "<group>";
+		};
 		27E6D6D82C3EBAB3009FC809 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				27D569262C6B7050003EF5D9 /* Other */,
 				27E9D6202C63FA950098CB96 /* In-Memory */,
 				27E9D5FC2C63D9020098CB96 /* Realm */,
-				27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1159,6 +1184,7 @@
 				27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */,
 				27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */,
 				27C6197F2C398C570067498F /* LogSeverity.swift in Sources */,
+				27D569282C6B7074003EF5D9 /* KeychainStorage.swift in Sources */,
 				27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */,
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
@@ -1227,6 +1253,7 @@
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
+				27D5692A2C6B7170003EF5D9 /* StorageConstants.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
 				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
 				2720DF2E2C515906007B4E77 /* String.swift in Sources */,
@@ -1247,6 +1274,7 @@
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
 				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,
 				27E9D6062C63E35E0098CB96 /* RealmCategory.swift in Sources */,
+				27D5692D2C6B728A003EF5D9 /* KeychainHelper.swift in Sources */,
 				2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */,
 				27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */,
 				27187B5D2C57C51A003D22C6 /* QRViewModel.swift in Sources */,
