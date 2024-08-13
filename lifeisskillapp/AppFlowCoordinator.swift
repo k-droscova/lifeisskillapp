@@ -63,9 +63,7 @@ extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     
     func loginDidFail() {
         let alert = UIAlertController(title: "Login Failed", message: "Please check that you used the correct username and password. If you forgot your password, click the button below to reset it.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            
-        })
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
         rootViewController?.present(alert, animated: true, completion: nil)
     }
 }
@@ -81,9 +79,7 @@ extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
 extension AppFlowCoordinator: NetworkManagerFlowDelegate {
     func onNoInternetConnection() {
         let alert = UIAlertController(title: "Internet Connection Lost", message: "Please be aware that the network is not available. Only most recently logged in user can log in again. You can scan points as usual, but if you log out before accessing network, all scanned points will be lost.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            
-        })
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
         rootViewController?.present(alert, animated: true, completion: nil)
     }
 }
