@@ -41,7 +41,9 @@ public final class RealmStorage: BaseClass, RealmStoraging {
     
     func getRealm() -> Realm? {
         do {
-            return try Realm(configuration: configurations)
+            return try DispatchQueue.global(qos: .userInitiated).sync {
+                return try Realm(configuration: configurations)
+            }
         } catch {
             logger.log(message: "REALM INIT ERROR: \(error.localizedDescription)")
             return nil

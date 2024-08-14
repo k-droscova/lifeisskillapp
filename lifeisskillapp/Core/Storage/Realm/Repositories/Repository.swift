@@ -20,91 +20,106 @@ protocol RealmRepositoring {
 }
 
 extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
+    
     func save(_ entity: Entity) throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
-        }
-        try realm.write {
-            realm.add(entity, update: .modified)
+        try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            try realm.write {
+                realm.add(entity, update: .modified)
+            }
         }
     }
     
     func save(_ entities: [Entity]) throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
-        }
-        try realm.write {
-            realm.add(entities, update: .modified)
+        try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            try realm.write {
+                realm.add(entities, update: .modified)
+            }
         }
     }
     
     func delete(_ entity: Entity) throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
-        }
-        try realm.write {
-            realm.delete(entity)
+        try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            try realm.write {
+                realm.delete(entity)
+            }
         }
     }
     
     func delete(_ entities: [Entity]) throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
-        }
-        try realm.write {
-            realm.delete(entities)
+        try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            try realm.write {
+                realm.delete(entities)
+            }
         }
     }
     
     func deleteAll() throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
-        }
-        try realm.write {
-            let allEntities = realm.objects(Entity.self)
-            realm.delete(allEntities)
+        try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            try realm.write {
+                let allEntities = realm.objects(Entity.self)
+                realm.delete(allEntities)
+            }
         }
     }
     
     func getAll() throws -> Results<Entity> {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
+        return try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            return realm.objects(Entity.self)
         }
-        return realm.objects(Entity.self)
     }
     
     func getById(_ id: String) throws -> Entity? {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
+        return try DispatchQueue.global(qos: .background).sync {
+            guard let realm = realmStorage.getRealm() else {
+                throw BaseError(
+                    context: .database,
+                    message: "Realm is not initialized",
+                    logger: self.logger
+                )
+            }
+            return realm.object(ofType: Entity.self, forPrimaryKey: id)
         }
-        return realm.object(ofType: Entity.self, forPrimaryKey: id)
     }
 }
