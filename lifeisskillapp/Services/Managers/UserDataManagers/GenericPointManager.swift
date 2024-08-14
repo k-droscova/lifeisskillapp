@@ -57,7 +57,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         self.userDataAPIService = dependencies.userDataAPI
         
         super.init()
-        self.load()
     }
     
     // MARK: - deinit
@@ -67,6 +66,12 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     }
     
     // MARK: - Public Interface
+    
+    func loadFromRepository() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .userPoints)
+        }
+    }
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user points")
@@ -93,13 +98,5 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     func getAll() -> [GenericPoint] {
         data?.data ?? []
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func load() {
-        Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .userPoints)
-        }
     }
 }

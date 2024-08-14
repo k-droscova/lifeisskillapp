@@ -21,13 +21,13 @@ protocol QRViewModeling: CameraViewModeling {
 }
 
 final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
-    typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasUserPointManager & HasLocationManager
     
     // MARK: - Private Properties
     
     weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
-    private let scanningManager: ScanningManaging
+    private let userPointManager: any UserPointManaging
     private let locationManager: LocationManaging
     
     // MARK: - Public Properties
@@ -41,7 +41,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
         self.logger = dependencies.logger
-        self.scanningManager = dependencies.scanningManager
+        self.userPointManager = dependencies.userPointManager
         self.locationManager = dependencies.locationManager
         super.init()
         setUpScanner()
@@ -65,14 +65,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     func handleScannedQRCode(_ code: String) {
         locationManager.checkLocationAuthorization()
         let point = LoadPoint(code: code, codeSource: .text)
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendScannedPoint(point)
-                self?.delegate?.onSuccess(source: .qr)
-            } catch {
-                self?.delegate?.onFailure(source: .qr)
-            }
-        }
+        userPointManager.handleScannedPoint(point)
     }
     
     func startScanning() {
@@ -151,7 +144,6 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
                 handleScannedQRCode(string.parseMessage())
             } else {
                 scanningFailed()
-                delegate?.onFailure(source: .qr)
             }
         }
     }

@@ -13,10 +13,12 @@ protocol HasScanningManager {
 
 protocol ScanningManaging {
     func sendScannedPoint(_ point: LoadPoint) async throws
+    func saveScannedPoint(_ point: LoadPoint) async throws
+    func checkValidity(_ point: LoadPoint) -> Bool
 }
 
 public final class ScanningManager: ScanningManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserManager & HasPersistentUserDataStoraging
 
     // MARK: - Private properties
     
@@ -24,6 +26,7 @@ public final class ScanningManager: ScanningManaging {
     private let userDataAPI: UserDataAPIServicing
     private let userManager: UserManaging
     private var token: String? { userManager.token }
+    private let storage: PersistentUserDataStoraging
     
     // MARK: - Initialization
     
@@ -31,6 +34,7 @@ public final class ScanningManager: ScanningManaging {
         self.logger = dependencies.logger
         self.userDataAPI = dependencies.userDataAPI
         self.userManager = dependencies.userManager
+        self.storage = dependencies.storage
     }
     
     // MARK: - Public Interface
@@ -52,6 +56,16 @@ public final class ScanningManager: ScanningManaging {
                 logger: logger)
         }
         logger.log(message: "Successfully sent scanned point: \(point.code)")
+    }
+    
+    func saveScannedPoint(_ point: LoadPoint) async throws {
+        logger.log(message: "Saving scanned point: \(point.code)")
+        
+    }
+    
+    func checkValidity(_ point: LoadPoint) -> Bool {
+        // TODO: handle preprocessing for validity in the app
+        true
     }
     
     // MARK: - Private Helpers

@@ -69,17 +69,27 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         self.userDataAPIService = dependencies.userDataAPI
         
         super.init()
-        self.load()
+        self.loadFromRepository()
     }
     
     // MARK: - Public Interface
     
+    func loadFromRepository() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .categories)
+            self?.selectedCategory = self?.data?.main
+        }
+    }
+    
     func fetch(withToken token: String) async throws {
-        logger.log(message: "Loading user categories")
+        logger.log(message: "Fetching user categories")
         do {
             let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
             data = response.data
-            selectedCategory = data?.main
+            guard selectedCategory != nil else {
+                selectedCategory = data?.main
+                return
+            }
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 userManager.forceLogout()
@@ -107,13 +117,6 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     }
     
     // MARK: - Private Helpers
-    
-    private func load() {
-        Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .categories)
-            self?.selectedCategory = self?.data?.main
-        }
-    }
     
     private func publishSelectedCategory() {
         DispatchQueue.main.async {

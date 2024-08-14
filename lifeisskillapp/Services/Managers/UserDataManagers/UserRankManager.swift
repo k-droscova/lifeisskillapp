@@ -24,7 +24,6 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
-    private var cancellables = Set<AnyCancellable>()
     private var checkSum: String?
     
     // MARK: - Public Properties
@@ -57,10 +56,15 @@ public final class UserRankManager: BaseClass, UserRankManaging {
         self.userDataAPIService = dependencies.userDataAPI
         
         super.init()
-        self.load()
     }
     
     // MARK: - Public Interface
+    
+    func loadFromRepository() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .rankings)
+        }
+    }
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user ranks")
@@ -87,13 +91,5 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     func getAll() -> [UserRank] {
         data?.data ?? []
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func load() {
-        Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .rankings)
-        }
     }
 }

@@ -14,12 +14,12 @@ protocol NfcViewModeling: BaseClass {
 }
 
 final class NfcViewModel: BaseClass, NfcViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
+    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasUserPointManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
-    private let scanningManager: ScanningManaging
+    private let userPointManager: any UserPointManaging
     private var session: NFCReaderSession?
     
     public var isNfcAvailable: Bool { NFCNDEFReaderSession.readingAvailable }
@@ -28,7 +28,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         self.delegate = delegate
         self.logger = dependencies.logger
         self.locationManager = dependencies.locationManager
-        self.scanningManager = dependencies.scanningManager
+        self.userPointManager = dependencies.userPointManager
     }
     
     func startScanning() {
@@ -53,16 +53,8 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     private func handleScannedPoint(_ pointID: String) {
         logger.log(message: "Point scanned from NFC: \(pointID)")
         let point = LoadPoint(code: pointID, codeSource: .nfc)
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendScannedPoint(point)
-                self?.stopScanning()
-                self?.delegate?.onSuccess(source: .nfc)
-            } catch {
-                self?.stopScanning()
-                self?.delegate?.onFailure(source: .nfc)
-            }
-        }
+        userPointManager.handleScannedPoint(point)
+        self.stopScanning()
     }
 }
 

@@ -6,33 +6,24 @@
 //
 
 import Foundation
+import Combine
 
-/// Protocol defining the delegate methods for GameDataManager.
 protocol GameDataManagerFlowDelegate: UserDataManagerFlowDelegate {
-    /// Called when an error occurs during data fetching.
-    /// - Parameter error: The error that occurred.
     func onError(_ error: Error)
 }
 
-/// Protocol to access an instance of GameDataManager.
 protocol HasGameDataManager {
-    /// The instance of GameDataManager.
     var gameDataManager: GameDataManaging { get }
 }
 
-/// Protocol defining the methods for GameDataManager.
 protocol GameDataManaging {
-    /// The delegate to handle flow events.
     var delegate: GameDataManagerFlowDelegate? { get set }
-    
-    /// Fetches new data if necessary.
-    /// - Parameter endpoint: The optional endpoint to fetch data for. If nil, fetches data for all endpoints.
+    func loadData(for endpoint: CheckSumAPIService.Endpoint?) async
     func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint?) async
 }
 
-/// Class responsible for managing game data.
 public final class GameDataManager: BaseClass, GameDataManaging {
-    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager
+    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -42,21 +33,23 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private let userPointManager: any UserPointManaging
     private let genericPointManager: any GenericPointManaging
     private let userRankManager: any UserRankManaging
+    private let userManager: UserManaging
+    private let networkMonitor: NetworkMonitoring
+    
     private var checkSumData: CheckSumData? {
         get { storage.checkSumData }
         set { storage.checkSumData = newValue }
     }
-    private let userManager: UserManaging
+    private var isOnline: Bool
+    private var networkStatusSubscription: AnyCancellable?
+    
     
     // MARK: - Public Properties
     
-    /// The delegate to handle flow events.
     weak var delegate: GameDataManagerFlowDelegate?
     
     // MARK: - Initialization
     
-    /// Initializes a new instance of GameDataManager with the provided dependencies.
-    /// - Parameter dependencies: The dependencies required by the GameDataManager.
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.storage = dependencies.storage
@@ -65,15 +58,32 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         self.userPointManager = dependencies.userPointManager
         self.userRankManager = dependencies.userRankManager
         self.userManager = dependencies.userManager
+        self.networkMonitor = dependencies.networkMonitor
+        self.isOnline = dependencies.networkMonitor.onlineStatus
         
         super.init()
-        self.load()
+        self.setupBindings()
+        self.load() // load checksums
+    }
+    
+    deinit {
+        networkStatusSubscription?.cancel()
     }
     
     // MARK: - Public Interface
     
-    /// Fetches new data if necessary.
-    /// - Parameter endpoint: The optional endpoint to fetch data for. If nil, fetches data for all endpoints.
+    func loadData(for endpoint: CheckSumAPIService.Endpoint?) async {
+        if isOnline {
+            await fetchNewDataIfNeccessary(endpoint: endpoint)
+            return
+        }
+        guard let endpoint else {
+            await self.loadAllDataFromRepository()
+            return
+        }
+        loadFromRepository(for: endpoint)
+    }
+    
     func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint? = nil) async {
         do {
             if let endpoint = endpoint {
@@ -99,7 +109,29 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     // MARK: - Private Helpers
     
-    /// Fetches data for all endpoints if necessary.
+    private func loadFromRepository(for endpoint: CheckSumAPIService.Endpoint) {
+        switch endpoint {
+        case .userpoints:
+            userPointManager.loadFromRepository()
+        case .rank:
+            userRankManager.loadFromRepository()
+        case .points:
+            userPointManager.loadFromRepository()
+        default:
+            print("Loading events or messages not yet implemented")
+        }
+    }
+    
+    private func loadAllDataFromRepository() async {
+        await withTaskGroup(of: Void.self) { group in
+            for endpoint in CheckSumAPIService.Endpoint.allCases {
+                group.addTask { [weak self] in
+                    self?.loadFromRepository(for: endpoint)
+                }
+            }
+        }
+    }
+    
     private func fetchAllDataIfNecessary() async {
         await withTaskGroup(of: Void.self) { group in
             for endpoint in CheckSumAPIService.Endpoint.allCases {
@@ -114,8 +146,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Fetches data for a specific endpoint.
-    /// - Parameter endpoint: The endpoint to fetch data for.
     private func fetchData(for endpoint: CheckSumAPIService.Endpoint) async throws {
         logger.log(message: "Fetching data for \(endpoint.path)")
         
@@ -137,9 +167,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Fetches the new checksum data for a specific endpoint.
-    /// - Parameter endpoint: The endpoint to fetch the checksum data for.
-    /// - Returns: The new checksum string.
     private func fetchNewCheckSumData(for endpoint: CheckSumAPIService.Endpoint) async throws -> String {
         do {
             switch endpoint {
@@ -168,11 +195,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Determines whether data should be fetched for a specific endpoint based on the checksum.
-    /// - Parameters:
-    ///   - endpoint: The endpoint to check.
-    ///   - newCheckSum: The new checksum to compare with the stored checksum.
-    /// - Returns: A Boolean indicating whether data should be fetched.
     private func shouldFetchData(for endpoint: CheckSumAPIService.Endpoint, newCheckSum: String) -> Bool {
         guard let currentData = checkSumData else {
             checkSumData = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
@@ -193,10 +215,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Updates the stored checksum for a specific endpoint.
-    /// - Parameters:
-    ///   - newCheckSum: The new checksum to store.
-    ///   - endpoint: The endpoint to update the checksum for.
     private func updateCheckSum(newCheckSum: String, for endpoint: CheckSumAPIService.Endpoint) {
         switch endpoint {
         case .userpoints:
@@ -212,7 +230,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Fetches new user points data and updates the checksum.
     private func fetchNewUserPoints() async {
         logger.log(message: "Updating user points data")
         do {
@@ -227,7 +244,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Fetches new user rank data and updates the checksum.
     private func fetchNewUserRank() async {
         logger.log(message: "Updating user rank data")
         do {
@@ -242,19 +258,16 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    /// Fetches new user messages data and updates the checksum.
     private func fetchNewUserMessages() async {
         logger.log(message: "Updating user messages data")
         // Add implementation for fetching messages data and updating checksum
     }
     
-    /// Fetches new user events data and updates the checksum.
     private func fetchNewUserEvents() async {
         logger.log(message: "Updating user events data")
         // Add implementation for fetching events data and updating checksum
     }
     
-    /// Fetches new points data and updates the checksum.
     private func fetchNewPoints() async {
         logger.log(message: "Updating points data")
         do {
@@ -272,6 +285,24 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private func load() {
         Task { @MainActor [weak self] in
             await self?.storage.loadFromRepository(for: .checkSum)
+        }
+    }
+    
+    private func setupBindings() {
+        networkStatusSubscription = networkMonitor.onlineStatusPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isOnline in
+                self?.handleNetworkStatusChange(isOnline: isOnline)
+            }
+    }
+    
+    private func handleNetworkStatusChange(isOnline: Bool) {
+        Task { [weak self] in
+            guard let self = self else { return }
+            self.isOnline = isOnline
+            if self.isOnline {
+                await self.fetchNewDataIfNeccessary()
+            }
         }
     }
 }

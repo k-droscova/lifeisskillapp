@@ -166,13 +166,8 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     @MainActor
     private func fetchData() async {
-        do {
-            try await userCategoryManager.fetch()
-            await gameDataManager.fetchNewDataIfNeccessary(endpoint: .userpoints)
-            await getSelectedCategoryPoints()
-        } catch {
-            delegate?.onError(error)
-        }
+        await gameDataManager.loadData(for: .userpoints)
+        await getSelectedCategoryPoints()
     }
     
     private func showCategoryPointsOnMap() {

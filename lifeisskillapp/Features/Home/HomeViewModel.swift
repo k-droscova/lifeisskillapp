@@ -25,8 +25,8 @@ protocol HomeViewModeling: BaseClass, ObservableObject {
 
 /// The HomeViewModel class responsible for managing the home flow within the app.
 final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, HomeViewModeling {
-    struct Dependencies: HasLoggerServicing & HasLocationManager & HasScanningManager & HasUserManager & SettingsBarViewModel.Dependencies {
-        let scanningManager: ScanningManaging
+    struct Dependencies: HasLoggerServicing & HasLocationManager & HasUserPointManager & HasUserManager & SettingsBarViewModel.Dependencies {
+        let userPointManager: any UserPointManaging
         let logger: LoggerServicing
         let locationManager: LocationManaging
         var userDefaultsStorage: UserDefaultsStoraging
@@ -41,7 +41,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     private var ocrVM: OcrViewModeling?
     private var qrVM: QRViewModeling?
     
-    private let scanningManager: ScanningManaging
+    private let userPointManager: any UserPointManaging
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
     private var userDefaultsStorage: UserDefaultsStoraging
@@ -62,7 +62,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         settingsDelegate: SettingsBarFlowDelegate?
     ) {
         self.locationManager = dependencies.locationManager
-        self.scanningManager = dependencies.scanningManager
+        self.userPointManager = dependencies.userPointManager
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.userDefaultsStorage = dependencies.userDefaultsStorage
@@ -88,7 +88,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func loadWithNFC() {
         nfcVM = NfcViewModel(
             dependencies: Dependencies(
-                scanningManager: self.scanningManager,
+                userPointManager: self.userPointManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
                 userDefaultsStorage: self.userDefaultsStorage,
@@ -103,7 +103,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func loadWithQRCode() {
         qrVM = QRViewModel(
             dependencies: Dependencies(
-                scanningManager: self.scanningManager,
+                userPointManager: self.userPointManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
                 userDefaultsStorage: self.userDefaultsStorage,
@@ -122,7 +122,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func loadFromCamera() {
         ocrVM = OcrViewModel(
             dependencies: Dependencies(
-                scanningManager: self.scanningManager,
+                userPointManager: self.userPointManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
                 userDefaultsStorage: self.userDefaultsStorage,

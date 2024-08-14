@@ -74,6 +74,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             image: Constants.TabBar.Home.unselected.icon,
             selectedImage: Constants.TabBar.Home.selected.icon
         )
+        appDependencies.userPointManager.scanningDelegate = homeFC
         
         // MARK: RANK
         let rankFC = RankFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(

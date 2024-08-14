@@ -12,13 +12,22 @@ protocol HasUserPointManager {
     var userPointManager: any UserPointManaging { get }
 }
 
+protocol ScanPointFlowDelegate: NSObject {
+    func onScanPointInvalidPoint()
+    func onScanPointProcessSuccessOnline(_ source: CodeSource)
+    func onScanPointProcessSuccessOffline(_ source: CodeSource)
+    func onScanPointProcessError(_ source: CodeSource)
+}
+
 protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataContainer == UserPointData {
+    var scanningDelegate: ScanPointFlowDelegate? { get set }
     func getPoints(byCategory categoryId: String) -> [UserPoint]
     func getTotalPoints(byCategory categoryId: String) -> Int
+    func handleScannedPoint(_ point: LoadPoint)
 }
 
 public final class UserPointManager: BaseClass, UserPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasScanningManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -26,8 +35,10 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
-    private var cancellables = Set<AnyCancellable>()
+    private let networkMonitor: NetworkMonitoring
+    private let scanningManager: ScanningManaging
     private var checkSum: String?
+    private var isOnline: Bool { networkMonitor.onlineStatus }
     
     // MARK: - Public Properties
     
@@ -35,6 +46,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
      TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
      Now it can be set from anywhere, needs to be handled with caution.
      */
+    weak var scanningDelegate: ScanPointFlowDelegate?
     weak var delegate: UserDataManagerFlowDelegate?
     
     var data: UserPointData? {
@@ -57,19 +69,20 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
+        self.networkMonitor = dependencies.networkMonitor
+        self.scanningManager = dependencies.scanningManager
         self.checkSum = storage.checkSumData?.userPoints
         
         super.init()
-        self.load()
-    }
-    
-    // MARK: - deinit
-    
-    deinit {
-        cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Public Interface
+    
+    func loadFromRepository() {
+        Task { @MainActor [weak self] in
+            await self?.storage.loadFromRepository(for: .userPoints)
+        }
+    }
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user points")
@@ -109,11 +122,43 @@ public final class UserPointManager: BaseClass, UserPointManaging {
             .reduce(0) { $0 + $1.pointValue }
     }
     
+    func handleScannedPoint(_ point: LoadPoint) {
+        guard scanningManager.checkValidity(point) else {
+            logger.log(message: "The Scanned point \(point.code) is invalid")
+            scanningDelegate?.onScanPointInvalidPoint()
+            return
+        }
+        if isOnline {
+            handleOnlinePoint(point)
+        }
+        else {
+            handleOfflinePoint(point)
+        }
+    }
+    
     // MARK: - Private Helpers
     
-    private func load() {
+    private func handleOnlinePoint(_ point: LoadPoint) {
         Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .userPoints)
+            do {
+                try await self?.scanningManager.sendScannedPoint(point)
+                self?.scanningDelegate?.onScanPointProcessSuccessOnline(point.codeSource)
+            } catch {
+                self?.logger.log(message: "The Scanned point \(point.code) could not be processed")
+                self?.scanningDelegate?.onScanPointProcessError(point.codeSource)
+            }
+        }
+    }
+    
+    private func handleOfflinePoint(_ point: LoadPoint) {
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.scanningManager.saveScannedPoint(point)
+                self?.scanningDelegate?.onScanPointProcessSuccessOffline(point.codeSource)
+            } catch {
+                self?.logger.log(message: "The Scanned point \(point.code) could not be processed")
+                self?.scanningDelegate?.onScanPointProcessError(point.codeSource)
+            }
         }
     }
 }

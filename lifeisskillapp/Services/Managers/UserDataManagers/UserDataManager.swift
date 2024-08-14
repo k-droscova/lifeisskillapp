@@ -22,8 +22,9 @@ protocol UserDataManaging {
     var delegate: UserDataManagerFlowDelegate? { get set }
     var data: DataContainer? { get set }
     var token: String? { get }
-    func fetch() async throws
-    func fetch(withToken token: String) async throws
+    func loadFromRepository() // for offline loading
+    func fetch() async throws // default implementation for online loading for all data managers
+    func fetch(withToken token: String) async throws // for online loading
     func getAll() -> [DataType]
     func getById(id: String) -> DataType?
 }

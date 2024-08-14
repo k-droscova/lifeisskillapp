@@ -12,7 +12,7 @@ import SwiftUI
 
 protocol HomeFlowCoordinatorDelegate: NSObject {}
 
-protocol HomeFlowDelegate: NSObject {
+protocol HomeFlowDelegate: NSObject, ScanPointFlowDelegate {
     // MARK: - scanning flow
     func loadFromQR(viewModel: QRViewModeling)
     func dismissQR()
@@ -20,7 +20,6 @@ protocol HomeFlowDelegate: NSObject {
     func dismissCamera()
     // MARK: - message flow
     func featureUnavailable(source: CodeSource)
-    func onSuccess(source: CodeSource)
     func onFailure(source: CodeSource)
     // MARK: - navigation
     func showOnboarding()
@@ -52,7 +51,7 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
     override func start() -> UIViewController {
         let viewModel = HomeViewModel<csVM, statusBarVM>(
             dependencies: .init(
-                scanningManager: appDependencies.scanningManager,
+                userPointManager: appDependencies.userPointManager,
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
                 userDefaultsStorage: appDependencies.userDefaultsStorage,
@@ -119,15 +118,34 @@ extension HomeFlowCoordinator {
         )
     }
     
-    func onSuccess(source: CodeSource) {
-        self.returnToHomeScreen()
-        appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
-        self.showSuccessAlert()
-    }
-    
     func onFailure(source: CodeSource) {
         self.returnToHomeScreen()
         appDependencies.logger.log(message: "scanning failure for source: \(source.rawValue)")
+        self.showFailureAlert(source)
+    }
+}
+
+extension HomeFlowCoordinator: ScanPointFlowDelegate {
+    func onScanPointInvalidPoint() {
+        self.returnToHomeScreen()
+        self.showInvalidPointAlert()
+    }
+    
+    func onScanPointProcessSuccessOnline(_ source: CodeSource) {
+        self.returnToHomeScreen()
+        appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
+        self.showOnlineSuccessAlert(source)
+    }
+    
+    func onScanPointProcessSuccessOffline(_ source: CodeSource) {
+        self.returnToHomeScreen()
+        appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
+        self.showOfflineSuccessAlert(source)
+    }
+    
+    func onScanPointProcessError(_ source: CodeSource) {
+        self.returnToHomeScreen()
+        appDependencies.logger.log(message: "scanning processing failure for source: \(source.rawValue)")
         self.showFailureAlert(source)
     }
     
@@ -137,7 +155,15 @@ extension HomeFlowCoordinator {
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    private func showSuccessAlert() {
+    private func showInvalidPointAlert() {
+        
+    }
+    
+    private func showOnlineSuccessAlert(_ source: CodeSource) {
+        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
+    }
+    
+    private func showOfflineSuccessAlert(_ source: CodeSource) {
         self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
     }
     

@@ -102,13 +102,8 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     @MainActor
     private func fetchData() async {
-        do {
-            try await userCategoryManager.fetch()
-            await gameDataManager.fetchNewDataIfNeccessary(endpoint: .rank)
-            await getSelectedCategoryRanking()
-        } catch {
-            delegate?.onError(error)
-        }
+        await gameDataManager.loadData(for: .rank)
+        await getSelectedCategoryRanking()
     }
     
     private func getAllUserRankData() -> [UserRank] {

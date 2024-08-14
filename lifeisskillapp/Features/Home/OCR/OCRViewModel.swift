@@ -18,11 +18,11 @@ protocol OcrViewModeling: CameraViewModeling {
 }
 
 final class OcrViewModel: BaseClass, OcrViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasUserPointManager & HasLocationManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
-    private let scanningManager: ScanningManaging
+    private let userPointManager: any UserPointManaging
     private let locationManager: LocationManaging
     
     // MARK: - Public Properties
@@ -35,7 +35,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         self.delegate = delegate
         self.logger = dependencies.logger
         self.locationManager = dependencies.locationManager
-        self.scanningManager = dependencies.scanningManager
+        self.userPointManager = dependencies.userPointManager
     }
     
     // MARK: - Public Interface
@@ -64,14 +64,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     private func sendScannedPointToAPI(_ code: String) {
         locationManager.checkLocationAuthorization()
         let point = LoadPoint(code: code, codeSource: .text)
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendScannedPoint(point)
-                self?.delegate?.onSuccess(source: .text)
-            } catch {
-                self?.delegate?.onFailure(source: .text)
-            }
-        }
+        userPointManager.handleScannedPoint(point)
     }
     
     private func extractNewCode(from text: String) -> String? {
