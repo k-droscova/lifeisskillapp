@@ -36,6 +36,7 @@ protocol UserManaging {
     func login(credentials: LoginCredentials) async throws
     func logout()
     func forceLogout()
+    func offlineLogout()
 }
 
 final class UserManager: BaseClass, UserManaging {
@@ -121,6 +122,18 @@ final class UserManager: BaseClass, UserManaging {
         }
         data = nil
         delegate?.onLogout()
+    }
+    
+    func offlineLogout() {
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.storage.clearAllUserData()
+                self?.data = nil
+                self?.delegate?.onLogout()
+            } catch {
+                self?.logger.log(message: "Error: offline logout failed")
+            }
+        }
     }
     
     func forceLogout() {

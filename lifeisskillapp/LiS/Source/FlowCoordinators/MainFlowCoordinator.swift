@@ -229,6 +229,28 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate, PointsFlowCoordinatorDelegate, RankFlowCoordinatorDelegate {}
 
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
+    func logoutPressedWhileOffline() {
+        let alert = UIAlertController(
+            title: NSLocalizedString("alert.logout_offline.title", comment: ""),
+            message: NSLocalizedString("alert.logout_offline.message", comment: ""),
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.ok", comment: ""),
+            style: .default
+        ) {
+            _ in
+            appDependencies.userManager.offlineLogout()
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.cancel", comment: ""),
+            style: .cancel
+        )
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
     // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
     func settingsPressed() {
         print("Need to navigate to settings")

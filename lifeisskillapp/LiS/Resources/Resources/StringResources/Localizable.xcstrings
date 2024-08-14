@@ -71,6 +71,29 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Zrušit"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "alert.button.ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "OK"
           }
         },
@@ -176,6 +199,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Internet Connection Lost"
+          }
+        }
+      }
+    },
+    "alert.logout_offline.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokud se odhlásíš tak ztratíš všechny body, které jsi načetl bez připojení k internetu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie fortfahren, verlieren Sie alle gescannten Punkte, die Sie im Offline-Modus gesammelt haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you proceed, you will lost all scanned points that you have collected while offline."
+          }
+        }
+      }
+    },
+    "alert.logout_offline.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skutečně se chceš odhlásit?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchten Sie sich wirklich abmelden?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you really want to logout?"
           }
         }
       }
