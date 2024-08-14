@@ -74,7 +74,11 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
                 self.isLoading = false
                 if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
                     delegate?.offlineLoginFailed()
+                    return
                 }
+                print("Login failed with error: \(error)")
+                self.delegate?.loginFailed()
+                return
             }
             catch {
                 self.isLoading = false

@@ -134,13 +134,13 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     func onScanPointProcessSuccessOnline(_ source: CodeSource) {
         self.returnToHomeScreen()
         appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
-        self.showOnlineSuccessAlert(source)
+        self.showOnlineSuccessAlert()
     }
     
     func onScanPointProcessSuccessOffline(_ source: CodeSource) {
         self.returnToHomeScreen()
         appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
-        self.showOfflineSuccessAlert(source)
+        self.showOfflineSuccessAlert()
     }
     
     func onScanPointProcessError(_ source: CodeSource) {
@@ -156,15 +156,15 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     }
     
     private func showInvalidPointAlert() {
-        
+        self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.invalid_point")
     }
     
-    private func showOnlineSuccessAlert(_ source: CodeSource) {
-        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
+    private func showOnlineSuccessAlert() {
+        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message_online")
     }
     
-    private func showOfflineSuccessAlert(_ source: CodeSource) {
-        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
+    private func showOfflineSuccessAlert() {
+        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message_offline")
     }
     
     private func showFailureAlert(_ source: CodeSource) {

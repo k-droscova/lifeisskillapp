@@ -81,7 +81,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             settingsDelegate: self,
             categorySelectorVM: csVM
         )
-
+        
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
@@ -176,21 +176,52 @@ extension MainFlowCoordinator {
     }
 }
 
+extension MainFlowCoordinator {
+    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
+        guard let rootVC = self.rootViewController else {
+            return
+        }
+        
+        let alertController = UIAlertController(
+            title: NSLocalizedString(titleKey, comment: ""),
+            message: NSLocalizedString(messageKey, comment: ""),
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+            completion?()
+        }
+        alertController.addAction(okAction)
+        
+        rootVC.present(alertController, animated: true, completion: nil)
+    }
+}
+
 extension MainFlowCoordinator: LocationManagerFlowDelegate {
     func onLocationUnsuccess() {
         showLocationAccessAlert()
     }
     
     private func showLocationAccessAlert() {
-        let alert = UIAlertController(title: "Location Access Denied", message: "Please enable location services in Settings.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Settings", style: .default) { _ in
+        let alert = UIAlertController(
+            title: NSLocalizedString("location.access.title", comment: ""),
+            message: NSLocalizedString("location.access.message", comment: ""),
+            preferredStyle: .alert
+        )
+        let settingsAction = UIAlertAction(
+            title: NSLocalizedString("settings.settings", comment: ""),
+            style: .default
+        ) {
+            _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            
-        })
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.cancel", comment: ""),
+            style: .cancel
+        )
+        alert.addAction(settingsAction)
+        alert.addAction(cancelAction)
         rootViewController?.present(alert, animated: true, completion: nil)
     }
 }

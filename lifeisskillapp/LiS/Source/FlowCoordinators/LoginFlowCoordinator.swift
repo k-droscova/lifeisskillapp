@@ -63,19 +63,39 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         delegate?.loginDidSucceed()
     }
     func loginFailed() {
-        let alert = UIAlertController(title: "Login Failed", message: "Please check that you used the correct username and password. If you forgot your password, click the button below to reset it.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        self.showOnlineLoginFailureAlert()
     }
     func offlineLoginFailed() {
-        let alert = UIAlertController(title: "Login Failed", message: "You are offline. Only the most recently logged in user can log in in offline mode. Ensure you used the correct credentials for log in.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.rootViewController?.present(alert, animated: true, completion: nil)
+        self.showOfflineLoginFailureAlert()
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func showOfflineLoginFailureAlert() {
+        self.showAlert(titleKey: "login.error.title", messageKey: "login.error_offline.message")
+    }
+    
+    private func showOnlineLoginFailureAlert() {
+        self.showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
+    }
+}
+
+extension LoginFlowCoordinator {
+    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
+        guard let rootVC = self.rootViewController else {
+            return
         }
+        
+        let alertController = UIAlertController(
+            title: NSLocalizedString(titleKey, comment: ""),
+            message: NSLocalizedString(messageKey, comment: ""),
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+            completion?()
+        }
+        alertController.addAction(okAction)
+        
+        rootVC.present(alertController, animated: true, completion: nil)
     }
 }

@@ -300,7 +300,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         Task { [weak self] in
             guard let self = self else { return }
             self.isOnline = isOnline
-            if self.isOnline {
+            if self.userManager.isLoggedIn && self.isOnline {
                 await self.fetchNewDataIfNeccessary()
             }
         }

@@ -36,12 +36,12 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         mainFC.delegate = self
         self.addChild(mainFC)
         let mainVC = mainFC.start()
-
+        
         window?.rootViewController = mainVC
         rootViewController = window?.rootViewController
         window?.makeKeyAndVisible()
     }
-
+    
     private func showLogin() {
         let loginFC = LoginFlowCoordinator<SettingsBarViewModel<LocationStatusBarViewModel>>(
             delegate: self
@@ -74,11 +74,7 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
     
     func onForceLogout() {
         self.reload()
-        Task { @MainActor [weak self] in
-            let alert = UIAlertController(title: "Forced logout", message: "It was detected that you have logged in on another device. It is not permitted to be logged in on multiple devices, hence we logged you out on this device.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-            self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        showAlert(titleKey: "alert.forced_logout.title", messageKey: "alert.forced_logout.message")
     }
 }
 
@@ -86,10 +82,27 @@ extension AppFlowCoordinator: MainFlowCoordinatorDelegate {}
 
 extension AppFlowCoordinator: NetworkManagerFlowDelegate {
     func onNoInternetConnection() {
-        Task { @MainActor [weak self] in
-            let alert = UIAlertController(title: "Internet Connection Lost", message: "Please be aware that the network is not available. Only most recently logged in user can log in again. You can scan points as usual, but if you log out before accessing network, all scanned points will be lost.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-            self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        showAlert(titleKey: "alert.internet.lost_connection.title", messageKey: "alert.internet.lost_connection.message")
+    }
+}
+
+extension AppFlowCoordinator {
+    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
+        DispatchQueue.main.async {
+            guard let rootVC = self.window?.rootViewController else {
+                return
+            }
+            
+            let alertController = UIAlertController(
+                title: NSLocalizedString(titleKey, comment: ""),
+                message: NSLocalizedString(messageKey, comment: ""),
+                preferredStyle: .alert
+            )
+            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                completion?()
+            }
+            alertController.addAction(okAction)
+            rootVC.present(alertController, animated: true, completion: nil)
         }
     }
 }
