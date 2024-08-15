@@ -12,9 +12,9 @@ protocol HasScanningManager {
 }
 
 protocol ScanningManaging {
-    func sendScannedPoint(_ point: LoadPoint) async throws
-    func saveScannedPoint(_ point: LoadPoint) async throws
-    func checkValidity(_ point: LoadPoint) -> Bool
+    func sendScannedPoint(_ point: ScannedPoint) async throws
+    func saveScannedPoint(_ point: ScannedPoint) async throws
+    func checkValidity(_ point: ScannedPoint) -> Bool
 }
 
 public final class ScanningManager: ScanningManaging {
@@ -39,7 +39,7 @@ public final class ScanningManager: ScanningManaging {
     
     // MARK: - Public Interface
     
-    func sendScannedPoint(_ point: LoadPoint) async throws {
+    func sendScannedPoint(_ point: ScannedPoint) async throws {
         logger.log(message: "Sending scanned point: \(point.code)")
         guard let token else {
             throw BaseError(
@@ -58,12 +58,12 @@ public final class ScanningManager: ScanningManaging {
         logger.log(message: "Successfully sent scanned point: \(point.code)")
     }
     
-    func saveScannedPoint(_ point: LoadPoint) async throws {
+    func saveScannedPoint(_ point: ScannedPoint) async throws {
         logger.log(message: "Saving scanned point: \(point.code)")
         
     }
     
-    func checkValidity(_ point: LoadPoint) -> Bool {
+    func checkValidity(_ point: ScannedPoint) -> Bool {
         // TODO: handle preprocessing for validity in the app
         true
     }
