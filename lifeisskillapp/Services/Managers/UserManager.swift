@@ -116,9 +116,9 @@ final class UserManager: BaseClass, UserManaging {
     func logout() {
         logger.log(message: "Logging out")
         do {
-            try realmLoginRepo.markUserAsLoggedOut()
+            try storage.onLogout()
         } catch {
-            logger.log(message: "Failed to mark user as logged out: \(error.localizedDescription)")
+            logger.log(message: "Failed to logout: \(error.localizedDescription)")
         }
         data = nil
         delegate?.onLogout()
@@ -139,8 +139,7 @@ final class UserManager: BaseClass, UserManaging {
     func forceLogout() {
         logger.log(message: "Forced logout")
         do {
-            // Mark the user as logged out in persistent storage
-            try realmLoginRepo.markUserAsLoggedOut()
+            try storage.onLogout()
         } catch {
             logger.log(message: "Failed to mark user as logged out: \(error.localizedDescription)")
         }
@@ -152,7 +151,6 @@ final class UserManager: BaseClass, UserManaging {
     
     private func load() {
         Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .login) // load the login data from repo to storage login property
             self?.checkIfUserIsLoggedIn() // check if the user has logged out before, or is still logged in
         }
     }

@@ -16,7 +16,6 @@ protocol UserDataStoraging {
     var userPointData: UserPointData? { get set }
     var genericPointData: GenericPointData? { get set }
     var userRankData: UserRankData? { get set }
-    var loginData: LoginUserData? { get set }
     var checkSumData: CheckSumData? { get set }
 }
 
@@ -106,25 +105,6 @@ final class UserDataStorage: UserDataStoraging {
                 internalStore["userRankData"] = NSNull()
             } else {
                 internalStore["userRankData"] = newValue
-            }
-        }
-    }
-    
-    var loginData: LoginUserData? {
-        get {
-            if let data = internalStore["loginData"] as? LoginUserData {
-                return data
-            } else if internalStore["loginData"] is NSNull {
-                return nil
-            } else {
-                return nil
-            }
-        }
-        set {
-            if newValue == nil {
-                internalStore["loginData"] = NSNull()
-            } else {
-                internalStore["loginData"] = newValue
             }
         }
     }

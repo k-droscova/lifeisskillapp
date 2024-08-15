@@ -30,6 +30,7 @@ protocol PointsViewModeling: BaseClass, ObservableObject {
     
     // Actions
     func onAppear()
+    func onDisappear()
     func mapButtonPressed()
     func listButtonPressed()
     func showPointOnMap(point: Point)
@@ -101,6 +102,12 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             self?.username = self?.userManager.userName ?? ""
             await self?.fetchData()
             self?.isLoading = false
+        }
+    }
+    
+    func onDisappear() {
+        Task { @MainActor [weak self] in
+            self?.totalPoints = 0
         }
     }
     

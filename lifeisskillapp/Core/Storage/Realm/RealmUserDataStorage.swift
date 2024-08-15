@@ -10,7 +10,7 @@ import RealmSwift
 import Combine
 
 enum PersistentDataType {
-    case categories, userPoints, genericPoints, rankings, login, checkSum
+    case categories, userPoints, genericPoints, rankings, checkSum
 }
 
 protocol HasPersistentUserDataStoraging {
@@ -19,6 +19,7 @@ protocol HasPersistentUserDataStoraging {
 
 protocol PersistentUserDataStoraging: UserDataStoraging {
     func load()
+    func onLogout() throws
     func loadFromRepository(for data: PersistentDataType) async
     func saveUserCategories(data: UserCategoryData?) async
     func saveUserPoints(data: UserPointData?) async
@@ -46,9 +47,8 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var _userPointData: UserPointData?
     private var _genericPointData: GenericPointData?
     private var _userRankData: UserRankData?
-    private var _loginData: LoginUserData?
     private var _checkSumData: CheckSumData?
-        
+    
     // MARK: - Public Properties
     
     var userCategoryData: UserCategoryData? {
@@ -99,18 +99,6 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         }
     }
     
-    var loginData: LoginUserData? {
-        get {
-            _loginData
-        }
-        set {
-            _loginData = newValue
-            Task {
-                await saveLoginData(data: newValue)
-            }
-        }
-    }
-    
     var checkSumData: CheckSumData? {
         get {
             _checkSumData
@@ -147,30 +135,28 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
                 group.addTask { await self.loadUserPoints() }
                 group.addTask { await self.loadGenericPoints() }
                 group.addTask { await self.loadUserRanks() }
-                group.addTask { await self.loadLoginData() }
                 group.addTask { await self.loadCheckSumData() }
             }
             logger.log(message: "All data loaded concurrently.")
         }
     }
     
+    func onLogout() throws {
+        try loginRepo.markUserAsLoggedOut()
+        self.clearInMemoryData()
+    }
+    
     func clearAllUserData() async throws {
-        // Perform the delete operations concurrently using `async let`
-        async let loginDeletion = Task { try loginRepo.deleteAll() }
-        async let checkSumDeletion = Task { try checkSumRepo.deleteAll() }
-        async let categoryDeletion = Task { try categoryRepo.deleteAll() }
-        async let rankingDeletion = Task { try rankingRepo.deleteAll() }
-        async let genericPointDeletion = Task { try genericPointRepo.deleteAll() }
-        async let userPointDeletion = Task { try userPointRepo.deleteAll() }
-        
-        // Await all deletions to finish
-        try await loginDeletion.value
-        try await checkSumDeletion.value
-        try await categoryDeletion.value
-        try await rankingDeletion.value
-        try await genericPointDeletion.value
-        try await userPointDeletion.value
-        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            group.addTask { try self.loginRepo.deleteAll() }
+            group.addTask { try self.checkSumRepo.deleteAll() }
+            group.addTask { try self.categoryRepo.deleteAll() }
+            group.addTask { try self.rankingRepo.deleteAll() }
+            group.addTask { try self.genericPointRepo.deleteAll() }
+            group.addTask { try self.userPointRepo.deleteAll() }
+            group.addTask { self.clearInMemoryData() }
+            try await group.waitForAll()
+        }
         // Log the data clearing process
         logger.log(message: "All related user data has been cleared.")
     }
@@ -183,8 +169,6 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             await loadGenericPoints()
         case .rankings:
             await loadUserRanks()
-        case .login:
-            await loadLoginData()
         case .checkSum:
             await loadCheckSumData()
         case .categories:
@@ -284,6 +268,19 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     // MARK: - Private Helpers
     
+    private func clearInMemoryData() {
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { self._userCategoryData = nil }
+                group.addTask { self._userPointData = nil }
+                group.addTask { self._userRankData = nil }
+                group.addTask { self._genericPointData = nil }
+                group.addTask { self._checkSumData = nil }
+            }
+            logger.log(message: "All data nullified on logout.")
+        }
+    }
+    
     private func loadCategories() async {
         do {
             let realmCategoryData = try categoryRepo.getAll().first
@@ -337,20 +334,6 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to load user ranks: \(error.localizedDescription)")
-        }
-    }
-    
-    private func loadLoginData() async {
-        do {
-            let realmLoginDetails = try loginRepo.getAll().first
-            if let realmLoginDetails = realmLoginDetails {
-                _loginData = realmLoginDetails.toLoginData()
-                logger.log(message: "Login data loaded successfully.")
-            } else {
-                logger.log(message: "No login data found in the repository.")
-            }
-        } catch {
-            logger.log(message: "Failed to load login data: \(error.localizedDescription)")
         }
     }
     

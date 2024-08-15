@@ -36,6 +36,9 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
         .onAppear {
             viewModel.onAppear()
         }
+        .onDisappear() {
+            viewModel.onDisappear()
+        }
         .overlay(
             Group {
                 if viewModel.isLoading {
