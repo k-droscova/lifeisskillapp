@@ -14,7 +14,7 @@ protocol QRViewModeling: CameraViewModeling {
     func setUpScanner()
     func dismissScanner()
     func scanningFailed()
-    func handleScannedQRCode(_ code: String)
+    func handleProcessedCode(_ code: String)
     func startScanning()
     func stopScanning()
     func setupPreviewLayer()
@@ -62,10 +62,9 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         delegate?.onFailure(source: .qr)
     }
     
-    func handleScannedQRCode(_ code: String) {
+    func handleProcessedCode(_ code: String) {
         locationManager.checkLocationAuthorization()
-        let point = ScannedPoint(code: code, codeSource: .text)
-        userPointManager.handleScannedPoint(point)
+        delegatePointProcessingToUserPointManager(code)
     }
     
     func startScanning() {
@@ -128,6 +127,11 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         captureSession = nil
         previewLayer = nil
     }
+    
+    private func delegatePointProcessingToUserPointManager(_ code: String) {
+        let point = ScannedPoint(code: code, codeSource: .text, location: locationManager.location)
+        userPointManager.handleScannedPoint(point)
+    }
 }
 
 extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
@@ -141,7 +145,7 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
 
             if string.contains("lifeisskill.cz") {
-                handleScannedQRCode(string.parseMessage())
+                handleProcessedCode(string.parseMessage())
             } else {
                 scanningFailed()
             }

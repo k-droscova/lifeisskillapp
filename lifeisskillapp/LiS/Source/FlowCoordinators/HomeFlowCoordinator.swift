@@ -126,6 +126,11 @@ extension HomeFlowCoordinator {
 }
 
 extension HomeFlowCoordinator: ScanPointFlowDelegate {
+    func onScanPointNoLocation() {
+        self.returnToHomeScreen()
+        self.showNoLocationAlert()
+    }
+    
     func onScanPointInvalidPoint() {
         self.returnToHomeScreen()
         self.showInvalidPointAlert()
@@ -153,6 +158,10 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     
     private func returnToHomeScreen() {
         navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func showNoLocationAlert() {
+        self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.no_location")
     }
     
     private func showInvalidPointAlert() {

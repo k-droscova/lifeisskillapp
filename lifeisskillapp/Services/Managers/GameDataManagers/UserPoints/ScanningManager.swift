@@ -65,7 +65,8 @@ public final class ScanningManager: ScanningManaging {
     
     func checkValidity(_ point: ScannedPoint) -> Bool {
         // TODO: handle preprocessing for validity in the app
-        true
+        guard (point.location != nil) else { return false }
+        return true
     }
     
     // MARK: - Private Helpers

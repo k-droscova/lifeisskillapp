@@ -15,8 +15,6 @@ protocol HasUserDefaultsStorage {
 
 protocol UserDefaultsStoraging {
     var appId: String? { get set }
-    var location: UserLocation? { get set }
-    var locationPublisher: AnyPublisher<UserLocation?, Never> { get }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
@@ -29,16 +27,6 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     
     // MARK: - Public Properties
     
-    var location: UserLocation? {
-        get {
-            UserDefaults.standard.location // uses UserDefaults extension for custom key
-        }
-        set {
-            UserDefaults.standard.location = newValue
-            triggerLocationPublisher()
-        }
-    }
-    
     var appId: String? {
         get {
             UserDefaults.standard.appId // uses UserDefaults extension for custom key
@@ -48,24 +36,9 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
         }
     }
     
-    // MARK: - Publisher
-    
-    var locationPublisher: AnyPublisher<UserLocation?, Never> {
-        return locationSubject.eraseToAnyPublisher()
-    }
-    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
-        self.locationSubject.send(self.location) // Initialize with the current location
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func triggerLocationPublisher() {
-        Task { @MainActor [weak self] in
-            self?.locationSubject.send(self?.location)
-        }
     }
 }

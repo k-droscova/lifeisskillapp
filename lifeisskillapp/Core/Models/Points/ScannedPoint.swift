@@ -10,6 +10,13 @@ import Foundation
 struct ScannedPoint: UserData {
     let code: String
     let codeSource: CodeSource
+    let location: UserLocation?
+    
+    init(code: String, codeSource: CodeSource, location: UserLocation?) {
+        self.code = code
+        self.codeSource = codeSource
+        self.location = location
+    }
 }
 
 extension ScannedPoint {

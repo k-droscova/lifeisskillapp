@@ -50,11 +50,16 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     
     // MARK: - Private Helpers
     
-    private func handleScannedPoint(_ pointID: String) {
-        logger.log(message: "Point scanned from NFC: \(pointID)")
-        let point = ScannedPoint(code: pointID, codeSource: .nfc)
-        userPointManager.handleScannedPoint(point)
+    private func handleProcessedCode(_ code: String) {
+        logger.log(message: "Point scanned from NFC: \(code)")
+        locationManager.checkLocationAuthorization()
+        delegatePointProcessingToUserPointManager(code)
         self.stopScanning()
+    }
+    
+    private func delegatePointProcessingToUserPointManager(_ code: String) {
+        let point = ScannedPoint(code: code, codeSource: .text, location: locationManager.location)
+        userPointManager.handleScannedPoint(point)
     }
 }
 
@@ -74,7 +79,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 guard string.contains("Life is Skill") else {
                     continue
                 }
-                handleScannedPoint(string.parseMessage())
+                handleProcessedCode(string.parseMessage())
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                     session.invalidate()
                 }

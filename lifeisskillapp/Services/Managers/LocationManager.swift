@@ -23,31 +23,39 @@ protocol HasLocationManager {
 /// Protocol defining the interface for managing location services.
 protocol LocationManaging {
     var delegate: LocationManagerFlowDelegate? { get set }
-    var gpsStatusPublisher: AnyPublisher<Bool, Never> { get }
     var gpsStatus: Bool { get }
+    var gpsStatusPublisher: AnyPublisher<Bool, Never> { get }
+    var location: UserLocation? { get }
+    var locationPublisher: AnyPublisher<UserLocation?, Never> { get }
     /// Checks the location authorization status and requests permission if needed.
     func checkLocationAuthorization()
 }
 
 /// A class responsible for managing location services and handling location updates.
 public final class LocationManager: BaseClass, LocationManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDefaultsStorage
+    typealias Dependencies = HasLoggerServicing
     
     // MARK: - Private Properties
     
     private let locationManager = CLLocationManager()
     private let logger: LoggerServicing
-    private var userDefaultsStorage: UserDefaultsStoraging
     private let gpsSubject = CurrentValueSubject<Bool, Never>(true)
+    private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil)
     
     // MARK: - Public Properties
     
     weak var delegate: LocationManagerFlowDelegate?
-    var gpsStatusPublisher: AnyPublisher<Bool, Never> {
-            return gpsSubject.eraseToAnyPublisher()
+    var location: UserLocation? {
+        locationSubject.value
     }
     var gpsStatus: Bool {
         gpsSubject.value
+    }
+    var gpsStatusPublisher: AnyPublisher<Bool, Never> {
+        return gpsSubject.eraseToAnyPublisher()
+    }
+    var locationPublisher: AnyPublisher<UserLocation?, Never> {
+        return locationSubject.eraseToAnyPublisher()
     }
     
     // MARK: - Initialization
@@ -56,7 +64,6 @@ public final class LocationManager: BaseClass, LocationManaging {
     /// - Parameter dependencies: The dependencies required by the LocationManager (Logging and Storage)
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
-        self.userDefaultsStorage = dependencies.userDefaultsStorage
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -79,6 +86,20 @@ public final class LocationManager: BaseClass, LocationManaging {
             break
         }
     }
+    
+    // MARK: - Private Helpers
+    
+    private func triggerLocationPublisher(_ location: UserLocation?) {
+        Task { @MainActor [weak self] in
+            self?.locationSubject.send(location)
+        }
+    }
+    
+    private func triggerGPSPublisher(_ status: Bool) {
+        Task { @MainActor [weak self] in
+            self?.gpsSubject.send(status)
+        }
+    }
 }
 
 extension LocationManager: CLLocationManagerDelegate {
@@ -88,11 +109,10 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - locations: An array of CLLocation objects representing the locations that were updated.
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        userDefaultsStorage.location = location.toUserLocation()
-        
+        triggerLocationPublisher(location.toUserLocation())
         // Update gps status only if the last value has been false
         guard !gpsSubject.value else { return }
-        gpsSubject.send(true)
+        triggerGPSPublisher(true)
     }
     
     /// Called when the location manager fails to update locations.
@@ -103,9 +123,10 @@ extension LocationManager: CLLocationManagerDelegate {
         logger.log(
             message: "ERROR: CCLocationManager failed with Error: \(error.localizedDescription)"
         )
+        triggerLocationPublisher(nil)
         // Update gps status only if the last value has been true
         guard gpsSubject.value else { return }
-        gpsSubject.send(false)
+        triggerGPSPublisher(false)
     }
     
     /// Called when the location authorization status changes.

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol LocationStatusBarViewModeling: BaseClass, ObservableObject {
-    init(dependencies: HasUserDefaultsStorage & HasLoggers & HasLocationManager & HasNetworkMonitor)
+    init(dependencies: HasLoggers & HasLocationManager & HasNetworkMonitor)
     var userLocation: UserLocation? { get }
     var appVersion: String { get }
     var isOnline: Bool { get set }
@@ -17,11 +17,10 @@ protocol LocationStatusBarViewModeling: BaseClass, ObservableObject {
 }
 
 final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationStatusBarViewModeling {
-    typealias Dependencies = HasUserDefaultsStorage & HasLoggers & HasLocationManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggers & HasLocationManager & HasNetworkMonitor
     
     // MARK: - Private properties
     
-    private let userDefaultsStorage: UserDefaultsStoraging
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
     private let networkMonitor: NetworkMonitoring
@@ -32,13 +31,12 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
     @Published var appVersion: String = "DEBUG" // TODO: fetch from environment
     @Published var isOnline: Bool = true
     @Published var isGpsOk: Bool = true
-    @Published var userLocation: UserLocation?
+    @Published var userLocation: UserLocation? = nil
     
     // MARK: - Initialization
     
     required init(dependencies: Dependencies) {
         logger = dependencies.logger
-        userDefaultsStorage = dependencies.userDefaultsStorage
         locationManager = dependencies.locationManager
         networkMonitor = dependencies.networkMonitor
         
@@ -64,7 +62,7 @@ final class LocationStatusBarViewModel: BaseClass, ObservableObject, LocationSta
             .store(in: &cancellables)
         
         // Location Binding
-        userDefaultsStorage.locationPublisher
+        locationManager.locationPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] location in
                 self?.updateLocation(location)

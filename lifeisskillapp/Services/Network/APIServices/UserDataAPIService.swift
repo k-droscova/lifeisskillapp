@@ -124,16 +124,30 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     private func encodeParams(point: ScannedPoint) throws -> Data {
         task = ApiTask.userPoints
         var taskParams = task.taskParams
+        guard let location = point.location else {
+            throw BaseError(
+                context: .system,
+                message: "Point is missing location",
+                code: .general(.missingConfigItem),
+                logger: loggerService
+            )
+        }
+        let date = location.timestamp
         let params = [
             "code": point.code,
-            "codeSource": point.codeSource.rawValue
+            "codeSource": point.codeSource.rawValue,
+            "lat": String(location.latitude),
+            "lng": String(location.longitude),
+            "acc": String(location.accuracy),
+            "alt": String(location.altitude),
+            "time": date.toPointListString()
         ]
         taskParams.merge(params) { (_, new) in new }
         let jsonString = try JsonMapper.jsonString(from: taskParams)
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw BaseError(
                 context: .system,
-                message: "Could not encode login params",
+                message: "Could not encode scan point params",
                 code: .general(.jsonEncoding),
                 logger: loggerService
             )

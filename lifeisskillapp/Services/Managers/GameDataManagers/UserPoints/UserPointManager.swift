@@ -14,6 +14,7 @@ protocol HasUserPointManager {
 
 protocol ScanPointFlowDelegate: NSObject {
     func onScanPointInvalidPoint()
+    func onScanPointNoLocation()
     func onScanPointProcessSuccessOnline(_ source: CodeSource)
     func onScanPointProcessSuccessOffline(_ source: CodeSource)
     func onScanPointProcessError(_ source: CodeSource)
@@ -123,6 +124,11 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     }
     
     func handleScannedPoint(_ point: ScannedPoint) {
+        guard point.location != nil else {
+            logger.log(message: "Couldn't extract user's location for scanned point \(point.code)")
+            scanningDelegate?.onScanPointNoLocation()
+            return
+        }
         guard scanningManager.checkValidity(point) else {
             logger.log(message: "The Scanned point \(point.code) is invalid")
             scanningDelegate?.onScanPointInvalidPoint()

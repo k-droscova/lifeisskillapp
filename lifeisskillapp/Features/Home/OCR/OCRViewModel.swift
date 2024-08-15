@@ -50,7 +50,8 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func handleProcessedCode(_ code: String) {
-        sendScannedPointToAPI(code)
+        locationManager.checkLocationAuthorization()
+        delegatePointProcessingToUserPointManager(code)
         dismissCamera()
     }
     
@@ -61,9 +62,8 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         return extractOldCode(from: text)
     }
     
-    private func sendScannedPointToAPI(_ code: String) {
-        locationManager.checkLocationAuthorization()
-        let point = ScannedPoint(code: code, codeSource: .text)
+    private func delegatePointProcessingToUserPointManager(_ code: String) {
+        let point = ScannedPoint(code: code, codeSource: .text, location: locationManager.location)
         userPointManager.handleScannedPoint(point)
     }
     
