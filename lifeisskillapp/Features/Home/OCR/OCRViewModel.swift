@@ -63,7 +63,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     private func sendScannedPointToAPI(_ code: String) {
         locationManager.checkLocationAuthorization()
-        let point = LoadPoint(code: code, codeSource: .text)
+        let point = ScannedPoint(code: code, codeSource: .text)
         userPointManager.handleScannedPoint(point)
     }
     

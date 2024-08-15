@@ -118,7 +118,7 @@
 		27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6198F2C3AAC1F0067498F /* APIResponseStructs.swift */; };
 		27C619932C3AAD260067498F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619922C3AAD260067498F /* User.swift */; };
 		27C619952C3AB0890067498F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619942C3AB0890067498F /* UserDefaults.swift */; };
-		27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* LoadPoint.swift */; };
+		27CBD7832C4E789900612375 /* ScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* ScannedPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
 		27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD78C2C4EC72F00612375 /* CLLocation.swift */; };
@@ -300,7 +300,7 @@
 		27C6198F2C3AAC1F0067498F /* APIResponseStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStructs.swift; sourceTree = "<group>"; };
 		27C619922C3AAD260067498F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27C619942C3AB0890067498F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		27CBD7822C4E789900612375 /* LoadPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPoint.swift; sourceTree = "<group>"; };
+		27CBD7822C4E789900612375 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
@@ -372,7 +372,7 @@
 				27066A8E2C45623F0092B499 /* PointType.swift */,
 				27066A902C4567260092B499 /* CodeSource.swift */,
 				27066A942C4570180092B499 /* GenericPoint.swift */,
-				27CBD7822C4E789900612375 /* LoadPoint.swift */,
+				27CBD7822C4E789900612375 /* ScannedPoint.swift */,
 			);
 			path = Points;
 			sourceTree = "<group>";
@@ -1283,7 +1283,7 @@
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				27D5692A2C6B7170003EF5D9 /* StorageConstants.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,
-				27CBD7832C4E789900612375 /* LoadPoint.swift in Sources */,
+				27CBD7832C4E789900612375 /* ScannedPoint.swift in Sources */,
 				2720DF2E2C515906007B4E77 /* String.swift in Sources */,
 				27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */,
 				276CA9D22C5E6D3D001D6394 /* RankView.swift in Sources */,

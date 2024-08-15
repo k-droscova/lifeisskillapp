@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct LoadPoint: UserData {
+struct ScannedPoint: UserData {
     let code: String
     let codeSource: CodeSource
 }
 
-extension LoadPoint {
+extension ScannedPoint {
     var id: String { code }
 }

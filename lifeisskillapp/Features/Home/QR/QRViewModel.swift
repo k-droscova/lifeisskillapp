@@ -64,7 +64,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     
     func handleScannedQRCode(_ code: String) {
         locationManager.checkLocationAuthorization()
-        let point = LoadPoint(code: code, codeSource: .text)
+        let point = ScannedPoint(code: code, codeSource: .text)
         userPointManager.handleScannedPoint(point)
     }
     

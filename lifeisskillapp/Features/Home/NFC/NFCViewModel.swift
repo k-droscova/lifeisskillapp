@@ -52,7 +52,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     
     private func handleScannedPoint(_ pointID: String) {
         logger.log(message: "Point scanned from NFC: \(pointID)")
-        let point = LoadPoint(code: pointID, codeSource: .nfc)
+        let point = ScannedPoint(code: pointID, codeSource: .nfc)
         userPointManager.handleScannedPoint(point)
         self.stopScanning()
     }

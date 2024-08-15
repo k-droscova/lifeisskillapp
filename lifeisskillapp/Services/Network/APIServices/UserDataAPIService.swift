@@ -24,7 +24,7 @@ protocol UserDataAPIServicing: APITasking {
      */
     func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<GenericPointData>
     
-    func postUserPoints(baseURL: URL, userToken: String, point: LoadPoint) async throws -> APIResponse<UserPointData>
+    func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData>
 }
 
 public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
@@ -107,7 +107,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    func postUserPoints(baseURL: URL, userToken: String, point: LoadPoint) async throws -> APIResponse<UserPointData> {
+    func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData> {
         let endpoint = Endpoint.userpoints
         let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
         task = ApiTask.userPoints
@@ -121,7 +121,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    private func encodeParams(point: LoadPoint) throws -> Data {
+    private func encodeParams(point: ScannedPoint) throws -> Data {
         task = ApiTask.userPoints
         var taskParams = task.taskParams
         let params = [
