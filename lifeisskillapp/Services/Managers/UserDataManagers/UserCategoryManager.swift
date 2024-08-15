@@ -52,7 +52,9 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     @Published var selectedCategory: UserCategory? {
         didSet {
-            publishSelectedCategory()
+            if oldValue?.id != selectedCategory?.id {
+                publishSelectedCategory()
+            }
         }
     }
     

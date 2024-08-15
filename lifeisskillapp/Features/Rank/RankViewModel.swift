@@ -65,6 +65,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         
         super.init()
         self.setupBindings()
+        self.logger.log(message: "RankViewModel: Rankings on INIT \(categoryRankings.count)")
     }
     
     // MARK: - Deinitialization
@@ -78,10 +79,18 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     func onAppear() {
         Task { @MainActor [weak self] in
+            self?.logger.log(message: "RankViewModel: Rankings on APPEAR START \(String(describing: self?.categoryRankings.count))")
             self?.isLoading = true
             self?.username = self?.userManager.userName ?? ""
             await self?.fetchData()
             self?.isLoading = false
+            self?.logger.log(message: "RankViewModel: Rankings on APPEAR END \(String(describing: self?.categoryRankings.count))")
+        }
+    }
+    
+    func onDisappear() {
+        Task { @MainActor [weak self] in
+            self?.categoryRankings = []
         }
     }
     
