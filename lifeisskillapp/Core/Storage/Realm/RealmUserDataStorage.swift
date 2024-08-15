@@ -43,6 +43,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var rankingRepo: any RealmUserRankRepositoring
     private var genericPointRepo: any RealmGenericPointRepositoring
     private var userPointRepo: any RealmUserPointRepositoring
+    private var scannedPointRepo: any RealmScannedPointRepositoring
     
     private var _userCategoryData: UserCategoryData?
     private var _userPointData: UserPointData?
@@ -122,6 +123,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         self.rankingRepo = dependencies.realmUserRankRepository
         self.genericPointRepo = dependencies.realmPointRepository
         self.userPointRepo = dependencies.realmUserPointRepository
+        self.scannedPointRepo = dependencies.realmScannedPointRepository
         
         super.init()
         self.load()
@@ -164,7 +166,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     func clearSavedScannedPoints() async throws {
         logger.log(message: "Saved scanned points deleted")
-        // TODO: implement scan point storage for offline scanning
+        try self.scannedPointRepo.deleteAll()
     }
     
     func loadFromRepository(for data: PersistentDataType) async {

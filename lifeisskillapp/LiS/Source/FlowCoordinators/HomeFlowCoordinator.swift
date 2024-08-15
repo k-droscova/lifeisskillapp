@@ -154,6 +154,11 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
         self.showFailureAlert(source)
     }
     
+    func onScanPointOfflineProcessError() {
+        self.returnToHomeScreen()
+        self.showOfflineFailureAlert()
+    }
+    
     // MARK: - Private Helpers
     
     private func returnToHomeScreen() {
@@ -174,6 +179,10 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     
     private func showOfflineSuccessAlert() {
         self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message_offline")
+    }
+    
+    private func showOfflineFailureAlert() {
+        self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.message_offline")
     }
     
     private func showFailureAlert(_ source: CodeSource) {

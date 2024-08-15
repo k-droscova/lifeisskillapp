@@ -18,6 +18,7 @@ protocol ScanPointFlowDelegate: NSObject {
     func onScanPointProcessSuccessOnline(_ source: CodeSource)
     func onScanPointProcessSuccessOffline(_ source: CodeSource)
     func onScanPointProcessError(_ source: CodeSource)
+    func onScanPointOfflineProcessError()
 }
 
 protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataContainer == UserPointData {
@@ -25,6 +26,7 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
     func getPoints(byCategory categoryId: String) -> [UserPoint]
     func getTotalPoints(byCategory categoryId: String) -> Int
     func handleScannedPoint(_ point: ScannedPoint)
+    func handleAllStoredScannedPoints()
 }
 
 public final class UserPointManager: BaseClass, UserPointManaging {
@@ -142,12 +144,23 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         }
     }
     
+    func handleAllStoredScannedPoints() {
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.scanningManager.sendAllStoredScannedPoints()
+            } catch {
+                self?.logger.log(message: "The saved scanned point could not be processed")
+                self?.scanningDelegate?.onScanPointOfflineProcessError()
+            }
+        }
+    }
+    
     // MARK: - Private Helpers
     
     private func handleOnlinePoint(_ point: ScannedPoint) {
         Task { @MainActor [weak self] in
             do {
-                try await self?.scanningManager.sendScannedPoint(point)
+                try await self?.scanningManager.handleScannedPointOnline(point)
                 self?.scanningDelegate?.onScanPointProcessSuccessOnline(point.codeSource)
             } catch {
                 self?.logger.log(message: "The Scanned point \(point.code) could not be processed")
@@ -159,7 +172,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     private func handleOfflinePoint(_ point: ScannedPoint) {
         Task { @MainActor [weak self] in
             do {
-                try await self?.scanningManager.saveScannedPoint(point)
+                try await self?.scanningManager.handleScannedPointOffline(point)
                 self?.scanningDelegate?.onScanPointProcessSuccessOffline(point.codeSource)
             } catch {
                 self?.logger.log(message: "The Scanned point \(point.code) could not be processed")

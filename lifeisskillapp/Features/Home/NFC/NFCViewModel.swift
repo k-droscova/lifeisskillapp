@@ -58,7 +58,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     }
     
     private func delegatePointProcessingToUserPointManager(_ code: String) {
-        let point = ScannedPoint(code: code, codeSource: .text, location: locationManager.location)
+        let point = ScannedPoint(code: code, codeSource: .nfc, location: locationManager.location)
         userPointManager.handleScannedPoint(point)
     }
 }

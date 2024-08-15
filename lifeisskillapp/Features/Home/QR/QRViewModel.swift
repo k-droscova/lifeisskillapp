@@ -129,7 +129,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     }
     
     private func delegatePointProcessingToUserPointManager(_ code: String) {
-        let point = ScannedPoint(code: code, codeSource: .text, location: locationManager.location)
+        let point = ScannedPoint(code: code, codeSource: .qr, location: locationManager.location)
         userPointManager.handleScannedPoint(point)
     }
 }

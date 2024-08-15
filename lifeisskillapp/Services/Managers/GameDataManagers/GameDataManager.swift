@@ -301,6 +301,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             guard let self = self else { return }
             self.isOnline = isOnline
             if self.userManager.isLoggedIn && self.isOnline {
+                await self.userPointManager.handleAllStoredScannedPoints()
                 await self.fetchNewDataIfNeccessary()
             }
         }

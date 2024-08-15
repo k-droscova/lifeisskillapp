@@ -71,18 +71,20 @@ public final class RealmStorage: BaseClass, RealmStoraging {
             RealmTimerParam.self,
             RealmStatusParam.self,
             RealmUserPointData.self,
-            RealmPointScan.self
+            RealmPointScan.self,
+            RealmScannedPoint.self,
+            RealmUserLocation.self
         ]
         
         // Set the schema version. This must be incremented whenever schema changes
-        configurations.schemaVersion = 2 // Increment this whenever you update your schema
+        configurations.schemaVersion = 25 // Increment this whenever you update your schema
         
         // Set the migration block
         configurations.migrationBlock = { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 // do nothing
             }
-            if oldSchemaVersion < 2 {
+            if oldSchemaVersion < 25 {
                 for objectType in objectTypes {
                     migration.deleteData(forType: objectType.className())
                 }
