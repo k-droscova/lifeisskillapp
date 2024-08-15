@@ -23,7 +23,7 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
     var scanningDelegate: ScanPointFlowDelegate? { get set }
     func getPoints(byCategory categoryId: String) -> [UserPoint]
     func getTotalPoints(byCategory categoryId: String) -> Int
-    func handleScannedPoint(_ point: LoadPoint)
+    func handleScannedPoint(_ point: ScannedPoint)
 }
 
 public final class UserPointManager: BaseClass, UserPointManaging {
@@ -122,7 +122,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
             .reduce(0) { $0 + $1.pointValue }
     }
     
-    func handleScannedPoint(_ point: LoadPoint) {
+    func handleScannedPoint(_ point: ScannedPoint) {
         guard scanningManager.checkValidity(point) else {
             logger.log(message: "The Scanned point \(point.code) is invalid")
             scanningDelegate?.onScanPointInvalidPoint()
@@ -138,7 +138,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     // MARK: - Private Helpers
     
-    private func handleOnlinePoint(_ point: LoadPoint) {
+    private func handleOnlinePoint(_ point: ScannedPoint) {
         Task { @MainActor [weak self] in
             do {
                 try await self?.scanningManager.sendScannedPoint(point)
@@ -150,7 +150,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         }
     }
     
-    private func handleOfflinePoint(_ point: LoadPoint) {
+    private func handleOfflinePoint(_ point: ScannedPoint) {
         Task { @MainActor [weak self] in
             do {
                 try await self?.scanningManager.saveScannedPoint(point)
