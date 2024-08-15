@@ -626,8 +626,9 @@
 		27274FB82C3322B7003453E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				27C619842C3A9D760067498F /* APIServices */,
 				2754571B2C33303B00F3B55A /* NetworkStructs */,
+				27C619842C3A9D760067498F /* APIServices */,
+				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
 				2754570A2C33259200F3B55A /* Network.swift */,
 				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
 			);
@@ -637,12 +638,9 @@
 		27274FB92C3322BD003453E2 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				2734DCA72C46A3C5008030F3 /* UserDataManagers */,
+				2734DCA72C46A3C5008030F3 /* GameDataManagers */,
 				2754570E2C33299300F3B55A /* UserManager.swift */,
 				2717AEB62C429C2A00A23F06 /* LocationManager.swift */,
-				27CBD7882C4E9E0400612375 /* GameDataManager.swift */,
-				271F1F112C5406F600DF9DFD /* ScanningManager.swift */,
-				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -706,16 +704,17 @@
 			path = UserData;
 			sourceTree = "<group>";
 		};
-		2734DCA72C46A3C5008030F3 /* UserDataManagers */ = {
+		2734DCA72C46A3C5008030F3 /* GameDataManagers */ = {
 			isa = PBXGroup;
 			children = (
-				2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */,
-				2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */,
+				2745A0BD2C6E2C6E00706254 /* UserPoints */,
+				2745A0BC2C6E2C5D00706254 /* GenericPoints */,
+				2745A0BB2C6E2C4E00706254 /* Ranking */,
+				2745A0BA2C6E2C3C00706254 /* Categories */,
+				27CBD7882C4E9E0400612375 /* GameDataManager.swift */,
 				27E32DE72C493BF900E69C58 /* UserDataManager.swift */,
-				27E32DE92C49504100E69C58 /* GenericPointManager.swift */,
-				27F27A422C4CFEFC00928388 /* UserRankManager.swift */,
 			);
-			path = UserDataManagers;
+			path = GameDataManagers;
 			sourceTree = "<group>";
 		};
 		27414D7C2C63A08B00C19F8C /* iOS */ = {
@@ -752,6 +751,39 @@
 				27414D822C63A08B00C19F8C /* Checkouts */,
 			);
 			path = Carthage;
+			sourceTree = "<group>";
+		};
+		2745A0BA2C6E2C3C00706254 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		2745A0BB2C6E2C4E00706254 /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				27F27A422C4CFEFC00928388 /* UserRankManager.swift */,
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
+		2745A0BC2C6E2C5D00706254 /* GenericPoints */ = {
+			isa = PBXGroup;
+			children = (
+				27E32DE92C49504100E69C58 /* GenericPointManager.swift */,
+			);
+			path = GenericPoints;
+			sourceTree = "<group>";
+		};
+		2745A0BD2C6E2C6E00706254 /* UserPoints */ = {
+			isa = PBXGroup;
+			children = (
+				271F1F112C5406F600DF9DFD /* ScanningManager.swift */,
+				2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */,
+			);
+			path = UserPoints;
 			sourceTree = "<group>";
 		};
 		274863262C526293008D8A3E /* OCR */ = {
