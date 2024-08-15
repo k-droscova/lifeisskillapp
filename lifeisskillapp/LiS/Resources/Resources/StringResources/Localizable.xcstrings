@@ -1010,6 +1010,29 @@
         }
       }
     },
+    "home.scan_error.no_location" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vypadá to, že nemáš gps signál, který je potřeba k načítání bodů."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es scheint, dass Sie keine GPS-Daten haben. Sie benötigen GPS-Daten, um Punkte zu scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It appears that you have no gps data. You need gps data to scan points."
+          }
+        }
+      }
+    },
     "home.scan_error.qr.message" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -28,6 +28,7 @@ protocol PersistentUserDataStoraging: UserDataStoraging {
     func saveLoginData(data: LoginUserData?) async
     func saveCheckSumData(data: CheckSumData?) async
     func clearAllUserData() async throws
+    func clearSavedScannedPoints() async throws
 }
 
 public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
@@ -159,6 +160,11 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         }
         // Log the data clearing process
         logger.log(message: "All related user data has been cleared.")
+    }
+    
+    func clearSavedScannedPoints() async throws {
+        logger.log(message: "Saved scanned points deleted")
+        // TODO: implement scan point storage for offline scanning
     }
     
     func loadFromRepository(for data: PersistentDataType) async {

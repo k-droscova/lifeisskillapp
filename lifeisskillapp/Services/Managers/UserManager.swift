@@ -127,7 +127,7 @@ final class UserManager: BaseClass, UserManaging {
     func offlineLogout() {
         Task { @MainActor [weak self] in
             do {
-                try await self?.storage.clearAllUserData()
+                try await self?.storage.clearSavedScannedPoints()
                 self?.data = nil
                 self?.delegate?.onLogout()
             } catch {
