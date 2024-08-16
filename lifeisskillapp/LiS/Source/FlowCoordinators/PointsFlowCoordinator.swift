@@ -17,7 +17,7 @@ protocol PointsFlowDelegate: NSObject {
     func selectCategoryPrompt()
 }
 
-final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink {
+final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
     private weak var delegate: PointsFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?
     private var categorySelectorVM: csVM
@@ -47,12 +47,6 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
 }
 
 extension PointsFlowCoordinator: PointsFlowDelegate {
-    // TODO: present approppriate alerts
-
-    func onError(_ error: any Error) {
-        print("ERROR: \(error.localizedDescription)")
-    }
-    
     func onNoDataAvailable() {
         print("No data available")
     }

@@ -12,7 +12,7 @@ import SwiftUI
 
 protocol MainFlowCoordinatorDelegate: NSObject {}
 
-final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
     weak var delegate: MainFlowCoordinatorDelegate?
     
     override init() {
@@ -35,15 +35,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     // MARK: - Private helpers
     
     private func setupTabBar() -> UITabBarController{
-        // MARK: DEBUG
-        let debugVM = DebugViewModel(dependencies: appDependencies)
-        let debugVC = DebugView(viewModel: debugVM).hosting()
-        debugVC.tabBarItem = UITabBarItem(
-            title: "debug",
-            image: UIImage(systemName: "ladybug.circle"),
-            selectedImage: UIImage(systemName: "ladybug.circle.fill")
-        )
-        
         // MARK: CATEGORY SELECTOR
         let csVM = CategorySelectorViewModel(dependencies: appDependencies)
         
@@ -93,7 +84,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         // MARK: - SETUP TabBar
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
-            debugVC,
             pointsVC,
             homeVC,
             rankVC
@@ -176,42 +166,16 @@ extension MainFlowCoordinator {
     }
 }
 
-extension MainFlowCoordinator {
-    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        guard let rootVC = self.rootViewController else {
-            return
-        }
-        
-        let alertController = UIAlertController(
-            title: NSLocalizedString(titleKey, comment: ""),
-            message: NSLocalizedString(messageKey, comment: ""),
-            preferredStyle: .alert
-        )
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-            completion?()
-        }
-        alertController.addAction(okAction)
-        
-        rootVC.present(alertController, animated: true, completion: nil)
-    }
-}
-
 extension MainFlowCoordinator: LocationManagerFlowDelegate {
     func onLocationUnsuccess() {
         showLocationAccessAlert()
     }
     
     private func showLocationAccessAlert() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("location.access.title", comment: ""),
-            message: NSLocalizedString("location.access.message", comment: ""),
-            preferredStyle: .alert
-        )
         let settingsAction = UIAlertAction(
             title: NSLocalizedString("settings.settings", comment: ""),
             style: .default
-        ) {
-            _ in
+        ) { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
@@ -220,9 +184,12 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
             title: NSLocalizedString("alert.button.cancel", comment: ""),
             style: .cancel
         )
-        alert.addAction(settingsAction)
-        alert.addAction(cancelAction)
-        rootViewController?.present(alert, animated: true, completion: nil)
+        
+        showAlert(
+            titleKey: "location.access.title",
+            messageKey: "location.access.message",
+            actions: [settingsAction, cancelAction]
+        )
     }
 }
 
@@ -230,25 +197,22 @@ extension MainFlowCoordinator: HomeFlowCoordinatorDelegate, PointsFlowCoordinato
 
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
     func logoutPressedWhileOffline() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("alert.logout_offline.title", comment: ""),
-            message: NSLocalizedString("alert.logout_offline.message", comment: ""),
-            preferredStyle: .alert
-        )
         let okAction = UIAlertAction(
             title: NSLocalizedString("alert.button.ok", comment: ""),
             style: .default
-        ) {
-            _ in
+        ) { _ in
             appDependencies.userManager.offlineLogout()
         }
         let cancelAction = UIAlertAction(
             title: NSLocalizedString("alert.button.cancel", comment: ""),
             style: .cancel
         )
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        rootViewController?.present(alert, animated: true, completion: nil)
+        
+        showAlert(
+            titleKey: "alert.logout_offline.title",
+            messageKey: "alert.logout_offline.message",
+            actions: [okAction, cancelAction]
+        )
     }
     
     // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS

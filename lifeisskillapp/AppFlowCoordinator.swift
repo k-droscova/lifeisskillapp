@@ -9,14 +9,19 @@ import Foundation
 import UIKit
 import ACKategories
 
-final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
     private weak var window: UIWindow?
+    // Custom property to expose rootViewController via window
+    internal var appRootViewController: UIViewController? {
+        return window?.rootViewController
+    }
     
     override func start(in window: UIWindow) {
         self.window = window
         super.start(in: window)
         appDependencies.networkMonitor.delegate = self // present alert if connection lost on all screens
         appDependencies.userManager.delegate = self
+        appDependencies.gameDataManager.delegate = self
         prepareWindow()
     }
     
@@ -86,23 +91,8 @@ extension AppFlowCoordinator: NetworkManagerFlowDelegate {
     }
 }
 
-extension AppFlowCoordinator {
-    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        DispatchQueue.main.async {
-            guard let rootVC = self.window?.rootViewController else {
-                return
-            }
-            
-            let alertController = UIAlertController(
-                title: NSLocalizedString(titleKey, comment: ""),
-                message: NSLocalizedString(messageKey, comment: ""),
-                preferredStyle: .alert
-            )
-            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-                completion?()
-            }
-            alertController.addAction(okAction)
-            rootVC.present(alertController, animated: true, completion: nil)
-        }
+extension AppFlowCoordinator: GameDataManagerFlowDelegate {
+    func onInvalidToken() {
+        appDependencies.userManager.forceLogout()
     }
 }

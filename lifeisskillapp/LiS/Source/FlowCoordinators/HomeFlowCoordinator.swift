@@ -26,7 +26,7 @@ protocol HomeFlowDelegate: NSObject, ScanPointFlowDelegate {
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
-final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink {
+final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: (any HomeViewModeling)?
@@ -198,25 +198,5 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
         case .unknown:
             self.showAlert(titleKey: "", messageKey: "")
         }
-    }
-}
-
-extension HomeFlowCoordinator {
-    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        guard let navigationController = self.navigationController else {
-            return
-        }
-        
-        let alertController = UIAlertController(
-            title: NSLocalizedString(titleKey, comment: ""),
-            message: NSLocalizedString(messageKey, comment: ""),
-            preferredStyle: .alert
-        )
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-            completion?()
-        }
-        alertController.addAction(okAction)
-        
-        navigationController.present(alertController, animated: true, completion: nil)
     }
 }
