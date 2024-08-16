@@ -77,14 +77,14 @@ public final class RealmStorage: BaseClass, RealmStoraging {
         ]
         
         // Set the schema version. This must be incremented whenever schema changes
-        configurations.schemaVersion = 25 // Increment this whenever you update your schema
+        configurations.schemaVersion = 26 // Increment this whenever you update your schema
         
         // Set the migration block
         configurations.migrationBlock = { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 // do nothing
             }
-            if oldSchemaVersion < 25 {
+            if oldSchemaVersion < 26 {
                 for objectType in objectTypes {
                     migration.deleteData(forType: objectType.className())
                 }

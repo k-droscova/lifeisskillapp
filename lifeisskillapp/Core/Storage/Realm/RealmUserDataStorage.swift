@@ -124,9 +124,6 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         self.genericPointRepo = dependencies.realmPointRepository
         self.userPointRepo = dependencies.realmUserPointRepository
         self.scannedPointRepo = dependencies.realmScannedPointRepository
-        
-        super.init()
-        self.load()
     }
     
     // MARK: - Public Interface

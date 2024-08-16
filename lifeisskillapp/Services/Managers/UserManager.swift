@@ -232,6 +232,7 @@ final class UserManager: BaseClass, UserManaging {
             )
         }
         try realmLoginRepo.markUserAsLoggedIn() // change the user in realm as logged in
+        storage.load()
         self.data = storedLoginData.toLoginData() // indicate to appFC to present Home Screen in TabBar
     }
 }

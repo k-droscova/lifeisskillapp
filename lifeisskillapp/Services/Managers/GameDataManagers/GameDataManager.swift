@@ -268,9 +268,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func load() {
-        Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .checkSum)
-        }
+        storage.load()
     }
     
     private func setupBindings() {

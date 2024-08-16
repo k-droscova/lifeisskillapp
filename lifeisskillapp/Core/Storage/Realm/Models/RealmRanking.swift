@@ -66,6 +66,7 @@ class RealmUserRank: Object {
 }
 
 class RealmRankedUser: Object {
+    @objc dynamic var rankingId: String = UUID().uuidString
     @objc dynamic var userId: String = ""
     @objc dynamic var email: String = ""
     @objc dynamic var nick: String = ""
@@ -79,7 +80,7 @@ class RealmRankedUser: Object {
     @objc dynamic var mobilr: String = ""
 
     override static func primaryKey() -> String? {
-        return "userId"
+        return "rankingId"
     }
     
     override required init() {
