@@ -94,6 +94,7 @@
 		278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174872C4BFBB500138376 /* AssetFontFamily.swift */; };
 		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
+		2794492A2C6F75AE00D8F037 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279449292C6F75AE00D8F037 /* AlertPresentable.swift */; };
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
 		27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4E2C3AFE4F00864028 /* APITask.swift */; };
@@ -278,6 +279,7 @@
 		278174872C4BFBB500138376 /* AssetFontFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
 		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
+		279449292C6F75AE00D8F037 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
 		27B25C4E2C3AFE4F00864028 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
@@ -306,7 +308,6 @@
 		27C619942C3AB0890067498F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
-		27CBD7862C4E877D00612375 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
 		27CBD78C2C4EC72F00612375 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		27D569272C6B7074003EF5D9 /* KeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
@@ -562,6 +563,7 @@
 				27274FBB2C3322D4003453E2 /* Extensions */,
 				27274FBA2C3322CA003453E2 /* Models */,
 				27CBD7842C4E7DFF00612375 /* BaseClass.swift */,
+				279449292C6F75AE00D8F037 /* AlertPresentable.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -668,7 +670,6 @@
 				27C619712C3822920067498F /* HTTPURLResponse.swift */,
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
 				27066A962C4573110092B499 /* DateTime.swift */,
-				27CBD7862C4E877D00612375 /* FlowCoordinator.swift */,
 				27CBD78C2C4EC72F00612375 /* CLLocation.swift */,
 				2720DF2D2C515906007B4E77 /* String.swift */,
 				27F528FF2C5A8A380042F537 /* ViewExtension.swift */,
@@ -1225,6 +1226,7 @@
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
+				2794492A2C6F75AE00D8F037 /* AlertPresentable.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				27E9D6192C63F8EC0098CB96 /* CategoryRepository.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,

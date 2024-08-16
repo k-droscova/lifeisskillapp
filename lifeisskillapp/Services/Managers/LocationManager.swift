@@ -39,8 +39,8 @@ public final class LocationManager: BaseClass, LocationManaging {
     
     private let locationManager = CLLocationManager()
     private let logger: LoggerServicing
-    private let gpsSubject = CurrentValueSubject<Bool, Never>(true)
-    private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil)
+    private let gpsSubject = CurrentValueSubject<Bool, Never>(false) // default false -> handles case when user starts the app without location services
+    private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil) // same reason for default nil
     
     // MARK: - Public Properties
     

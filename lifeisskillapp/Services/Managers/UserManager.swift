@@ -86,12 +86,12 @@ final class UserManager: BaseClass, UserManaging {
     // MARK: - Public interface
     
     func initializeAppId() async throws {
-        logger.log(message: "Initializing App Id")
         if let appId = userDefaultsStorage.appId {
             logger.log(message: "App Id \(appId) exists")
             return
         }
         do {
+            logger.log(message: "Initializing App Id")
             let response = try await registerAppAPI.registerApp(baseURL: APIUrl.baseURL)
             let responseAppId = response.data.appId
             userDefaultsStorage.appId = responseAppId

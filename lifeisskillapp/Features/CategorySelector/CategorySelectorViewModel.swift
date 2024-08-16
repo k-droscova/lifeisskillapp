@@ -11,7 +11,6 @@ import Observation
 protocol CategorySelectorViewModeling: BaseClass, ObservableObject {
     var selectedCategory: UserCategory? { get set }
     var userCategories: [UserCategory] { get }
-    func onAppear()
 }
 
 final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySelectorViewModeling {
@@ -36,19 +35,24 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
-    }
-    
-    // MARK: - Public Interface
-    
-    func onAppear() {
-        Task { @MainActor [weak self] in
-            await self?.fetchNewDataIfNeccessary()
-        }
+        
+        super.init()
+        /*
+         Fetching of user categories is performed only after login when CS VM is initialized in MainFC.
+         If online fetching fails then it falls back to the data that is loaded from Repo in userCategoryManager init
+         */
+        self.load()
     }
     
     // MARK: - Private Helpers
     
-    private func fetchNewDataIfNeccessary() async {
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.fetchData()
+        }
+    }
+    
+    private func fetchData() async {
         do {
             try await userCategoryManager.fetch()
             let categories = getAllUserCategories()
