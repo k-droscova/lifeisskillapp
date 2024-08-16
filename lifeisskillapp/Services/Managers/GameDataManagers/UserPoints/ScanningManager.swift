@@ -31,9 +31,7 @@ public final class ScanningManager: ScanningManaging {
     private let storage: PersistentUserDataStoraging
     private var scannedPointRepo: any RealmScannedPointRepositoring
     private let networkMonitor: NetworkMonitoring
-    
-    private var cancellables: Set<AnyCancellable> = []
-    
+        
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {

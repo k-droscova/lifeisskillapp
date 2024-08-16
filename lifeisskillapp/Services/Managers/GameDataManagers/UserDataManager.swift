@@ -11,15 +11,10 @@ protocol UserData: Codable, Identifiable {
     var id: String { get }
 }
 
-protocol UserDataManagerFlowDelegate: NSObject {
-    func onInvalidToken()
-}
-
 protocol UserDataManaging {
     associatedtype DataType: UserData
     associatedtype DataContainer: DataProtocol
     
-    var delegate: UserDataManagerFlowDelegate? { get set }
     var data: DataContainer? { get set }
     var token: String? { get }
     func loadFromRepository() // for offline loading

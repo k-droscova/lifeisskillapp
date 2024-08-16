@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol GameDataManagerFlowDelegate: UserDataManagerFlowDelegate {
+protocol GameDataManagerFlowDelegate: NSObject {
     func onError(_ error: Error)
 }
 
@@ -41,8 +41,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         set { storage.checkSumData = newValue }
     }
     private var isOnline: Bool
-    private var networkStatusSubscription: AnyCancellable?
-    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Public Properties
     
@@ -66,8 +65,10 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         self.load() // load checksums
     }
     
+    // MARK: - deinit
+    
     deinit {
-        networkStatusSubscription?.cancel()
+        cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Public Interface
@@ -89,17 +90,12 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             if let endpoint = endpoint {
                 try await fetchData(for: endpoint)
             } else {
-                await fetchAllDataIfNecessary()
+                try await fetchAllDataIfNecessary()
             }
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                do {
-                    try await storage.clearAllUserData()
-                } catch {
-                    logger.log(message: "Force logout failed")
-                    return
-                }
-                delegate?.onInvalidToken()
+                userManager.forceLogout()
+                return
             }
         }
         catch {
@@ -132,17 +128,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    private func fetchAllDataIfNecessary() async {
-        await withTaskGroup(of: Void.self) { group in
+    private func fetchAllDataIfNecessary() async throws {
+        try await withThrowingTaskGroup(of: Void.self) { group in
             for endpoint in CheckSumAPIService.Endpoint.allCases {
                 group.addTask { [weak self] in
-                    do {
-                        try await self?.fetchData(for: endpoint)
-                    } catch {
-                        self?.delegate?.onError(error)
-                    }
+                    try await self?.fetchData(for: endpoint)
                 }
             }
+            try await group.waitForAll()
         }
     }
     
@@ -168,30 +161,22 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func fetchNewCheckSumData(for endpoint: CheckSumAPIService.Endpoint) async throws -> String {
-        do {
-            switch endpoint {
-            case .userpoints:
-                let response = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
-                return response.data.pointsProtect
-            case .rank:
-                let response = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL)
-                return response.data.rankProtect
-            case .events:
-                let response = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
-                return response.data.eventsProtect
-            case .messages:
-                let response = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
-                return response.data.msgProtect
-            case .points:
-                let response = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
-                return response.data.pointsProtect
-            }
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to fetch check sum data for \(endpoint.path)",
-                logger: logger
-            )
+        switch endpoint {
+        case .userpoints:
+            let response = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
+            return response.data.pointsProtect
+        case .rank:
+            let response = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL)
+            return response.data.rankProtect
+        case .events:
+            let response = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
+            return response.data.eventsProtect
+        case .messages:
+            let response = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
+            return response.data.msgProtect
+        case .points:
+            let response = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
+            return response.data.pointsProtect
         }
     }
     
@@ -289,11 +274,12 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func setupBindings() {
-        networkStatusSubscription = networkMonitor.onlineStatusPublisher
+        networkMonitor.onlineStatusPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isOnline in
                 self?.handleNetworkStatusChange(isOnline: isOnline)
             }
+            .store(in: &cancellables)
     }
     
     private func handleNetworkStatusChange(isOnline: Bool) {

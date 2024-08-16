@@ -20,8 +20,8 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorA
         self.window = window
         super.start(in: window)
         appDependencies.networkMonitor.delegate = self // present alert if connection lost on all screens
-        appDependencies.userManager.delegate = self
-        appDependencies.gameDataManager.delegate = self
+        appDependencies.userManager.delegate = self // login logout
+        appDependencies.gameDataManager.delegate = self // present alert if any fatal error with game data occurs anywhere in the app
         prepareWindow()
     }
     
@@ -91,8 +91,4 @@ extension AppFlowCoordinator: NetworkManagerFlowDelegate {
     }
 }
 
-extension AppFlowCoordinator: GameDataManagerFlowDelegate {
-    func onInvalidToken() {
-        appDependencies.userManager.forceLogout()
-    }
-}
+extension AppFlowCoordinator: GameDataManagerFlowDelegate {}

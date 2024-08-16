@@ -24,16 +24,9 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
-    private var cancellables = Set<AnyCancellable>()
     private var checkSum: String?
     
     // MARK: - Public Properties
-    
-    /*
-     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
-     Now it can be set from anywhere, needs to be handled with caution.
-     */
-    weak var delegate: UserDataManagerFlowDelegate?
     
     var data: GenericPointData? {
         get {
@@ -57,12 +50,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         self.userDataAPIService = dependencies.userDataAPI
         
         super.init()
-    }
-    
-    // MARK: - deinit
-    
-    deinit {
-        cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Public Interface

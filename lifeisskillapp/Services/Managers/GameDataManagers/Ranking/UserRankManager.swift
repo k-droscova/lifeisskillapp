@@ -28,12 +28,6 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     // MARK: - Public Properties
     
-    /*
-     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
-     Now it can be set from anywhere, needs to be handled with caution.
-     */
-    weak var delegate: UserDataManagerFlowDelegate?
-    
     var data: UserRankData? {
         get {
             storage.userRankData
@@ -74,6 +68,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 userManager.forceLogout()
+                return
             }
         }
         catch {

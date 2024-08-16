@@ -17,7 +17,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
     
     override init() {
         super.init()
-        appDependencies.locationManager.delegate = self
+        appDependencies.locationManager.delegate = self // MainFC presents alerts linked to location, since we need location AFTER login for point scanning
     }
     
     override func start() -> UIViewController {
@@ -65,7 +65,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
             image: Constants.TabBar.Home.unselected.icon,
             selectedImage: Constants.TabBar.Home.selected.icon
         )
-        appDependencies.userPointManager.scanningDelegate = homeFC
+        appDependencies.userPointManager.scanningDelegate = homeFC // homeFC handles alerts related to point scanning
         
         // MARK: RANK
         let rankFC = RankFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(

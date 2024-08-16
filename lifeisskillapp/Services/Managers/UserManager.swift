@@ -128,6 +128,7 @@ final class UserManager: BaseClass, UserManaging {
         Task { @MainActor [weak self] in
             do {
                 try await self?.storage.clearSavedScannedPoints()
+                try self?.storage.onLogout()
                 self?.data = nil
                 self?.delegate?.onLogout()
             } catch {
@@ -137,14 +138,16 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     func forceLogout() {
-        logger.log(message: "Forced logout")
-        do {
-            try storage.onLogout()
-        } catch {
-            logger.log(message: "Failed to mark user as logged out: \(error.localizedDescription)")
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.storage.clearSavedScannedPoints()
+                try self?.storage.onLogout()
+                self?.data = nil
+                self?.delegate?.onForceLogout()
+            } catch {
+                self?.logger.log(message: "Error: force logout failed")
+            }
         }
-        data = nil
-        delegate?.onForceLogout()
     }
     
     // MARK: - Private Helpers
@@ -174,23 +177,22 @@ final class UserManager: BaseClass, UserManaging {
             let response = try await loginAPI.login(loginCredentials: credentials, baseURL: APIUrl.baseURL)
             let loggedInUser = response.data.user
             
-            // check if there is logged in user data
+            // check if there is existing user in realm
             guard let existingUser = try realmLoginRepo.getSavedLoginDetails() else {
                 try keychainStorage.save(credentials: credentials) // save new credentials to keychain
                 try realmLoginRepo.saveLoginUser(loggedInUser) // save new data to realm
                 data = response.data // give signal of successfull login
                 return
             }
-            // if the newly logged in user is different then we clear all data in realm
+            // if there is data in realm and if the newly logged in user is different then we clear all data in realm
             if loggedInUser.userId != existingUser.userID {
                 logger.log(message: "Different user detected. Clearing all related data.")
                 try await storage.clearAllUserData() // clear all data
-                try keychainStorage.delete() // delete previous credentials
-                try keychainStorage.save(credentials: credentials) // save new credentials in keychain
             }
-            
-            try realmLoginRepo.saveLoginUser(loggedInUser) // save the new login data, more specifically the new token
-            data = response.data // give signal of successfull login
+            try realmLoginRepo.saveLoginUser(loggedInUser) // save the new login data
+            try keychainStorage.delete() // delete previous credentials
+            try keychainStorage.save(credentials: credentials) // save new credentials in keychain
+            data = response.data // indicate to appFC to present Home Screen in TabBar
         } catch {
             throw BaseError(
                 context: .system,
@@ -201,6 +203,7 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     private func performOfflineLogin(credentials: LoginCredentials) throws {
+        // check keychain and that the data match
         guard let storedUsername = keychainStorage.username,
               let storedPassword = keychainStorage.password,
               storedUsername == credentials.username,
@@ -212,6 +215,7 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
+        // load stored data
         guard let storedLoginData = try realmLoginRepo.getSavedLoginDetails() else {
             throw BaseError(
                 context: .system,
@@ -219,6 +223,7 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
+        // make sure that the user was logged out, this should never fall through to else {...}
         guard !storedLoginData.isLoggedIn else {
             throw BaseError(
                 context: .system,
@@ -226,13 +231,7 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
-        try realmLoginRepo.markUserAsLoggedIn()
-        self.data = storedLoginData.toLoginData()
-    }
-}
-
-extension UserManager: UserDataManagerFlowDelegate {
-    func onInvalidToken() {
-        self.forceLogout()
+        try realmLoginRepo.markUserAsLoggedIn() // change the user in realm as logged in
+        self.data = storedLoginData.toLoginData() // indicate to appFC to present Home Screen in TabBar
     }
 }

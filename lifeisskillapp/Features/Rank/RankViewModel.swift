@@ -11,11 +11,19 @@ import Combine
 protocol RankViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
     associatedtype settingBarVM: SettingsBarViewModeling
-    var categoryRankings: [Ranking] { get }
-    var isLoading: Bool { get }
-    var username: String { get }
     var csViewModel: categorySelectorVM { get }
     var settingsViewModel: settingBarVM { get }
+    
+    // Loading state
+    var isLoading: Bool { get }
+    
+    // User information
+    var username: String { get }
+    
+    // Points information
+    var categoryRankings: [Ranking] { get }
+    
+    // Actions
     func onAppear()
 }
 
@@ -71,7 +79,6 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     deinit {
         cancellables.forEach { $0.cancel() }
-        logger.log(message: "RankViewModel deinitialized and cancellables invalidated")
     }
     
     // MARK: - Public Interface
@@ -88,11 +95,9 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     // MARK: - Private Helpers
     
     private func setupBindings() {
-        print("BINDINGS: Setting up bindings in RankViewModel")
         userCategoryManager.selectedCategoryPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] category in
-                print("BINDINGS: Received new category in RankViewModel: \(String(describing: category?.id))")
                 Task { [weak self] in
                     await self?.getSelectedCategoryRanking()
                 }

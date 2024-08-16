@@ -45,12 +45,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     // MARK: - Public Properties
     
-    /*
-     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
-     Now it can be set from anywhere, needs to be handled with caution.
-     */
     weak var scanningDelegate: ScanPointFlowDelegate?
-    weak var delegate: UserDataManagerFlowDelegate?
     
     var data: UserPointData? {
         get {
@@ -148,6 +143,11 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         Task { @MainActor [weak self] in
             do {
                 try await self?.scanningManager.sendAllStoredScannedPoints()
+            } catch let error as BaseError {
+                if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                    self?.userManager.forceLogout()
+                    return
+                }
             } catch {
                 self?.logger.log(message: "The saved scanned point could not be processed")
                 self?.scanningDelegate?.onScanPointOfflineProcessError()

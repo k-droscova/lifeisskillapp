@@ -31,12 +31,6 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     // MARK: - Public Properties
     
-    /*
-     TODO: need to resolve whether it is necessary to be declared public or can be set during init (which class will be responsible for onUpdate)
-     Now it can be set from anywhere, needs to be handled with caution.
-     */
-    weak var delegate: UserDataManagerFlowDelegate?
-    
     var data: UserCategoryData? {
         get {
             storage.userCategoryData

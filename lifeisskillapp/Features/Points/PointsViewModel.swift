@@ -91,7 +91,6 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     deinit {
         cancellables.forEach { $0.cancel() }
-        logger.log(message: "PointsViewModel deinitialized and cancellables invalidated")
     }
     
     // MARK: Public Interface
