@@ -225,6 +225,8 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     }
     
     func onboardingPressed() {
-        print("need to open onboarding")
+        let onboardingVC = OnboardingView().hosting()
+        onboardingVC.modalPresentationStyle = .formSheet
+        rootViewController?.present(onboardingVC, animated: true, completion: nil)
     }
 }
