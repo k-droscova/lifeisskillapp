@@ -39,12 +39,6 @@ enum CustomImages: String {
         case settings = "Icons/CornerIcons/settings"
     }
     
-    enum MapIcons: String {
-        case culture = "Icons/Map/culture"
-        case ecology = "Icons/Map/ecology"
-        case sport = "Icons/Map/sport"
-    }
-    
     enum Notifications: String {
         case emailOn = "Icons/Notifications/Email/On"
         case emailOff = "Icons/Notifications/Email/Off"

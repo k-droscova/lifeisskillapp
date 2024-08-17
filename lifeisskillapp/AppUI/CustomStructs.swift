@@ -248,3 +248,16 @@ struct OnboardingPageView: View {
             .multilineTextAlignment(.center)
     }
 }
+
+struct CustomMapPin: View {
+    let point: Point
+    let isSelected: Bool
+    
+    var body: some View {
+        point.type.icon
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: isSelected ? 40 : 30, height: isSelected ? 40 : 30) // Adjust size based on selection
+            .shadow(radius: isSelected ? 10 : 5) // Add a shadow or other effects to indicate selection
+    }
+}

@@ -11,9 +11,10 @@ import MapKit
 
 protocol MapViewModeling: BaseClass, ObservableObject {
     var points: [Point] { get }
-    var region: MKCoordinateRegion { get }
+    var region: MKCoordinateRegion { get set }
     
     func onAppear()
+    func onPointSelected(_ point: Point)
 }
 
 final class MapViewModel: BaseClass, ObservableObject, MapViewModeling {
@@ -63,6 +64,10 @@ final class MapViewModel: BaseClass, ObservableObject, MapViewModeling {
             guard shouldListenToGameDataChanges else { return }
             await gameDataManager.fetchNewDataIfNeccessary(endpoint: .points)
         }
+    }
+    
+    func onPointSelected(_ point: Point) {
+        logger.log(message: "Point selected: \(point.name)")
     }
     
     // MARK: - Private Helpers
