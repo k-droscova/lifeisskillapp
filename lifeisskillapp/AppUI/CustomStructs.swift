@@ -227,11 +227,6 @@ struct OnboardingPageView: View {
     let image: Image
     let text: Text
     
-    init(image: Image, text: Text) {
-        self.image = image
-        self.text = text
-    }
-    
     var body: some View {
         VStack(spacing: CustomSizes.OnboardingPageView.verticalSpacing.size) {
             imageView
