@@ -106,7 +106,7 @@ struct StatusView: View {
     private let textOff: String
     private let colorOn: Color
     private let colorOff: Color
-
+    
     internal init(status: Binding<Bool>, textOn: String, textOff: String, colorOn: Color, colorOff: Color) {
         self._status = status
         self.textOn = textOn
@@ -114,7 +114,7 @@ struct StatusView: View {
         self.colorOn = colorOn
         self.colorOff = colorOff
     }
-
+    
     var body: some View {
         Text(status ? textOn : textOff)
             .foregroundColor(status ? colorOn : colorOff)
@@ -220,5 +220,31 @@ struct UserPointsTopLeftButtonsView: View {
         guard usernameTextSize > imageSize else { return 0}
         let result = (usernameTextSize - imageSize) / 2.0
         return result
+    }
+}
+
+struct OnboardingPageView: View {
+    let image: Image
+    let text: Text
+    
+    var body: some View {
+        VStack(spacing: CustomSizes.OnboardingPageView.verticalSpacing.size) {
+            imageView
+            textView
+        }
+        .padding(.horizontal, CustomSizes.OnboardingPageView.horizontalPadding.size)
+    }
+    
+    private var imageView: some View {
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: CustomSizes.OnboardingPageView.frameHeight.size)
+    }
+    
+    private var textView: some View {
+        text
+            .body1Regular
+            .multilineTextAlignment(.center)
     }
 }

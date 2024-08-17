@@ -203,4 +203,18 @@ enum CustomSizes {
             }
         }
     }
+    
+    enum OnboardingPageView {
+        case verticalSpacing, horizontalPadding, frameHeight
+        var size: CGFloat {
+            switch self {
+            case .verticalSpacing:
+                64
+            case .horizontalPadding:
+                32
+            case .frameHeight:
+                300
+            }
+        }
+    }
 }
