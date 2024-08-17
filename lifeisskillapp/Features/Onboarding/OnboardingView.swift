@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    init() {
-        self.setupPageControlAppearance()
-    }
     var body: some View {
         TabView {
             page1
@@ -21,13 +18,6 @@ struct OnboardingView: View {
             page6
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-    }
-}
-
-extension OnboardingView {
-    private func setupPageControlAppearance() {
-        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.colorLisRose // Active dot color
-        UIPageControl.appearance().pageIndicatorTintColor = UIColor.colorLisBlue // Inactive dot color
     }
 }
 

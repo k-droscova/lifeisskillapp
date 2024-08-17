@@ -9,7 +9,7 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     let appFlowCoordinator = AppFlowCoordinator()
     
@@ -17,7 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // Override point for customization after application launch.
+        // Set up UIPageControl appearance globally
+        self.setupPageControlAppearance()
+        
+        // Initialize the main window and start the app flow
         let window = UIWindow(frame: UIScreen.main.bounds)
         appFlowCoordinator.start(in: window)
         self.window = window
@@ -25,3 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate {
+    private func setupPageControlAppearance() {
+        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.colorLisRose // Active dot color
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.colorLisBlue // Inactive dot color
+    }
+}
