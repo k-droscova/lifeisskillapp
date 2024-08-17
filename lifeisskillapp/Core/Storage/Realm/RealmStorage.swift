@@ -74,35 +74,12 @@ public final class RealmStorage: BaseClass, RealmStoraging {
         
 #else
         // Define the schema version for production or other environments
-        configurations.schemaVersion = 27
+        configurations.schemaVersion = 1
         
         // Set the migration block for production
         configurations.migrationBlock = { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 // do nothing
-            }
-            if oldSchemaVersion < 27 {
-                let objectTypes = [
-                    RealmCheckSumData.self,
-                    RealmLoginDetails.self,
-                    RealmCategory.self,
-                    RealmUserCategoryData.self,
-                    RealmUserRankData.self,
-                    RealmUserRank.self,
-                    RealmRankedUser.self,
-                    RealmGenericPointData.self,
-                    RealmGenericPoint.self,
-                    RealmPointParam.self,
-                    RealmTimerParam.self,
-                    RealmStatusParam.self,
-                    RealmUserPointData.self,
-                    RealmUserPoint.self,
-                    RealmScannedPoint.self,
-                    RealmUserLocation.self
-                ]
-                for objectType in objectTypes {
-                    migration.deleteData(forType: objectType.className())
-                }
             }
         }
 #endif
