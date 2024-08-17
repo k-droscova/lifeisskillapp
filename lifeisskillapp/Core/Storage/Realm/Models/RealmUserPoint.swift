@@ -9,9 +9,9 @@ import Foundation
 import RealmSwift
 
 class RealmUserPointData: Object {
-    @objc dynamic var dataID: String = "UserPointData"
+    @objc dynamic var dataID: String = "UserPointData" // Single instance identified by a constant ID
     @objc dynamic var checkSum: String = ""
-    let data = List<RealmPointScan>()
+    let data = List<RealmUserPoint>()
     
     override static func primaryKey() -> String? {
         "dataID"
@@ -21,10 +21,10 @@ class RealmUserPointData: Object {
         super.init()
     }
     
-    internal init(from userPointData: UserPointData) {
-        super.init()
+    convenience init(from userPointData: UserPointData) {
+        self.init()
         self.checkSum = userPointData.checkSum
-        let points = userPointData.data.map { RealmPointScan(from: $0) }
+        let points = userPointData.data.map { RealmUserPoint(from: $0) }
         self.data.append(objectsIn: points)
     }
     
@@ -34,8 +34,8 @@ class RealmUserPointData: Object {
     }
 }
 
-class RealmPointScan: Object {
-    @objc dynamic var id: String = ""
+class RealmUserPoint: Object {
+    @objc dynamic var pointID: String = ""
     @objc dynamic var recordKey: String = ""
     @objc dynamic var pointTime: Date = Date()
     @objc dynamic var pointName: String = ""
@@ -52,17 +52,16 @@ class RealmPointScan: Object {
     @objc dynamic var doesPointCount: Bool = true
 
     override static func primaryKey() -> String? {
-        return "recordKey"
+        "recordKey"
     }
     
     override required init() {
         super.init()
     }
     
-    // Initializer to create RealmPointScan from UserPoint
-    internal init(from userPoint: UserPoint) {
-        super.init()
-        self.id = userPoint.id
+    convenience init(from userPoint: UserPoint) {
+        self.init()
+        self.pointID = userPoint.id
         self.recordKey = userPoint.recordKey
         self.pointTime = userPoint.pointTime
         self.pointName = userPoint.pointName
@@ -79,10 +78,9 @@ class RealmPointScan: Object {
         self.doesPointCount = userPoint.doesPointCount
     }
     
-    // Method to convert RealmPointScan back to UserPoint
     func toUserPoint() -> UserPoint {
         return UserPoint(
-            id: self.id,
+            id: self.pointID,
             recordKey: self.recordKey,
             pointTime: self.pointTime,
             pointName: self.pointName,

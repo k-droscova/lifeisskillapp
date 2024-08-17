@@ -21,7 +21,7 @@ class RealmScannedPoint: Object {
     override required init() {
         super.init()
     }
-    // Initializer to create ScannedPointRealm from ScannedPoint struct
+
     convenience init(from scannedPoint: ScannedPoint) {
         self.init()
         self.code = scannedPoint.code
@@ -31,7 +31,6 @@ class RealmScannedPoint: Object {
         }
     }
     
-    // Method to convert ScannedPointRealm back to ScannedPoint struct
     func toScannedPoint() -> ScannedPoint {
         return ScannedPoint(
             code: code,
@@ -48,7 +47,6 @@ class RealmUserLocation: EmbeddedObject, Codable {
     @objc dynamic var accuracy: Double = 0.0
     @objc dynamic var timestamp: Date = Date()
     
-    // Initializer to create UserLocationRealm from UserLocation struct
     convenience init(from userLocation: UserLocation) {
         self.init()
         self.latitude = userLocation.latitude
@@ -58,7 +56,6 @@ class RealmUserLocation: EmbeddedObject, Codable {
         self.timestamp = userLocation.timestamp
     }
     
-    // Method to convert UserLocationRealm back to UserLocation struct
     func toUserLocation() -> UserLocation {
         return UserLocation(
             latitude: latitude,

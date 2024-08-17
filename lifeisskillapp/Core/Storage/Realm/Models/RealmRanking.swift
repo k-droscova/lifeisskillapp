@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmUserRankData: Object {
-    @objc dynamic var dataID: String = "UserRankData"
+    @objc dynamic var dataID: String = "UserRankData"  // Single instance identified by a constant ID
     @objc dynamic var checkSum: String = ""
     let data = List<RealmUserRank>()
 
@@ -21,9 +21,8 @@ class RealmUserRankData: Object {
         super.init()
     }
     
-    // Custom initializer to create RealmUserRankData from UserRankData
-    internal init(from userRankData: UserRankData) {
-        super.init()
+    convenience init(from userRankData: UserRankData) {
+        self.init()
         self.checkSum = userRankData.checkSum
         let ranks = userRankData.data.map { RealmUserRank(from: $0) }
         self.data.append(objectsIn: ranks)
@@ -37,37 +36,35 @@ class RealmUserRankData: Object {
 }
 
 class RealmUserRank: Object {
-    @objc dynamic var catId: String = ""
+    @objc dynamic var catID: String = ""
     @objc dynamic var catUserRank: Int = 0
     let listUserRank = List<RealmRankedUser>()
 
     override static func primaryKey() -> String? {
-        return "catId"
+        return "catID"
     }
     
     override required init() {
         super.init()
     }
     
-    // Custom initializer to create RealmUserRank from UserRank
-    internal init(from userRank: UserRank) {
-        super.init()
-        self.catId = userRank.catId
+    convenience init(from userRank: UserRank) {
+        self.init()
+        self.catID = userRank.catId
         self.catUserRank = userRank.catUserRank
         let rankedUsers = userRank.listUserRank.map { RealmRankedUser(from: $0) }
         self.listUserRank.append(objectsIn: rankedUsers)
     }
     
-    // Method to convert RealmUserRank back to UserRank
     func toUserRank() -> UserRank {
         let rankedUsers = listUserRank.compactMap { $0.toRankedUser() }
-        return UserRank(catId: catId, catUserRank: catUserRank, listUserRank: Array(rankedUsers))
+        return UserRank(catId: catID, catUserRank: catUserRank, listUserRank: Array(rankedUsers))
     }
 }
 
 class RealmRankedUser: Object {
-    @objc dynamic var rankingId: String = UUID().uuidString
-    @objc dynamic var userId: String = ""
+    @objc dynamic var rankingID: String = UUID().uuidString // required since users can be ranked in multiple categories (cannot use userId)
+    @objc dynamic var userID: String = ""
     @objc dynamic var email: String = ""
     @objc dynamic var nick: String = ""
     @objc dynamic var sexRaw: String = ""
@@ -80,17 +77,16 @@ class RealmRankedUser: Object {
     @objc dynamic var mobilr: String = ""
 
     override static func primaryKey() -> String? {
-        return "rankingId"
+        "rankingID"
     }
     
     override required init() {
         super.init()
     }
     
-    // Custom initializer to create RealmRankedUser from RankedUser
-    internal init(from rankedUser: RankedUser) {
-        super.init()
-        self.userId = rankedUser.userId
+    convenience init(from rankedUser: RankedUser) {
+        self.init()
+        self.userID = rankedUser.userId
         self.email = rankedUser.email
         self.nick = rankedUser.nick
         self.sexRaw = rankedUser.sex.rawValue
@@ -103,14 +99,13 @@ class RealmRankedUser: Object {
         self.mobilr = rankedUser.mobilr
     }
     
-    // Method to convert RealmRankedUser back to RankedUser
     func toRankedUser() -> RankedUser? {
         guard let sex = UserGender(rawValue: self.sexRaw) else {
             return nil
         }
         
         return RankedUser(
-            userId: self.userId,
+            userId: self.userID,
             email: self.email,
             nick: self.nick,
             sex: sex,

@@ -136,7 +136,7 @@
 		27E9D6062C63E35E0098CB96 /* RealmCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6052C63E35E0098CB96 /* RealmCategory.swift */; };
 		27E9D6082C63E3810098CB96 /* RealmRanking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6072C63E3810098CB96 /* RealmRanking.swift */; };
 		27E9D60A2C63E7860098CB96 /* RealmGenericPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6092C63E7860098CB96 /* RealmGenericPoint.swift */; };
-		27E9D60C2C63E8B90098CB96 /* RealmPointScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D60B2C63E8B90098CB96 /* RealmPointScan.swift */; };
+		27E9D60C2C63E8B90098CB96 /* RealmUserPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D60B2C63E8B90098CB96 /* RealmUserPoint.swift */; };
 		27E9D60F2C63EB8E0098CB96 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D60E2C63EB8E0098CB96 /* LoginRepository.swift */; };
 		27E9D6112C63EC010098CB96 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6102C63EC010098CB96 /* Repository.swift */; };
 		27E9D6132C63F3B60098CB96 /* RealmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9D6122C63F3B60098CB96 /* RealmStorage.swift */; };
@@ -322,7 +322,7 @@
 		27E9D6052C63E35E0098CB96 /* RealmCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCategory.swift; sourceTree = "<group>"; };
 		27E9D6072C63E3810098CB96 /* RealmRanking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRanking.swift; sourceTree = "<group>"; };
 		27E9D6092C63E7860098CB96 /* RealmGenericPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmGenericPoint.swift; sourceTree = "<group>"; };
-		27E9D60B2C63E8B90098CB96 /* RealmPointScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPointScan.swift; sourceTree = "<group>"; };
+		27E9D60B2C63E8B90098CB96 /* RealmUserPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserPoint.swift; sourceTree = "<group>"; };
 		27E9D60E2C63EB8E0098CB96 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		27E9D6102C63EC010098CB96 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		27E9D6122C63F3B60098CB96 /* RealmStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorage.swift; sourceTree = "<group>"; };
@@ -993,7 +993,7 @@
 				27E9D6052C63E35E0098CB96 /* RealmCategory.swift */,
 				27E9D6072C63E3810098CB96 /* RealmRanking.swift */,
 				27E9D6092C63E7860098CB96 /* RealmGenericPoint.swift */,
-				27E9D60B2C63E8B90098CB96 /* RealmPointScan.swift */,
+				27E9D60B2C63E8B90098CB96 /* RealmUserPoint.swift */,
 				276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */,
 			);
 			path = Models;
@@ -1307,7 +1307,7 @@
 				2734DCA62C469442008030F3 /* UserPoint.swift in Sources */,
 				2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */,
 				275472CE2C5D0D2A00F5578F /* CategorySelectorViewModel.swift in Sources */,
-				27E9D60C2C63E8B90098CB96 /* RealmPointScan.swift in Sources */,
+				27E9D60C2C63E8B90098CB96 /* RealmUserPoint.swift in Sources */,
 				27F67E9B2C61690800F1C63E /* PointsView.swift in Sources */,
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
 				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,

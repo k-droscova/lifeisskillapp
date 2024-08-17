@@ -9,6 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmLoginDetails: Object {
+    @objc dynamic var loginID: String = "LoginDetailsData" // Single instance identified by a constant ID
     @objc dynamic var userID: String = ""
     @objc dynamic var email: String = ""
     @objc dynamic var nick: String = ""
@@ -23,18 +24,16 @@ class RealmLoginDetails: Object {
     @objc dynamic var fullActivation: Bool = false
     @objc dynamic var isLoggedIn: Bool = false
 
-    // Primary key
     override static func primaryKey() -> String? {
-        return "userID"
+        "loginID"
     }
 
     override required init() {
         super.init()
     }
     
-    // Initializer to create RealmLoginDetails from LoggedInUser
-    internal init(from loggedInUser: LoggedInUser) {
-        super.init()
+    convenience init(from loggedInUser: LoggedInUser) {
+        self.init()
         self.userID = loggedInUser.userId
         self.email = loggedInUser.email
         self.nick = loggedInUser.nick
@@ -49,7 +48,6 @@ class RealmLoginDetails: Object {
         self.fullActivation = loggedInUser.fullActivation
     }
     
-    // Method to convert RealmLoginDetails back to LoggedInUser
     func toLoginData() -> LoginUserData? {
         guard let user = toLoggedInUser() else {
             return nil

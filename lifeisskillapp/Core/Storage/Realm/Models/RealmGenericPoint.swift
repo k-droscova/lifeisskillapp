@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmGenericPointData: Object {
-    @objc dynamic var dataID: String = "GenericPointData"
+    @objc dynamic var dataID: String = "GenericPointData" // Single instance identified by a constant ID
     @objc dynamic var checkSum: String = ""
     let data = List<RealmGenericPoint>()
     
@@ -21,15 +21,13 @@ class RealmGenericPointData: Object {
         super.init()
     }
     
-    // Custom initializer to create RealmGenericPointData from GenericPointData
-    internal init(from genericPointData: GenericPointData) {
-        super.init()
+    convenience init(from genericPointData: GenericPointData) {
+        self.init()
         self.checkSum = genericPointData.checkSum
         let points = genericPointData.data.map { RealmGenericPoint(from: $0) }
         self.data.append(objectsIn: points)
     }
     
-    // Method to convert RealmGenericPointData back to GenericPointData
     func toGenericPointData() -> GenericPointData {
         let points = data.map { $0.toGenericPoint() }
         return GenericPointData(checkSum: checkSum, data: Array(points))
@@ -59,9 +57,8 @@ class RealmGenericPoint: Object {
         super.init()
     }
     
-    // Custom initializer to create RealmGenericPoint from GenericPoint
-    internal init(from genericPoint: GenericPoint) {
-        super.init()
+    convenience init(from genericPoint: GenericPoint) {
+        self.init()
         self.pointID = genericPoint.id
         self.pointLat = genericPoint.pointLat
         self.pointLng = genericPoint.pointLng
@@ -79,7 +76,6 @@ class RealmGenericPoint: Object {
         }
     }
     
-    // Method to convert RealmGenericPoint back to GenericPoint
     func toGenericPoint() -> GenericPoint {
         return GenericPoint(from: self)
     }
@@ -93,14 +89,12 @@ class RealmPointParam: Object {
         super.init()
     }
     
-    // Custom initializer to create RealmPointParam from PointParam
-    internal init(from param: PointParam) {
-        super.init()
+    convenience init(from param: PointParam) {
+        self.init()
         self.timer = param.timer.map { RealmTimerParam(from: $0) }
         self.status = param.status.map { RealmStatusParam(from: $0) }
     }
     
-    // Method to convert RealmPointParam back to PointParam
     func toPointParam() -> PointParam {
         return PointParam(
             timer: self.timer?.toTimerParam(),
@@ -120,9 +114,8 @@ class RealmTimerParam: Object {
         super.init()
     }
     
-    // Custom initializer to create RealmTimerParam from TimerParam
-    internal init(from timerParam: TimerParam) {
-        super.init()
+    convenience init(from timerParam: TimerParam) {
+        self.init()
         self.base = timerParam.base
         self.done = timerParam.done
         self.maxTime = timerParam.maxTime
@@ -130,7 +123,6 @@ class RealmTimerParam: Object {
         self.distance = timerParam.distance
     }
     
-    // Method to convert RealmTimerParam back to TimerParam
     func toTimerParam() -> TimerParam {
         return TimerParam(
             base: self.base,
@@ -150,14 +142,12 @@ class RealmStatusParam: Object {
         super.init()
     }
     
-    // Custom initializer to create RealmStatusParam from StatusParam
-    internal init(from statusParam: StatusParam) {
-        super.init()
+    convenience init(from statusParam: StatusParam) {
+        self.init()
         self.color = statusParam.color
         self.isValid = statusParam.isValid
     }
     
-    // Method to convert RealmStatusParam back to StatusParam
     func toStatusParam() -> StatusParam {
         return StatusParam(
             color: self.color,

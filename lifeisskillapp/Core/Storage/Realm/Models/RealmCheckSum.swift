@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmCheckSumData: Object {
-    @objc dynamic var checkSumID: String = "checksum" // Single instance identified by a constant ID
+    @objc dynamic var checkSumID: String = "CheckSumData" // Single instance identified by a constant ID
     @objc dynamic var userPoints: String = ""
     @objc dynamic var rank: String = ""
     @objc dynamic var messages: String = ""
@@ -23,9 +23,9 @@ class RealmCheckSumData: Object {
     override required init() {
         super.init()
     }
-    // Internal initializer to create RealmCheckSumData from CheckSumData
-    internal init(from checkSumData: CheckSumData) {
-        super.init()
+
+    convenience init(from checkSumData: CheckSumData) {
+        self.init()
         self.userPoints = checkSumData.userPoints
         self.rank = checkSumData.rank
         self.messages = checkSumData.messages
