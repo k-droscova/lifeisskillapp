@@ -248,14 +248,43 @@ struct OnboardingPageView: View {
 }
 
 struct CustomMapPin: View {
-    let point: Point
+    let point: GenericPoint
     let isSelected: Bool
     
     var body: some View {
-        point.type.icon
+        point.pointType.icon
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: isSelected ? 40 : 30, height: isSelected ? 40 : 30) // Adjust size based on selection
             .shadow(radius: isSelected ? 10 : 5) // Add a shadow or other effects to indicate selection
+    }
+}
+
+struct MapDetailView: View {
+    let point: GenericPoint
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                point.pointType.icon
+                    .resizable()
+                    .squareFrame(size: 24)
+                Text(point.pointName)
+                    .headline3
+                Spacer()
+            }
+            ExDivider(color: Color.black, height: 1)
+            
+            // Add more detailed information here if needed
+            Text("Hodnota bodu: \(point.pointValue)")
+                .body2Regular
+            
+            Text("Podporovatel: \(point.sponsorId)")
+                .body2Regular
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 5)
     }
 }
