@@ -15,6 +15,8 @@
 		27066A972C4573110092B499 /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A962C4573110092B499 /* DateTime.swift */; };
 		27066A992C45755C0092B499 /* CheckSumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A982C45755C0092B499 /* CheckSumData.swift */; };
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
+		2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144C2C720B4A00A0ECF2 /* Map.swift */; };
+		2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */; };
 		2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AEB62C429C2A00A23F06 /* LocationManager.swift */; };
 		2717AEFE2C42ACCD00A23F06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2717AEFD2C42ACCD00A23F06 /* Images.xcassets */; };
 		2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */; };
@@ -181,6 +183,8 @@
 		27066A962C4573110092B499 /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
 		27066A982C45755C0092B499 /* CheckSumData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumData.swift; sourceTree = "<group>"; };
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
+		2712144C2C720B4A00A0ECF2 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotations.swift; sourceTree = "<group>"; };
 		2717AEB62C429C2A00A23F06 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2717AEFD2C42ACCD00A23F06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.otf"; sourceTree = "<group>"; };
@@ -750,6 +754,7 @@
 			children = (
 				27540E4C2C70CE96005A0B49 /* MapViewModel.swift */,
 				27540E4E2C70D943005A0B49 /* MapView.swift */,
+				2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -885,6 +890,7 @@
 			isa = PBXGroup;
 			children = (
 				27C619882C3AA3A00067498F /* API.swift */,
+				2712144C2C720B4A00A0ECF2 /* Map.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -1088,6 +1094,7 @@
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
 				276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */,
+				2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
 				271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */,
 				27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */,
@@ -1115,6 +1122,7 @@
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
 				273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */,
+				2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */,
 				27540E4D2C70CE96005A0B49 /* MapViewModel.swift in Sources */,
 				276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,

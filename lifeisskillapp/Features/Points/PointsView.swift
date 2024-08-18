@@ -24,12 +24,11 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
                 topLeftView: buttonsView,
                 spacing: PointsViewConstants.vStackSpacing
             ) {
-                userInfoView
-                
-                PointsListView(
-                    points: viewModel.categoryPoints
-                ) { point in
-                    viewModel.showPointOnMap(point: point)
+                if viewModel.isMapButtonPressed {
+                    mapView
+                }
+                else {
+                    listView
                 }
             }
         }
@@ -47,6 +46,22 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
 }
 
 private extension PointsView {
+    
+    private var listView: some View {
+        Group {
+            userInfoView
+            
+            PointsListView(
+                points: viewModel.categoryPoints
+            ) { point in
+                viewModel.showPointOnMap(point: point)
+            }
+        }
+    }
+    
+    private var mapView: some View {
+        MapView(viewModel: viewModel)
+    }
     
     private var buttonsView: some View {
         UserPointsTopLeftButtonsView(

@@ -192,7 +192,6 @@ struct UserPointsTopLeftButtonsView: View {
     var body: some View {
         HStack(spacing: CustomSizes.UserPointsTopLeftButtonsView.horizontalPadding.size) {
             Button(action: {
-                isMapShown = true
                 mapButtonAction()
             }) {
                 Image(systemName: "map")
@@ -202,7 +201,6 @@ struct UserPointsTopLeftButtonsView: View {
                     .foregroundColor(isMapShown ? buttonPressed : buttonNotPressed)
             }
             Button(action: {
-                isMapShown = false
                 listButtonAction()
             }) {
                 Image(systemName: "list.bullet")

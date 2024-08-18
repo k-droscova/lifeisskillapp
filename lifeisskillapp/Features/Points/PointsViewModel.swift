@@ -7,8 +7,9 @@
 
 import Foundation
 import Combine
+import MapKit
 
-protocol PointsViewModeling: BaseClass, ObservableObject {
+protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling {
     associatedtype CategorySelectorVM: CategorySelectorViewModeling
     associatedtype settingBarVM: SettingsBarViewModeling
     var csViewModel: CategorySelectorVM { get }
@@ -36,7 +37,7 @@ protocol PointsViewModeling: BaseClass, ObservableObject {
 }
 
 final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies & HasGenericPointManager
     
     // MARK: - Private Properties
     
@@ -45,6 +46,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userPointManager: any UserPointManaging
+    private let genericPointManager: any GenericPointManaging
     private let userDataManager: any UserLoginDataManaging
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
@@ -53,14 +55,22 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     // MARK: - Public Properties
     
+    // generic
+    var csViewModel: csVM
+    var settingsViewModel: settingBarVM
     @Published var isLoading: Bool = false
     @Published var isMapButtonPressed: Bool = false
+    // point list view
     @Published var username: String = ""
     @Published var userGender: UserGender
     @Published var totalPoints: Int = 0
     @Published var categoryPoints: [Point] = []
-    var csViewModel: csVM
-    var settingsViewModel: settingBarVM
+    // map view
+    @Published var points: [GenericPoint] = []
+    @Published var region: MKCoordinateRegion = MKCoordinateRegion()
+    @Published var selectedPoint: GenericPoint?
+    @Published var cameraBoundary: MKMapView.CameraBoundary?
+    @Published var cameraZoomRange: MKMapView.CameraZoomRange?
     
     // MARK: - Initialization
     
@@ -74,6 +84,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
         self.gameDataManager = dependencies.gameDataManager
+        self.genericPointManager = dependencies.genericPointManager
         self.userDataManager = dependencies.userLoginManager
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
@@ -105,16 +116,39 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     }
     
     func mapButtonPressed() {
+        guard !self.isMapButtonPressed else { return }
         logger.log(message: "map button pressed")
-        self.showCategoryPointsOnMap()
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            await self.setupMapPoints(self.categoryPoints)
+            self.configureMapRegion(points: self.categoryPoints)
+            self.isMapButtonPressed = true
+        }
     }
     
     func listButtonPressed() {
+        guard self.isMapButtonPressed else { return }
         logger.log(message: "list button pressed")
+        Task { @MainActor [weak self] in
+            self?.isMapButtonPressed = false
+            self?.selectedPoint = nil
+            self?.points = []
+        }
     }
     
     func showPointOnMap(point: Point) {
         logger.log(message: "showing map for point: \(point.name)")
+        Task { @MainActor [weak self] in
+            await self?.setupMapPoints([point])
+            self?.configureMapRegion(points: [point])
+            self?.isMapButtonPressed = true
+        }
+    }
+    
+    func onPointTapped(_ point: GenericPoint) {
+        Task { @MainActor [weak self] in
+            self?.selectedPoint = point
+        }
     }
     
     // MARK: Private Helpers
@@ -126,7 +160,11 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             .sink { [weak self] category in
                 print("BINDINGS: Received new category in PointsViewModel: \(String(describing: category?.id))")
                 Task { [weak self] in
-                    await self?.getSelectedCategoryPoints()
+                    guard let self = self else { return }
+                    await self.getSelectedCategoryPoints()
+                    if self.isMapButtonPressed {
+                        await self.setupMapPoints(self.categoryPoints)
+                    }
                 }
             }
             .store(in: &cancellables)
@@ -159,7 +197,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             self.totalPoints = 0
             return
         }
-
+        
         self.categoryPoints = userPoints.map { Point(from: $0) }
         self.totalPoints = userPointManager.getTotalPoints(byCategory: selectedCategory.id)
     }
@@ -167,15 +205,24 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     @MainActor
     private func fetchData() async {
         do {
-            try await userCategoryManager.fetch()
-            await gameDataManager.fetchNewDataIfNeccessary(endpoint: .userpoints)
+            async let categoryFetch: () = userCategoryManager.fetch()
+            async let userPointsFetch: () = gameDataManager.fetchNewDataIfNeccessary(endpoint: .userpoints)
+            async let pointsFetch: () = gameDataManager.fetchNewDataIfNeccessary(endpoint: .points)
+            
+            try await categoryFetch
+            await userPointsFetch
+            await pointsFetch
+            
             await getSelectedCategoryPoints()
         } catch {
             delegate?.onError(error)
         }
     }
     
-    private func showCategoryPointsOnMap() {
-        logger.log(message: "showing all category points on map")
+    @MainActor
+    private func setupMapPoints(_ points: [Point]) async {
+        self.points = points.compactMap { point in
+            return genericPointManager.getById(id: point.pointId)
+        }
     }
 }
