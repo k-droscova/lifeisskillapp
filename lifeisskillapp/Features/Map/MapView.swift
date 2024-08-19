@@ -11,6 +11,10 @@ import MapKit
 struct MapView<ViewModel: MapViewModeling>: UIViewRepresentable {
     @StateObject var viewModel: ViewModel
     
+    init(viewModel: ViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(viewModel: viewModel)
     }
@@ -36,10 +40,10 @@ struct MapView<ViewModel: MapViewModeling>: UIViewRepresentable {
     func updateUIView(_ uiView: MKMapView, context: Context) {
         uiView.removeAnnotations(uiView.annotations)
         
-        // Update annotations or any other properties if needed
-        if uiView.annotations.isEmpty {
-            uiView.addAnnotations(viewModel.points.map { CustomMapAnnotation(point: $0) })
-        }
+        // Add the updated annotations
+        let newAnnotations = viewModel.points.map { CustomMapAnnotation(point: $0) }
+        uiView.addAnnotations(newAnnotations)
+        
         uiView.setRegion(viewModel.region, animated: true)
     }
     

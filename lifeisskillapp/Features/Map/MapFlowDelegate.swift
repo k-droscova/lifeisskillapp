@@ -35,6 +35,7 @@ extension MapViewFlowDelegate {
             sheet.prefersGrabberVisible = false
             sheet.largestUndimmedDetentIdentifier = smallDetent.identifier
         }
+        vc.isModalInPresentation = true 
         
         DispatchQueue.main.async {
             root.present(vc, animated: true) {

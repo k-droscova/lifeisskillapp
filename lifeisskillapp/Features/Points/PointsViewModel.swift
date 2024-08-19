@@ -54,6 +54,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     }
     private var cancellables = Set<AnyCancellable>()
     private let locationStorage: UserDefaultsStoraging // TODO: change to location manager as in realm feature branch
+    private var mapPoints: [Point] = []
     
     // MARK: - Public Properties
     
@@ -114,10 +115,14 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     func onAppear() {
         Task { @MainActor [weak self] in
-            self?.isLoading = true
-            self?.username = self?.userDataManager.userName ?? ""
-            await self?.fetchData()
-            self?.isLoading = false
+            guard let self = self else { return }
+            self.isLoading = true
+            self.username = self.userDataManager.userName ?? ""
+            await self.fetchData()
+            if self.isMapButtonPressed {
+                await self.setupMapPoints(self.mapPoints)
+            }
+            self.isLoading = false
         }
     }
     
@@ -222,6 +227,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     @MainActor
     private func setupMapPoints(_ points: [Point]) async {
+        self.mapPoints = points
         self.points = points.compactMap { point in
             return genericPointManager.getById(id: point.pointId)
         }
