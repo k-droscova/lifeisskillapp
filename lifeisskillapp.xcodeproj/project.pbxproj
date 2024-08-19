@@ -57,6 +57,7 @@
 		2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */; };
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
 		2736FA482C6A76D500B03B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27274F882C3320F3003453E2 /* LaunchScreen.storyboard */; };
+		273910022C7384AF005C7B52 /* MapFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273910012C7384AF005C7B52 /* MapFlowDelegate.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
@@ -228,6 +229,7 @@
 		2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIService.swift; sourceTree = "<group>"; };
 		2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
 		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
+		273910012C7384AF005C7B52 /* MapFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowDelegate.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
 		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
 		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -755,6 +757,7 @@
 				27540E4C2C70CE96005A0B49 /* MapViewModel.swift */,
 				27540E4E2C70D943005A0B49 /* MapView.swift */,
 				2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */,
+				273910012C7384AF005C7B52 /* MapFlowDelegate.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1123,6 +1126,7 @@
 				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
 				273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */,
 				2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */,
+				273910022C7384AF005C7B52 /* MapFlowDelegate.swift in Sources */,
 				27540E4D2C70CE96005A0B49 /* MapViewModel.swift in Sources */,
 				276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */,
 				27E6D6DC2C3EBB2B009FC809 /* UserDefaultsStorage.swift in Sources */,
