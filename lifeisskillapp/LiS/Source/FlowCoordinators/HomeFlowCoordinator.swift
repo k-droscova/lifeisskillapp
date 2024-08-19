@@ -67,9 +67,9 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
             settingsDelegate: self.settingsDelegate
         )
         self.homeVM = viewModel
-        let homeController = HomeView(viewModel: viewModel).hosting()
-        self.rootViewController = homeController
-        let navController = UINavigationController(rootViewController: homeController)
+        let vc = HomeView(viewModel: viewModel).hosting()
+        self.rootViewController = vc
+        let navController = UINavigationController(rootViewController: vc)
         self.navigationController = navController
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         return navController

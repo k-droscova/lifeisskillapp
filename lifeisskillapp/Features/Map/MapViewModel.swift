@@ -9,7 +9,52 @@ import Foundation
 import Combine
 import MapKit
 
+protocol MapViewFlowDelegate: NSObject {
+    var root: UIViewController? { get }
+    func onPointTapped(for point: GenericPoint)
+    func onMapTapped()
+}
+
+extension MapViewFlowDelegate {
+    func onPointTapped(for point: GenericPoint) {
+        print("DEBUG: onPointTapped in Delegate for point: \(point.pointName)")
+        guard let root = root else {
+            print("DEBUG: Root view controller is nil")
+            return
+        }
+        let vc = MapDetailView(point: point).hosting()
+        vc.modalPresentationStyle = .pageSheet
+        
+        if let sheet = vc.sheetPresentationController {
+            let smallDetent = UISheetPresentationController.Detent.custom(resolver: { context in
+                return 150 // Adjust the height as needed
+            })
+            
+            sheet.detents = [smallDetent]
+            sheet.selectedDetentIdentifier = smallDetent.identifier
+            sheet.prefersGrabberVisible = true
+            sheet.largestUndimmedDetentIdentifier = smallDetent.identifier
+        }
+        
+        DispatchQueue.main.async {
+            root.present(vc, animated: true) {
+                print("DEBUG: Sheet presentation called on main thread")
+            }
+        }
+    }
+    
+    func onMapTapped() {
+        print("DEBUG: onMapTapped in Delegate")
+        guard let root = root else {
+            print("DEBUG: Root view controller is nil")
+            return
+        }
+        root.presentedViewController?.dismiss(animated: true, completion: nil)
+    }
+}
+
 protocol MapViewModeling: BaseClass, ObservableObject {
+    var mapDelegate: MapViewFlowDelegate? { get set }
     var points: [GenericPoint] { get }
     var region: MKCoordinateRegion { get set }
     var selectedPoint: GenericPoint? { get }
@@ -18,6 +63,7 @@ protocol MapViewModeling: BaseClass, ObservableObject {
     
     func onAppear()
     func onPointTapped(_ point: GenericPoint)
+    func onMapTapped()
 }
 
 extension MapViewModeling {
@@ -72,84 +118,14 @@ extension MapViewModeling {
     }
 }
 
-/*final class MapViewModel: BaseClass, ObservableObject, MapViewModeling {
- 
- typealias Dependencies = HasLoggerServicing & HasGameDataManager
- 
- // MARK: - Private Properties
- 
- private let logger: LoggerServicing
- private let gameDataManager: GameDataManaging
- private var shouldListenToGameDataChanges: Bool = false
- private var cancellables = Set<AnyCancellable>()
- 
- // MARK: - Public Properties
- 
- @Published var points: [Point] = []
- @Published var region: MKCoordinateRegion = MKCoordinateRegion(
- center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
- span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
- )
- 
- // MARK: - Initialization
- 
- init(dependencies: Dependencies, points: [Point]? = nil) {
- self.logger = dependencies.logger
- self.gameDataManager = dependencies.gameDataManager
- 
- super.init()
- guard let points else {
- self.shouldListenToGameDataChanges = true
- self.setupBindings()
- return
- }
- self.setPoints(points)
- }
- 
- // MARK: - deinit
- 
- deinit {
- cancellables.forEach { $0.cancel() }
- }
- 
- // MARK: - Public Interface
- 
- func onAppear() {
- Task {
- guard shouldListenToGameDataChanges else { return }
- await gameDataManager.fetchNewDataIfNeccessary(endpoint: .points)
- }
- }
- 
- func onPointSelected(_ point: Point) {
- logger.log(message: "Point selected: \(point.name)")
- }
- 
- // MARK: - Private Helpers
- 
- private func setPoints(_ points: [Point]) {
- Task { @MainActor [weak self] in
- self?.points = points
- if let firstPoint = points.first {
- self?.region = MKCoordinateRegion(
- center: CLLocationCoordinate2D(latitude: firstPoint.location.latitude, longitude: firstPoint.location.longitude),
- span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
- )
- }
- }
- }
- 
- private func setupBindings() {
- // TODO: implement subscribtion to generic point data changes
- /*
-  .receive(on: DispatchQueue.main)
-  .sink { [weak self] points in
-  Task { [weak self] in
-  await self?.setPoints(points)
-  }
-  }
-  .store(in: &cancellables)
-  */
- }
- }
- */
+extension MapViewModeling {
+    func onPointTapped(_ point: GenericPoint) {
+        print("DEBUG: onPointTapped called with point: \(point.pointName)")
+        mapDelegate?.onPointTapped(for: point)
+    }
+    
+    func onMapTapped() {
+        print("DEBUG: onMapTapped called")
+        mapDelegate?.onMapTapped()
+    }
+}

@@ -62,4 +62,23 @@ enum PointType: Int, Codable {
             return SwiftUI.Image("Icons/Map/unknown")
         }
     }
+    
+    var iconName: String {
+        switch self {
+        case .sport:
+            "Icons/Map/sport"
+        case .environment:
+            "Icons/Map/nature"
+        case .culture:
+            "Icons/Map/culture"
+        case .tourist:
+            "Icons/Map/tourist"
+        case .energySponsor:
+            "Icons/Map/7en_green"
+        case .virtual:
+            "Icons/Map/virtual"
+        case .unknown:
+            "Icons/Map/unknown"
+        }
+    }
 }

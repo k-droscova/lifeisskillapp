@@ -269,6 +269,9 @@
     "Generic Point Data" : {
 
     },
+    "Hodnota bodu: %lld" : {
+
+    },
     "home.button.how" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1462,6 +1465,9 @@
           }
         }
       }
+    },
+    "Podporovatel: %@" : {
+
     },
     "point_list.outbox.cell" : {
       "extractionState" : "manual",

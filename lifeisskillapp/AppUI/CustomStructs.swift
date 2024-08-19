@@ -247,19 +247,6 @@ struct OnboardingPageView: View {
     }
 }
 
-struct CustomMapPin: View {
-    let point: GenericPoint
-    let isSelected: Bool
-    
-    var body: some View {
-        point.pointType.icon
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: isSelected ? 40 : 30, height: isSelected ? 40 : 30) // Adjust size based on selection
-            .shadow(radius: isSelected ? 10 : 5) // Add a shadow or other effects to indicate selection
-    }
-}
-
 struct MapDetailView: View {
     let point: GenericPoint
     
@@ -267,8 +254,6 @@ struct MapDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 point.pointType.icon
-                    .resizable()
-                    .squareFrame(size: 24)
                 Text(point.pointName)
                     .headline3
                 Spacer()
@@ -284,7 +269,5 @@ struct MapDetailView: View {
         }
         .padding()
         .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 5)
     }
 }

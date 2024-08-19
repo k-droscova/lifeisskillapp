@@ -42,6 +42,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     // MARK: - Private Properties
     
     private weak var delegate: PointsFlowDelegate?
+    internal weak var mapDelegate: MapViewFlowDelegate?
     private let logger: LoggerServicing
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
@@ -78,6 +79,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         dependencies: Dependencies,
         categorySelectorVM: csVM,
         delegate: PointsFlowDelegate?,
+        mapDelegate: MapViewFlowDelegate?,
         settingsDelegate: SettingsBarFlowDelegate?
     ) {
         self.logger = dependencies.logger
@@ -93,6 +95,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         )
         self.userGender = userDataManager.data?.user.sex ?? .male
         self.delegate = delegate
+        self.mapDelegate = mapDelegate
         super.init()
         self.setupBindings()
     }
@@ -137,17 +140,12 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     }
     
     func showPointOnMap(point: Point) {
+        guard !self.isMapButtonPressed else { return }
         logger.log(message: "showing map for point: \(point.name)")
         Task { @MainActor [weak self] in
             await self?.setupMapPoints([point])
             self?.configureMapRegion(points: [point])
             self?.isMapButtonPressed = true
-        }
-    }
-    
-    func onPointTapped(_ point: GenericPoint) {
-        Task { @MainActor [weak self] in
-            self?.selectedPoint = point
         }
     }
     
@@ -224,5 +222,6 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         self.points = points.compactMap { point in
             return genericPointManager.getById(id: point.pointId)
         }
+        print("MAP: Populated with \(self.points.count) points")
     }
 }

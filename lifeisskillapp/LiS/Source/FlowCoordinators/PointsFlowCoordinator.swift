@@ -41,10 +41,15 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
             dependencies: appDependencies,
             categorySelectorVM: self.categorySelectorVM,
             delegate: self,
+            mapDelegate: self,
             settingsDelegate: self.settingsDelegate
         )
         let vc = PointsView(viewModel: viewModel).hosting()
-        return vc
+        self.rootViewController = vc
+        let navController = UINavigationController(rootViewController: vc)
+        self.navigationController = navController
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        return navController
     }
 }
 
@@ -63,4 +68,8 @@ extension PointsFlowCoordinator: PointsFlowDelegate {
     func selectCategoryPrompt() {
         print("Please select category")
     }
+}
+
+extension PointsFlowCoordinator: MapViewFlowDelegate {
+    var root: UIViewController? { self.navigationController }
 }
