@@ -266,6 +266,17 @@ struct MapDetailView: View {
             
             Text("Podporovatel: \(point.sponsorId)")
                 .body2Regular
+            
+            HStack {
+                Spacer()
+                
+                if point.hasDetail, let detailURL = URL(string: APIUrl.detailUrl + "\(point.id)") {
+                    Link(LocalizedStringKey("map.detail"), destination: detailURL)
+                        .subheadline
+                        .foregroundColor(.colorLisBlue)
+                        .padding(.top, 10)
+                }
+            }
         }
         .padding()
         .background(Color.white)

@@ -10,6 +10,7 @@ import UIKit
 
 protocol MapViewFlowDelegate: NSObject {
     var root: UIViewController? { get }
+    
     func onPointTapped(for point: GenericPoint)
     func onMapTapped()
 }
@@ -31,7 +32,7 @@ extension MapViewFlowDelegate {
             
             sheet.detents = [smallDetent]
             sheet.selectedDetentIdentifier = smallDetent.identifier
-            sheet.prefersGrabberVisible = true
+            sheet.prefersGrabberVisible = false
             sheet.largestUndimmedDetentIdentifier = smallDetent.identifier
         }
         
@@ -48,6 +49,8 @@ extension MapViewFlowDelegate {
             print("DEBUG: Root view controller is nil")
             return
         }
-        root.presentedViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            root.presentedViewController?.dismiss(animated: true, completion: nil)
+        }
     }
 }

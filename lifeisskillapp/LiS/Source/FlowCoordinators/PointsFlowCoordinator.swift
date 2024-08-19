@@ -19,10 +19,11 @@ protocol PointsFlowDelegate: GameDataManagerFlowDelegate, NSObject {
     func selectCategoryPrompt()
 }
 
-final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink {
+final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, MapViewFlowDelegate {
     private weak var delegate: PointsFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?
     private var categorySelectorVM: csVM
+    private var viewModel: (any PointsViewModeling)?
     
     // MARK: - Initialization
     
@@ -44,6 +45,7 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
             mapDelegate: self,
             settingsDelegate: self.settingsDelegate
         )
+        self.viewModel = viewModel
         let vc = PointsView(viewModel: viewModel).hosting()
         self.rootViewController = vc
         let navController = UINavigationController(rootViewController: vc)
@@ -70,6 +72,6 @@ extension PointsFlowCoordinator: PointsFlowDelegate {
     }
 }
 
-extension PointsFlowCoordinator: MapViewFlowDelegate {
+extension PointsFlowCoordinator {
     var root: UIViewController? { self.navigationController }
 }

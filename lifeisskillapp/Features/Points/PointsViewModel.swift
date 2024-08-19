@@ -37,7 +37,7 @@ protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling {
 }
 
 final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies & HasGenericPointManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies & HasGenericPointManager & HasUserDefaultsStorage
     
     // MARK: - Private Properties
     
@@ -53,6 +53,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         getSelectedCategory()
     }
     private var cancellables = Set<AnyCancellable>()
+    private let locationStorage: UserDefaultsStoraging // TODO: change to location manager as in realm feature branch
     
     // MARK: - Public Properties
     
@@ -69,9 +70,10 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     // map view
     @Published var points: [GenericPoint] = []
     @Published var region: MKCoordinateRegion = MKCoordinateRegion()
-    @Published var selectedPoint: GenericPoint?
     @Published var cameraBoundary: MKMapView.CameraBoundary?
     @Published var cameraZoomRange: MKMapView.CameraZoomRange?
+    var selectedPoint: GenericPoint?
+    var userLocation: UserLocation? { locationStorage.location }
     
     // MARK: - Initialization
     
@@ -88,6 +90,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         self.gameDataManager = dependencies.gameDataManager
         self.genericPointManager = dependencies.genericPointManager
         self.userDataManager = dependencies.userLoginManager
+        self.locationStorage = dependencies.userDefaultsStorage // TODO: change to location manager
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
