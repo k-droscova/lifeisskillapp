@@ -54,7 +54,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     ) {
         userManager = dependencies.userManager
         self.delegate = delegate
-        self.settingsViewModel = settingBarVM.init(
+        settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
             delegate: settingsDelegate
         )
@@ -90,8 +90,9 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     }
     
     func onAppear() {
-        if !userManager.hasAppId {
+        guard userManager.hasAppId else {
             fetchData()
+            return
         }
     }
     
@@ -106,8 +107,8 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     // MARK: Private Helpers
     
     private func fetchData() {
-        Task {
-            try await appDependencies.userManager.initializeAppId()
+        Task { [weak self] in
+            try await self?.userManager.initializeAppId()
         }
     }
     

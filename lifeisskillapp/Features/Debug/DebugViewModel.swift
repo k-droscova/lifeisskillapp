@@ -43,8 +43,8 @@ final class DebugViewModel: DebugViewModeling, ObservableObject {
     }
     
     func onAppear() {
-        Task {
-            await fetchData()
+        Task { [weak self] in
+            await self?.fetchData()
         }
     }
     

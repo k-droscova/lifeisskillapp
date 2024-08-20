@@ -275,7 +275,8 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     // MARK: - Private Helpers
     
     private func clearInMemoryData() {
-        Task {
+        Task { [weak self] in
+            guard let self = self else { return }
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { self._userCategoryData = nil }
                 group.addTask { self._userPointData = nil }
@@ -283,7 +284,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
                 group.addTask { self._genericPointData = nil }
                 group.addTask { self._checkSumData = nil }
             }
-            logger.log(message: "All data nullified on logout.")
+            self.logger.log(message: "All data nullified on logout.")
         }
     }
     
