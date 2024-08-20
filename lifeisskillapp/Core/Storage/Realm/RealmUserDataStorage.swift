@@ -59,56 +59,56 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         }
         set {
             _userCategoryData = newValue
-            Task {
-                await saveUserCategories(data: newValue)
+            Task { [weak self] in
+                await self?.saveUserCategories(data: newValue)
             }
         }
     }
-    
+
     var userPointData: UserPointData? {
         get {
             _userPointData
         }
         set {
             _userPointData = newValue
-            Task {
-                await saveUserPoints(data: newValue)
+            Task { [weak self] in
+                await self?.saveUserPoints(data: newValue)
             }
         }
     }
-    
+
     var genericPointData: GenericPointData? {
         get {
             _genericPointData
         }
         set {
             _genericPointData = newValue
-            Task {
-                await saveGenericPoints(data: newValue)
+            Task { [weak self] in
+                await self?.saveGenericPoints(data: newValue)
             }
         }
     }
-    
+
     var userRankData: UserRankData? {
         get {
             _userRankData
         }
         set {
             _userRankData = newValue
-            Task {
-                await saveUserRanks(data: newValue)
+            Task { [weak self] in
+                await self?.saveUserRanks(data: newValue)
             }
         }
     }
-    
+
     var checkSumData: CheckSumData? {
         get {
             _checkSumData
         }
         set {
             _checkSumData = newValue
-            Task {
-                await saveCheckSumData(data: newValue)
+            Task { [weak self] in
+                await self?.saveCheckSumData(data: newValue)
             }
         }
     }
@@ -129,7 +129,8 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     // MARK: - Public Interface
     
     func load() {
-        Task {
+        Task { [weak self] in
+            guard let self = self else { return }
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.loadCategories() }
                 group.addTask { await self.loadUserPoints() }
@@ -137,7 +138,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
                 group.addTask { await self.loadUserRanks() }
                 group.addTask { await self.loadCheckSumData() }
             }
-            logger.log(message: "All data loaded concurrently.")
+            self.logger.log(message: "All data loaded concurrently.")
         }
     }
     
@@ -147,7 +148,8 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     }
     
     func clearAllUserData() async throws {
-        try await withThrowingTaskGroup(of: Void.self) { group in
+        try await withThrowingTaskGroup(of: Void.self) { [weak self] group in
+            guard let self = self else { return }
             group.addTask { try self.loginRepo.deleteAll() }
             group.addTask { try self.checkSumRepo.deleteAll() }
             group.addTask { try self.categoryRepo.deleteAll() }
@@ -157,7 +159,6 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             group.addTask { self.clearInMemoryData() }
             try await group.waitForAll()
         }
-        // Log the data clearing process
         logger.log(message: "All related user data has been cleared.")
     }
     
