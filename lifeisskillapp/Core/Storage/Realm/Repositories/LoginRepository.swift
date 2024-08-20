@@ -33,71 +33,61 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
     }
     
     func getSavedLoginDetails() throws -> RealmLoginDetails? {
-        return try DispatchQueue.global(qos: .background).sync {
-            return try getAll().first
-        }
+        return try getAll().first
     }
     
     func getLoggedInUser() throws -> RealmLoginDetails? {
-        return try DispatchQueue.global(qos: .background).sync {
-            return try getAll().first(where: { $0.isLoggedIn })
-        }
+        return try getAll().first(where: { $0.isLoggedIn })
     }
     
     func saveLoginUser(_ user: LoggedInUser) throws {
-        try DispatchQueue.global(qos: .background).sync {
-            let loginDetails = RealmLoginDetails(from: user)
-            try save(loginDetails)
-        }
+        let loginDetails = RealmLoginDetails(from: user)
+        try save(loginDetails)
     }
     
     func markUserAsLoggedOut() throws {
-        try DispatchQueue.global(qos: .background).sync {
-            guard let loggedInUser = try getSavedLoginDetails() else {
-                throw BaseError(
-                    context: .database,
-                    message: "No user is currently logged in.",
-                    logger: logger
-                )
-            }
-            
-            guard let realm = realmStorage.getRealm() else {
-                throw BaseError(
-                    context: .database,
-                    message: "Failed to get Realm instance",
-                    logger: logger
-                )
-            }
-            
-            try realm.write {
-                loggedInUser.isLoggedIn = false
-                realm.add(loggedInUser, update: .modified)
-            }
+        guard let loggedInUser = try getSavedLoginDetails() else {
+            throw BaseError(
+                context: .database,
+                message: "No user is currently logged in.",
+                logger: logger
+            )
+        }
+        
+        guard let realm = realmStorage.getRealm() else {
+            throw BaseError(
+                context: .database,
+                message: "Failed to get Realm instance",
+                logger: logger
+            )
+        }
+        
+        try realm.write {
+            loggedInUser.isLoggedIn = false
+            realm.add(loggedInUser, update: .modified)
         }
     }
     
     func markUserAsLoggedIn() throws {
-        try DispatchQueue.global(qos: .background).sync {
-            guard let loggedInUser = try getSavedLoginDetails() else {
-                throw BaseError(
-                    context: .database,
-                    message: "No user is currently logged in.",
-                    logger: logger
-                )
-            }
-            
-            guard let realm = realmStorage.getRealm() else {
-                throw BaseError(
-                    context: .database,
-                    message: "Failed to get Realm instance",
-                    logger: logger
-                )
-            }
-            
-            try realm.write {
-                loggedInUser.isLoggedIn = true
-                realm.add(loggedInUser, update: .modified)
-            }
+        guard let loggedInUser = try getSavedLoginDetails() else {
+            throw BaseError(
+                context: .database,
+                message: "No user is currently logged in.",
+                logger: logger
+            )
+        }
+        
+        guard let realm = realmStorage.getRealm() else {
+            throw BaseError(
+                context: .database,
+                message: "Failed to get Realm instance",
+                logger: logger
+            )
+        }
+        
+        try realm.write {
+            loggedInUser.isLoggedIn = true
+            realm.add(loggedInUser, update: .modified)
         }
     }
 }
