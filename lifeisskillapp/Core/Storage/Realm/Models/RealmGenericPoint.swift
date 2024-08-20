@@ -91,8 +91,8 @@ class RealmPointParam: Object {
     
     convenience init(from param: PointParam) {
         self.init()
-        self.timer = param.timer.map { RealmTimerParam(from: $0) }
-        self.status = param.status.map { RealmStatusParam(from: $0) }
+        self.timer = param.timer.map(RealmTimerParam.init(from:))
+        self.status = param.status.map(RealmStatusParam.init(from:))
     }
     
     func toPointParam() -> PointParam {
