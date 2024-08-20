@@ -26,7 +26,6 @@ public final class RealmStorage: BaseClass, RealmStoraging {
     
     // MARK: - Public Properties
     
-    var realm: Realm?
     private(set) var configurations: Realm.Configuration = Realm.Configuration()
     
     // MARK: - Initialization
