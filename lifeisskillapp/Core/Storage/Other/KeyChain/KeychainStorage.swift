@@ -34,54 +34,57 @@ public final class KeychainStorage: BaseClass, KeychainStoraging {
     
     func save(credentials: LoginCredentials) throws {
         guard let usernameData = credentials.username.data(using: .utf8),
-              let passwordData = credentials.password.data(using: .utf8) else {
+              let passwordData = credentials.password.data(using: .utf8) 
+        else {
             throw BaseError(
                 context: .database,
                 message: "Failed to convert credentials to Data",
-                logger: self.logger
+                logger: logger
             )
         }
         
-        let usernameSaveStatus = keychainHelper.save(key: KeychainConstants.usernameKey, data: usernameData)
-        guard usernameSaveStatus == errSecSuccess else {
+        do {
+            try keychainHelper.save(key: KeychainConstants.usernameKey, data: usernameData)
+            do {
+                try keychainHelper.save(key: KeychainConstants.passwordKey, data: passwordData)
+            } catch {
+                // Rollback in case saving the password fails
+                try? keychainHelper.delete(key: KeychainConstants.usernameKey)
+                throw BaseError(
+                    context: .database,
+                    message: "Failed to save password",
+                    logger: logger
+                )
+            }
+        } catch {
             throw BaseError(
                 context: .database,
-                message: "Failed to save username with status \(usernameSaveStatus)",
-                logger: self.logger
-            )
-        }
-        
-        let passwordSaveStatus = keychainHelper.save(key: KeychainConstants.passwordKey, data: passwordData)
-        guard passwordSaveStatus == errSecSuccess else {
-            // rollback
-            _ = keychainHelper.delete(key: KeychainConstants.usernameKey)
-            throw BaseError(
-                context: .database,
-                message: "Failed to save password with status \(passwordSaveStatus)",
-                logger: self.logger
+                message: "Failed to save username",
+                logger: logger
             )
         }
     }
     
     func delete() throws {
-        guard let username = self.username?.data(using: .utf8) else { return } // for rollback
-        let usernameDeleteStatus = keychainHelper.delete(key: KeychainConstants.usernameKey)
-        guard usernameDeleteStatus == errSecSuccess else {
+        guard let username = self.username?.data(using: .utf8) else { return } // For rollback
+        do {
+            try keychainHelper.delete(key: KeychainConstants.usernameKey)
+            do {
+                try keychainHelper.delete(key: KeychainConstants.passwordKey)
+            } catch {
+                // Rollback in case deleting the password fails
+                try? keychainHelper.save(key: KeychainConstants.usernameKey, data: username)
+                throw BaseError(
+                    context: .database,
+                    message: "Failed to delete password",
+                    logger: logger
+                )
+            }
+        } catch {
             throw BaseError(
                 context: .database,
-                message: "Failed to delete username with status \(usernameDeleteStatus)",
-                logger: self.logger
-            )
-        }
-        
-        let passwordDeleteStatus = keychainHelper.delete(key: KeychainConstants.passwordKey)
-        guard passwordDeleteStatus == errSecSuccess else {
-            // rollback
-            _ = keychainHelper.save(key: KeychainConstants.usernameKey, data: username)
-            throw BaseError(
-                context: .database,
-                message: "Failed to delete password with status \(passwordDeleteStatus)",
-                logger: self.logger
+                message: "Failed to delete username",
+                logger: logger
             )
         }
     }
@@ -89,18 +92,22 @@ public final class KeychainStorage: BaseClass, KeychainStoraging {
     // MARK: - Private Helpers
     
     private func loadUsername() -> String? {
-        guard let usernameData = keychainHelper.load(key: KeychainConstants.usernameKey) else {
-            logger.log(message: "Failed to load username from Keychain")
+        do {
+            let usernameData = try keychainHelper.load(key: KeychainConstants.usernameKey)
+            return String(data: usernameData, encoding: .utf8)
+        } catch {
+            logger.log(message: "Failed to load username from Keychain: \(error)")
             return nil
         }
-        return String(data: usernameData, encoding: .utf8)
     }
     
     private func loadPassword() -> String? {
-        guard let passwordData = keychainHelper.load(key: KeychainConstants.passwordKey) else {
-            logger.log(message: "Failed to load password from Keychain")
+        do {
+            let passwordData = try keychainHelper.load(key: KeychainConstants.passwordKey)
+            return String(data: passwordData, encoding: .utf8)
+        } catch {
+            logger.log(message: "Failed to load password from Keychain: \(error)")
             return nil
         }
-        return String(data: passwordData, encoding: .utf8)
     }
 }
