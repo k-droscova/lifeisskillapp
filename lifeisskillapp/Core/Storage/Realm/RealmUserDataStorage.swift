@@ -13,11 +13,16 @@ enum PersistentDataType {
     case categories, userPoints, genericPoints, rankings, checkSum
 }
 
+protocol PersistentUserDataStorageDelegate: NSObject {
+    func onError(_ error: Error)
+}
+
 protocol HasPersistentUserDataStoraging {
     var storage: PersistentUserDataStoraging { get }
 }
 
 protocol PersistentUserDataStoraging: UserDataStoraging {
+    var delegate: PersistentUserDataStorageDelegate? { get set }
     func load()
     func onLogout() throws
     func loadFromRepository(for data: PersistentDataType) async
@@ -113,6 +118,8 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         }
     }
     
+    weak var delegate: PersistentUserDataStorageDelegate?
+
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
@@ -194,6 +201,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to save/delete user categories: \(error.localizedDescription)")
+            delegate?.onError(error)
         }
     }
     
@@ -209,6 +217,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to save/delete user points: \(error.localizedDescription)")
+            delegate?.onError(error)
         }
     }
     
@@ -224,6 +233,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to save/delete generic points: \(error.localizedDescription)")
+            delegate?.onError(error)
         }
     }
     
@@ -239,6 +249,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to save/delete user ranks: \(error.localizedDescription)")
+            delegate?.onError(error)
         }
     }
     
@@ -254,6 +265,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to save/delete login data: \(error.localizedDescription)")
+            delegate?.onError(error)
         }
     }
     
@@ -269,6 +281,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             }
         } catch {
             logger.log(message: "Failed to save/delete CheckSum data: \(error.localizedDescription)")
+            delegate?.onError(error)
         }
     }
     
