@@ -21,21 +21,21 @@ class RealmScannedPoint: Object {
     override required init() {
         super.init()
     }
-
+    
     convenience init(from scannedPoint: ScannedPoint) {
         self.init()
-        self.code = scannedPoint.code
-        self.codeSource = scannedPoint.codeSource.rawValue
+        code = scannedPoint.code
+        codeSource = scannedPoint.codeSource.rawValue
         if let loc = scannedPoint.location {
-            self.location = RealmUserLocation(from: loc)
+            location = RealmUserLocation(from: loc)
         }
     }
     
-    func toScannedPoint() -> ScannedPoint {
-        return ScannedPoint(
+    func scannedPoint() -> ScannedPoint {
+        ScannedPoint(
             code: code,
             codeSource: CodeSource(rawValue: codeSource) ?? .unknown,
-            location: location?.toUserLocation()
+            location: location?.userLocation()
         )
     }
 }
@@ -49,15 +49,15 @@ class RealmUserLocation: EmbeddedObject, Codable {
     
     convenience init(from userLocation: UserLocation) {
         self.init()
-        self.latitude = userLocation.latitude
-        self.longitude = userLocation.longitude
-        self.altitude = userLocation.altitude
-        self.accuracy = userLocation.accuracy
-        self.timestamp = userLocation.timestamp
+        latitude = userLocation.latitude
+        longitude = userLocation.longitude
+        altitude = userLocation.altitude
+        accuracy = userLocation.accuracy
+        timestamp = userLocation.timestamp
     }
     
-    func toUserLocation() -> UserLocation {
-        return UserLocation(
+    func userLocation() -> UserLocation {
+        UserLocation(
             latitude: latitude,
             longitude: longitude,
             altitude: altitude,

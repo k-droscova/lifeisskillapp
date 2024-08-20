@@ -12,7 +12,7 @@ class RealmUserRankData: Object {
     @objc dynamic var dataID: String = "UserRankData"  // Single instance identified by a constant ID
     @objc dynamic var checkSum: String = ""
     let data = List<RealmUserRank>()
-
+    
     override static func primaryKey() -> String? {
         "dataID"
     }
@@ -23,14 +23,13 @@ class RealmUserRankData: Object {
     
     convenience init(from userRankData: UserRankData) {
         self.init()
-        self.checkSum = userRankData.checkSum
+        checkSum = userRankData.checkSum
         let ranks = userRankData.data.map { RealmUserRank(from: $0) }
-        self.data.append(objectsIn: ranks)
+        data.append(objectsIn: ranks)
     }
     
-    // Method to convert RealmUserRankData back to UserRankData
-    func toUserRankData() -> UserRankData {
-        let ranks = data.map { $0.toUserRank() }
+    func userRankData() -> UserRankData {
+        let ranks = data.map { $0.userRank() }
         return UserRankData(checkSum: checkSum, data: Array(ranks))
     }
 }
@@ -39,7 +38,7 @@ class RealmUserRank: Object {
     @objc dynamic var catID: String = ""
     @objc dynamic var catUserRank: Int = 0
     let listUserRank = List<RealmRankedUser>()
-
+    
     override static func primaryKey() -> String? {
         return "catID"
     }
@@ -50,14 +49,14 @@ class RealmUserRank: Object {
     
     convenience init(from userRank: UserRank) {
         self.init()
-        self.catID = userRank.catId
-        self.catUserRank = userRank.catUserRank
+        catID = userRank.catId
+        catUserRank = userRank.catUserRank
         let rankedUsers = userRank.listUserRank.map { RealmRankedUser(from: $0) }
-        self.listUserRank.append(objectsIn: rankedUsers)
+        listUserRank.append(objectsIn: rankedUsers)
     }
     
-    func toUserRank() -> UserRank {
-        let rankedUsers = listUserRank.compactMap { $0.toRankedUser() }
+    func userRank() -> UserRank {
+        let rankedUsers = listUserRank.compactMap { $0.rankedUser() }
         return UserRank(catId: catID, catUserRank: catUserRank, listUserRank: Array(rankedUsers))
     }
 }
@@ -75,7 +74,7 @@ class RealmRankedUser: Object {
     @objc dynamic var emailr: String = ""
     @objc dynamic var mobil: String = ""
     @objc dynamic var mobilr: String = ""
-
+    
     override static func primaryKey() -> String? {
         "rankingID"
     }
@@ -86,24 +85,23 @@ class RealmRankedUser: Object {
     
     convenience init(from rankedUser: RankedUser) {
         self.init()
-        self.userID = rankedUser.userId
-        self.email = rankedUser.email
-        self.nick = rankedUser.nick
-        self.sexRaw = rankedUser.sex.rawValue
-        self.order = rankedUser.order
-        self.points = rankedUser.points
-        self.lastTime = rankedUser.lastTime
-        self.psc = rankedUser.psc
-        self.emailr = rankedUser.emailr
-        self.mobil = rankedUser.mobil
-        self.mobilr = rankedUser.mobilr
+        userID = rankedUser.userId
+        email = rankedUser.email
+        nick = rankedUser.nick
+        sexRaw = rankedUser.sex.rawValue
+        order = rankedUser.order
+        points = rankedUser.points
+        lastTime = rankedUser.lastTime
+        psc = rankedUser.psc
+        emailr = rankedUser.emailr
+        mobil = rankedUser.mobil
+        mobilr = rankedUser.mobilr
     }
     
-    func toRankedUser() -> RankedUser? {
+    func rankedUser() -> RankedUser? {
         guard let sex = UserGender(rawValue: self.sexRaw) else {
             return nil
         }
-        
         return RankedUser(
             userId: self.userID,
             email: self.email,

@@ -12,7 +12,7 @@ class RealmUserCategoryData: Object {
     @objc dynamic var dataID: String = "UserCategoryData" // Single instance identified by a constant ID
     @objc dynamic var mainCategory: RealmCategory?
     let allCategories = List<RealmCategory>()
-
+    
     override static func primaryKey() -> String? {
         "dataID"
     }
@@ -23,12 +23,12 @@ class RealmUserCategoryData: Object {
     
     convenience init(from userCategoryData: UserCategoryData) {
         self.init()
-        self.mainCategory = RealmCategory(from: userCategoryData.main)
+        mainCategory = RealmCategory(from: userCategoryData.main)
         let categories = userCategoryData.data.map { RealmCategory(from: $0) }
-        self.allCategories.append(objectsIn: categories)
+        allCategories.append(objectsIn: categories)
     }
     
-    func toUserCategoryData() -> UserCategoryData? {
+    func userCategoryData() -> UserCategoryData? {
         guard let mainCategory = mainCategory else { return nil }
         let main = UserCategory(id: mainCategory.categoryID, name: mainCategory.name, detail: mainCategory.detail, isPublic: mainCategory.isPublic)
         let categories = Array(allCategories.map { UserCategory(id: $0.categoryID, name: $0.name, detail: $0.detail, isPublic: $0.isPublic) })
@@ -52,9 +52,9 @@ class RealmCategory: Object {
     
     convenience init(from userCategory: UserCategory) {
         self.init()
-        self.categoryID = userCategory.id
-        self.name = userCategory.name
-        self.detail = userCategory.detail
-        self.isPublic = userCategory.isPublic
+        categoryID = userCategory.id
+        name = userCategory.name
+        detail = userCategory.detail
+        isPublic = userCategory.isPublic
     }
 }

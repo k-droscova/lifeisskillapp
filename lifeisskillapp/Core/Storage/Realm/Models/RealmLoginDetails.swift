@@ -23,39 +23,39 @@ class RealmLoginDetails: Object {
     @objc dynamic var mainCategory: String = ""
     @objc dynamic var fullActivation: Bool = false
     @objc dynamic var isLoggedIn: Bool = false
-
+    
     override static func primaryKey() -> String? {
         "loginID"
     }
-
+    
     override required init() {
         super.init()
     }
     
     convenience init(from loggedInUser: LoggedInUser) {
         self.init()
-        self.userID = loggedInUser.userId
-        self.email = loggedInUser.email
-        self.nick = loggedInUser.nick
-        self.sexRaw = loggedInUser.sex.rawValue
-        self.rights = loggedInUser.rights
-        self.rightsCoded = loggedInUser.rightsCoded
-        self.token = loggedInUser.token
-        self.userRank = loggedInUser.userRank
-        self.userPoints = loggedInUser.userPoints
-        self.distance = loggedInUser.distance
-        self.mainCategory = loggedInUser.mainCategory
-        self.fullActivation = loggedInUser.fullActivation
+        userID = loggedInUser.userId
+        email = loggedInUser.email
+        nick = loggedInUser.nick
+        sexRaw = loggedInUser.sex.rawValue
+        rights = loggedInUser.rights
+        rightsCoded = loggedInUser.rightsCoded
+        token = loggedInUser.token
+        userRank = loggedInUser.userRank
+        userPoints = loggedInUser.userPoints
+        distance = loggedInUser.distance
+        mainCategory = loggedInUser.mainCategory
+        fullActivation = loggedInUser.fullActivation
     }
     
-    func toLoginData() -> LoginUserData? {
-        guard let user = toLoggedInUser() else {
+    func loginUserData() -> LoginUserData? {
+        guard let user = loggedInUser() else {
             return nil
         }
         return LoginUserData(from: user)
     }
     
-    private func toLoggedInUser() -> LoggedInUser? {
+    private func loggedInUser() -> LoggedInUser? {
         guard let sex = UserGender(rawValue: self.sexRaw) else {
             return nil
         }

@@ -40,7 +40,7 @@ public class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositori
                 }
                 
                 let realmPoints = realm.objects(RealmScannedPoint.self)
-                let scannedPoints = realmPoints.map { $0.toScannedPoint()}
+                let scannedPoints = realmPoints.map { $0.scannedPoint()}
                 continuation.resume(returning: Array(scannedPoints))
             } catch {
                 continuation.resume(throwing: error)

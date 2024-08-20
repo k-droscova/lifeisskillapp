@@ -23,13 +23,13 @@ class RealmGenericPointData: Object {
     
     convenience init(from genericPointData: GenericPointData) {
         self.init()
-        self.checkSum = genericPointData.checkSum
+        checkSum = genericPointData.checkSum
         let points = genericPointData.data.map { RealmGenericPoint(from: $0) }
-        self.data.append(objectsIn: points)
+        data.append(objectsIn: points)
     }
     
-    func toGenericPointData() -> GenericPointData {
-        let points = data.map { $0.toGenericPoint() }
+    func genericPointData() -> GenericPointData {
+        let points = data.map { $0.genericPoint() }
         return GenericPointData(checkSum: checkSum, data: Array(points))
     }
 }
@@ -50,7 +50,7 @@ class RealmGenericPoint: Object {
     @objc dynamic var param: RealmPointParam?
     
     override static func primaryKey() -> String? {
-        return "pointID"
+        "pointID"
     }
     
     override required init() {
@@ -59,25 +59,25 @@ class RealmGenericPoint: Object {
     
     convenience init(from genericPoint: GenericPoint) {
         self.init()
-        self.pointID = genericPoint.id
-        self.pointLat = genericPoint.pointLat
-        self.pointLng = genericPoint.pointLng
-        self.pointAlt = genericPoint.pointAlt
-        self.pointName = genericPoint.pointName
-        self.pointValue = genericPoint.pointValue
-        self.pointType = genericPoint.pointType.rawValue
-        self.cluster = genericPoint.cluster
-        self.pointSpec = genericPoint.pointSpec
-        self.sponsorID = genericPoint.sponsorId
-        self.hasDetail = genericPoint.hasDetail
-        self.active = genericPoint.active
+        pointID = genericPoint.id
+        pointLat = genericPoint.pointLat
+        pointLng = genericPoint.pointLng
+        pointAlt = genericPoint.pointAlt
+        pointName = genericPoint.pointName
+        pointValue = genericPoint.pointValue
+        pointType = genericPoint.pointType.rawValue
+        cluster = genericPoint.cluster
+        pointSpec = genericPoint.pointSpec
+        sponsorID = genericPoint.sponsorId
+        hasDetail = genericPoint.hasDetail
+        active = genericPoint.active
         if let param = genericPoint.param {
             self.param = RealmPointParam(from: param)
         }
     }
     
-    func toGenericPoint() -> GenericPoint {
-        return GenericPoint(from: self)
+    func genericPoint() -> GenericPoint {
+        GenericPoint(from: self)
     }
 }
 
@@ -91,14 +91,14 @@ class RealmPointParam: Object {
     
     convenience init(from param: PointParam) {
         self.init()
-        self.timer = param.timer.map(RealmTimerParam.init(from:))
-        self.status = param.status.map(RealmStatusParam.init(from:))
+        timer = param.timer.map(RealmTimerParam.init(from:))
+        status = param.status.map(RealmStatusParam.init(from:))
     }
     
-    func toPointParam() -> PointParam {
-        return PointParam(
-            timer: self.timer?.toTimerParam(),
-            status: self.status?.toStatusParam()
+    func pointParam() -> PointParam {
+        PointParam(
+            timer: self.timer?.timerParam(),
+            status: self.status?.statusParam()
         )
     }
 }
@@ -116,15 +116,15 @@ class RealmTimerParam: Object {
     
     convenience init(from timerParam: TimerParam) {
         self.init()
-        self.base = timerParam.base
-        self.done = timerParam.done
-        self.maxTime = timerParam.maxTime
-        self.minTime = timerParam.minTime
-        self.distance = timerParam.distance
+        base = timerParam.base
+        done = timerParam.done
+        maxTime = timerParam.maxTime
+        minTime = timerParam.minTime
+        distance = timerParam.distance
     }
     
-    func toTimerParam() -> TimerParam {
-        return TimerParam(
+    func timerParam() -> TimerParam {
+        TimerParam(
             base: self.base,
             done: self.done,
             maxTime: self.maxTime,
@@ -144,12 +144,12 @@ class RealmStatusParam: Object {
     
     convenience init(from statusParam: StatusParam) {
         self.init()
-        self.color = statusParam.color
-        self.isValid = statusParam.isValid
+        color = statusParam.color
+        isValid = statusParam.isValid
     }
     
-    func toStatusParam() -> StatusParam {
-        return StatusParam(
+    func statusParam() -> StatusParam {
+        StatusParam(
             color: self.color,
             isValid: self.isValid
         )

@@ -162,7 +162,7 @@ final class UserManager: BaseClass, UserManaging {
         do {
             // if the user hasn't logged out then I use that data
             if let storedLoginData = try realmLoginRepo.getSavedLoginDetails(), storedLoginData.isLoggedIn {
-                self.data = storedLoginData.toLoginData() // gives signal to show main page
+                self.data = storedLoginData.loginUserData() // gives signal to show main page
             } else {
                 self.data = nil // gives signal to show login page
             }
@@ -233,6 +233,6 @@ final class UserManager: BaseClass, UserManaging {
         }
         try realmLoginRepo.markUserAsLoggedIn() // change the user in realm as logged in
         storage.load()
-        self.data = storedLoginData.toLoginData() // indicate to appFC to present Home Screen in TabBar
+        self.data = storedLoginData.loginUserData() // indicate to appFC to present Home Screen in TabBar
     }
 }

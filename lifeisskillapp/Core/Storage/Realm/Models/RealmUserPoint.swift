@@ -23,13 +23,13 @@ class RealmUserPointData: Object {
     
     convenience init(from userPointData: UserPointData) {
         self.init()
-        self.checkSum = userPointData.checkSum
+        checkSum = userPointData.checkSum
         let points = userPointData.data.map { RealmUserPoint(from: $0) }
-        self.data.append(objectsIn: points)
+        data.append(objectsIn: points)
     }
     
-    func toUserPointData() -> UserPointData {
-        let points = data.map { $0.toUserPoint() }
+    func userPointData() -> UserPointData {
+        let points = data.map { $0.userPoint() }
         return UserPointData(checkSum: checkSum, data: Array(points))
     }
 }
@@ -50,7 +50,7 @@ class RealmUserPoint: Object {
     let pointCategory = List<String>()
     @objc dynamic var duration: TimeInterval = 0.0
     @objc dynamic var doesPointCount: Bool = true
-
+    
     override static func primaryKey() -> String? {
         "recordKey"
     }
@@ -61,25 +61,25 @@ class RealmUserPoint: Object {
     
     convenience init(from userPoint: UserPoint) {
         self.init()
-        self.pointID = userPoint.id
-        self.recordKey = userPoint.recordKey
-        self.pointTime = userPoint.pointTime
-        self.pointName = userPoint.pointName
-        self.pointValue = userPoint.pointValue
-        self.pointType = userPoint.pointType.rawValue
-        self.pointSpec = userPoint.pointSpec
-        self.pointLat = userPoint.pointLat
-        self.pointLng = userPoint.pointLng
-        self.pointAlt = userPoint.pointAlt
-        self.accuracy = userPoint.accuracy
-        self.codeSource = userPoint.codeSource.rawValue
-        self.pointCategory.append(objectsIn: userPoint.pointCategory)
-        self.duration = userPoint.duration ?? 0.0
-        self.doesPointCount = userPoint.doesPointCount
+        pointID = userPoint.id
+        recordKey = userPoint.recordKey
+        pointTime = userPoint.pointTime
+        pointName = userPoint.pointName
+        pointValue = userPoint.pointValue
+        pointType = userPoint.pointType.rawValue
+        pointSpec = userPoint.pointSpec
+        pointLat = userPoint.pointLat
+        pointLng = userPoint.pointLng
+        pointAlt = userPoint.pointAlt
+        accuracy = userPoint.accuracy
+        codeSource = userPoint.codeSource.rawValue
+        pointCategory.append(objectsIn: userPoint.pointCategory)
+        duration = userPoint.duration ?? 0.0
+        doesPointCount = userPoint.doesPointCount
     }
     
-    func toUserPoint() -> UserPoint {
-        return UserPoint(
+    func userPoint() -> UserPoint {
+        UserPoint(
             id: self.pointID,
             recordKey: self.recordKey,
             pointTime: self.pointTime,

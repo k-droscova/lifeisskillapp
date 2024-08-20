@@ -23,17 +23,17 @@ class RealmCheckSumData: Object {
     override required init() {
         super.init()
     }
-
+    
     convenience init(from checkSumData: CheckSumData) {
         self.init()
-        self.userPoints = checkSumData.userPoints
-        self.rank = checkSumData.rank
-        self.messages = checkSumData.messages
-        self.events = checkSumData.events
-        self.points = checkSumData.points
+        userPoints = checkSumData.userPoints
+        rank = checkSumData.rank
+        messages = checkSumData.messages
+        events = checkSumData.events
+        points = checkSumData.points
     }
     
-    func toCheckSumData() -> CheckSumData? {
-        return CheckSumData(from: self)
+    func checkSumData() -> CheckSumData? {
+        CheckSumData(from: self)
     }
 }

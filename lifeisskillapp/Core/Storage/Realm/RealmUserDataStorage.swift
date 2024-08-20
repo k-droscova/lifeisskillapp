@@ -290,7 +290,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmCategoryData = try categoryRepo.getAll().first
             if let realmCategoryData = realmCategoryData {
-                _userCategoryData = realmCategoryData.toUserCategoryData()
+                _userCategoryData = realmCategoryData.userCategoryData()
                 logger.log(message: "User categories loaded successfully.")
             } else {
                 logger.log(message: "No user categories found in the repository.")
@@ -304,7 +304,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmUserPoints = try userPointRepo.getAll().first
             if let realmUserPoints = realmUserPoints {
-                _userPointData = realmUserPoints.toUserPointData()
+                _userPointData = realmUserPoints.userPointData()
                 logger.log(message: "User points loaded successfully.")
             } else {
                 logger.log(message: "No user points found in the repository.")
@@ -318,7 +318,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmGenericPoints = try genericPointRepo.getAll().first
             if let realmGenericPoints = realmGenericPoints {
-                _genericPointData = realmGenericPoints.toGenericPointData()
+                _genericPointData = realmGenericPoints.genericPointData()
                 logger.log(message: "Generic points loaded successfully.")
             } else {
                 logger.log(message: "No generic points found in the repository.")
@@ -332,7 +332,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmUserRanks = try rankingRepo.getAll().first
             if let realmUserRanks = realmUserRanks {
-                _userRankData = realmUserRanks.toUserRankData()
+                _userRankData = realmUserRanks.userRankData()
                 logger.log(message: "User ranks loaded successfully.")
             } else {
                 logger.log(message: "No user ranks found in the repository.")
@@ -346,7 +346,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         do {
             let realmCheckSumData = try checkSumRepo.getAll().first
             if let realmCheckSumData = realmCheckSumData {
-                _checkSumData = realmCheckSumData.toCheckSumData()
+                _checkSumData = realmCheckSumData.checkSumData()
                 logger.log(message: "CheckSum data loaded successfully.")
             } else {
                 logger.log(message: "No CheckSum data found in the repository.")
