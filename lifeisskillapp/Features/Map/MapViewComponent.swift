@@ -62,8 +62,9 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
                 
                 // Hide the title and subtitle by setting them to nil
                 clusterView?.canShowCallout = false
-                // Show number of annotations in the cluster
                 clusterView?.glyphText = "\(cluster.memberAnnotations.count)"
+                clusterView?.titleVisibility = .hidden
+                clusterView?.subtitleVisibility = .hidden
                 return clusterView
             }
             
@@ -94,16 +95,10 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             if let cluster = view.annotation as? MKClusterAnnotation {
+                // immediately deselect, we just want to zoom in
                 mapView.deselectAnnotation(cluster, animated: false)
-                // Zoom in on the cluster without changing the pin size
-                let clusterRegion = MKCoordinateRegion(
-                    center: cluster.coordinate,
-                    span: MKCoordinateSpan(
-                        latitudeDelta: mapView.region.span.latitudeDelta / 2.0,
-                        longitudeDelta: mapView.region.span.longitudeDelta / 2.0
-                    )
-                )
-                mapView.setRegion(clusterRegion, animated: true)
+                let newClusterRegion = calculateRegionAfterClusterTapped(for: cluster)
+                mapView.setRegion(newClusterRegion, animated: true)
             } else if let annotation = view.annotation as? CustomMapAnnotation,
                       let point = viewModel.points.first(where: { $0.id == annotation.id }) {
                 // Animate the pin to a larger size when an individual annotation is selected
@@ -116,13 +111,9 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-            if let cluster = view.annotation as? MKClusterAnnotation {
-                // Handle cluster deselection
-                // Since we are manually deselecting clusters immediately after zooming in,
-                // you generally won't need to do anything here for clusters.
+            if view.annotation is MKClusterAnnotation {
                 print("Cluster deselected")
-            } else if let annotation = view.annotation as? CustomMapAnnotation {
-                // Handle individual annotation deselection
+            } else if view.annotation is CustomMapAnnotation {
                 // Reset the pin to its original size when deselected
                 UIView.animate(withDuration: 0.2) {
                     view.transform = .identity // Reset the transform to the original size
@@ -133,6 +124,36 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, didFailToLocateUserWithError error: Error) {
             print("DEBUG: Failed to locate user: \(error.localizedDescription)")
+        }
+        
+        private func calculateRegionAfterClusterTapped(for cluster: MKClusterAnnotation) -> MKCoordinateRegion {
+            // Calculate the bounding box of the annotations within the cluster
+            var minLatitude: CLLocationDegrees = 90.0
+            var maxLatitude: CLLocationDegrees = -90.0
+            var minLongitude: CLLocationDegrees = 180.0
+            var maxLongitude: CLLocationDegrees = -180.0
+            
+            for annotation in cluster.memberAnnotations {
+                let coordinate = annotation.coordinate
+                minLatitude = min(minLatitude, coordinate.latitude)
+                maxLatitude = max(maxLatitude, coordinate.latitude)
+                minLongitude = min(minLongitude, coordinate.longitude)
+                maxLongitude = max(maxLongitude, coordinate.longitude)
+            }
+            
+            // Calculate the center of the bounding box
+            let centerLatitude = (minLatitude + maxLatitude) / 2.0
+            let centerLongitude = (minLongitude + maxLongitude) / 2.0
+            
+            // Calculate the span (with some padding)
+            let latitudeDelta = (maxLatitude - minLatitude) * 1.2 // Adding 20% padding
+            let longitudeDelta = (maxLongitude - minLongitude) * 1.2 // Adding 20% padding
+            
+            // Create the region
+            return MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: centerLatitude, longitude: centerLongitude),
+                span: MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+            )
         }
     }
 }
