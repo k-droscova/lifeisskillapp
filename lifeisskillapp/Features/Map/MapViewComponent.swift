@@ -25,25 +25,14 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         mapView.addAnnotations(viewModel.points.map { CustomMapAnnotation(point: $0) })
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .followWithHeading
-        
-        // Apply the region and camera settings
         mapView.setRegion(viewModel.region, animated: true)
-        if let boundary = viewModel.cameraBoundary {
-            mapView.cameraBoundary = boundary
-        }
-        if let zoomRange = viewModel.cameraZoomRange {
-            mapView.cameraZoomRange = zoomRange
-        }
         return mapView
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         uiView.removeAnnotations(uiView.annotations)
-        
-        // Add the updated annotations
         let newAnnotations = viewModel.points.map { CustomMapAnnotation(point: $0) }
         uiView.addAnnotations(newAnnotations)
-        
         uiView.setRegion(viewModel.region, animated: true)
     }
     
@@ -79,28 +68,22 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            print("DEBUG: Annotation selected")
-            
             // Animate the pin to a larger size when selected
             UIView.animate(withDuration: 0.2) {
                 view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5) // 1.5x larger
             }
-            
-            if let annotation = view.annotation as? CustomMapAnnotation {
-                if let point = viewModel.points.first(where: { $0.id == annotation.id }) {
-                    viewModel.onPointTapped(point)
-                }
+            if let annotation = view.annotation as? CustomMapAnnotation,
+               let point = viewModel.points.first(where: { $0.id == annotation.id })
+            {
+                viewModel.onPointTapped(point)
             }
         }
         
         func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-            print("DEBUG: Annotation deselected")
-            
             // Animate the pin back to its original size when deselected
             UIView.animate(withDuration: 0.2) {
                 view.transform = .identity // Reset the transform to the original size
             }
-            
             viewModel.onMapTapped()
         }
         

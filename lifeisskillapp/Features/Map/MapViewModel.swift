@@ -9,7 +9,6 @@ import Foundation
 import Combine
 import MapKit
 
-
 protocol MapViewModeling: BaseClass, ObservableObject {
     associatedtype settingBarVM: SettingsBarViewModeling
     var settingsViewModel: settingBarVM { get }
@@ -18,8 +17,6 @@ protocol MapViewModeling: BaseClass, ObservableObject {
     var points: [GenericPoint] { get }
     var region: MKCoordinateRegion { get set }
     var selectedPoint: GenericPoint? { get set }
-    var cameraBoundary: MKMapView.CameraBoundary? { get set }
-    var cameraZoomRange: MKMapView.CameraZoomRange? { get set }
     var userLocation: UserLocation? { get }
     
     func onAppear()
@@ -45,8 +42,6 @@ final class MapViewModel<settingBarVM: SettingsBarViewModeling>
     @Published var isLoading: Bool = false
     @Published var points: [GenericPoint] = []
     @Published var region: MKCoordinateRegion = MKCoordinateRegion()
-    @Published var cameraBoundary: MKMapView.CameraBoundary?
-    @Published var cameraZoomRange: MKMapView.CameraZoomRange?
     var selectedPoint: GenericPoint?
     var userLocation: UserLocation? { locationStorage.location }
     
@@ -106,10 +101,6 @@ extension MapViewModeling {
                 longitudeDelta: MapConstants.longitudeDelta
             )
         )
-        if #available(iOS 17.0, *) {
-            self.cameraBoundary = MKMapView.CameraBoundary(coordinateRegion: region)
-            self.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: MapConstants.maxCenterCoordinateDistance)
-        }
     }
     
     func configureMapRegion(points: [Point]) {
@@ -124,10 +115,6 @@ extension MapViewModeling {
                 longitudeDelta: MapConstants.longitudeDelta
             )
         )
-        if #available(iOS 17.0, *) {
-            self.cameraBoundary = MKMapView.CameraBoundary(coordinateRegion: region)
-            self.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: MapConstants.maxCenterCoordinateDistance)
-        }
     }
     
     func configureMapRegion(location: UserLocation? = nil) {
@@ -142,10 +129,6 @@ extension MapViewModeling {
                 longitudeDelta: MapConstants.longitudeDelta
             )
         )
-        if #available(iOS 17.0, *) {
-            self.cameraBoundary = MKMapView.CameraBoundary(coordinateRegion: region)
-            self.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: MapConstants.maxCenterCoordinateDistance)
-        }
     }
     
     private func configureDefaultMapRegion() {
@@ -156,10 +139,6 @@ extension MapViewModeling {
                 longitudeDelta: MapConstants.longitudeDelta
             )
         )
-        if #available(iOS 17.0, *) {
-            self.cameraBoundary = MKMapView.CameraBoundary(coordinateRegion: region)
-            self.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: MapConstants.maxCenterCoordinateDistance)
-        }
     }
 }
 
