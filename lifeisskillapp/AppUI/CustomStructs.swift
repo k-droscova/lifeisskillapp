@@ -274,7 +274,6 @@ struct MapDetailView: View {
 #else
                 let urlString = APIUrl.detailUrl + "\(point.id)" // Production url
 #endif
-                // TODO: debug version -> testweb
                 if point.hasDetail, let detailURL = URL(string: urlString) {
                     Link(LocalizedStringKey("map.detail"), destination: detailURL)
                         .subheadline
