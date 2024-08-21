@@ -269,9 +269,6 @@
     "Generic Point Data" : {
 
     },
-    "Hodnota bodu: %lld" : {
-
-    },
     "home.button.how" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1279,6 +1276,50 @@
         }
       }
     },
+    "map.detail.sponsor" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podporovatel: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsor: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsor: %@"
+          }
+        }
+      }
+    },
+    "map.detail.value" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota bodu: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punktwert: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Point value: %@"
+          }
+        }
+      }
+    },
     "map.route_button.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1488,9 +1529,6 @@
           }
         }
       }
-    },
-    "Podporovatel: %@" : {
-
     },
     "point_list.outbox.cell" : {
       "extractionState" : "manual",
