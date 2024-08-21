@@ -71,8 +71,6 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     internal weak var mapDelegate: MapViewFlowDelegate?
     @Published var points: [GenericPoint] = []
     @Published var region: MKCoordinateRegion = MKCoordinateRegion()
-    @Published var cameraBoundary: MKMapView.CameraBoundary?
-    @Published var cameraZoomRange: MKMapView.CameraZoomRange?
     var selectedPoint: GenericPoint?
     var userLocation: UserLocation? { locationStorage.location }
     
