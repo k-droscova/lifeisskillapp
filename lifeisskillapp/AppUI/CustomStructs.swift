@@ -262,15 +262,20 @@ struct MapDetailView: View {
             
             Text(String(format: NSLocalizedString("map.detail.value", comment: ""), "\(point.pointValue)"))
                 .body2Regular
-
+            
             // TODO: need to implement fetching of images once I have permanent storage -> will need to redo generic point model to have optional image attribute and store it as data or something similar
             Text(String(format: NSLocalizedString("map.detail.sponsor", comment: ""), "\(point.sponsorId)"))
                 .body2Regular // will be image instead of just ID
             
             HStack {
                 Spacer()
+#if DEBUG
+                let urlString = APIUrl.detailUrlDebug + "\(point.id)" // Test data url
+#else
+                let urlString = APIUrl.detailUrl + "\(point.id)" // Production url
+#endif
                 // TODO: debug version -> testweb
-                if point.hasDetail, let detailURL = URL(string: APIUrl.detailUrl + "\(point.id)") {
+                if point.hasDetail, let detailURL = URL(string: urlString) {
                     Link(LocalizedStringKey("map.detail"), destination: detailURL)
                         .subheadline
                         .foregroundColor(.colorLisBlue)
