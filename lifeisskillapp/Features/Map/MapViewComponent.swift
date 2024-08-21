@@ -22,10 +22,10 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-        mapView.addAnnotations(viewModel.points.map { CustomMapAnnotation(point: $0) })
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .followWithHeading
         mapView.setRegion(viewModel.region, animated: true)
+        mapView.addAnnotations(viewModel.points.map { CustomMapAnnotation(point: $0) })
         return mapView
     }
     
@@ -44,6 +44,26 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if let cluster = annotation as? MKClusterAnnotation {
+                // Customize the cluster annotation view
+                let identifier = "ClusterAnnotationView"
+                var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+                
+                if clusterView == nil {
+                    clusterView = MKMarkerAnnotationView(annotation: cluster, reuseIdentifier: identifier)
+                }
+                
+                // Determine the cluster color based on the first annotation type
+                if let firstAnnotation = cluster.memberAnnotations.first as? CustomMapAnnotation {
+                    clusterView?.markerTintColor = firstAnnotation.clusterColor
+                } else {
+                    clusterView?.markerTintColor = .gray // Default color if no annotations are found
+                }
+                // Show number of annotations in the cluster
+                clusterView?.glyphText = "\(cluster.memberAnnotations.count)"
+                return clusterView
+            }
+            
             guard let customAnnotation = annotation as? CustomMapAnnotation else {
                 return nil
             }
@@ -59,10 +79,12 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
             
             if let icon = customAnnotation.icon {
                 annotationView?.image = icon
-                // Store the original size
                 annotationView?.bounds.size = icon.size
                 annotationView?.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0) // Pin from the bottom center
             }
+            
+            // Enable clustering, cluster is identified by pointType (so points with same types are clustered together)
+            annotationView?.clusteringIdentifier = customAnnotation.clusterIdentifier
             
             return annotationView
         }
