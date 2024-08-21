@@ -17,7 +17,7 @@ class CustomMapAnnotation: NSObject, MKAnnotation, Identifiable {
     
     init(point: GenericPoint) {
         coordinate = CLLocationCoordinate2D(latitude: point.pointLat, longitude: point.pointLng)
-        title = point.pointName
+        title = nil
         subtitle = nil
         pointType = point.pointType
         id = point.id

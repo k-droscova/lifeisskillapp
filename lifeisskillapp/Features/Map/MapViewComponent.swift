@@ -59,6 +59,9 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
                 } else {
                     clusterView?.markerTintColor = .gray // Default color if no annotations are found
                 }
+                
+                // Hide the title and subtitle by setting them to nil
+                clusterView?.canShowCallout = false
                 // Show number of annotations in the cluster
                 clusterView?.glyphText = "\(cluster.memberAnnotations.count)"
                 return clusterView
@@ -90,23 +93,42 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            // Animate the pin to a larger size when selected
-            UIView.animate(withDuration: 0.2) {
-                view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5) // 1.5x larger
-            }
-            if let annotation = view.annotation as? CustomMapAnnotation,
-               let point = viewModel.points.first(where: { $0.id == annotation.id })
-            {
+            if let cluster = view.annotation as? MKClusterAnnotation {
+                mapView.deselectAnnotation(cluster, animated: false)
+                // Zoom in on the cluster without changing the pin size
+                let clusterRegion = MKCoordinateRegion(
+                    center: cluster.coordinate,
+                    span: MKCoordinateSpan(
+                        latitudeDelta: mapView.region.span.latitudeDelta / 2.0,
+                        longitudeDelta: mapView.region.span.longitudeDelta / 2.0
+                    )
+                )
+                mapView.setRegion(clusterRegion, animated: true)
+            } else if let annotation = view.annotation as? CustomMapAnnotation,
+                      let point = viewModel.points.first(where: { $0.id == annotation.id }) {
+                // Animate the pin to a larger size when an individual annotation is selected
+                UIView.animate(withDuration: 0.2) {
+                    view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5) // 1.5x larger
+                }
+                // Call the method in the view model to handle the point tap
                 viewModel.onPointTapped(point)
             }
         }
         
         func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-            // Animate the pin back to its original size when deselected
-            UIView.animate(withDuration: 0.2) {
-                view.transform = .identity // Reset the transform to the original size
+            if let cluster = view.annotation as? MKClusterAnnotation {
+                // Handle cluster deselection
+                // Since we are manually deselecting clusters immediately after zooming in,
+                // you generally won't need to do anything here for clusters.
+                print("Cluster deselected")
+            } else if let annotation = view.annotation as? CustomMapAnnotation {
+                // Handle individual annotation deselection
+                // Reset the pin to its original size when deselected
+                UIView.animate(withDuration: 0.2) {
+                    view.transform = .identity // Reset the transform to the original size
+                }
+                viewModel.onMapTapped()
             }
-            viewModel.onMapTapped()
         }
         
         func mapView(_ mapView: MKMapView, didFailToLocateUserWithError error: Error) {
