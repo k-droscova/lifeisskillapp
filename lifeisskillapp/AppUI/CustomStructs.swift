@@ -269,7 +269,7 @@ struct MapDetailView: View {
             
             HStack {
                 Spacer()
-                
+                // TODO: debug version -> testweb
                 if point.hasDetail, let detailURL = URL(string: APIUrl.detailUrl + "\(point.id)") {
                     Link(LocalizedStringKey("map.detail"), destination: detailURL)
                         .subheadline
