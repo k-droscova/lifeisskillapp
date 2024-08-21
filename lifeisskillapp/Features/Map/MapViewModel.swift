@@ -11,7 +11,10 @@ import MapKit
 
 
 protocol MapViewModeling: BaseClass, ObservableObject {
+    associatedtype settingBarVM: SettingsBarViewModeling
+    var settingsViewModel: settingBarVM { get }
     var mapDelegate: MapViewFlowDelegate? { get set }
+    var isLoading: Bool { get }
     var points: [GenericPoint] { get }
     var region: MKCoordinateRegion { get set }
     var selectedPoint: GenericPoint? { get set }
@@ -24,7 +27,91 @@ protocol MapViewModeling: BaseClass, ObservableObject {
     func onMapTapped()
 }
 
+final class MapViewModel<settingBarVM: SettingsBarViewModeling>
+: BaseClass, ObservableObject, MapViewModeling {
+    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasGenericPointManager & SettingsBarViewModel.Dependencies
+    
+    // MARK: - Private Properties
+    
+    private let logger: LoggerServicing
+    private var gameDataManager: GameDataManaging
+    private let genericPointManager: any GenericPointManaging
+    private let locationStorage: UserDefaultsStoraging // TODO: change to location manager as in realm feature branch
+    
+    // MARK: - Public Properties
+
+    internal weak var mapDelegate: MapViewFlowDelegate?
+    var settingsViewModel: settingBarVM
+    @Published var isLoading: Bool = false
+    @Published var points: [GenericPoint] = []
+    @Published var region: MKCoordinateRegion = MKCoordinateRegion()
+    @Published var cameraBoundary: MKMapView.CameraBoundary?
+    @Published var cameraZoomRange: MKMapView.CameraZoomRange?
+    var selectedPoint: GenericPoint?
+    var userLocation: UserLocation? { locationStorage.location }
+    
+    init(
+        dependencies: Dependencies,
+        mapDelegate: MapViewFlowDelegate?,
+        settingsDelegate: SettingsBarFlowDelegate?
+    ) {
+        self.logger = dependencies.logger
+        self.gameDataManager = dependencies.gameDataManager
+        self.genericPointManager = dependencies.genericPointManager
+        self.locationStorage = dependencies.userDefaultsStorage // TODO: change to location manager
+        self.settingsViewModel = settingBarVM.init(
+            dependencies: dependencies,
+            delegate: settingsDelegate
+        )
+        self.mapDelegate = mapDelegate
+    }
+    
+    func onAppear() {
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            await self.fetchData()
+            configureMapRegion(location: self.userLocation)
+            self.isLoading = false
+        }
+    }
+    
+    // MARK: - Private Helpers
+    
+    @MainActor
+    private func fetchData() async {
+        await gameDataManager.fetchNewDataIfNeccessary(endpoint: .points)
+        await setupMapPoints()
+    }
+    
+    @MainActor
+    private func setupMapPoints() async {
+        self.points = genericPointManager.getAll()
+        print("MAP: Populated with \(self.points.count) points")
+    }
+}
+
+/// Default implementation for map region configuration
 extension MapViewModeling {
+    
+    func configureMapRegion(points: [GenericPoint]) {
+        guard let point = points.first else {
+            self.configureMapRegion(location: userLocation)
+            return
+        }
+        self.region = MKCoordinateRegion(
+            center: point.location.toCLLocation().coordinate,
+            span: MKCoordinateSpan(
+                latitudeDelta: MapConstants.latitudeDelta,
+                longitudeDelta: MapConstants.longitudeDelta
+            )
+        )
+        if #available(iOS 17.0, *) {
+            self.cameraBoundary = MKMapView.CameraBoundary(coordinateRegion: region)
+            self.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: MapConstants.maxCenterCoordinateDistance)
+        }
+    }
+    
     func configureMapRegion(points: [Point]) {
         guard let point = points.first else {
             self.configureMapRegion(location: userLocation)

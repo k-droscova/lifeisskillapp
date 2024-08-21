@@ -9,9 +9,9 @@ import Foundation
 import Combine
 import MapKit
 
-protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling {
+protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling where settingBarVM: SettingsBarViewModeling {
     associatedtype CategorySelectorVM: CategorySelectorViewModeling
-    associatedtype settingBarVM: SettingsBarViewModeling
+    
     var csViewModel: CategorySelectorVM { get }
     var settingsViewModel: settingBarVM { get }
     
@@ -42,7 +42,6 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     // MARK: - Private Properties
     
     private weak var delegate: PointsFlowDelegate?
-    internal weak var mapDelegate: MapViewFlowDelegate?
     private let logger: LoggerServicing
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
@@ -69,6 +68,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     @Published var totalPoints: Int = 0
     @Published var categoryPoints: [Point] = []
     // map view
+    internal weak var mapDelegate: MapViewFlowDelegate?
     @Published var points: [GenericPoint] = []
     @Published var region: MKCoordinateRegion = MKCoordinateRegion()
     @Published var cameraBoundary: MKMapView.CameraBoundary?

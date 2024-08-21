@@ -13,6 +13,7 @@ protocol MapViewFlowDelegate: NSObject {
     
     func onPointTapped(for point: GenericPoint)
     func onMapTapped()
+    func onError(_ error: Error)
 }
 
 extension MapViewFlowDelegate {

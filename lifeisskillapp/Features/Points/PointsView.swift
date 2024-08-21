@@ -60,7 +60,7 @@ private extension PointsView {
     }
     
     private var mapView: some View {
-        MapView(viewModel: viewModel)
+        MapViewComponent(viewModel: viewModel)
     }
     
     private var buttonsView: some View {
