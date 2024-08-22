@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 
 protocol MapViewFlowDelegate: NSObject {
+    /*
+     For displaying pageSheet presentation.
+     Classes that implement this protocol will provide their rootVC/navVC and use default implementation for map tapping-related functions in the extension below
+     */
     var root: UIViewController? { get }
     
     func onPointTapped(for point: GenericPoint)
