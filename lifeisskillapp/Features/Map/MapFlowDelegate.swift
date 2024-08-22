@@ -27,7 +27,7 @@ extension MapViewFlowDelegate {
             print("DEBUG: Root view controller is nil")
             return
         }
-        let vc = MapDetailView(point: point).hosting()
+        let vc = MapPointDetailView(point: point).hosting()
         vc.modalPresentationStyle = .pageSheet
         
         if let sheet = vc.sheetPresentationController {

@@ -97,6 +97,8 @@
 		278174842C4BF96B00138376 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174832C4BF96B00138376 /* View.swift */; };
 		278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174872C4BFBB500138376 /* AssetFontFamily.swift */; };
 		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
+		2784F9382C7769330041E72E /* MapPointDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */; };
+		2784F93C2C776B2A0041E72E /* MapPointDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */; };
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
@@ -269,6 +271,8 @@
 		278174832C4BF96B00138376 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		278174872C4BFBB500138376 /* AssetFontFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
 		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
+		2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailViewModel.swift; sourceTree = "<group>"; };
+		2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailView.swift; sourceTree = "<group>"; };
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -759,11 +763,11 @@
 		27540E4B2C70CE88005A0B49 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				27540E4C2C70CE96005A0B49 /* MapViewModel.swift */,
-				27540E4E2C70D943005A0B49 /* MapViewComponent.swift */,
-				2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */,
-				273910012C7384AF005C7B52 /* MapFlowDelegate.swift */,
+				2784F93A2C776AFA0041E72E /* MapComponent */,
+				2784F9392C776AE70041E72E /* MapPointDetail */,
 				2794CDE32C74F13D007B5C0D /* MapView.swift */,
+				27540E4C2C70CE96005A0B49 /* MapViewModel.swift */,
+				273910012C7384AF005C7B52 /* MapFlowDelegate.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -801,6 +805,24 @@
 				276CA9D12C5E6D3D001D6394 /* RankView.swift */,
 			);
 			path = Rank;
+			sourceTree = "<group>";
+		};
+		2784F9392C776AE70041E72E /* MapPointDetail */ = {
+			isa = PBXGroup;
+			children = (
+				2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */,
+				2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */,
+			);
+			path = MapPointDetail;
+			sourceTree = "<group>";
+		};
+		2784F93A2C776AFA0041E72E /* MapComponent */ = {
+			isa = PBXGroup;
+			children = (
+				27540E4E2C70D943005A0B49 /* MapViewComponent.swift */,
+				2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */,
+			);
+			path = MapComponent;
 			sourceTree = "<group>";
 		};
 		27C619502C36E69C0067498F /* Mappers */ = {
@@ -1153,12 +1175,14 @@
 				273022332C624DBE00F9D572 /* LocationStatusBarViewModel.swift in Sources */,
 				275472D02C5D110400F5578F /* CategorySelectorView.swift in Sources */,
 				27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */,
+				2784F9382C7769330041E72E /* MapPointDetailViewModel.swift in Sources */,
 				27187B5F2C57CD78003D22C6 /* HomeQRView.swift in Sources */,
 				27C619672C37069E0067498F /* APIResponseError.swift in Sources */,
 				27C619722C3822920067498F /* HTTPURLResponse.swift in Sources */,
 				27C619952C3AB0890067498F /* UserDefaults.swift in Sources */,
 				27066A8A2C45580D0092B499 /* UserCategory.swift in Sources */,
 				27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */,
+				2784F93C2C776B2A0041E72E /* MapPointDetailView.swift in Sources */,
 				278174842C4BF96B00138376 /* View.swift in Sources */,
 				2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */,
 				27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */,
