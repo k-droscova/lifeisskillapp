@@ -28,7 +28,7 @@ extension MapViewFlowDelegate {
         
         if let sheet = vc.sheetPresentationController {
             let smallDetent = UISheetPresentationController.Detent.custom(resolver: { context in
-                return 150 // Adjust the height as needed
+                return MapConstants.mapDetailViewSheetHeight
             })
             
             sheet.detents = [smallDetent]

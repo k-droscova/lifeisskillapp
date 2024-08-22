@@ -28,4 +28,6 @@ public struct MapConstants {
         static let longitude: Double = 14.418540
         static let altitude: Double = 225
     }
+    
+    static let mapDetailViewSheetHeight: CGFloat = 150
 }
