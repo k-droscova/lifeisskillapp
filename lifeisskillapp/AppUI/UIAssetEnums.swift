@@ -93,7 +93,7 @@ enum CustomImages {
             case black = "Black"
             
             var fullPath: String {
-                return Home.basePath + self.rawValue
+                Home.basePath + self.rawValue
             }
         }
         
@@ -104,7 +104,7 @@ enum CustomImages {
             case black = "Black"
             
             var fullPath: String {
-                return Map.basePath + self.rawValue
+                Map.basePath + self.rawValue
             }
         }
         
@@ -115,7 +115,7 @@ enum CustomImages {
             case black = "Black"
             
             var fullPath: String {
-                return News.basePath + self.rawValue
+                News.basePath + self.rawValue
             }
         }
         
@@ -126,7 +126,7 @@ enum CustomImages {
             case black = "Black"
             
             var fullPath: String {
-                return Profile.basePath + self.rawValue
+                Profile.basePath + self.rawValue
             }
         }
         
@@ -137,7 +137,7 @@ enum CustomImages {
             case black = "Black"
             
             var fullPath: String {
-                return Rank.basePath + self.rawValue
+                Rank.basePath + self.rawValue
             }
         }
     }
