@@ -197,7 +197,7 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
         case .text:
             showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
         case .unknown:
-            showAlert(titleKey: "", messageKey: "")
+            showAlert(titleKey: "alert.general_error.title", messageKey: "alert.general_error.message")
         }
     }
 }
