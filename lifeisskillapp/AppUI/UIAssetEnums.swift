@@ -11,7 +11,14 @@ import SwiftUI
 
 enum SFSSymbols: String {
     case camera = "xmark"
+    case list = "list.bullet"
+    case map = "map"
+    
+    var Image: Image {
+        SwiftUI.Image(systemName: self.rawValue)
+    }
 }
+
 enum CustomImages {
     
     enum Miscellaneous: String {

@@ -194,7 +194,7 @@ struct UserPointsTopLeftButtonsView: View {
             Button(action: {
                 mapButtonAction()
             }) {
-                Image(systemName: "map")
+                SFSSymbols.map.Image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)
@@ -203,7 +203,7 @@ struct UserPointsTopLeftButtonsView: View {
             Button(action: {
                 listButtonAction()
             }) {
-                Image(systemName: "list.bullet")
+                SFSSymbols.list.Image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)
