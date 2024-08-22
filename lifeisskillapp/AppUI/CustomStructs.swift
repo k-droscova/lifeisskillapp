@@ -260,11 +260,11 @@ struct MapDetailView: View {
             }
             ExDivider(color: Color.black, height: 1)
             
-            Text(String(format: NSLocalizedString("map.detail.value", comment: ""), "\(point.pointValue)"))
+            Text(String(format: NSLocalizedString("map.detail.value", comment: ""), String(point.pointValue)))
                 .body2Regular
             
             // TODO: need to implement fetching of images once I have permanent storage -> will need to redo generic point model to have optional image attribute and store it as data or something similar
-            Text(String(format: NSLocalizedString("map.detail.sponsor", comment: ""), "\(point.sponsorId)"))
+            Text(String(format: NSLocalizedString("map.detail.sponsor", comment: ""), String(point.sponsorId)))
                 .body2Regular // will be image instead of just ID
             
             HStack {
