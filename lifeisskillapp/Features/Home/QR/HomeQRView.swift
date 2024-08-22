@@ -57,7 +57,7 @@ struct HomeQRView: View {
     }
     
     private var centerView: some View {
-        Image(CustomImages.scanningFrame.rawValue)
+        Image(CustomImages.Miscellaneous.scanningFrame.fullPath)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .padding()

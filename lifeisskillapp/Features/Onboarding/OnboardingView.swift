@@ -24,42 +24,42 @@ struct OnboardingView: View {
 extension OnboardingView {
     private var page1: some View {
         OnboardingPageView(
-            image: Image(CustomImages.Screens.howTo1.rawValue),
+            image: Image(CustomImages.Screens.howTo1.fullPath),
             text: Text("onboarding.description.find")
         )
     }
     
     private var page2: some View {
         OnboardingPageView(
-            image: Image(CustomImages.Screens.messagesNews.rawValue),
+            image: Image(CustomImages.Screens.messagesNews.fullPath),
             text: Text("onboarding.description.web")
         )
     }
     
     private var page3: some View {
         OnboardingPageView(
-            image: Image(CustomImages.Screens.howTo2.rawValue),
+            image: Image(CustomImages.Screens.howTo2.fullPath),
             text: Text("onboarding.description.activity")
         )
     }
     
     private var page4: some View {
         OnboardingPageView(
-            image: Image(CustomImages.Screens.home.rawValue),
+            image: Image(CustomImages.Screens.home.fullPath),
             text: Text("onboarding.description.point")
         )
     }
     
     private var page5: some View {
         OnboardingPageView(
-            image: Image(CustomImages.Screens.rank.rawValue),
+            image: Image(CustomImages.Screens.rank.fullPath),
             text: Text("onboarding.description.prizes")
         )
     }
     
     private var page6: some View {
         OnboardingPageView(
-            image: Image(CustomImages.Screens.helpDesk.rawValue),
+            image: Image(CustomImages.Screens.helpDesk.fullPath),
             text: Text("onboarding.description.problems")
         )
     }
