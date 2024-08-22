@@ -30,9 +30,9 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorA
     private func prepareWindow() {
         childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
         if appDependencies.userManager.isLoggedIn {
-            self.showHome()
+            showHome()
         } else {
-            self.showLogin()
+            showLogin()
         }
     }
     
@@ -68,17 +68,17 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorA
 
 extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidSucceed() {
-        self.reload()
+        reload()
     }
 }
 
 extension AppFlowCoordinator: UserManagerFlowDelegate {
     func onLogout() {
-        self.reload()
+        reload()
     }
     
     func onForceLogout() {
-        self.reload()
+        reload()
         showAlert(titleKey: "alert.forced_logout.title", messageKey: "alert.forced_logout.message")
     }
 }
