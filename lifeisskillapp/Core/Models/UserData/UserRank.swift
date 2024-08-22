@@ -71,11 +71,11 @@ struct Ranking: Identifiable {
         // Assign trophy image based on rank
         switch self.rank {
         case 1:
-            self.trophyImage = CustomImages.Rankings.first.rawValue
+            self.trophyImage = CustomImages.Rankings.first.fullPath
         case 2:
-            self.trophyImage = CustomImages.Rankings.second.rawValue
+            self.trophyImage = CustomImages.Rankings.second.fullPath
         case 3:
-            self.trophyImage = CustomImages.Rankings.third.rawValue
+            self.trophyImage = CustomImages.Rankings.third.fullPath
         default:
             self.trophyImage = nil
         }
@@ -92,11 +92,11 @@ struct Ranking: Identifiable {
         // Assign trophy image based on rank
         switch self.rank {
         case 1:
-            self.trophyImage = trophyImage ?? CustomImages.Rankings.first.rawValue
+            self.trophyImage = trophyImage ?? CustomImages.Rankings.first.fullPath
         case 2:
-            self.trophyImage = trophyImage ?? CustomImages.Rankings.second.rawValue
+            self.trophyImage = trophyImage ?? CustomImages.Rankings.second.fullPath
         case 3:
-            self.trophyImage = trophyImage ?? CustomImages.Rankings.third.rawValue
+            self.trophyImage = trophyImage ?? CustomImages.Rankings.third.fullPath
         default:
             self.trophyImage = trophyImage
         }

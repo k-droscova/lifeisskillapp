@@ -53,7 +53,7 @@ private extension RankView {
     }
     
     private var rankImageView: some View {
-        Image(CustomImages.Screens.rank.rawValue)
+        Image(CustomImages.Screens.rank.fullPath)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: RankViewConstants.imageHeight)

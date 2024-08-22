@@ -123,9 +123,9 @@ extension MainFlowCoordinator {
                 var icon: UIImage? {
                     switch self {
                     case .selected:
-                        UIImage(named: CustomImages.TabBar.Home.pink.rawValue)
+                        UIImage(named: CustomImages.TabBar.Home.pink.fullPath)
                     case .unselected:
-                        UIImage(named: CustomImages.TabBar.Home.pink.rawValue)
+                        UIImage(named: CustomImages.TabBar.Home.pink.fullPath)
                     }
                 }
             }
@@ -134,9 +134,9 @@ extension MainFlowCoordinator {
                 var icon: UIImage? {
                     switch self {
                     case .selected:
-                        UIImage(named: CustomImages.TabBar.Rank.pink.rawValue)
+                        UIImage(named: CustomImages.TabBar.Rank.pink.fullPath)
                     case .unselected:
-                        UIImage(named: CustomImages.TabBar.Rank.black.rawValue)
+                        UIImage(named: CustomImages.TabBar.Rank.black.fullPath)
                     }
                 }
             }
@@ -145,9 +145,9 @@ extension MainFlowCoordinator {
                 var icon: UIImage? {
                     switch self {
                     case .selected:
-                        UIImage(named: CustomImages.TabBar.Profile.pink.rawValue)
+                        UIImage(named: CustomImages.TabBar.Profile.pink.fullPath)
                     case .unselected:
-                        UIImage(named: CustomImages.TabBar.Profile.black.rawValue)
+                        UIImage(named: CustomImages.TabBar.Profile.black.fullPath)
                     }
                 }
             }
@@ -156,9 +156,9 @@ extension MainFlowCoordinator {
                 var icon: UIImage? {
                     switch self {
                     case .selected:
-                        UIImage(named: CustomImages.TabBar.Map.pink.rawValue)
+                        UIImage(named: CustomImages.TabBar.Map.pink.fullPath)
                     case .unselected:
-                        UIImage(named: CustomImages.TabBar.Map.black.rawValue)
+                        UIImage(named: CustomImages.TabBar.Map.black.fullPath)
                     }
                 }
             }

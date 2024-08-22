@@ -12,78 +12,161 @@ import SwiftUI
 enum SFSSymbols: String {
     case camera = "xmark"
 }
-
-enum CustomImages: String {
-    case scanningFrame = "frame"
+enum CustomImages {
+    
+    enum Miscellaneous: String {
+        private static let basePath = "Miscellaneous/"
+        
+        case scanningFrame = "frame"
+        
+        var fullPath: String {
+            Miscellaneous.basePath + self.rawValue
+        }
+    }
     
     enum Screens: String {
-        case home = "Ilustrations/home"
-        case login = "Ilustrations/login"
-        case helpDesk = "Ilustrations/helpDesk"
-        case howTo1 = "Ilustrations/howTo1"
-        case howTo2 = "Ilustrations/howTo2"
-        case messagesNews = "Ilustrations/messages_news"
-        case rank = "Ilustrations/ranking"
-        case signUp = "Ilustrations/signUp"
+        private static let basePath = "Ilustrations/"
+        
+        case home = "home"
+        case login = "login"
+        case helpDesk = "helpDesk"
+        case howTo1 = "howTo1"
+        case howTo2 = "howTo2"
+        case messagesNews = "messages_news"
+        case rank = "ranking"
+        case signUp = "signUp"
+        
+        var fullPath: String {
+            Screens.basePath + self.rawValue
+        }
     }
     
     enum CornerIcons: String {
-        case backPink = "Icons/CornerIcons/back_pink"
-        case backBlack = "Icons/CornerIcons/back"
-        case changeUserData =
-                "Icons/CornerIcons/changeUserData"
-        case flashOn = "Icons/CornerIcons/flashOn"
-        case flashOff = "Icons/CornerIcons/flashOff"
-        case message = "Icons/CornerIcons/message"
-        case prizes = "Icons/CornerIcons/prizes"
-        case settings = "Icons/CornerIcons/settings"
-    }
-    
-    enum MapIcons: String {
-        case culture = "Icons/Map/culture"
-        case ecology = "Icons/Map/ecology"
-        case sport = "Icons/Map/sport"
+        private static let basePath = "Icons/CornerIcons/"
+        
+        case backPink = "back_pink"
+        case backBlack = "back"
+        case changeUserData = "changeUserData"
+        case flashOn = "flashOn"
+        case flashOff = "flashOff"
+        case message = "message"
+        case prizes = "prizes"
+        case settings = "settings"
+        
+        var fullPath: String {
+            CornerIcons.basePath + self.rawValue
+        }
     }
     
     enum Notifications: String {
-        case emailOn = "Icons/Notifications/Email/On"
-        case emailOff = "Icons/Notifications/Email/Off"
-        case phoneOn = "Icons/Notifications/Phone/On"
-        case phoneOff = "Icons/Notifications/Phone/Off"
+        private static let basePath = "Icons/Notifications/"
+        
+        case emailOn = "Email/On"
+        case emailOff = "Email/Off"
+        case phoneOn = "Phone/On"
+        case phoneOff = "Phone/Off"
+        
+        var fullPath: String {
+            Notifications.basePath + self.rawValue
+        }
     }
     
     enum Rankings: String {
-        case first = "Icons/Rankings/firstPlace"
-        case second = "Icons/Rankings/secondPlace"
-        case third = "Icons/Rankings/thirdPlace"
+        private static let basePath = "Icons/Rankings/"
+        
+        case first = "firstPlace"
+        case second = "secondPlace"
+        case third = "thirdPlace"
+        
+        var fullPath: String {
+            Rankings.basePath + self.rawValue
+        }
     }
     
     enum TabBar {
+        private static let basePath = "Icons/TabBar/"
+        
         enum Home: String {
-            case pink = "Icons/TabBar/Home/Pink"
-            case black = "Icons/TabBar/Home/Black"
+            private static let basePath = TabBar.basePath + "Home/"
+            
+            case pink = "Pink"
+            case black = "Black"
+            
+            var fullPath: String {
+                Home.basePath + self.rawValue
+            }
         }
+        
         enum Map: String {
-            case pink = "Icons/TabBar/Map/Pink"
-            case black = "Icons/TabBar/Map/Black"
+            private static let basePath = TabBar.basePath + "Map/"
+            
+            case pink = "Pink"
+            case black = "Black"
+            
+            var fullPath: String {
+                Map.basePath + self.rawValue
+            }
         }
+        
         enum News: String {
-            case pink = "Icons/TabBar/News/Pink"
-            case black = "Icons/TabBar/News/Black"
+            private static let basePath = TabBar.basePath + "News/"
+            
+            case pink = "Pink"
+            case black = "Black"
+            
+            var fullPath: String {
+                News.basePath + self.rawValue
+            }
         }
+        
         enum Profile: String {
-            case pink = "Icons/TabBar/Profile/Pink"
-            case black = "Icons/TabBar/Profile/Black"
+            private static let basePath = TabBar.basePath + "Profile/"
+            
+            case pink = "Pink"
+            case black = "Black"
+            
+            var fullPath: String {
+                Profile.basePath + self.rawValue
+            }
         }
+        
         enum Rank: String {
-            case pink = "Icons/TabBar/Rank/Pink"
-            case black = "Icons/TabBar/Rank/Black"
+            private static let basePath = TabBar.basePath + "Rank/"
+            
+            case pink = "Pink"
+            case black = "Black"
+            
+            var fullPath: String {
+                Rank.basePath + self.rawValue
+            }
         }
     }
     
     enum Avatar: String {
+        private static let basePath = "Avatars/"
+        
         case male = "pointListBoy"
         case female = "pointListGirl"
+        
+        var fullPath: String {
+            Avatar.basePath + self.rawValue
+        }
+    }
+    
+    enum Map: String {
+        private static let basePath = "Icons/Map/"
+        
+        case sport = "sport"
+        case environment = "nature"
+        case culture = "culture"
+        case tourist = "tourist"
+        case energySponsor = "7en_green"
+        case virtual = "virtual"
+        case unknown = "unknown"
+        
+        var fullPath: String {
+            Map.basePath + self.rawValue
+        }
     }
 }
 

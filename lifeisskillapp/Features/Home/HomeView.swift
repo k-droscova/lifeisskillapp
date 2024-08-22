@@ -57,7 +57,7 @@ private extension HomeView {
     }
     
     private var imageView: some View {
-        Image(CustomImages.Screens.home.rawValue)
+        Image(CustomImages.Screens.home.fullPath)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .squareFrame(size: HomeViewConstants.imageSize)
