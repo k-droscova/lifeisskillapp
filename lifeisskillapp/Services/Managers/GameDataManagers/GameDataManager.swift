@@ -74,7 +74,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     // MARK: - Public Interface
     
     func loadData(for endpoint: CheckSumAPIService.Endpoint?) async {
-        if isOnline {
+        guard !isOnline else {
             await fetchNewDataIfNeccessary(endpoint: endpoint)
             return
         }
