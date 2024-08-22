@@ -37,9 +37,9 @@ enum UserGender: String, Codable {
     var icon: String {
         switch self {
         case .male:
-            CustomImages.Avatar.male.rawValue
+            CustomImages.Avatar.male.fullPath
         case .female:
-            CustomImages.Avatar.female.rawValue
+            CustomImages.Avatar.female.fullPath
         }
     }
 }

@@ -50,7 +50,7 @@ private extension LoginView {
     }
     
     private var loginImageView: some View {
-        Image(CustomImages.Screens.login.rawValue)
+        Image(CustomImages.Screens.login.fullPath)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: LoginViewConstants.imageHeight)

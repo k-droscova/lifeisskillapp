@@ -27,11 +27,11 @@ struct FlashButton: View {
     var body: some View {
         Button(action: action) {
             flashOn ?
-            Image(CustomImages.CornerIcons.flashOn.rawValue)
+            Image(CustomImages.CornerIcons.flashOn.fullPath)
                 .resizable()
                 .frame(width: 16, height: 24)
             :
-            Image(CustomImages.CornerIcons.flashOff.rawValue)
+            Image(CustomImages.CornerIcons.flashOff.fullPath)
                 .resizable()
                 .frame(width: 16, height: 24)
         }
