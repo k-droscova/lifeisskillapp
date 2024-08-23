@@ -15,6 +15,9 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     private let logger: LoggerServicing
     private var internalStore: [String: Any] = [:]
     
+    var token: String?
+    var isLoggedIn: Bool = false
+    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
@@ -28,9 +31,35 @@ final class InMemoryUserDataStorage: UserDataStoraging {
         for (key, value) in internalStore {
             print("\(key): \(value)")
         }
+        isLoggedIn = true
+    }
+    
+    func savedLoginDetails() async throws -> LoginUserData? {
+        guard let loggedInUser = internalStore["LoginUserData"] as? LoggedInUser else { return nil }
+        return LoginUserData.init(from: loggedInUser)
+    }
+    
+    func loggedInUserDetails() async throws -> LoginUserData? {
+        guard let loggedInUser = internalStore["LoginUserData"] as? LoggedInUser else { return nil }
+        return LoginUserData.init(from: loggedInUser)
+    }
+    
+    func login(_ user: LoggedInUser) async throws {
+        internalStore["LoginUserData"] = user
+        isLoggedIn = true
+    }
+    
+    func markUserAsLoggedOut() async throws {
+        await self.onLogout()
+    }
+    
+    func markUserAsLoggedIn() async throws {
+        return
     }
     
     func onLogout() async {
+        token = nil
+        isLoggedIn = false
         internalStore.removeAll()
     }
     

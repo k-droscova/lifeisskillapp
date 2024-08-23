@@ -22,7 +22,6 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
-    private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
     private var _data: UserRankData?
     
@@ -31,19 +30,15 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     // MARK: - Public Properties
     
-    var token: String? { userManager.token }
+    var token: String? { storage.token }
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
-        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
         self.networkMonitor = dependencies.networkMonitor
-
-        super.init()
-        self.loadFromRepository()
     }
     
     // MARK: - Public Interface
@@ -61,24 +56,9 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Fetching user ranks")
-        do {
-            let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
-            try await storage.saveUserRankData(response.data)
-            _data = response.data
-        } catch let error as BaseError {
-            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                userManager.forceLogout()
-                return
-            } else {
-                throw error
-            }
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to load user ranks",
-                logger: logger
-            )
-        }
+        let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
+        try await storage.saveUserRankData(response.data)
+        _data = response.data
     }
     
     func getById(id: String) -> UserRank? {

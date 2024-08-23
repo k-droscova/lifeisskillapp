@@ -172,7 +172,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     @MainActor
     private func fetchData() async {
-        await gameDataManager.loadData(for: .userpoints)
+        await gameDataManager.loadData(for: .userPoints)
         await getSelectedCategoryPoints()
     }
     

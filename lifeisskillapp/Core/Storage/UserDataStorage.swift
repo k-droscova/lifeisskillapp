@@ -31,4 +31,13 @@ protocol UserDataStoraging {
     func saveCheckSumData(_ data: CheckSumData?) async throws
     func scannedPoints() async throws -> [ScannedPoint]
     func saveScannedPoint(_ point: ScannedPoint) async throws
+    
+    // LOGIN USER DATA RELATED INTERFACE
+    func savedLoginDetails() async throws -> LoginUserData?
+    func loggedInUserDetails() async throws -> LoginUserData?
+    func login(_ user: LoggedInUser) async throws
+    func markUserAsLoggedOut() async throws
+    func markUserAsLoggedIn() async throws
+    var token: String? { get }
+    var isLoggedIn: Bool { get }
 }

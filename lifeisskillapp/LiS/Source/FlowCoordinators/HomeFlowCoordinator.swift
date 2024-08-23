@@ -53,7 +53,7 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
     override func start() -> UIViewController {
         let viewModel = HomeViewModel<csVM, statusBarVM>(
             dependencies: .init(
-                userPointManager: appDependencies.userPointManager,
+                gameDataManager: appDependencies.gameDataManager,
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
                 userDefaultsStorage: appDependencies.userDefaultsStorage,
@@ -124,6 +124,21 @@ extension HomeFlowCoordinator {
         appDependencies.logger.log(message: "scanning failure for source: \(source.rawValue)")
         showFailureAlert(source)
     }
+    
+    private func showFailureAlert(_ source: CodeSource) {
+        switch source {
+        case .qr:
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.qr.message")
+        case .nfc:
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.nfc.message")
+        case .virtual:
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
+        case .text:
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
+        case .unknown:
+            showAlert(titleKey: "alert.general_error.title", messageKey: "alert.general_error.message")
+        }
+    }
 }
 
 extension HomeFlowCoordinator: ScanPointFlowDelegate {
@@ -149,10 +164,9 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
         showOfflineSuccessAlert()
     }
     
-    func onScanPointProcessError(_ source: CodeSource) {
+    func onScanPointOnlineProcessError(_ source: CodeSource) {
         returnToHomeScreen()
         appDependencies.logger.log(message: "scanning processing failure for source: \(source.rawValue)")
-        showFailureAlert(source)
     }
     
     func onScanPointOfflineProcessError() {
@@ -184,20 +198,5 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     
     private func showOfflineFailureAlert() {
         showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.message_offline")
-    }
-    
-    private func showFailureAlert(_ source: CodeSource) {
-        switch source {
-        case .qr:
-            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.qr.message")
-        case .nfc:
-            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.nfc.message")
-        case .virtual:
-            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
-        case .text:
-            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
-        case .unknown:
-            showAlert(titleKey: "alert.general_error.title", messageKey: "alert.general_error.message")
-        }
     }
 }

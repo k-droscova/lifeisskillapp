@@ -21,7 +21,6 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorA
         super.start(in: window)
         appDependencies.networkMonitor.delegate = self // present alert if connection lost on all screens
         appDependencies.userManager.delegate = self // login logout
-        appDependencies.gameDataManager.delegate = self // present alert if any fatal error with game data occurs anywhere in the app
         prepareWindow()
     }
     
@@ -90,5 +89,3 @@ extension AppFlowCoordinator: NetworkManagerFlowDelegate {
         showAlert(titleKey: "alert.internet.lost_connection.title", messageKey: "alert.internet.lost_connection.message")
     }
 }
-
-extension AppFlowCoordinator: GameDataManagerFlowDelegate {}

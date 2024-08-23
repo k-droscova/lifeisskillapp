@@ -14,11 +14,12 @@ protocol CategorySelectorViewModeling: BaseClass, ObservableObject {
 }
 
 final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySelectorViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasGameDataManager
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
+    private let gameDataManager: GameDataManaging
     private var userCategoryManager: any UserCategoryManaging
     
     // MARK: - Public Properties
@@ -35,7 +36,7 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userCategoryManager = dependencies.userCategoryManager
-        
+        self.gameDataManager = dependencies.gameDataManager
         super.init()
         /*
          Fetching of user categories is performed only after login when CS VM is initialized in MainFC.
@@ -53,15 +54,11 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     }
     
     private func fetchData() async {
-        do {
-            try await userCategoryManager.loadData()
-            let categories = getAllUserCategories()
-            await MainActor.run {
-                self.userCategories = categories
-                self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.getAll().first
-            }
-        } catch {
-            logger.log(message: "ERROR: Unable to fetch new user category data")
+        await gameDataManager.loadData(for: .categories)
+        let categories = getAllUserCategories()
+        await MainActor.run {
+            self.userCategories = categories
+            self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.getAll().first
         }
     }
     

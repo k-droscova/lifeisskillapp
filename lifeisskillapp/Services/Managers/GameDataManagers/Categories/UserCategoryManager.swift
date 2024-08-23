@@ -19,13 +19,12 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
-    private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
     private var selectedCategorySubject = CurrentValueSubject<UserCategory?, Never>(nil)
     private var _data: UserCategoryData?
@@ -34,7 +33,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
 
     // MARK: - Public Properties
     
-    var token: String? { userManager.token }
+    var token: String? { storage.token }
     @Published var selectedCategory: UserCategory? {
         didSet {
             if oldValue?.id != selectedCategory?.id {
@@ -52,12 +51,8 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
-        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
         self.networkMonitor = dependencies.networkMonitor
-        
-        super.init()
-        self.loadFromRepository()
     }
     
     // MARK: - Public Interface
@@ -76,26 +71,11 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Fetching user categories")
-        do {
-            let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
-            try await storage.saveUserCategoryData(response.data)
-            _data = response.data
-            guard selectedCategory != nil else {
-                selectedCategory = _data?.main
-                return
-            }
-        } catch let error as BaseError {
-            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                userManager.forceLogout()
-            } else {
-                throw error
-            }
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to load user categories",
-                logger: logger
-            )
+        let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
+        try await storage.saveUserCategoryData(response.data)
+        _data = response.data
+        if selectedCategory == nil {
+            selectedCategory = _data?.main
         }
     }
     

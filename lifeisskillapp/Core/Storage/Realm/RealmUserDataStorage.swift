@@ -43,6 +43,11 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var _checkSumData: CheckSumData?
     private var _scannedPoints: [ScannedPoint] = []
     
+    // MARK: - Public Properties
+    
+    var token: String?
+    var isLoggedIn: Bool = false
+    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
@@ -66,15 +71,16 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
             group.addTask { try await self.loadGenericPoints() }
             group.addTask { try await self.loadUserRanks() }
             group.addTask { try await self.loadCheckSumData() }
-            
             try await group.waitForAll()
         }
+        self.isLoggedIn = true
         logger.log(message: "All data loaded concurrently on login.")
     }
     
     func onLogout() async throws {
         try loginRepo.markUserAsLoggedOut()
         await clearInMemoryData()
+        self.isLoggedIn = false
         logger.log(message: "User logged out successfully.")
     }
     
@@ -226,6 +232,34 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         return _scannedPoints
     }
     
+    // MARK: - Public Interface For Logged In User
+    
+    func savedLoginDetails() async throws -> LoginUserData? {
+        guard let user = try loginRepo.getSavedLoginDetails() else { return nil }
+        return user.loginUserData()
+    }
+    
+    func loggedInUserDetails() async throws -> LoginUserData? {
+        guard let user = try loginRepo.getSavedLoginDetails(), user.isLoggedIn else { return nil }
+        return user.loginUserData()
+    }
+    
+    func login(_ user: LoggedInUser) async throws {
+        try loginRepo.saveLoginUser(user)
+        self.token = user.token
+    }
+    
+    func markUserAsLoggedOut() async throws {
+        try loginRepo.markUserAsLoggedOut()
+        self.token = nil
+    }
+    
+    func markUserAsLoggedIn() async throws {
+        guard let user = try loginRepo.getSavedLoginDetails() else { return }
+        try loginRepo.markUserAsLoggedOut()
+        self.token = user.token
+    }
+    
     // MARK: - Private Helpers
     
     private func clearInMemoryData() async {
@@ -237,6 +271,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
                 group.addTask { self._userRankData = nil }
                 group.addTask { self._genericPointData = nil }
                 group.addTask { self._checkSumData = nil }
+                group.addTask { self.token = nil }
             }
             self.logger.log(message: "All data nullified on logout.")
         }

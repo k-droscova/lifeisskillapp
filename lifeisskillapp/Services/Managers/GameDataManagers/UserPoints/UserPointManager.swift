@@ -17,7 +17,7 @@ protocol ScanPointFlowDelegate: NSObject {
     func onScanPointNoLocation()
     func onScanPointProcessSuccessOnline(_ source: CodeSource)
     func onScanPointProcessSuccessOffline(_ source: CodeSource)
-    func onScanPointProcessError(_ source: CodeSource)
+    func onScanPointOnlineProcessError(_ source: CodeSource)
     func onScanPointOfflineProcessError()
 }
 
@@ -25,18 +25,17 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
     var scanningDelegate: ScanPointFlowDelegate? { get set }
     func getPoints(byCategory categoryId: String) -> [UserPoint]
     func getTotalPoints(byCategory categoryId: String) -> Int
-    func handleScannedPoint(_ point: ScannedPoint)
-    func handleAllStoredScannedPoints()
+    func handleScannedPoint(_ point: ScannedPoint) async throws
+    func handleAllStoredScannedPoints() async throws
 }
 
 public final class UserPointManager: BaseClass, UserPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasScanningManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasScanningManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
-    private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
     private let scanningManager: ScanningManaging
     private var _data: UserPointData?
@@ -48,20 +47,16 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     weak var scanningDelegate: ScanPointFlowDelegate?
     
-    var token: String? { userManager.token }
+    var token: String? { storage.token }
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
-        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
         self.networkMonitor = dependencies.networkMonitor
         self.scanningManager = dependencies.scanningManager
-        
-        super.init()
-        self.loadFromRepository()
     }
     
     // MARK: - Public Interface
@@ -79,23 +74,9 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user points")
-        do {
-            let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
-            try await storage.saveUserPointData(response.data)
-            _data = response.data
-        } catch let error as BaseError {
-            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                userManager.forceLogout()
-            } else {
-                throw error
-            }
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to load user points",
-                logger: logger
-            )
-        }
+        let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
+        try await storage.saveUserPointData(response.data)
+        _data = response.data
     }
     
     func getById(id: String) -> UserPoint? {
@@ -117,7 +98,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
             .reduce(0) { $0 + $1.pointValue }
     }
     
-    func handleScannedPoint(_ point: ScannedPoint) {
+    func handleScannedPoint(_ point: ScannedPoint) async throws {
         guard point.location != nil else {
             logger.log(message: "Couldn't extract user's location for scanned point \(point.code)")
             scanningDelegate?.onScanPointNoLocation()
@@ -129,26 +110,14 @@ public final class UserPointManager: BaseClass, UserPointManaging {
             return
         }
         if isOnline {
-            handleOnlinePoint(point)
+            try await handleOnlinePoint(point)
         } else {
-            handleOfflinePoint(point)
+            await handleOfflinePoint(point)
         }
     }
     
-    func handleAllStoredScannedPoints() {
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendAllStoredScannedPoints()
-            } catch let error as BaseError {
-                if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                    self?.userManager.forceLogout()
-                    return
-                }
-            } catch {
-                self?.logger.log(message: "The saved scanned point could not be processed")
-                self?.scanningDelegate?.onScanPointOfflineProcessError()
-            }
-        }
+    func handleAllStoredScannedPoints() async throws {
+        try await scanningManager.sendAllStoredScannedPoints()
     }
     
     func onLogout() {
@@ -161,27 +130,27 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     // MARK: - Private Helpers
     
-    private func handleOnlinePoint(_ point: ScannedPoint) {
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.handleScannedPointOnline(point)
-                self?.scanningDelegate?.onScanPointProcessSuccessOnline(point.codeSource)
-            } catch {
-                self?.logger.log(message: "The Scanned point \(point.code) could not be processed")
-                self?.scanningDelegate?.onScanPointProcessError(point.codeSource)
+    private func handleOnlinePoint(_ point: ScannedPoint) async throws {
+        do {
+            try await scanningManager.handleScannedPointOnline(point)
+            scanningDelegate?.onScanPointProcessSuccessOnline(point.codeSource)
+        } catch let error as BaseError {
+            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                throw error // Handled by Game Data Manager
+            } else {
+                scanningDelegate?.onScanPointOnlineProcessError(point.codeSource)
             }
+        } catch {
+            scanningDelegate?.onScanPointOnlineProcessError(point.codeSource)
         }
     }
     
-    private func handleOfflinePoint(_ point: ScannedPoint) {
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.handleScannedPointOffline(point)
-                self?.scanningDelegate?.onScanPointProcessSuccessOffline(point.codeSource)
-            } catch {
-                self?.logger.log(message: "The Scanned point \(point.code) could not be processed")
-                self?.scanningDelegate?.onScanPointProcessError(point.codeSource)
-            }
+    private func handleOfflinePoint(_ point: ScannedPoint) async {
+        do {
+            try await scanningManager.handleScannedPointOffline(point)
+            scanningDelegate?.onScanPointProcessSuccessOffline(point.codeSource)
+        } catch {
+            scanningDelegate?.onScanPointOnlineProcessError(point.codeSource)
         }
     }
 }

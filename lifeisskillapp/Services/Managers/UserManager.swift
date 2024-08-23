@@ -24,12 +24,10 @@ protocol UserManaging {
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
     
-    // MARK: LOGGED IN USER PROPERTIES
+    // MARK: LOGGED IN USER PROPERTIES FOR VIEWMODELS
     
-    var userId: String? { get }
-    var token: String? { get }
+    //var token: String? { get }
     var userName: String? { get }
-    var userMainCategory: String? { get }
     var userGender: UserGender? { get }
     
     func initializeAppId() async throws
@@ -49,7 +47,6 @@ final class UserManager: BaseClass, UserManaging {
     private var storage: PersistentUserDataStoraging
     private let registerAppAPI: RegisterAppAPIServicing
     private let loginAPI: LoginAPIServicing
-    private var realmLoginRepo: any RealmLoginRepositoring
     private let networkMonitor: NetworkMonitoring
     private let keychainStorage: KeychainStoraging
     
@@ -62,10 +59,8 @@ final class UserManager: BaseClass, UserManaging {
     weak var delegate: UserManagerFlowDelegate?
     var isLoggedIn: Bool { data != nil }
     var hasAppId: Bool { userDefaultsStorage.appId != nil }
-    var userId: String? { self.data?.user.id }
-    var token: String? { self.data?.user.token }
+
     var userName: String? { self.data?.user.nick }
-    var userMainCategory: String? { self.data?.user.mainCategory }
     var userGender: UserGender? { self.data?.user.sex }
     
     // MARK: - Initialization
@@ -75,7 +70,6 @@ final class UserManager: BaseClass, UserManaging {
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
         self.loginAPI = dependencies.loginAPI
-        self.realmLoginRepo = dependencies.container.realmLoginRepository
         self.storage = dependencies.storage
         self.networkMonitor = dependencies.networkMonitor
         self.keychainStorage = dependencies.keychainStorage
@@ -155,15 +149,14 @@ final class UserManager: BaseClass, UserManaging {
     
     private func load() {
         Task { @MainActor [weak self] in
-            self?.checkIfUserIsLoggedIn() // check if the user has logged out before, or is still logged in
+            await self?.checkIfUserIsLoggedIn() // check if the user has logged out before, or is still logged in
         }
     }
     
-    private func checkIfUserIsLoggedIn() {
+    private func checkIfUserIsLoggedIn() async {
         do {
-            // if the user hasn't logged out then I use that data
-            if let storedLoginData = try realmLoginRepo.getSavedLoginDetails(), storedLoginData.isLoggedIn {
-                self.data = storedLoginData.loginUserData() // gives signal to show main page
+            if let storedLoginData = try await storage.loggedInUserDetails() {
+                self.data = storedLoginData // gives signal to show main page
             } else {
                 self.data = nil // gives signal to show login page
             }
@@ -179,18 +172,18 @@ final class UserManager: BaseClass, UserManaging {
             let loggedInUser = response.data.user
             
             // check if there is existing user in realm
-            guard let existingUser = try realmLoginRepo.getSavedLoginDetails() else {
+            guard let existingUser = try await storage.savedLoginDetails() else {
                 try keychainStorage.save(credentials: credentials) // save new credentials to keychain
-                try realmLoginRepo.saveLoginUser(loggedInUser) // save new data to realm
+                try await storage.login(loggedInUser) // save new data to realm
                 data = response.data // give signal of successfull login
                 return
             }
             // if there is data in realm and if the newly logged in user is different then we clear all data in realm
-            if loggedInUser.userId != existingUser.userID {
+            if loggedInUser.userId != existingUser.user.userId {
                 logger.log(message: "Different user detected. Clearing all related data.")
                 try await storage.clearUserRelatedData() // clear all data
             }
-            try realmLoginRepo.saveLoginUser(loggedInUser) // save the new login data
+            try await storage.login(loggedInUser) // save the new login data
             try keychainStorage.delete() // delete previous credentials
             try keychainStorage.save(credentials: credentials) // save new credentials in keychain
             data = response.data // indicate to appFC to present Home Screen in TabBar
@@ -217,23 +210,22 @@ final class UserManager: BaseClass, UserManaging {
             )
         }
         // load stored data
-        guard let storedLoginData = try realmLoginRepo.getSavedLoginDetails() else {
+        guard try await storage.loggedInUserDetails() == nil else {
             throw BaseError(
                 context: .system,
                 message: "Offline login failed: unable to retrieve realm data.",
                 logger: logger
             )
         }
-        // make sure that the user was logged out, this should never fall through to else {...}
-        guard !storedLoginData.isLoggedIn else {
+        guard let storedLoginData = try await storage.savedLoginDetails() else {
             throw BaseError(
                 context: .system,
-                message: "Offline login failed: user is supposedly already logged in in realm database.",
+                message: "Offline login failed: unable to retrieve realm data.",
                 logger: logger
             )
         }
-        try realmLoginRepo.markUserAsLoggedIn() // change the user in realm as logged in
+        try await storage.markUserAsLoggedIn()
         try await storage.onLogin()
-        self.data = storedLoginData.loginUserData() // indicate to appFC to present Home Screen in TabBar
+        self.data = storedLoginData // indicate to appFC to present Home Screen in TabBar
     }
 }
