@@ -54,7 +54,8 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     }
     
     private func fetchData() async {
-        await gameDataManager.loadData(for: .categories)
+        // TODO: ask martin if I should load new category data for every display of category selector or if it sufficed to keep the fetching limited to login
+        //await gameDataManager.loadData(for: .categories)
         let categories = getAllUserCategories()
         await MainActor.run {
             self.userCategories = categories
