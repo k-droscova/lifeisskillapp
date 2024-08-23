@@ -177,7 +177,9 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     // MARK: - Private Helpers
     
     private func returnToHomeScreen() {
-        navigationController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
     
     private func showNoLocationAlert() {
