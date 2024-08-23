@@ -38,27 +38,17 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
-    private let networkMonitor: NetworkMonitoring
     private let scanningManager: ScanningManaging
-    private var checkSum: String?
+    private var _data: UserPointData?
     private var isOnline: Bool { networkMonitor.onlineStatus }
+    
+    internal let networkMonitor: NetworkMonitoring
     
     // MARK: - Public Properties
     
     weak var scanningDelegate: ScanPointFlowDelegate?
     
-    var data: UserPointData? {
-        get {
-            storage.userPointData
-        }
-        set {
-            storage.userPointData = newValue
-        }
-    }
-    
-    var token: String? {
-        get { userManager.token }
-    }
+    var token: String? { userManager.token }
     
     // MARK: - Initialization
     
@@ -69,16 +59,21 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         self.userDataAPIService = dependencies.userDataAPI
         self.networkMonitor = dependencies.networkMonitor
         self.scanningManager = dependencies.scanningManager
-        self.checkSum = storage.checkSumData?.userPoints
         
         super.init()
+        self.loadFromRepository()
     }
     
     // MARK: - Public Interface
     
     func loadFromRepository() {
         Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .userPoints)
+            do {
+                try await self?.storage.loadFromRepository(for: .userPoints)
+                self?._data = try await self?.storage.userPointData()
+            } catch {
+                self?.logger.log(message: "Unable to load user points from storage")
+            }
         }
     }
     
@@ -86,13 +81,15 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         logger.log(message: "Loading user points")
         do {
             let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
-            data = response.data
+            try await storage.saveUserPointData(response.data)
+            _data = response.data
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 userManager.forceLogout()
+            } else {
+                throw error
             }
-        }
-        catch {
+        } catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to load user points",
@@ -102,19 +99,19 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     }
     
     func getById(id: String) -> UserPoint? {
-        data?.data.first { $0.id == id }
+        _data?.data.first { $0.id == id }
     }
     
     func getAll() -> [UserPoint] {
-        data?.data ?? []
+        _data?.data ?? []
     }
     
     func getPoints(byCategory categoryId: String) -> [UserPoint] {
-        data?.data.filter { $0.pointCategory.contains(categoryId) } ?? []
+        _data?.data.filter { $0.pointCategory.contains(categoryId) } ?? []
     }
     
     func getTotalPoints(byCategory categoryId: String) -> Int {
-        // returns total for user points that are valid
+        // Returns total for user points that are valid
         return getPoints(byCategory: categoryId)
             .filter { $0.doesPointCount }
             .reduce(0) { $0 + $1.pointValue }
@@ -133,8 +130,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
         }
         if isOnline {
             handleOnlinePoint(point)
-        }
-        else {
+        } else {
             handleOfflinePoint(point)
         }
     }
@@ -153,6 +149,14 @@ public final class UserPointManager: BaseClass, UserPointManaging {
                 self?.scanningDelegate?.onScanPointOfflineProcessError()
             }
         }
+    }
+    
+    func onLogout() {
+        _data = nil
+    }
+    
+    func checkSum() -> String? {
+        _data?.checkSum
     }
     
     // MARK: - Private Helpers

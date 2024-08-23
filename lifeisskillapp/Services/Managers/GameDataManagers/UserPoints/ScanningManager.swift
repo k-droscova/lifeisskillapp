@@ -66,7 +66,7 @@ public final class ScanningManager: ScanningManaging {
     
     func handleScannedPointOffline(_ point: ScannedPoint) async throws {
         logger.log(message: "Saving scanned point: \(point.code)")
-        try scannedPointRepo.save(RealmScannedPoint(from: point))
+        try await storage.saveScannedPoint(point)
     }
     
     func checkValidity(_ point: ScannedPoint) -> Bool {
@@ -76,7 +76,7 @@ public final class ScanningManager: ScanningManaging {
     }
     
     func sendAllStoredScannedPoints() async throws {
-        let points = try await scannedPointRepo.getScannedPoints()
+        let points = try await storage.scannedPoints()
         try scannedPointRepo.deleteAll()
         
         for scannedPoint in points {

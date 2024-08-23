@@ -19,7 +19,7 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
 }
 
 public final class UserCategoryManager: BaseClass, UserCategoryManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -28,22 +28,13 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
     private var selectedCategorySubject = CurrentValueSubject<UserCategory?, Never>(nil)
+    private var _data: UserCategoryData?
     
+    internal let networkMonitor: NetworkMonitoring
+
     // MARK: - Public Properties
     
-    var data: UserCategoryData? {
-        get {
-            storage.userCategoryData
-        }
-        set {
-            storage.userCategoryData = newValue
-        }
-    }
-    
-    var token: String? {
-        get { userManager.token }
-    }
-    
+    var token: String? { userManager.token }
     @Published var selectedCategory: UserCategory? {
         didSet {
             if oldValue?.id != selectedCategory?.id {
@@ -63,6 +54,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
+        self.networkMonitor = dependencies.networkMonitor
         
         super.init()
         self.loadFromRepository()
@@ -72,8 +64,13 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     func loadFromRepository() {
         Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .categories)
-            self?.selectedCategory = self?.data?.main
+            do {
+                try await self?.storage.loadFromRepository(for: .categories)
+                self?._data = try await self?.storage.userCategoryData()
+                self?.selectedCategory = try? await self?.storage.userCategoryData()?.main
+            } catch {
+                self?.logger.log(message: "Unable to load categories from storage")
+            }
         }
     }
     
@@ -81,17 +78,19 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         logger.log(message: "Fetching user categories")
         do {
             let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
-            data = response.data
+            try await storage.saveUserCategoryData(response.data)
+            _data = response.data
             guard selectedCategory != nil else {
-                selectedCategory = data?.main
+                selectedCategory = _data?.main
                 return
             }
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 userManager.forceLogout()
+            } else {
+                throw error
             }
-        }
-        catch {
+        } catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to load user categories",
@@ -101,15 +100,23 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     }
     
     func getById(id: String) -> UserCategory? {
-        data?.data.first { $0.id == id }
+        _data?.data.first { $0.id == id }
     }
     
     func getAll() -> [UserCategory] {
-        data?.data ?? []
+        _data?.data ?? []
     }
     
     func getMainCategory() -> UserCategory? {
-        data?.main
+        _data?.main
+    }
+    
+    func onLogout() {
+        _data = nil
+    }
+    
+    func checkSum() -> String? {
+        nil
     }
     
     // MARK: - Private Helpers

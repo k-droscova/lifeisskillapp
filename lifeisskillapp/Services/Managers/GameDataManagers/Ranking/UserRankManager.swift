@@ -15,8 +15,8 @@ protocol HasUserRankManager {
 protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataContainer == UserRankData {
 }
 
-public final class UserRankManager: BaseClass, UserRankManaging {    
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager
+public final class UserRankManager: BaseClass, UserRankManaging {
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -24,22 +24,14 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
-    private var checkSum: String?
+    private var _data: UserRankData?
+    
+    internal let networkMonitor: NetworkMonitoring
+
     
     // MARK: - Public Properties
     
-    var data: UserRankData? {
-        get {
-            storage.userRankData
-        }
-        set {
-            storage.userRankData = newValue
-        }
-    }
-    
-    var token: String? {
-        get { userManager.token }
-    }
+    var token: String? { userManager.token }
     
     // MARK: - Initialization
     
@@ -48,30 +40,39 @@ public final class UserRankManager: BaseClass, UserRankManaging {
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
-        
+        self.networkMonitor = dependencies.networkMonitor
+
         super.init()
+        self.loadFromRepository()
     }
     
     // MARK: - Public Interface
     
     func loadFromRepository() {
         Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .rankings)
+            do {
+                try await self?.storage.loadFromRepository(for: .rankings)
+                self?._data = try await self?.storage.userRankData()
+            } catch {
+                self?.logger.log(message: "Unable to load user ranks from storage")
+            }
         }
     }
     
     func fetch(withToken token: String) async throws {
-        logger.log(message: "Loading user ranks")
+        logger.log(message: "Fetching user ranks")
         do {
             let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
-            data = response.data
+            try await storage.saveUserRankData(response.data)
+            _data = response.data
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 userManager.forceLogout()
                 return
+            } else {
+                throw error
             }
-        }
-        catch {
+        } catch {
             throw BaseError(
                 context: .system,
                 message: "Unable to load user ranks",
@@ -81,10 +82,18 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     }
     
     func getById(id: String) -> UserRank? {
-        data?.data.first { $0.id == id }
+        _data?.data.first { $0.id == id }
     }
     
     func getAll() -> [UserRank] {
-        data?.data ?? []
+        _data?.data ?? []
+    }
+    
+    func onLogout() {
+        _data = nil
+    }
+    
+    func checkSum() -> String? {
+        _data?.checkSum
     }
 }

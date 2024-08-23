@@ -19,7 +19,7 @@ protocol HasGameDataManager {
 protocol GameDataManaging {
     var delegate: GameDataManagerFlowDelegate? { get set }
     func loadData(for endpoint: CheckSumAPIService.Endpoint?) async
-    func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint?) async
+    func fetchNewDataIfNecessary(endpoint: CheckSumAPIService.Endpoint?) async
 }
 
 public final class GameDataManager: BaseClass, GameDataManaging {
@@ -35,11 +35,6 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private let userRankManager: any UserRankManaging
     private let userManager: UserManaging
     private let networkMonitor: NetworkMonitoring
-    
-    private var checkSumData: CheckSumData? {
-        get { storage.checkSumData }
-        set { storage.checkSumData = newValue }
-    }
     private var isOnline: Bool
     private var cancellables = Set<AnyCancellable>()
     
@@ -75,17 +70,17 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     func loadData(for endpoint: CheckSumAPIService.Endpoint?) async {
         guard !isOnline else {
-            await fetchNewDataIfNeccessary(endpoint: endpoint)
+            await fetchNewDataIfNecessary(endpoint: endpoint)
             return
         }
-        guard let endpoint else {
+        if let endpoint = endpoint {
+            await loadFromRepository(for: endpoint)
+        } else {
             await self.loadAllDataFromRepository()
-            return
         }
-        loadFromRepository(for: endpoint)
     }
     
-    func fetchNewDataIfNeccessary(endpoint: CheckSumAPIService.Endpoint? = nil) async {
+    func fetchNewDataIfNecessary(endpoint: CheckSumAPIService.Endpoint? = nil) async {
         do {
             if let endpoint = endpoint {
                 try await fetchData(for: endpoint)
@@ -97,24 +92,23 @@ public final class GameDataManager: BaseClass, GameDataManaging {
                 userManager.forceLogout()
                 return
             }
-        }
-        catch {
+        } catch {
             delegate?.onError(error)
         }
     }
     
     // MARK: - Private Helpers
     
-    private func loadFromRepository(for endpoint: CheckSumAPIService.Endpoint) {
+    private func loadFromRepository(for endpoint: CheckSumAPIService.Endpoint) async {
         switch endpoint {
         case .userpoints:
-            userPointManager.loadFromRepository()
+            await userPointManager.loadFromRepository()
         case .rank:
-            userRankManager.loadFromRepository()
+            await userRankManager.loadFromRepository()
         case .points:
-            userPointManager.loadFromRepository()
+            await userPointManager.loadFromRepository()
         default:
-            print("Loading events or messages not yet implemented")
+            logger.log(message: "Loading events or messages not yet implemented")
         }
     }
     
@@ -122,7 +116,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         await withTaskGroup(of: Void.self) { group in
             for endpoint in CheckSumAPIService.Endpoint.allCases {
                 group.addTask { [weak self] in
-                    self?.loadFromRepository(for: endpoint)
+                    await self?.loadFromRepository(for: endpoint)
                 }
             }
         }
@@ -144,7 +138,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         
         let checkSum = try await fetchNewCheckSumData(for: endpoint)
         
-        if shouldFetchData(for: endpoint, newCheckSum: checkSum) {
+        if try await shouldFetchData(for: endpoint, newCheckSum: checkSum) {
             switch endpoint {
             case .userpoints:
                 await fetchNewUserPoints()
@@ -180,11 +174,8 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    private func shouldFetchData(for endpoint: CheckSumAPIService.Endpoint, newCheckSum: String) -> Bool {
-        guard let currentData = checkSumData else {
-            checkSumData = CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
-            return true
-        }
+    private func shouldFetchData(for endpoint: CheckSumAPIService.Endpoint, newCheckSum: String) async throws -> Bool {
+        let currentData = try await storage.checkSumData() ?? CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         
         switch endpoint {
         case .userpoints:
@@ -200,30 +191,34 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    private func updateCheckSum(newCheckSum: String, for endpoint: CheckSumAPIService.Endpoint) {
+    private func updateCheckSum(newCheckSum: String, for endpoint: CheckSumAPIService.Endpoint) async throws {
+        var currentData = try await storage.checkSumData() ?? CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
+        
         switch endpoint {
         case .userpoints:
-            checkSumData?.userPoints = newCheckSum
+            currentData.userPoints = newCheckSum
         case .rank:
-            checkSumData?.rank = newCheckSum
+            currentData.rank = newCheckSum
         case .events:
-            checkSumData?.events = newCheckSum
+            currentData.events = newCheckSum
         case .messages:
-            checkSumData?.messages = newCheckSum
+            currentData.messages = newCheckSum
         case .points:
-            checkSumData?.points = newCheckSum
+            currentData.points = newCheckSum
         }
+        
+        try await storage.saveCheckSumData(currentData)
     }
     
     private func fetchNewUserPoints() async {
         logger.log(message: "Updating user points data")
         do {
             try await userPointManager.fetch()
-            guard let newCheckSum = userPointManager.data?.checkSum else {
+            guard let newCheckSum = userPointManager.checkSum() else {
                 logger.log(message: "ERROR: User points checksum is null")
                 return
             }
-            updateCheckSum(newCheckSum: newCheckSum, for: .userpoints)
+            try await updateCheckSum(newCheckSum: newCheckSum, for: .userpoints)
         } catch {
             logger.log(message: "ERROR: User points data fetch failed")
         }
@@ -233,11 +228,11 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         logger.log(message: "Updating user rank data")
         do {
             try await userRankManager.fetch()
-            guard let newCheckSum = userRankManager.data?.checkSum else {
+            guard let newCheckSum = userRankManager.checkSum() else {
                 logger.log(message: "ERROR: User rank checksum is null")
                 return
             }
-            updateCheckSum(newCheckSum: newCheckSum, for: .rank)
+            try await updateCheckSum(newCheckSum: newCheckSum, for: .rank)
         } catch {
             logger.log(message: "ERROR: User rank data fetch failed")
         }
@@ -257,18 +252,24 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         logger.log(message: "Updating points data")
         do {
             try await genericPointManager.fetch()
-            guard let newCheckSum = genericPointManager.data?.checkSum else {
+            guard let newCheckSum = genericPointManager.checkSum() else {
                 logger.log(message: "ERROR: Points checksum is null")
                 return
             }
-            updateCheckSum(newCheckSum: newCheckSum, for: .points)
+            try await updateCheckSum(newCheckSum: newCheckSum, for: .points)
         } catch {
             logger.log(message: "ERROR: Points data fetch failed")
         }
     }
     
     private func load() {
-        storage.load()
+        Task { [weak self] in
+            do {
+                try await self?.storage.loadAllDataFromRepositories()
+            } catch {
+                self?.logger.log(message: error.localizedDescription)
+            }
+        }
     }
     
     private func setupBindings() {
@@ -286,7 +287,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             self.isOnline = isOnline
             if self.userManager.isLoggedIn && self.isOnline {
                 self.userPointManager.handleAllStoredScannedPoints()
-                await self.fetchNewDataIfNeccessary()
+                await self.fetchNewDataIfNecessary()
             }
         }
     }

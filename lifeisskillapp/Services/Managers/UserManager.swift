@@ -55,7 +55,7 @@ final class UserManager: BaseClass, UserManaging {
     
     private var data: LoginUserData?
     private var isOnline: Bool { networkMonitor.onlineStatus }
-
+    
     
     // MARK: - Public Properties
     
@@ -109,26 +109,27 @@ final class UserManager: BaseClass, UserManaging {
         if isOnline {
             try await performOnlineLogin(credentials: credentials)
         } else {
-            try performOfflineLogin(credentials: credentials)
+            try await performOfflineLogin(credentials: credentials)
         }
     }
     
     func logout() {
-        logger.log(message: "Logging out")
-        do {
-            try storage.onLogout()
-        } catch {
-            logger.log(message: "Failed to logout: \(error.localizedDescription)")
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.storage.onLogout()
+            } catch {
+                self?.logger.log(message: "Failed to logout: \(error.localizedDescription)")
+            }
+            self?.data = nil
+            self?.delegate?.onLogout()
         }
-        data = nil
-        delegate?.onLogout()
     }
     
     func offlineLogout() {
         Task { @MainActor [weak self] in
             do {
-                try await self?.storage.clearSavedScannedPoints()
-                try self?.storage.onLogout()
+                try await self?.storage.clearScannedPointData()
+                try await self?.storage.onLogout()
                 self?.data = nil
                 self?.delegate?.onLogout()
             } catch {
@@ -140,8 +141,8 @@ final class UserManager: BaseClass, UserManaging {
     func forceLogout() {
         Task { @MainActor [weak self] in
             do {
-                try await self?.storage.clearSavedScannedPoints()
-                try self?.storage.onLogout()
+                try await self?.storage.clearScannedPointData()
+                try await self?.storage.onLogout()
                 self?.data = nil
                 self?.delegate?.onForceLogout()
             } catch {
@@ -187,7 +188,7 @@ final class UserManager: BaseClass, UserManaging {
             // if there is data in realm and if the newly logged in user is different then we clear all data in realm
             if loggedInUser.userId != existingUser.userID {
                 logger.log(message: "Different user detected. Clearing all related data.")
-                try await storage.clearAllUserData() // clear all data
+                try await storage.clearUserRelatedData() // clear all data
             }
             try realmLoginRepo.saveLoginUser(loggedInUser) // save the new login data
             try keychainStorage.delete() // delete previous credentials
@@ -202,7 +203,7 @@ final class UserManager: BaseClass, UserManaging {
         }
     }
     
-    private func performOfflineLogin(credentials: LoginCredentials) throws {
+    private func performOfflineLogin(credentials: LoginCredentials) async throws {
         // check keychain and that the data match
         guard let storedUsername = keychainStorage.username,
               let storedPassword = keychainStorage.password,
@@ -232,7 +233,7 @@ final class UserManager: BaseClass, UserManaging {
             )
         }
         try realmLoginRepo.markUserAsLoggedIn() // change the user in realm as logged in
-        storage.load()
+        try await storage.onLogin()
         self.data = storedLoginData.loginUserData() // indicate to appFC to present Home Screen in TabBar
     }
 }

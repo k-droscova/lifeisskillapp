@@ -54,11 +54,11 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     private func fetchData() async {
         do {
-            try await userCategoryManager.fetch()
+            try await userCategoryManager.loadData()
             let categories = getAllUserCategories()
             await MainActor.run {
                 self.userCategories = categories
-                self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.data?.data.first
+                self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.getAll().first
             }
         } catch {
             logger.log(message: "ERROR: Unable to fetch new user category data")

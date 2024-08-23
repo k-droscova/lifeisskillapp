@@ -52,10 +52,10 @@
 		2734DCA62C469442008030F3 /* UserPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCA52C469442008030F3 /* UserPoint.swift */; };
 		2734DCA92C46A3E6008030F3 /* UserCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */; };
 		2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */; };
-		2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */; };
+		2734DCAE2C46AA49008030F3 /* InMemoryUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* InMemoryUserDataStorage.swift */; };
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
-		2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */; };
 		2736FA482C6A76D500B03B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27274F882C3320F3003453E2 /* LaunchScreen.storyboard */; };
+		2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
@@ -68,6 +68,7 @@
 		27414D912C63A15300C19F8C /* RealmSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
+		27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27497AF72C78ACDB00E7051D /* UserDataStorage.swift */; };
 		2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750BBF92C6A550E00F82A04 /* OnboardingView.swift */; };
 		275457092C33254300F3B55A /* ACKategories in Frameworks */ = {isa = PBXBuildFile; productRef = 275457082C33254300F3B55A /* ACKategories */; };
 		2754570B2C33259200F3B55A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754570A2C33259200F3B55A /* Network.swift */; };
@@ -241,7 +242,7 @@
 		2734DCA52C469442008030F3 /* UserPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPoint.swift; sourceTree = "<group>"; };
 		2734DCA82C46A3E6008030F3 /* UserCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryManager.swift; sourceTree = "<group>"; };
 		2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIService.swift; sourceTree = "<group>"; };
-		2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
+		2734DCAD2C46AA49008030F3 /* InMemoryUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryUserDataStorage.swift; sourceTree = "<group>"; };
 		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
 		2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDataStorage.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 		27414D842C63A08B00C19F8C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		27497AF72C78ACDB00E7051D /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
 		2750BBF92C6A550E00F82A04 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2754570A2C33259200F3B55A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2754570C2C3328B300F3B55A /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -982,6 +984,7 @@
 				27D569262C6B7050003EF5D9 /* Other */,
 				27E9D6202C63FA950098CB96 /* In-Memory */,
 				27E9D5FC2C63D9020098CB96 /* Realm */,
+				27497AF72C78ACDB00E7051D /* UserDataStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1029,7 +1032,7 @@
 		27E9D6202C63FA950098CB96 /* In-Memory */ = {
 			isa = PBXGroup;
 			children = (
-				2734DCAD2C46AA49008030F3 /* UserDataStorage.swift */,
+				2734DCAD2C46AA49008030F3 /* InMemoryUserDataStorage.swift */,
 			);
 			path = "In-Memory";
 			sourceTree = "<group>";
@@ -1242,7 +1245,7 @@
 				2794492A2C6F75AE00D8F037 /* AlertPresentable.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				27E9D6192C63F8EC0098CB96 /* CategoryRepository.swift in Sources */,
-				2734DCAE2C46AA49008030F3 /* UserDataStorage.swift in Sources */,
+				2734DCAE2C46AA49008030F3 /* InMemoryUserDataStorage.swift in Sources */,
 				27E9D6082C63E3810098CB96 /* RealmRanking.swift in Sources */,
 				273022372C626DCA00F9D572 /* SettingsBarView.swift in Sources */,
 				27F529002C5A8A380042F537 /* ViewExtension.swift in Sources */,
@@ -1282,7 +1285,6 @@
 				278174842C4BF96B00138376 /* View.swift in Sources */,
 				27E9D61F2C63F9770098CB96 /* PointRepository.swift in Sources */,
 				2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */,
-				27F27A472C4D334F00928388 /* UserLoginDataManager.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				273022352C62577800F9D572 /* LocationStatusBarView.swift in Sources */,
@@ -1291,6 +1293,7 @@
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
 				27E9D6112C63EC010098CB96 /* Repository.swift in Sources */,
+				27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
