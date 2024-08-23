@@ -38,7 +38,7 @@ protocol UserManaging {
 }
 
 final class UserManager: BaseClass, UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage & HasGameDataManager
     
     // MARK: - Private Properties
     
@@ -49,6 +49,7 @@ final class UserManager: BaseClass, UserManaging {
     private let loginAPI: LoginAPIServicing
     private let networkMonitor: NetworkMonitoring
     private let keychainStorage: KeychainStoraging
+    private let gameDataManager: GameDataManaging
     
     private var data: LoginUserData?
     private var isOnline: Bool { networkMonitor.onlineStatus }
@@ -73,8 +74,10 @@ final class UserManager: BaseClass, UserManaging {
         self.storage = dependencies.storage
         self.networkMonitor = dependencies.networkMonitor
         self.keychainStorage = dependencies.keychainStorage
+        self.gameDataManager = dependencies.gameDataManager
         
         super.init()
+        self.checkIfUserIsLoggedIn() // check if the user is logged in already
     }
     
     // MARK: - Public interface
@@ -105,6 +108,7 @@ final class UserManager: BaseClass, UserManaging {
         } else {
             try await performOfflineLogin(credentials: credentials)
         }
+        await gameDataManager.loadData(for: nil) // load all data for the user upon login
     }
     
     func logout() {
@@ -147,7 +151,7 @@ final class UserManager: BaseClass, UserManaging {
     
     // MARK: - Private Helpers
     
-    private func load() {
+    private func checkIfUserIsLoggedIn() {
         Task { @MainActor [weak self] in
             await self?.checkIfUserIsLoggedIn() // check if the user has logged out before, or is still logged in
         }
