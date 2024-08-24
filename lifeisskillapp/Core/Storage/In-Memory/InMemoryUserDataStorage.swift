@@ -15,8 +15,22 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     private let logger: LoggerServicing
     private var internalStore: [String: Any] = [:]
     
-    var token: String?
-    var isLoggedIn: Bool = false
+    // MARK: - Public Properties
+    
+    private(set) var token: String?
+    private(set) var isLoggedIn: Bool = false
+    
+    // MARK: - Keys
+    
+    private enum StorageKey: String {
+        case loginUserData = "LoginUserData"
+        case userCategoryData = "userCategoryData"
+        case userPointData = "userPointData"
+        case userRankData = "userRankData"
+        case genericPointData = "genericPointData"
+        case checkSumData = "checkSumData"
+        case scannedPoints = "scannedPoints"
+    }
     
     // MARK: - Initialization
     
@@ -35,17 +49,17 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     }
     
     func savedLoginDetails() async throws -> LoginUserData? {
-        guard let loggedInUser = internalStore["LoginUserData"] as? LoggedInUser else { return nil }
-        return LoginUserData.init(from: loggedInUser)
+        guard let loggedInUser = internalStore[StorageKey.loginUserData.rawValue] as? LoggedInUser else { return nil }
+        return LoginUserData(from: loggedInUser)
     }
     
     func loggedInUserDetails() async throws -> LoginUserData? {
-        guard let loggedInUser = internalStore["LoginUserData"] as? LoggedInUser else { return nil }
-        return LoginUserData.init(from: loggedInUser)
+        guard let loggedInUser = internalStore[StorageKey.loginUserData.rawValue] as? LoggedInUser else { return nil }
+        return LoginUserData(from: loggedInUser)
     }
     
     func login(_ user: LoggedInUser) async throws {
-        internalStore["LoginUserData"] = user
+        internalStore[StorageKey.loginUserData.rawValue] = user
         isLoggedIn = true
     }
     
@@ -64,105 +78,105 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     }
     
     func clearScannedPointData() async throws {
-        internalStore.removeValue(forKey: "scannedPoints")
+        internalStore.removeValue(forKey: StorageKey.scannedPoints.rawValue)
     }
     
     func clearUserRelatedData() async throws {
         // Remove user category, user points, and user rank data
-        internalStore.removeValue(forKey: "userCategoryData")
-        internalStore.removeValue(forKey: "userPointData")
-        internalStore.removeValue(forKey: "userRankData")
+        internalStore.removeValue(forKey: StorageKey.userCategoryData.rawValue)
+        internalStore.removeValue(forKey: StorageKey.userPointData.rawValue)
+        internalStore.removeValue(forKey: StorageKey.userRankData.rawValue)
         
         // Clear the related fields in CheckSumData
-        if var checkSumData = internalStore["checkSumData"] as? CheckSumData {
+        if var checkSumData = internalStore[StorageKey.checkSumData.rawValue] as? CheckSumData {
             checkSumData.userPoints = ""
             checkSumData.rank = ""
-            internalStore["checkSumData"] = checkSumData
+            internalStore[StorageKey.checkSumData.rawValue] = checkSumData
         }
     }
     
     // MARK: - User Categories
     
     func userCategoryData() async throws -> UserCategoryData? {
-        internalStore["userCategoryData"] as? UserCategoryData
+        internalStore[StorageKey.userCategoryData.rawValue] as? UserCategoryData
     }
     
     func saveUserCategoryData(_ data: UserCategoryData?) async throws {
         guard let data else {
-            internalStore.removeValue(forKey: "userCategoryData")
+            internalStore.removeValue(forKey: StorageKey.userCategoryData.rawValue)
             return
         }
-        internalStore["userCategoryData"] = data
+        internalStore[StorageKey.userCategoryData.rawValue] = data
     }
     
     // MARK: - User Points
     
     func userPointData() async throws -> UserPointData? {
-        internalStore["userPointData"] as? UserPointData
+        internalStore[StorageKey.userPointData.rawValue] as? UserPointData
     }
     
     func saveUserPointData(_ data: UserPointData?) async throws {
         guard let data else {
-            internalStore.removeValue(forKey: "userPointData")
+            internalStore.removeValue(forKey: StorageKey.userPointData.rawValue)
             return
         }
-        internalStore["userPointData"] = data
+        internalStore[StorageKey.userPointData.rawValue] = data
     }
     
     // MARK: - User Rank
     
     func userRankData() async throws -> UserRankData? {
-        internalStore["userRankData"] as? UserRankData
+        internalStore[StorageKey.userRankData.rawValue] as? UserRankData
     }
     
     func saveUserRankData(_ data: UserRankData?) async throws {
         guard let data else {
-            internalStore.removeValue(forKey: "userRankData")
+            internalStore.removeValue(forKey: StorageKey.userRankData.rawValue)
             return
         }
-        internalStore["userRankData"] = data
+        internalStore[StorageKey.userRankData.rawValue] = data
     }
     
     // MARK: - Generic Points
     
     func genericPointData() async throws -> GenericPointData? {
-        internalStore["genericPointData"] as? GenericPointData
+        internalStore[StorageKey.genericPointData.rawValue] as? GenericPointData
     }
     
     func saveGenericPointData(_ data: GenericPointData?) async throws {
         guard let data else {
-            internalStore.removeValue(forKey: "genericPointData")
+            internalStore.removeValue(forKey: StorageKey.genericPointData.rawValue)
             return
         }
-        internalStore["genericPointData"] = data
+        internalStore[StorageKey.genericPointData.rawValue] = data
     }
     
     // MARK: - Check Sums
     
     func checkSumData() async throws -> CheckSumData? {
-        internalStore["checkSumData"] as? CheckSumData
+        internalStore[StorageKey.checkSumData.rawValue] as? CheckSumData
     }
     
     func saveCheckSumData(_ data: CheckSumData?) async throws {
         guard let data else {
-            internalStore.removeValue(forKey: "checkSumData")
+            internalStore.removeValue(forKey: StorageKey.checkSumData.rawValue)
             return
         }
-        internalStore["checkSumData"] = data
+        internalStore[StorageKey.checkSumData.rawValue] = data
     }
     
     // MARK: - Scanned Points
     
     func scannedPoints() async throws -> [ScannedPoint] {
-        internalStore["scannedPoints"] as? [ScannedPoint] ?? []
+        internalStore[StorageKey.scannedPoints.rawValue] as? [ScannedPoint] ?? []
     }
     
     func saveScannedPoint(_ point: ScannedPoint) async throws {
-        if var points = internalStore["scannedPoints"] as? [ScannedPoint] {
+        if var points = internalStore[StorageKey.scannedPoints.rawValue] as? [ScannedPoint] {
             points.append(point)
-            internalStore["scannedPoints"] = points
+            internalStore[StorageKey.scannedPoints.rawValue] = points
         } else {
-            internalStore["scannedPoints"] = [point]
+            internalStore[StorageKey.scannedPoints.rawValue] = [point]
         }
     }
 }
