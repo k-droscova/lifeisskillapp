@@ -19,7 +19,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
         super.init()
         appDependencies.locationManager.delegate = self // MainFC presents alerts linked to location, since we need location AFTER login for point scanning
         appDependencies.gameDataManager.delegate = self // present alert if any fatal error with game data occurs anywhere in the app
-        loadDataAfterLogin()
     }
     
     override func start() -> UIViewController {
@@ -113,14 +112,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
             tabBar.barTintColor = CustomColors.TabBar.background.color
             tabBar.tintColor = CustomColors.TabBar.selectedItem.color
             tabBar.unselectedItemTintColor = CustomColors.TabBar.unselectedItem.color
-        }
-    }
-}
-
-extension MainFlowCoordinator {
-    private func loadDataAfterLogin() {
-        Task {
-            await appDependencies.gameDataManager.loadData(for: nil)
         }
     }
 }

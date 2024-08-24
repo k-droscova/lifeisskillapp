@@ -90,10 +90,10 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         try await withThrowingTaskGroup(of: Void.self) { [weak self] group in
             guard let self = self else { return }
             group.addTask { try self.loginRepo.deleteAll() }
-            group.addTask { try self.checkSumRepo.deleteAll() }
             group.addTask { try self.categoryRepo.deleteAll() }
             group.addTask { try self.rankingRepo.deleteAll() }
             group.addTask { try self.userPointRepo.deleteAll() }
+            group.addTask { try self.checkSumRepo.deleteUserSpecificCheckSums() }
             group.addTask { await self.clearInMemoryData() }
             try await group.waitForAll()
         }
