@@ -35,6 +35,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var genericPointRepo: any RealmGenericPointRepositoring
     private var userPointRepo: any RealmUserPointRepositoring
     private var scannedPointRepo: any RealmScannedPointRepositoring
+    private var sponsorRepo: any RealmSponsorRepositoring
     
     private var _userCategoryData: UserCategoryData?
     private var _userPointData: UserPointData?
@@ -59,6 +60,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         self.genericPointRepo = dependencies.realmPointRepository
         self.userPointRepo = dependencies.realmUserPointRepository
         self.scannedPointRepo = dependencies.realmScannedPointRepository
+        self.sponsorRepo = dependencies.realmSponsorRepository
     }
     
     // MARK: - Public Interface
@@ -200,6 +202,11 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         try scannedPointRepo.save(RealmScannedPoint(from: point))
     }
     
+    func saveSponsorImage(for sponsorId: String, imageData: Data) async throws {
+        let sponsorData = RealmSponsorData(sponsorID: sponsorId, imageData: imageData)
+        try sponsorRepo.save(sponsorData)
+    }
+    
     // MARK: - Public Interface Getting Methods
     
     func userCategoryData() async throws -> UserCategoryData? {
@@ -230,6 +237,10 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     func scannedPoints() async throws -> [ScannedPoint] {
         try await loadScannedPoints()
         return _scannedPoints
+    }
+    
+    func sponsorImage(for sponsorId: String) async throws -> Data? {
+        return try sponsorRepo.getById(sponsorId)?.imageData
     }
     
     // MARK: - Public Interface For Logged In User

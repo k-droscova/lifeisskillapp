@@ -30,6 +30,7 @@ final class InMemoryUserDataStorage: UserDataStoraging {
         case genericPointData = "genericPointData"
         case checkSumData = "checkSumData"
         case scannedPoints = "scannedPoints"
+        case sponsorImageDataPrefix = "sponsorImageData_"
     }
     
     // MARK: - Initialization
@@ -178,5 +179,17 @@ final class InMemoryUserDataStorage: UserDataStoraging {
         } else {
             internalStore[StorageKey.scannedPoints.rawValue] = [point]
         }
+    }
+    
+    // MARK: - Sponsor Images
+    
+    func saveSponsorImage(for sponsorId: String, imageData: Data) async throws {
+        let key = StorageKey.sponsorImageDataPrefix.rawValue + sponsorId
+        internalStore[key] = imageData
+    }
+    
+    func sponsorImage(for sponsorId: String) async throws -> Data? {
+        let key = StorageKey.sponsorImageDataPrefix.rawValue + sponsorId
+        return internalStore[key] as? Data
     }
 }

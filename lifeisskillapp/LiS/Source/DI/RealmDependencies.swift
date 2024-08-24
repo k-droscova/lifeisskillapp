@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias HasRealmRepositories = HasRealmLoginRepository & HasRealmCategoryRepository & HasRealmCheckSumRepository & HasRealmUserRankRepository & HasRealmUserPointRepository & HasRealmGenericPointRepository & HasRealmScannedPointRepository
+typealias HasRealmRepositories = HasRealmLoginRepository & HasRealmCategoryRepository & HasRealmCheckSumRepository & HasRealmUserRankRepository & HasRealmUserPointRepository & HasRealmGenericPointRepository & HasRealmScannedPointRepository & HasRealmSponsorRepository
 
 protocol HasRepositoryContainer {
     var container: HasRealmRepositories { get set }
@@ -21,6 +21,7 @@ final class RepositoryContainer: HasRealmRepositories {
     var realmUserPointRepository: any RealmUserPointRepositoring = RealmUserPointRepository(dependencies: appDependencies)
     var realmPointRepository: any RealmGenericPointRepositoring = RealmGenericPointRepository(dependencies: appDependencies)
     var realmScannedPointRepository: any RealmScannedPointRepositoring = RealmScannedPointRepository(dependencies: appDependencies)
+    var realmSponsorRepository: any RealmSponsorRepositoring = RealmSponsorRepository(dependencies: appDependencies)
 }
 
 final class RealmUserDataStorageDependencies: HasLoggers, HasRealmRepositories {
@@ -32,6 +33,7 @@ final class RealmUserDataStorageDependencies: HasLoggers, HasRealmRepositories {
     var realmUserPointRepository: any RealmUserPointRepositoring
     var realmPointRepository: any RealmGenericPointRepositoring
     var realmScannedPointRepository: any RealmScannedPointRepositoring
+    var realmSponsorRepository: any RealmSponsorRepositoring
     
     init(container: HasRealmRepositories, logger: LoggerServicing) {
         self.logger = logger
@@ -42,5 +44,6 @@ final class RealmUserDataStorageDependencies: HasLoggers, HasRealmRepositories {
         self.realmUserPointRepository = container.realmUserPointRepository
         self.realmPointRepository = container.realmPointRepository
         self.realmScannedPointRepository = container.realmScannedPointRepository
+        self.realmSponsorRepository = container.realmSponsorRepository
     }
 }

@@ -99,7 +99,8 @@ public final class RealmStorage: BaseClass, RealmStoraging {
             RealmUserPointData.self,
             RealmUserPoint.self,
             RealmScannedPoint.self,
-            RealmUserLocation.self
+            RealmUserLocation.self,
+            RealmSponsorData.self
         ]
     }
 }

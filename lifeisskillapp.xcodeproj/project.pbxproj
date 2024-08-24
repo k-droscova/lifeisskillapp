@@ -58,6 +58,8 @@
 		2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
+		274001652C7A271200AD5D7D /* RealmSponsorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001642C7A271200AD5D7D /* RealmSponsorData.swift */; };
+		274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
 		27414D862C63A08B00C19F8C /* .realm-cocoa.version in Resources */ = {isa = PBXBuildFile; fileRef = 27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */; };
 		27414D892C63A08B00C19F8C /* realm-cocoa in Resources */ = {isa = PBXBuildFile; fileRef = 27414D812C63A08B00C19F8C /* realm-cocoa */; };
@@ -247,6 +249,8 @@
 		2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDataStorage.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
 		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
+		274001642C7A271200AD5D7D /* RealmSponsorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorData.swift; sourceTree = "<group>"; };
+		274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorRepository.swift; sourceTree = "<group>"; };
 		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		27414D7B2C63A08B00C19F8C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".realm-cocoa.version"; sourceTree = "<group>"; };
@@ -1010,6 +1014,7 @@
 				27E9D6092C63E7860098CB96 /* RealmGenericPoint.swift */,
 				27E9D60B2C63E8B90098CB96 /* RealmUserPoint.swift */,
 				276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */,
+				274001642C7A271200AD5D7D /* RealmSponsorData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1025,6 +1030,7 @@
 				27E9D61C2C63F9410098CB96 /* UserPointRepository.swift */,
 				27E9D61E2C63F9770098CB96 /* PointRepository.swift */,
 				276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */,
+				274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1284,6 +1290,7 @@
 				27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */,
 				278174842C4BF96B00138376 /* View.swift in Sources */,
 				27E9D61F2C63F9770098CB96 /* PointRepository.swift in Sources */,
+				274001652C7A271200AD5D7D /* RealmSponsorData.swift in Sources */,
 				2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */,
 				27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */,
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
@@ -1294,6 +1301,7 @@
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
 				27E9D6112C63EC010098CB96 /* Repository.swift in Sources */,
 				27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */,
+				274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,

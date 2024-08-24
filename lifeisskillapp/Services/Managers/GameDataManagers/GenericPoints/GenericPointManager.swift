@@ -13,6 +13,7 @@ protocol HasGenericPointManager {
 }
 
 protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, DataContainer == GenericPointData {
+    func sponsorImage(for sponsorId: String, width: Int, height: Int) async throws -> Data?
 }
 
 public final class GenericPointManager: BaseClass, GenericPointManaging {
@@ -74,5 +75,32 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     func checkSum() -> String? {
         _data?.checkSum
+    }
+    
+    // MARK: - Sponsor Image Management
+    
+    func sponsorImage(for sponsorId: String, width: Int, height: Int) async throws -> Data? {
+        // First, try to retrieve the image from the storage
+        if let existingImage = try await storage.sponsorImage(for: sponsorId) {
+            return existingImage
+        }
+        // Fetch image from the remote API using the UserDataAPIService
+        guard let token = token else {
+            throw BaseError(
+                context: .api,
+                message: "No valid user token found",
+                code: .general(.missingConfigItem),
+                logger: logger
+            )
+        }
+        let imageData = try await userDataAPIService.getSponsorImage(
+            baseURL: APIUrl.baseURL,
+            userToken: token,
+            sponsorId: sponsorId,
+            width: width,
+            height: height
+        )
+        try await storage.saveSponsorImage(for: sponsorId, imageData: imageData)
+        return imageData
     }
 }

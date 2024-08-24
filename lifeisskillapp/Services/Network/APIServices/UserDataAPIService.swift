@@ -25,6 +25,8 @@ protocol UserDataAPIServicing: APITasking {
     func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<GenericPointData>
     
     func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData>
+    
+    func getSponsorImage(baseURL: URL, userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data
 }
 
 public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
@@ -121,6 +123,21 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
             errorObject: APIResponseError.self)
     }
     
+    func getSponsorImage(baseURL: URL, userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data {
+        let endpoint = Endpoint.sponsorImage(sponsorId: sponsorId, width: width, height: height)
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
+        let url = try endpoint.urlWithPath(base: baseURL, logger: loggerService)
+        return try await network.performRequestWithoutDataDecoding(
+            url: url,
+            method: .GET,
+            headers: headers,
+            sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self
+        )
+    }
+    
+    // MARK: - Private Helpers
+    
     private func encodeParams(point: ScannedPoint) throws -> Data {
         task = ApiTask.userPoints
         var taskParams = task.taskParams
@@ -157,8 +174,8 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
 }
 
 extension UserDataAPIService {
-    enum Endpoint: CaseIterable {
-        case usercategory, userpoints, rank, events, messages, points
+    enum Endpoint {
+        case usercategory, userpoints, rank, events, messages, points, sponsorImage(sponsorId: String, width: Int, height: Int)
         
         var path: String {
             switch self {
@@ -174,11 +191,15 @@ extension UserDataAPIService {
                 return "/messages"
             case .points:
                 return "/points"
+            case .sponsorImage(let sponsorId, let width, let height):
+                return "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
             }
         }
         
         var typeHeaders: [String: String] {
             switch self {
+            case .sponsorImage(let sponsorId, let width, let height):
+                ["accept": "image/png"]
             default:
                 ["accept": "application/json"]
             }
@@ -212,4 +233,3 @@ extension UserDataAPIService {
         }
     }
 }
-

@@ -31,6 +31,8 @@ protocol UserDataStoraging {
     func saveCheckSumData(_ data: CheckSumData?) async throws
     func scannedPoints() async throws -> [ScannedPoint]
     func saveScannedPoint(_ point: ScannedPoint) async throws
+    func saveSponsorImage(for sponsorId: String, imageData: Data) async throws
+    func sponsorImage(for sponsorId: String) async throws -> Data?
     
     // LOGIN USER DATA RELATED INTERFACE
     func savedLoginDetails() async throws -> LoginUserData?
