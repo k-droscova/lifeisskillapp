@@ -34,6 +34,10 @@ final class QRScannerViewController: Base.ViewController {
     }
     
     private func setupScanner() {
+        guard viewModel.isScannerSetup else {
+            viewModel.scanningFailed()
+            return
+        }
         viewModel.setupPreviewLayer()
         if let previewLayer = viewModel.previewLayer {
             previewLayer.frame = view.layer.bounds

@@ -18,7 +18,7 @@ protocol MainFlowDelegate: NSObject {
     
 }
 
-final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     weak var delegate: MainFlowCoordinatorDelegate?
     
     override init() {
@@ -208,7 +208,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             
         })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 }
 
@@ -227,7 +227,7 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
             
         })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 }
 
@@ -248,7 +248,7 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     func onboardingPressed() {
         let onboardingVC = OnboardingView().hosting()
         onboardingVC.modalPresentationStyle = .formSheet
-        rootViewController?.present(onboardingVC, animated: true, completion: nil)
+        present(onboardingVC, animated: true)
     }
 }
 

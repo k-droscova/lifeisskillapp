@@ -8,13 +8,7 @@
 import Foundation
 import UIKit
 
-protocol MapViewFlowDelegate: NSObject {
-    /*
-     For displaying pageSheet presentation.
-     Classes that implement this protocol will provide their rootVC/navVC and use default implementation for map tapping-related functions in the extension below
-     */
-    var root: UIViewController? { get }
-    
+protocol MapViewFlowDelegate: BaseFlowCoordinator {    
     func onPointTapped(for point: GenericPoint)
     func onMapTapped()
     func onError(_ error: Error)
@@ -22,11 +16,6 @@ protocol MapViewFlowDelegate: NSObject {
 
 extension MapViewFlowDelegate {
     func onPointTapped(for point: GenericPoint) {
-        print("DEBUG: onPointTapped in Delegate for point: \(point.pointName)")
-        guard let root = root else {
-            print("DEBUG: Root view controller is nil")
-            return
-        }
         let vc = MapPointDetailView(point: point).hosting()
         vc.modalPresentationStyle = .pageSheet
         
@@ -41,22 +30,10 @@ extension MapViewFlowDelegate {
             sheet.largestUndimmedDetentIdentifier = smallDetent.identifier
         }
         vc.isModalInPresentation = true 
-        
-        DispatchQueue.main.async {
-            root.present(vc, animated: true) {
-                print("DEBUG: Sheet presentation called on main thread")
-            }
-        }
+        present(vc, animated: true)
     }
     
     func onMapTapped() {
-        print("DEBUG: onMapTapped in Delegate")
-        guard let root = root else {
-            print("DEBUG: Root view controller is nil")
-            return
-        }
-        DispatchQueue.main.async {
-            root.presentedViewController?.dismiss(animated: true, completion: nil)
-        }
+        dismiss()
     }
 }
