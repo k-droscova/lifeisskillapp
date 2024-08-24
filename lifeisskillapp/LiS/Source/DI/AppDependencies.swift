@@ -36,7 +36,7 @@ final class AppDependency {
     // MARK: storage
     
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
-    lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
+    lazy var userDataStorage: UserDataStoraging = InMemoryUserDataStorage(dependencies: self)
     lazy var keychainHelper: KeychainHelping = KeychainHelper(dependencies: self)
     lazy var keychainStorage: KeychainStoraging = KeychainStorage(dependencies: self)
     

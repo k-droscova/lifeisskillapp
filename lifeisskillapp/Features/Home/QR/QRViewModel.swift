@@ -21,13 +21,13 @@ protocol QRViewModeling: CameraViewModeling {
 }
 
 final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
-    typealias Dependencies = HasLoggerServicing & HasUserPointManager & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasLocationManager
     
     // MARK: - Private Properties
     
     weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
-    private let userPointManager: any UserPointManaging
+    private let gameDataManager: GameDataManaging
     private let locationManager: LocationManaging
     
     // MARK: - Public Properties
@@ -41,7 +41,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
         self.logger = dependencies.logger
-        self.userPointManager = dependencies.userPointManager
+        self.gameDataManager = dependencies.gameDataManager
         self.locationManager = dependencies.locationManager
         super.init()
         setUpScanner()
@@ -64,7 +64,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     
     func handleProcessedCode(_ code: String) {
         locationManager.checkLocationAuthorization()
-        delegatePointProcessingToUserPointManager(code)
+        delegatePointScanningToGameDataManager(code)
     }
     
     func startScanning() {
@@ -128,9 +128,11 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         previewLayer = nil
     }
     
-    private func delegatePointProcessingToUserPointManager(_ code: String) {
-        let point = ScannedPoint(code: code, codeSource: .qr, location: locationManager.location)
-        userPointManager.handleScannedPoint(point)
+    private func delegatePointScanningToGameDataManager(_ code: String) {
+        Task { [weak self] in
+            let point = ScannedPoint(code: code, codeSource: .qr, location: self?.locationManager.location)
+            await self?.gameDataManager.onPointScanned(point)
+        }
     }
 }
 

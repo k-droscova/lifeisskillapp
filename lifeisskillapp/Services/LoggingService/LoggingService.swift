@@ -16,8 +16,9 @@ public protocol LoggerServicing {
 }
 
 public extension LoggerServicing {
-    func log(message: String? = nil, event: Loggable? = nil) {
-        _log(message: message, event: event)
+    func log(message: String? = nil, event: Loggable? = nil, file: String = #file, function: String = #function, line: Int = #line) {
+        let filename = (file as NSString).lastPathComponent
+        let prefixedMessage = "[\(filename):\(function):\(line)] \(message ?? "")"
+        _log(message: prefixedMessage, event: event)
     }
 }
-

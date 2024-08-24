@@ -18,6 +18,8 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
     override init() {
         super.init()
         appDependencies.locationManager.delegate = self // MainFC presents alerts linked to location, since we need location AFTER login for point scanning
+        appDependencies.gameDataManager.delegate = self // present alert if any fatal error with game data occurs anywhere in the app
+        loadDataAfterLogin()
     }
     
     override func start() -> UIViewController {
@@ -111,6 +113,14 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
             tabBar.barTintColor = CustomColors.TabBar.background.color
             tabBar.tintColor = CustomColors.TabBar.selectedItem.color
             tabBar.unselectedItemTintColor = CustomColors.TabBar.unselectedItem.color
+        }
+    }
+}
+
+extension MainFlowCoordinator {
+    private func loadDataAfterLogin() {
+        Task {
+            await appDependencies.gameDataManager.loadData(for: nil)
         }
     }
 }
@@ -228,5 +238,15 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
         let onboardingVC = OnboardingView().hosting()
         onboardingVC.modalPresentationStyle = .formSheet
         rootViewController?.present(onboardingVC, animated: true, completion: nil)
+    }
+}
+
+extension MainFlowCoordinator: GameDataManagerFlowDelegate {
+    func onInvalidToken() {
+        appDependencies.userManager.forceLogout()
+    }
+    
+    func storedScannedPointsFailedToSend() {
+        showAlert(titleKey: "alert.scanning.processing.stored.title", messageKey: "alert.scanning.processing.stored.message")
     }
 }

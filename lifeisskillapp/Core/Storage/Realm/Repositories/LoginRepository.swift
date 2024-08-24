@@ -26,6 +26,7 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
     
     public let logger: LoggerServicing
     var realmStorage: RealmStoraging
+    var token: String? { getLoggedInUserToken() }
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
@@ -88,6 +89,19 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
         try realm.write {
             loggedInUser.isLoggedIn = true
             realm.add(loggedInUser, update: .modified)
+        }
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func getLoggedInUserToken() -> String? {
+        do {
+            guard let loggedInUser = try getSavedLoginDetails(), loggedInUser.isLoggedIn else { return nil }
+            return loggedInUser.token
+        } catch {
+            // SHOULD NEVER GET TO THIS, accessing token should only happen after login
+            logger.log(message: "No logged in user token available")
+            return nil
         }
     }
 }

@@ -107,7 +107,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     @MainActor
     private func fetchData() async {
-        await gameDataManager.loadData(for: .rank)
+        await gameDataManager.loadData(for: .ranks)
         await getSelectedCategoryRanking()
     }
     
@@ -121,7 +121,8 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     @MainActor
     private func getSelectedCategoryRanking() async {
-        guard let data = userRankManager.data?.data, data.isNotEmpty else {
+        let data = userRankManager.getAll()
+        guard data.isNotEmpty else {
             logger.log(message: "No user rank data available")
             delegate?.onNoDataAvailable()
             return

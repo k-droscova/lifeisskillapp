@@ -20,14 +20,13 @@ protocol ScanningManaging {
 }
 
 public final class ScanningManager: ScanningManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserManager & HasPersistentUserDataStoraging & HasRepositoryContainer & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasRepositoryContainer & HasNetworkMonitor
     
     // MARK: - Private properties
     
     private let logger: LoggerServicing
     private let userDataAPI: UserDataAPIServicing
-    private let userManager: UserManaging
-    private var token: String? { userManager.token }
+    private var token: String? { storage.token }
     private let storage: PersistentUserDataStoraging
     private var scannedPointRepo: any RealmScannedPointRepositoring
     private let networkMonitor: NetworkMonitoring
@@ -37,7 +36,6 @@ public final class ScanningManager: ScanningManaging {
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.userDataAPI = dependencies.userDataAPI
-        self.userManager = dependencies.userManager
         self.storage = dependencies.storage
         self.scannedPointRepo = dependencies.container.realmScannedPointRepository
         self.networkMonitor = dependencies.networkMonitor
@@ -66,7 +64,7 @@ public final class ScanningManager: ScanningManaging {
     
     func handleScannedPointOffline(_ point: ScannedPoint) async throws {
         logger.log(message: "Saving scanned point: \(point.code)")
-        try scannedPointRepo.save(RealmScannedPoint(from: point))
+        try await storage.saveScannedPoint(point)
     }
     
     func checkValidity(_ point: ScannedPoint) -> Bool {
@@ -76,7 +74,7 @@ public final class ScanningManager: ScanningManaging {
     }
     
     func sendAllStoredScannedPoints() async throws {
-        let points = try await scannedPointRepo.getScannedPoints()
+        let points = try await storage.scannedPoints()
         try scannedPointRepo.deleteAll()
         
         for scannedPoint in points {

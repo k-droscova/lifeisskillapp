@@ -18,11 +18,11 @@ protocol OcrViewModeling: CameraViewModeling {
 }
 
 final class OcrViewModel: BaseClass, OcrViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserPointManager & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasLocationManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
-    private let userPointManager: any UserPointManaging
+    private let gameDataManager: GameDataManaging
     private let locationManager: LocationManaging
     
     // MARK: - Public Properties
@@ -35,7 +35,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         self.delegate = delegate
         self.logger = dependencies.logger
         self.locationManager = dependencies.locationManager
-        self.userPointManager = dependencies.userPointManager
+        self.gameDataManager = dependencies.gameDataManager
     }
     
     // MARK: - Public Interface
@@ -51,7 +51,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     func handleProcessedCode(_ code: String) {
         locationManager.checkLocationAuthorization()
-        delegatePointProcessingToUserPointManager(code)
+        delegatePointScanningToGameDataManager(code)
         dismissCamera()
     }
     
@@ -62,9 +62,11 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         return extractOldCode(from: text)
     }
     
-    private func delegatePointProcessingToUserPointManager(_ code: String) {
-        let point = ScannedPoint(code: code, codeSource: .text, location: locationManager.location)
-        userPointManager.handleScannedPoint(point)
+    private func delegatePointScanningToGameDataManager(_ code: String) {
+        Task { [weak self] in
+            let point = ScannedPoint(code: code, codeSource: .text, location: self?.locationManager.location)
+            await self?.gameDataManager.onPointScanned(point)
+        }
     }
     
     private func extractNewCode(from text: String) -> String? {

@@ -14,12 +14,12 @@ protocol NfcViewModeling: BaseClass {
 }
 
 final class NfcViewModel: BaseClass, NfcViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasUserPointManager
+    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasGameDataManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
-    private let userPointManager: any UserPointManaging
+    private let gameDataManager: GameDataManaging
     private var session: NFCReaderSession?
     
     public var isNfcAvailable: Bool { NFCNDEFReaderSession.readingAvailable }
@@ -28,7 +28,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         self.delegate = delegate
         self.logger = dependencies.logger
         self.locationManager = dependencies.locationManager
-        self.userPointManager = dependencies.userPointManager
+        self.gameDataManager = dependencies.gameDataManager
     }
     
     func startScanning() {
@@ -53,13 +53,15 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     private func handleProcessedCode(_ code: String) {
         logger.log(message: "Point scanned from NFC: \(code)")
         locationManager.checkLocationAuthorization()
-        delegatePointProcessingToUserPointManager(code)
+        delegatePointScanningToGameDataManager(code)
         self.stopScanning()
     }
     
-    private func delegatePointProcessingToUserPointManager(_ code: String) {
-        let point = ScannedPoint(code: code, codeSource: .nfc, location: locationManager.location)
-        userPointManager.handleScannedPoint(point)
+    private func delegatePointScanningToGameDataManager(_ code: String) {
+        Task { [weak self] in
+            let point = ScannedPoint(code: code, codeSource: .nfc, location: self?.locationManager.location)
+            await self?.gameDataManager.onPointScanned(point)
+        }
     }
 }
 

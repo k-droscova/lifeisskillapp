@@ -16,74 +16,63 @@ protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, 
 }
 
 public final class GenericPointManager: BaseClass, GenericPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
-    private let userManager: UserManaging
     private let userDataAPIService: UserDataAPIServicing
-    private var checkSum: String?
+    private var _data: GenericPointData?
+    
+    internal let networkMonitor: NetworkMonitoring
     
     // MARK: - Public Properties
     
-    var data: GenericPointData? {
-        get {
-            storage.genericPointData
-        }
-        set {
-            storage.genericPointData = newValue
-        }
-    }
-    
-    var token: String? {
-        get { userManager.token }
-    }
+    var token: String? { storage.token }
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
-        self.userManager = dependencies.userManager
         self.userDataAPIService = dependencies.userDataAPI
-        
-        super.init()
+        self.networkMonitor = dependencies.networkMonitor
     }
     
     // MARK: - Public Interface
     
     func loadFromRepository() {
         Task { @MainActor [weak self] in
-            await self?.storage.loadFromRepository(for: .userPoints)
+            do {
+                try await self?.storage.loadFromRepository(for: .genericPoints)
+                self?._data = try await self?.storage.genericPointData()
+            } catch {
+                self?.logger.log(message: "Unable to load generic points from storage")
+            }
         }
     }
     
     func fetch(withToken token: String) async throws {
-        logger.log(message: "Loading user points")
-        do {
-            let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: token)
-            data = response.data
-        } catch let error as BaseError {
-            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
-                userManager.forceLogout()
-            }
-        }
-        catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to load points",
-                logger: logger
-            )
-        }
+        logger.log(message: "Fetching generic points")
+        let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: token)
+        try await storage.saveGenericPointData(response.data)
+        _data = response.data
     }
     
     func getById(id: String) -> GenericPoint? {
-        data?.data.first { $0.id == id }
+        _data?.data.first { $0.id == id }
     }
     
     func getAll() -> [GenericPoint] {
-        data?.data ?? []
+        _data?.data ?? []
+    }
+    
+    func onLogout() {
+        _data = nil
+    }
+    
+    func checkSum() -> String? {
+        _data?.checkSum
     }
 }

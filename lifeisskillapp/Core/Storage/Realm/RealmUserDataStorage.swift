@@ -10,11 +10,7 @@ import RealmSwift
 import Combine
 
 enum PersistentDataType {
-    case categories, userPoints, genericPoints, rankings, checkSum
-}
-
-protocol PersistentUserDataStorageDelegate: NSObject {
-    func onError(_ error: Error)
+    case categories, userPoints, genericPoints, rankings, checkSum, scannedPoints
 }
 
 protocol HasPersistentUserDataStoraging {
@@ -22,18 +18,8 @@ protocol HasPersistentUserDataStoraging {
 }
 
 protocol PersistentUserDataStoraging: UserDataStoraging {
-    var delegate: PersistentUserDataStorageDelegate? { get set }
-    func load()
-    func onLogout() throws
-    func loadFromRepository(for data: PersistentDataType) async
-    func saveUserCategories(data: UserCategoryData?) async
-    func saveUserPoints(data: UserPointData?) async
-    func saveGenericPoints(data: GenericPointData?) async
-    func saveUserRanks(data: UserRankData?) async
-    func saveLoginData(data: LoginUserData?) async
-    func saveCheckSumData(data: CheckSumData?) async
-    func clearAllUserData() async throws
-    func clearSavedScannedPoints() async throws
+    func loadAllDataFromRepositories() async throws
+    func loadFromRepository(for data: PersistentDataType) async throws
 }
 
 public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
@@ -55,71 +41,13 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     private var _genericPointData: GenericPointData?
     private var _userRankData: UserRankData?
     private var _checkSumData: CheckSumData?
+    private var _scannedPoints: [ScannedPoint] = []
     
     // MARK: - Public Properties
     
-    var userCategoryData: UserCategoryData? {
-        get {
-            _userCategoryData
-        }
-        set {
-            _userCategoryData = newValue
-            Task { [weak self] in
-                await self?.saveUserCategories(data: newValue)
-            }
-        }
-    }
-
-    var userPointData: UserPointData? {
-        get {
-            _userPointData
-        }
-        set {
-            _userPointData = newValue
-            Task { [weak self] in
-                await self?.saveUserPoints(data: newValue)
-            }
-        }
-    }
-
-    var genericPointData: GenericPointData? {
-        get {
-            _genericPointData
-        }
-        set {
-            _genericPointData = newValue
-            Task { [weak self] in
-                await self?.saveGenericPoints(data: newValue)
-            }
-        }
-    }
-
-    var userRankData: UserRankData? {
-        get {
-            _userRankData
-        }
-        set {
-            _userRankData = newValue
-            Task { [weak self] in
-                await self?.saveUserRanks(data: newValue)
-            }
-        }
-    }
-
-    var checkSumData: CheckSumData? {
-        get {
-            _checkSumData
-        }
-        set {
-            _checkSumData = newValue
-            Task { [weak self] in
-                await self?.saveCheckSumData(data: newValue)
-            }
-        }
-    }
+    var token: String?
+    var isLoggedIn: Bool = false
     
-    weak var delegate: PersistentUserDataStorageDelegate?
-
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
@@ -135,159 +63,206 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     // MARK: - Public Interface
     
-    func load() {
-        Task { [weak self] in
+    func onLogin() async throws {
+        try await withThrowingTaskGroup(of: Void.self) {  [weak self] group in
             guard let self = self else { return }
-            await withTaskGroup(of: Void.self) { group in
-                group.addTask { await self.loadCategories() }
-                group.addTask { await self.loadUserPoints() }
-                group.addTask { await self.loadGenericPoints() }
-                group.addTask { await self.loadUserRanks() }
-                group.addTask { await self.loadCheckSumData() }
-            }
-            self.logger.log(message: "All data loaded concurrently.")
+            group.addTask { try await self.loadCategories() }
+            group.addTask { try await self.loadUserPoints() }
+            group.addTask { try await self.loadGenericPoints() }
+            group.addTask { try await self.loadUserRanks() }
+            group.addTask { try await self.loadCheckSumData() }
+            try await group.waitForAll()
         }
+        self.isLoggedIn = true
+        logger.log(message: "All data loaded concurrently on login.")
     }
     
-    func onLogout() throws {
+    func onLogout() async throws {
         try loginRepo.markUserAsLoggedOut()
-        self.clearInMemoryData()
+        await clearInMemoryData()
+        self.isLoggedIn = false
+        logger.log(message: "User logged out successfully.")
     }
     
-    func clearAllUserData() async throws {
+    func clearUserRelatedData() async throws {
         try await withThrowingTaskGroup(of: Void.self) { [weak self] group in
             guard let self = self else { return }
             group.addTask { try self.loginRepo.deleteAll() }
             group.addTask { try self.checkSumRepo.deleteAll() }
             group.addTask { try self.categoryRepo.deleteAll() }
             group.addTask { try self.rankingRepo.deleteAll() }
-            group.addTask { try self.genericPointRepo.deleteAll() }
             group.addTask { try self.userPointRepo.deleteAll() }
-            group.addTask { self.clearInMemoryData() }
+            group.addTask { await self.clearInMemoryData() }
             try await group.waitForAll()
         }
         logger.log(message: "All related user data has been cleared.")
     }
     
-    func clearSavedScannedPoints() async throws {
+    func clearScannedPointData() async throws {
+        try scannedPointRepo.deleteAll()
         logger.log(message: "Saved scanned points deleted")
-        try self.scannedPointRepo.deleteAll()
     }
     
-    func loadFromRepository(for data: PersistentDataType) async {
+    func loadFromRepository(for data: PersistentDataType) async throws {
         switch data {
         case .userPoints:
-            await loadUserPoints()
+            try await loadUserPoints()
         case .genericPoints:
-            await loadGenericPoints()
+            try await loadGenericPoints()
         case .rankings:
-            await loadUserRanks()
+            try await loadUserRanks()
         case .checkSum:
-            await loadCheckSumData()
+            try await loadCheckSumData()
         case .categories:
-            await loadCategories()
+            try await loadCategories()
+        case .scannedPoints:
+            try await loadScannedPoints()
         }
     }
     
-    func saveUserCategories(data: UserCategoryData?) async {
-        do {
-            if let data = data {
-                let realmCategoryData = RealmUserCategoryData(from: data)
-                try categoryRepo.save(realmCategoryData)
-                logger.log(message: "User categories saved successfully.")
-            } else {
-                try categoryRepo.deleteAll()
-                logger.log(message: "User categories deleted successfully.")
-            }
-        } catch {
-            logger.log(message: "Failed to save/delete user categories: \(error.localizedDescription)")
-            delegate?.onError(error)
+    func loadAllDataFromRepositories() async throws {
+        try await withThrowingTaskGroup(of: Void.self) {  [weak self] group in
+            guard let self = self else { return }
+            group.addTask { try await self.loadCategories() }
+            group.addTask { try await self.loadUserPoints() }
+            group.addTask { try await self.loadGenericPoints() }
+            group.addTask { try await self.loadUserRanks() }
+            group.addTask { try await self.loadCheckSumData() }
+            
+            try await group.waitForAll()
         }
+        logger.log(message: "All data loaded concurrently")
     }
     
-    func saveUserPoints(data: UserPointData?) async {
-        do {
-            if let data = data {
-                let realmUserPointData = RealmUserPointData(from: data)
-                try userPointRepo.save(realmUserPointData)
-                logger.log(message: "User points saved successfully.")
-            } else {
-                try userPointRepo.deleteAll()
-                logger.log(message: "User points deleted successfully.")
-            }
-        } catch {
-            logger.log(message: "Failed to save/delete user points: \(error.localizedDescription)")
-            delegate?.onError(error)
+    // MARK: - Public Interface Saving Methods
+    
+    func saveUserCategoryData(_ data: UserCategoryData?) async throws {
+        if let data = data {
+            let realmCategoryData = RealmUserCategoryData(from: data)
+            try categoryRepo.save(realmCategoryData)
+            logger.log(message: "User categories saved successfully.")
+        } else {
+            try categoryRepo.deleteAll()
+            logger.log(message: "User categories deleted successfully.")
         }
+        _userCategoryData = data
     }
     
-    func saveGenericPoints(data: GenericPointData?) async {
-        do {
-            if let data = data {
-                let realmGenericPointData = RealmGenericPointData(from: data)
-                try genericPointRepo.save(realmGenericPointData)
-                logger.log(message: "Generic points saved successfully.")
-            } else {
-                try genericPointRepo.deleteAll()
-                logger.log(message: "Generic points deleted successfully.")
-            }
-        } catch {
-            logger.log(message: "Failed to save/delete generic points: \(error.localizedDescription)")
-            delegate?.onError(error)
+    func saveUserPointData(_ data: UserPointData?) async throws {
+        if let data = data {
+            let realmUserPointData = RealmUserPointData(from: data)
+            try userPointRepo.save(realmUserPointData)
+            logger.log(message: "User points saved successfully.")
+        } else {
+            try userPointRepo.deleteAll()
+            logger.log(message: "User points deleted successfully.")
         }
+        _userPointData = data
     }
     
-    func saveUserRanks(data: UserRankData?) async {
-        do {
-            if let data = data {
-                let realmUserRankData = RealmUserRankData(from: data)
-                try rankingRepo.save(realmUserRankData)
-                logger.log(message: "User ranks saved successfully.")
-            } else {
-                try rankingRepo.deleteAll()
-                logger.log(message: "User ranks deleted successfully.")
-            }
-        } catch {
-            logger.log(message: "Failed to save/delete user ranks: \(error.localizedDescription)")
-            delegate?.onError(error)
+    func saveGenericPointData(_ data: GenericPointData?) async throws {
+        if let data = data {
+            let realmGenericPointData = RealmGenericPointData(from: data)
+            try genericPointRepo.save(realmGenericPointData)
+            logger.log(message: "Generic points saved successfully.")
+        } else {
+            try genericPointRepo.deleteAll()
+            logger.log(message: "Generic points deleted successfully.")
         }
+        _genericPointData = data
     }
     
-    func saveLoginData(data: LoginUserData?) async {
-        do {
-            if let data = data {
-                let realmLoginDetails = RealmLoginDetails(from: data.user)
-                try loginRepo.save(realmLoginDetails)
-                logger.log(message: "Login data saved successfully.")
-            } else {
-                try loginRepo.deleteAll()
-                logger.log(message: "Login data deleted successfully.")
-            }
-        } catch {
-            logger.log(message: "Failed to save/delete login data: \(error.localizedDescription)")
-            delegate?.onError(error)
+    func saveUserRankData(_ data: UserRankData?) async throws{
+        if let data = data {
+            let realmUserRankData = RealmUserRankData(from: data)
+            try rankingRepo.save(realmUserRankData)
+            logger.log(message: "User ranks saved successfully.")
+        } else {
+            try rankingRepo.deleteAll()
+            logger.log(message: "User ranks deleted successfully.")
         }
+        _userRankData = data
     }
     
-    func saveCheckSumData(data: CheckSumData?) async {
-        do {
-            if let data = data {
-                let realmCheckSumData = RealmCheckSumData(from: data)
-                try checkSumRepo.save(realmCheckSumData)
-                logger.log(message: "CheckSum data saved successfully.")
-            } else {
-                try checkSumRepo.deleteAll()
-                logger.log(message: "CheckSum data deleted successfully.")
-            }
-        } catch {
-            logger.log(message: "Failed to save/delete CheckSum data: \(error.localizedDescription)")
-            delegate?.onError(error)
+    func saveCheckSumData(_ data: CheckSumData?) async throws {
+        if let data = data {
+            let realmCheckSumData = RealmCheckSumData(from: data)
+            try checkSumRepo.save(realmCheckSumData)
+            logger.log(message: "CheckSum data saved successfully.")
+        } else {
+            try checkSumRepo.deleteAll()
+            logger.log(message: "CheckSum data deleted successfully.")
         }
+        _checkSumData = data
+    }
+    
+    func saveScannedPoint(_ point: ScannedPoint) async throws {
+        try scannedPointRepo.save(RealmScannedPoint(from: point))
+    }
+    
+    // MARK: - Public Interface Getting Methods
+    
+    func userCategoryData() async throws -> UserCategoryData? {
+        try await loadCategories()
+        return _userCategoryData
+    }
+    
+    func userPointData() async throws -> UserPointData? {
+        try await loadUserPoints()
+        return _userPointData
+    }
+    
+    func userRankData() async throws -> UserRankData? {
+        try await loadUserRanks()
+        return _userRankData
+    }
+    
+    func genericPointData() async throws -> GenericPointData? {
+        try await loadGenericPoints()
+        return _genericPointData
+    }
+    
+    func checkSumData() async throws -> CheckSumData? {
+        try await loadCheckSumData()
+        return _checkSumData
+    }
+    
+    func scannedPoints() async throws -> [ScannedPoint] {
+        try await loadScannedPoints()
+        return _scannedPoints
+    }
+    
+    // MARK: - Public Interface For Logged In User
+    
+    func savedLoginDetails() async throws -> LoginUserData? {
+        guard let user = try loginRepo.getSavedLoginDetails() else { return nil }
+        return user.loginUserData()
+    }
+    
+    func loggedInUserDetails() async throws -> LoginUserData? {
+        guard let user = try loginRepo.getSavedLoginDetails(), user.isLoggedIn else { return nil }
+        return user.loginUserData()
+    }
+    
+    func login(_ user: LoggedInUser) async throws {
+        try loginRepo.saveLoginUser(user)
+        self.token = user.token
+    }
+    
+    func markUserAsLoggedOut() async throws {
+        try loginRepo.markUserAsLoggedOut()
+        self.token = nil
+    }
+    
+    func markUserAsLoggedIn() async throws {
+        guard let user = try loginRepo.getSavedLoginDetails() else { return }
+        try loginRepo.markUserAsLoggedOut()
+        self.token = user.token
     }
     
     // MARK: - Private Helpers
     
-    private func clearInMemoryData() {
+    private func clearInMemoryData() async {
         Task { [weak self] in
             guard let self = self else { return }
             await withTaskGroup(of: Void.self) { group in
@@ -296,78 +271,64 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
                 group.addTask { self._userRankData = nil }
                 group.addTask { self._genericPointData = nil }
                 group.addTask { self._checkSumData = nil }
+                group.addTask { self.token = nil }
             }
             self.logger.log(message: "All data nullified on logout.")
         }
     }
     
-    private func loadCategories() async {
-        do {
-            let realmCategoryData = try categoryRepo.getAll().first
-            if let realmCategoryData = realmCategoryData {
-                _userCategoryData = realmCategoryData.userCategoryData()
-                logger.log(message: "User categories loaded successfully.")
-            } else {
-                logger.log(message: "No user categories found in the repository.")
-            }
-        } catch {
-            logger.log(message: "Failed to load user categories: \(error.localizedDescription)")
+    private func loadCategories() async throws {
+        let realmCategoryData = try categoryRepo.getAll().first
+        if let realmCategoryData = realmCategoryData {
+            _userCategoryData = realmCategoryData.userCategoryData()
+            logger.log(message: "User categories loaded successfully.")
+        } else {
+            logger.log(message: "No user categories found in the repository.")
         }
     }
     
-    private func loadUserPoints() async {
-        do {
-            let realmUserPoints = try userPointRepo.getAll().first
-            if let realmUserPoints = realmUserPoints {
-                _userPointData = realmUserPoints.userPointData()
-                logger.log(message: "User points loaded successfully.")
-            } else {
-                logger.log(message: "No user points found in the repository.")
-            }
-        } catch {
-            logger.log(message: "Failed to load user points: \(error.localizedDescription)")
+    private func loadUserPoints() async throws {
+        let realmUserPoints = try userPointRepo.getAll().first
+        if let realmUserPoints = realmUserPoints {
+            _userPointData = realmUserPoints.userPointData()
+            logger.log(message: "User points loaded successfully.")
+        } else {
+            logger.log(message: "No user points found in the repository.")
         }
     }
     
-    private func loadGenericPoints() async {
-        do {
-            let realmGenericPoints = try genericPointRepo.getAll().first
-            if let realmGenericPoints = realmGenericPoints {
-                _genericPointData = realmGenericPoints.genericPointData()
-                logger.log(message: "Generic points loaded successfully.")
-            } else {
-                logger.log(message: "No generic points found in the repository.")
-            }
-        } catch {
-            logger.log(message: "Failed to load generic points: \(error.localizedDescription)")
+    private func loadGenericPoints() async throws {
+        let realmGenericPoints = try genericPointRepo.getAll().first
+        if let realmGenericPoints = realmGenericPoints {
+            _genericPointData = realmGenericPoints.genericPointData()
+            logger.log(message: "Generic points loaded successfully.")
+        } else {
+            logger.log(message: "No generic points found in the repository.")
         }
     }
     
-    private func loadUserRanks() async {
-        do {
-            let realmUserRanks = try rankingRepo.getAll().first
-            if let realmUserRanks = realmUserRanks {
-                _userRankData = realmUserRanks.userRankData()
-                logger.log(message: "User ranks loaded successfully.")
-            } else {
-                logger.log(message: "No user ranks found in the repository.")
-            }
-        } catch {
-            logger.log(message: "Failed to load user ranks: \(error.localizedDescription)")
+    private func loadUserRanks() async throws {
+        let realmUserRanks = try rankingRepo.getAll().first
+        if let realmUserRanks = realmUserRanks {
+            _userRankData = realmUserRanks.userRankData()
+            logger.log(message: "User ranks loaded successfully.")
+        } else {
+            logger.log(message: "No user ranks found in the repository.")
         }
     }
     
-    private func loadCheckSumData() async {
-        do {
-            let realmCheckSumData = try checkSumRepo.getAll().first
-            if let realmCheckSumData = realmCheckSumData {
-                _checkSumData = realmCheckSumData.checkSumData()
-                logger.log(message: "CheckSum data loaded successfully.")
-            } else {
-                logger.log(message: "No CheckSum data found in the repository.")
-            }
-        } catch {
-            logger.log(message: "Failed to load CheckSum data: \(error.localizedDescription)")
+    private func loadCheckSumData() async throws {
+        let realmCheckSumData = try checkSumRepo.getAll().first
+        if let realmCheckSumData = realmCheckSumData {
+            _checkSumData = realmCheckSumData.checkSumData()
+            logger.log(message: "CheckSum data loaded successfully.")
+        } else {
+            logger.log(message: "No CheckSum data found in the repository.")
         }
+    }
+    
+    private func loadScannedPoints() async throws {
+        let scannedPoints = try await scannedPointRepo.getScannedPoints()
+        _scannedPoints = scannedPoints
     }
 }
