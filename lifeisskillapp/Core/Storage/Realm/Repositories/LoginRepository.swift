@@ -99,6 +99,8 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
             guard let loggedInUser = try getSavedLoginDetails(), loggedInUser.isLoggedIn else { return nil }
             return loggedInUser.token
         } catch {
+            // SHOULD NEVER GET TO THIS, accessing token should only happen after login
+            logger.log(message: "No logged in user token available")
             return nil
         }
     }
