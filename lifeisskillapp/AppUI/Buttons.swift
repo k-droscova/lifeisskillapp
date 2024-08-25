@@ -14,7 +14,7 @@ struct CameraButton: View {
     
     var body: some View {
         Button(action: action) {
-            Image(systemName: SFSSymbols.camera.rawValue)
+            SFSSymbols.camera.Image
         }
         .buttonStyle(CameraButtonStyle())
     }

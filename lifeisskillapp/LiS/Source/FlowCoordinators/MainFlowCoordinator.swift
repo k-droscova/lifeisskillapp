@@ -18,7 +18,7 @@ protocol MainFlowDelegate: NSObject {
     
 }
 
-final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     weak var delegate: MainFlowCoordinatorDelegate?
     
     override init() {
@@ -68,6 +68,20 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             selectedImage: Constants.TabBar.Points.selected.icon
         )
         
+        // MARK: MAP
+        
+        let mapFC = MapFlowCoordinator<SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
+            settingsDelegate: self
+        )
+        addChild(mapFC)
+        let mapVC = mapFC.start()
+        mapVC.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("map.title", comment: ""),
+            image: Constants.TabBar.Map.unselected.icon,
+            selectedImage: Constants.TabBar.Map.selected.icon
+        )
+        
         // MARK: HOME
         let homeFC = HomeFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
             delegate: self,
@@ -87,7 +101,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
             settingsDelegate: self,
             categorySelectorVM: csVM
         )
-
+        
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
@@ -101,6 +115,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         tabVC.viewControllers = [
             debugVC,
             pointsVC,
+            mapVC,
             homeVC,
             rankVC
         ]
@@ -193,7 +208,7 @@ extension MainFlowCoordinator: UserManagerFlowDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             
         })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 }
 
@@ -212,7 +227,7 @@ extension MainFlowCoordinator: LocationManagerFlowDelegate {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
             
         })
-        rootViewController?.present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 }
 
@@ -233,12 +248,12 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     func onboardingPressed() {
         let onboardingVC = OnboardingView().hosting()
         onboardingVC.modalPresentationStyle = .formSheet
-        rootViewController?.present(onboardingVC, animated: true, completion: nil)
+        present(onboardingVC, animated: true)
     }
 }
 
-extension MainFlowCoordinator: RankFlowCoordinatorDelegate {
-}
+extension MainFlowCoordinator: RankFlowCoordinatorDelegate {}
 
-extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {
-}
+extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {}
+
+extension MainFlowCoordinator: MapFlowCoordinatorDelegate {}

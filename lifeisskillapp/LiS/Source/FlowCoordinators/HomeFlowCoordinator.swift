@@ -29,7 +29,7 @@ protocol HomeFlowDelegate: NSObject {
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
-final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink {
+final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: (any HomeViewModeling)?
@@ -67,9 +67,9 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
             settingsDelegate: self.settingsDelegate
         )
         self.homeVM = viewModel
-        let homeController = HomeView(viewModel: viewModel).hosting()
-        self.rootViewController = homeController
-        let navController = UINavigationController(rootViewController: homeController)
+        let vc = HomeView(viewModel: viewModel).hosting()
+        self.rootViewController = vc
+        let navController = UINavigationController(rootViewController: vc)
         self.navigationController = navController
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         return navController
@@ -83,7 +83,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
     func loadFromQR(viewModel: QRViewModeling) {
         let qrViewController = HomeQRView(viewModel: viewModel).hosting()
         qrViewController.modalPresentationStyle = .fullScreen
-        navigationController?.present(qrViewController, animated: true, completion: nil)
+        present(qrViewController, animated: true)
     }
     
     func dismissQR() {
@@ -96,7 +96,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
         if #available(iOS 16.0, *) {
             let cameraViewController = HomeCameraOCRView(viewModel: viewModel).hosting()
             cameraViewController.modalPresentationStyle = .fullScreen
-            navigationController?.present(cameraViewController, animated: true, completion: nil)
+            present(cameraViewController, animated: true)
         } else {
             self.featureUnavailable(source: .text)
         }
@@ -122,21 +122,23 @@ extension HomeFlowCoordinator {
     }
     
     func onSuccess(source: CodeSource) {
-        self.returnToHomeScreen()
+        returnToHomeScreen()
         appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
-        self.showSuccessAlert()
+        showSuccessAlert()
     }
     
     func onFailure(source: CodeSource) {
-        self.returnToHomeScreen()
+        returnToHomeScreen()
         appDependencies.logger.log(message: "scanning failure for source: \(source.rawValue)")
-        self.showFailureAlert(source)
+        showFailureAlert(source)
     }
     
     // MARK: - Private Helpers
     
     private func returnToHomeScreen() {
-        navigationController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
     
     private func showSuccessAlert() {
@@ -158,11 +160,8 @@ extension HomeFlowCoordinator {
 }
 
 extension HomeFlowCoordinator {
+    @MainActor
     private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        guard let navigationController = self.navigationController else {
-            return
-        }
-        
         let alertController = UIAlertController(
             title: NSLocalizedString(titleKey, comment: ""),
             message: NSLocalizedString(messageKey, comment: ""),
@@ -172,7 +171,6 @@ extension HomeFlowCoordinator {
             completion?()
         }
         alertController.addAction(okAction)
-        
-        navigationController.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true)
     }
 }
