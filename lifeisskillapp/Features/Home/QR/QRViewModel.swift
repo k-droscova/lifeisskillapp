@@ -10,6 +10,7 @@ import AVFoundation
 protocol QRViewModeling: CameraViewModeling {
     var captureSession: AVCaptureSession? { get set }
     var previewLayer: AVCaptureVideoPreviewLayer? { get set }
+    var isScannerSetup: Bool { get }
     
     func setUpScanner()
     func dismissScanner()
@@ -35,6 +36,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var isFlashOn: Bool = false
+    private(set) var isScannerSetup: Bool = false
     
     // MARK: - Initialization
     
@@ -80,6 +82,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
             if let captureSession = self?.captureSession, captureSession.isRunning {
                 captureSession.stopRunning()
             }
+            self?.isScannerSetup = false
         }
     }
     
@@ -95,7 +98,6 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         
         guard let captureSession = captureSession,
               let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
-            scanningFailed()
             return
         }
         
@@ -104,11 +106,9 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
             if captureSession.canAddInput(videoInput) {
                 captureSession.addInput(videoInput)
             } else {
-                scanningFailed()
                 return
             }
         } catch {
-            scanningFailed()
             return
         }
         
@@ -118,9 +118,9 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metadataOutput.metadataObjectTypes = [.qr]
         } else {
-            scanningFailed()
             return
         }
+        isScannerSetup = true
     }
     
     private func nulifyReferences() {

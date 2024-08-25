@@ -17,10 +17,11 @@ protocol PointsFlowDelegate: NSObject {
     func selectCategoryPrompt()
 }
 
-final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
+final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, MapViewFlowDelegate, FlowCoordinatorAlertPresentable {
     private weak var delegate: PointsFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?
     private var categorySelectorVM: csVM
+    private var viewModel: (any PointsViewModeling)?
     
     // MARK: - Initialization
     
@@ -39,10 +40,16 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
             dependencies: appDependencies,
             categorySelectorVM: self.categorySelectorVM,
             delegate: self,
+            mapDelegate: self,
             settingsDelegate: self.settingsDelegate
         )
+        self.viewModel = viewModel
         let vc = PointsView(viewModel: viewModel).hosting()
-        return vc
+        self.rootViewController = vc
+        let navController = UINavigationController(rootViewController: vc)
+        self.navigationController = navController
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        return navController
     }
 }
 
@@ -54,4 +61,8 @@ extension PointsFlowCoordinator: PointsFlowDelegate {
     func selectCategoryPrompt() {
         print("Please select category")
     }
+}
+
+extension PointsFlowCoordinator {
+    var root: UIViewController? { self.navigationController }
 }

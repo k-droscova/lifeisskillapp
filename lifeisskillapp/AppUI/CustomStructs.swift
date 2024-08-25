@@ -192,20 +192,18 @@ struct UserPointsTopLeftButtonsView: View {
     var body: some View {
         HStack(spacing: CustomSizes.UserPointsTopLeftButtonsView.horizontalPadding.size) {
             Button(action: {
-                isMapShown = true
                 mapButtonAction()
             }) {
-                Image(systemName: "map")
+                SFSSymbols.map.Image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)
                     .foregroundColor(isMapShown ? buttonPressed : buttonNotPressed)
             }
             Button(action: {
-                isMapShown = false
                 listButtonAction()
             }) {
-                Image(systemName: "list.bullet")
+                SFSSymbols.list.Image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)

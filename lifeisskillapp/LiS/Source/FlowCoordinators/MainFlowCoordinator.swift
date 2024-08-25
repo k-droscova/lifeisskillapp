@@ -12,7 +12,7 @@ import SwiftUI
 
 protocol MainFlowCoordinatorDelegate: NSObject {}
 
-final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
+final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator, FlowCoordinatorAlertPresentable {
     weak var delegate: MainFlowCoordinatorDelegate?
     
     override init() {
@@ -53,6 +53,20 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
             selectedImage: Constants.TabBar.Points.selected.icon
         )
         
+        // MARK: MAP
+        
+        let mapFC = MapFlowCoordinator<SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
+            settingsDelegate: self
+        )
+        addChild(mapFC)
+        let mapVC = mapFC.start()
+        mapVC.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("map.title", comment: ""),
+            image: Constants.TabBar.Map.unselected.icon,
+            selectedImage: Constants.TabBar.Map.selected.icon
+        )
+        
         // MARK: HOME
         let homeFC = HomeFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
             delegate: self,
@@ -86,6 +100,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinator
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
             pointsVC,
+            mapVC,
             homeVC,
             rankVC
         ]
@@ -167,6 +182,22 @@ extension MainFlowCoordinator {
     }
 }
 
+
+extension MainFlowCoordinator: UserManagerFlowDelegate {
+    func onLogout() {
+        delegate?.reload()
+    }
+    func onDataError(_ error: Error) {
+        // TODO: HANDLE ERROR BETTER
+        appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
+        let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            
+        })
+        present(alert, animated: true)
+    }
+}
+
 extension MainFlowCoordinator: LocationManagerFlowDelegate {
     func onLocationUnsuccess() {
         showLocationAccessAlert()
@@ -228,7 +259,7 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     func onboardingPressed() {
         let onboardingVC = OnboardingView().hosting()
         onboardingVC.modalPresentationStyle = .formSheet
-        rootViewController?.present(onboardingVC, animated: true, completion: nil)
+        present(onboardingVC, animated: true)
     }
 }
 
@@ -241,3 +272,9 @@ extension MainFlowCoordinator: GameDataManagerFlowDelegate {
         showAlert(titleKey: "alert.scanning.processing.stored.title", messageKey: "alert.scanning.processing.stored.message")
     }
 }
+
+extension MainFlowCoordinator: RankFlowCoordinatorDelegate {}
+
+extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {}
+
+extension MainFlowCoordinator: MapFlowCoordinatorDelegate {}
