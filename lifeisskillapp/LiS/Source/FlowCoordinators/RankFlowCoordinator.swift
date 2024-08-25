@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import ACKategories
-import SwiftUI
 
 protocol RankFlowCoordinatorDelegate: NSObject {}
 
@@ -41,6 +40,8 @@ final class RankFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
     ///
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
+        super.start()
+        
         let viewModel = RankViewModel<csVM, statusBarVM>(
             dependencies: appDependencies,
             categorySelectorVM: self.categorySelectorVM, 
@@ -48,7 +49,11 @@ final class RankFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
             settingsDelegate: self.settingsDelegate
         )
         let vc = RankView(viewModel: viewModel).hosting()
-        return vc
+        self.rootViewController = vc
+        let navController = UINavigationController(rootViewController: vc)
+        self.navigationController = navController
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        return navController
     }
 }
 

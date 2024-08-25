@@ -84,10 +84,10 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
         
         // MARK: RANK
         let rankFC = RankFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
             settingsDelegate: self,
             categorySelectorVM: csVM
         )
-        
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(

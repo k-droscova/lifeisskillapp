@@ -51,6 +51,8 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
     ///
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
+        super.start()
+        
         let viewModel = HomeViewModel<csVM, statusBarVM>(
             dependencies: .init(
                 gameDataManager: appDependencies.gameDataManager,

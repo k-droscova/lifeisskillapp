@@ -36,6 +36,8 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
     }
     
     override func start() -> UIViewController {
+        super.start()
+        
         let viewModel = PointsViewModel<csVM, statusBarVM>(
             dependencies: appDependencies,
             categorySelectorVM: self.categorySelectorVM,

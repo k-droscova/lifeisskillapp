@@ -33,6 +33,7 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
         settingsDelegate: SettingsBarFlowDelegate? = nil
     )
     {
+        super.init()
         self.delegate = delegate
         self.settingsDelegate = settingsDelegate
     }
@@ -41,6 +42,8 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
     ///
     /// - Returns: The login view controller to be presented.
     override func start() -> UIViewController {
+        super.start()
+        
         let viewModel = LoginViewModel<statusBarVM>(
             dependencies: appDependencies,
             delegate: self,
