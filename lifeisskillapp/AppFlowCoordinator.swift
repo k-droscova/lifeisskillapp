@@ -9,12 +9,8 @@ import Foundation
 import UIKit
 import ACKategories
 
-final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
+final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     private weak var window: UIWindow?
-    // Custom property to expose rootViewController via window
-    internal var appRootViewController: UIViewController? {
-        return window?.rootViewController
-    }
     
     override func start(in window: UIWindow) {
         self.window = window

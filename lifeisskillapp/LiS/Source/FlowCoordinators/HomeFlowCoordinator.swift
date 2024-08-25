@@ -28,7 +28,7 @@ protocol HomeFlowDelegate: NSObject, ScanPointFlowDelegate {
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
-final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator, FlowCoordinatorAlertPresentable {
+final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: HomeFlowCoordinatorDelegate?
     private weak var homeVM: (any HomeViewModeling)?
@@ -134,9 +134,7 @@ extension HomeFlowCoordinator {
     // MARK: - Private Helpers
     
     private func returnToHomeScreen() {
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
-        }
+        dismiss()
     }
     
     private func showSuccessAlert() {
@@ -194,12 +192,6 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     
     // MARK: - Private Helpers
     
-    private func returnToHomeScreen() {
-        DispatchQueue.main.async {
-            self.navigationController?.dismiss(animated: true, completion: nil)
-        }
-    }
-    
     private func showNoLocationAlert() {
         showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.no_location")
     }
@@ -218,20 +210,5 @@ extension HomeFlowCoordinator: ScanPointFlowDelegate {
     
     private func showOfflineFailureAlert() {
         showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.message_offline")
-    }
- 
-extension HomeFlowCoordinator {
-    @MainActor
-    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        let alertController = UIAlertController(
-            title: NSLocalizedString(titleKey, comment: ""),
-            message: NSLocalizedString(messageKey, comment: ""),
-            preferredStyle: .alert
-        )
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-            completion?()
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true)
     }
 }

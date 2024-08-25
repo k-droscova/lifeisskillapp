@@ -27,8 +27,6 @@ final class MapFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.FlowC
     }
     
     override func start() -> UIViewController {
-        super.start()
-        
         let viewModel = MapViewModel<statusBarVM>(
             dependencies: appDependencies,
             mapDelegate: self,

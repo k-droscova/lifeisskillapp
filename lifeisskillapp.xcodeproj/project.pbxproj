@@ -57,14 +57,12 @@
 		2734DCAE2C46AA49008030F3 /* InMemoryUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAD2C46AA49008030F3 /* InMemoryUserDataStorage.swift */; };
 		2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */; };
 		2736FA482C6A76D500B03B9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27274F882C3320F3003453E2 /* LaunchScreen.storyboard */; };
+		273910022C7384AF005C7B52 /* MapFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273910012C7384AF005C7B52 /* MapFlowDelegate.swift */; };
 		2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		274001652C7A271200AD5D7D /* RealmSponsorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001642C7A271200AD5D7D /* RealmSponsorData.swift */; };
 		274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */; };
-		273910022C7384AF005C7B52 /* MapFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273910012C7384AF005C7B52 /* MapFlowDelegate.swift */; };
-		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
-		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		274001692C7A41E500AD5D7D /* BaseFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
 		27414D862C63A08B00C19F8C /* .realm-cocoa.version in Resources */ = {isa = PBXBuildFile; fileRef = 27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */; };
@@ -109,7 +107,6 @@
 		2784F9382C7769330041E72E /* MapPointDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */; };
 		2784F93C2C776B2A0041E72E /* MapPointDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */; };
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
-		2794492A2C6F75AE00D8F037 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279449292C6F75AE00D8F037 /* AlertPresentable.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
@@ -260,14 +257,12 @@
 		2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIService.swift; sourceTree = "<group>"; };
 		2734DCAD2C46AA49008030F3 /* InMemoryUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryUserDataStorage.swift; sourceTree = "<group>"; };
 		2734DCAF2C46C6E4008030F3 /* UserPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManager.swift; sourceTree = "<group>"; };
+		273910012C7384AF005C7B52 /* MapFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowDelegate.swift; sourceTree = "<group>"; };
 		2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDataStorage.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
 		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
 		274001642C7A271200AD5D7D /* RealmSponsorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorData.swift; sourceTree = "<group>"; };
 		274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorRepository.swift; sourceTree = "<group>"; };
-		273910012C7384AF005C7B52 /* MapFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowDelegate.swift; sourceTree = "<group>"; };
-		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
-		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
 		274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFlowCoordinator.swift; sourceTree = "<group>"; };
 		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		27414D7B2C63A08B00C19F8C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
@@ -310,7 +305,6 @@
 		2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailViewModel.swift; sourceTree = "<group>"; };
 		2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailView.swift; sourceTree = "<group>"; };
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
-		279449292C6F75AE00D8F037 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -598,7 +592,6 @@
 				27274FBB2C3322D4003453E2 /* Extensions */,
 				27274FBA2C3322CA003453E2 /* Models */,
 				27CBD7842C4E7DFF00612375 /* BaseClass.swift */,
-				279449292C6F75AE00D8F037 /* AlertPresentable.swift */,
 				274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */,
 			);
 			path = Core;
@@ -1308,7 +1301,6 @@
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
-				2794492A2C6F75AE00D8F037 /* AlertPresentable.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				27E9D6192C63F8EC0098CB96 /* CategoryRepository.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* InMemoryUserDataStorage.swift in Sources */,

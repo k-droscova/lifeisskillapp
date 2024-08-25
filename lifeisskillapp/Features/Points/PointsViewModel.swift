@@ -38,7 +38,7 @@ protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling where 
 }
 
 final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies & HasGenericPointManager & HasUserDefaultsStorage
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & SettingsBarViewModel.Dependencies & HasGenericPointManager & HasLocationManager
     
     // MARK: - Private Properties
     
@@ -53,7 +53,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         getSelectedCategory()
     }
     private var cancellables = Set<AnyCancellable>()
-    private let locationStorage: UserDefaultsStoraging // TODO: change to location manager as in realm feature branch
+    private let locationStorage: LocationManaging
     private var mapPoints: [Point] = []
     
     // MARK: - Public Properties
@@ -90,7 +90,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         self.gameDataManager = dependencies.gameDataManager
         self.userManager = dependencies.userManager
         self.genericPointManager = dependencies.genericPointManager
-        self.locationStorage = dependencies.userDefaultsStorage // TODO: change to location manager
+        self.locationStorage = dependencies.locationManager
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
@@ -113,13 +113,14 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     func onAppear() {
         Task { @MainActor [weak self] in
-            self?.isLoading = true
-            self?.username = self?.userManager.userName ?? ""
-            await self?.fetchData()
+            guard let self = self else { return }
+            self.isLoading = true
+            self.username = self.userManager.userName ?? ""
+            await self.fetchData()
             if self.isMapButtonPressed {
                 await self.setupMapPoints(self.mapPoints)
             }
-            self?.isLoading = false
+            self.isLoading = false
         }
     }
     

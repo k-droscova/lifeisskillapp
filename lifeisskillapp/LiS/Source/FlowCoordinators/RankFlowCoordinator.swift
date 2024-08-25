@@ -19,7 +19,7 @@ protocol RankFlowDelegate: NSObject {
 }
 
 /// The HomeFlowCoordinator is responsible for managing the home flow within the app. It handles the navigation and actions from the home view controller.
-final class RankFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
+final class RankFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     /// The delegate to notify about the success of point loading.
     private weak var delegate: RankFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?

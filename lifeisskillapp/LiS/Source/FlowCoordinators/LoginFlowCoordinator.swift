@@ -22,7 +22,7 @@ protocol LoginFlowDelegate: NSObject {
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
-final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, FlowCoordinatorAlertPresentable {
+final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     private weak var delegate: LoginFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?
     
@@ -63,19 +63,19 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         delegate?.loginDidSucceed()
     }
     func loginFailed() {
-        self.showOnlineLoginFailureAlert()
+        showOnlineLoginFailureAlert()
     }
     func offlineLoginFailed() {
-        self.showOfflineLoginFailureAlert()
+        showOfflineLoginFailureAlert()
     }
     
     // MARK: - Private Helpers
     
     private func showOfflineLoginFailureAlert() {
-        self.showAlert(titleKey: "login.error.title", messageKey: "login.error_offline.message")
+        showAlert(titleKey: "login.error.title", messageKey: "login.error_offline.message")
     }
     
     private func showOnlineLoginFailureAlert() {
-        self.showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
+        showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
     }
 }
