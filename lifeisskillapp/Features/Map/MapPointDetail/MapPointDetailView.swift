@@ -11,8 +11,8 @@ struct MapPointDetailView: View {
     @ObservedObject private var viewModel: MapPointDetailViewModel
     
     // Custom initializer that accepts a GenericPoint
-    init(point: GenericPoint) {
-        self.viewModel = MapPointDetailViewModel(point: point)
+    init(dependencies: MapPointDetailViewModel.Dependencies, point: GenericPoint) {
+        self.viewModel = MapPointDetailViewModel(dependencies: dependencies, point: point)
     }
     
     var body: some View {
@@ -28,11 +28,14 @@ struct MapPointDetailView: View {
             Text(viewModel.pointValueText)
                 .body2Regular
             
-            // TODO: need to implement fetching of images once I have permanent storage -> will need to redo generic point model to have optional image attribute and store it as data or something similar
             Text(viewModel.sponsorText)
                 .body2Regular
             
             HStack {
+                // TODO: need to fix formatting of the height of the sheet somehow
+                if let sponsorImage = viewModel.sponsorImage {
+                    sponsorImage
+                }
                 Spacer()
                 if viewModel.hasDetail, let detailURL = viewModel.detailURL {
                     Link(LocalizedStringKey("map.detail"), destination: detailURL)
@@ -44,6 +47,9 @@ struct MapPointDetailView: View {
         }
         .padding(MapPointDetailViewConstants.viewPadding)
         .background(MapPointDetailViewConstants.Colors.backgroundColor)
+        .onAppear {
+            viewModel.onAppear() 
+        }
     }
 }
 
