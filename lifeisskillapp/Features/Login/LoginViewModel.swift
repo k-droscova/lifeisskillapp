@@ -66,12 +66,11 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             self.isLoading = true
+            defer { self.isLoading = false }
             do {
                 try await self.userManager.login(credentials: .init(username: username, password: password))
-                self.isLoading = false
                 self.delegate?.loginSuccessful()
             } catch let error as BaseError {
-                self.isLoading = false
                 if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
                     delegate?.offlineLoginFailed()
                     return
@@ -79,9 +78,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
                 print("Login failed with error: \(error)")
                 self.delegate?.loginFailed()
                 return
-            }
-            catch {
-                self.isLoading = false
+            } catch {
                 print("Login failed with error: \(error)")
                 self.delegate?.loginFailed()
                 return
