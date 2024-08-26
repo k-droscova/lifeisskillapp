@@ -14,35 +14,49 @@ protocol CameraViewModeling: BaseClass {
 }
 
 extension CameraViewModeling {
-    
-    // MARK: - Default Implementation as behavior is consistent throughout inheritors
-    
+
     func toggleFlash() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
-            appDependencies.logger.log(message: "flash tapped")
-            guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else {
-                appDependencies.logger.log(message: "Device has no Torch")
-                return
-            }
+        var device: AVCaptureDevice?
+
+        if #available(iOS 17, *) {
+            device = AVCaptureDevice.userPreferredCamera
+        } else {
+            let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(
+                deviceTypes: [
+                    .builtInTripleCamera,
+                    .builtInDualWideCamera,
+                    .builtInUltraWideCamera,
+                    .builtInWideAngleCamera,
+                    .builtInTrueDepthCamera
+                ],
+                mediaType: .video,
+                position: .back
+            )
+            device = deviceDiscoverySession.devices.first
+        }
+
+        guard let device else {
+            print("No suitable camera device found.")
+            return
+        }
+
+        if device.hasTorch && device.isTorchAvailable {
             do {
                 try device.lockForConfiguration()
+                if device.torchMode == .on {
+                    device.torchMode = .off
+                } else {
+                    try device.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
+                }
+                device.unlockForConfiguration()
                 DispatchQueue.main.async {
-                    if self.isFlashOn {
-                        device.torchMode = .off
-                    } else {
-                        do {
-                            try device.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
-                        } catch {
-                            appDependencies.logger.log(message: "Failed to set torch mode: \(error)")
-                        }
-                    }
-                    self.isFlashOn.toggle()
-                    device.unlockForConfiguration()
+                    self.isFlashOn = (device.torchMode == .on)
                 }
             } catch {
-                appDependencies.logger.log(message: "Failed to toggle flash: \(error)")
+                print("Failed to configure the torch: \(error)")
             }
+        } else {
+            print("Torch is not available on this device.")
         }
     }
 }
