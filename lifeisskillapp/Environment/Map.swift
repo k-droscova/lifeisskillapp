@@ -13,6 +13,7 @@ public struct MapConstants {
     static let mapDetailImageHeight: CGFloat = 100
     static let latitudeDelta = 0.05
     static let longitudeDelta = 0.05
+    static let virtualPointDistance = 1000.0
     static let defaultCoordinate = CLLocation(
         coordinate: CLLocationCoordinate2D(
             latitude: Prague.latitude,

@@ -99,6 +99,16 @@ private extension HomeView {
                     SFSSymbols.camera.Image
                 }
                 
+                if viewModel.isVirtualAvailable {
+                    HomeButton(
+                        action: viewModel.loadVirtual,
+                        background: HomeViewConstants.Colors.virtual,
+                        foregroundColor: HomeViewConstants.Colors.white
+                    ) {
+                        SFSSymbols.virtual.Image
+                    }
+                }
+                
             }
             HomeButton(
                 action: viewModel.showOnboarding,
