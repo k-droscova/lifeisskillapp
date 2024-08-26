@@ -548,7 +548,7 @@
         }
       }
     },
-"forgot_password.alert.error.message" : {
+    "forgot_password.alert.password_error.message" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -571,7 +571,7 @@
         }
       }
     },
-    "forgot_password.alert.error.title" : {
+    "forgot_password.alert.password_error.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -590,6 +590,92 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error"
+          }
+        }
+      }
+    },
+    "forgot_password.alert.pin_error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadal jsi nesprávný pin. Ujisti se, že zadáváš pin, který ti přišel na email."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der eingegebene Pin ist ungültig. Stellen Sie sicher, dass Sie den richtigen Pin eingegeben haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The pin you entered is invalid. Make sure you entered the correct pin."
+          }
+        }
+      }
+    },
+    "forgot_password.alert.pin_error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültiger Pin"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid Pin"
+          }
+        }
+      }
+    },
+    "forgot_password.alert.request_error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujisti se, že zadáváš správné údaje."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stellen Sie sicher, dass Sie eine gültige E-Mail-Adresse oder einen Benutzernamen eingegeben haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure you entered a valid email or username."
+          }
+        }
+      }
+    },
+    "forgot_password.alert.request_error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Žádost o pin selhala"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler beim Anfordern eines neuen Pins"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to request new pin"
           }
         }
       }
@@ -968,8 +1054,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Načíst pomocí fotoaparátu"
+            "state" : "translated",
+            "value" : "Načíst pomocí foťáku"
           }
         },
         "de" : {

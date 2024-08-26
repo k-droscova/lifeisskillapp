@@ -1,62 +1,75 @@
 //
-//  LoginAPIService.swift
+//  ForgotPasswordAPIService.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 07.07.2024.
+//  Created by Karolína Droscová on 26.08.2024.
 //
 
 import Foundation
 
-struct LoginCredentials: Codable {
-    let username: String
-    let password: String
+struct ForgotPasswordCredentials: Codable {
+    let email: String
+    let newPassword: String
+    let pin: String
 }
 
-protocol HasLoginAPIService {
-    var loginAPI: LoginAPIServicing { get }
+protocol HasForgotPasswordAPIService {
+    var forgotPasswordAPI: ForgotPasswordAPIServicing { get }
 }
 
-protocol LoginAPIServicing: APITasking {
-    func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse>
+protocol ForgotPasswordAPIServicing: APITasking {
+    func fetchPin(username: String, baseURL: URL) async throws -> APIResponse<ForgotPasswordData>
+    func setNewPassword(credentials: ForgotPasswordCredentials, baseURL: URL) async throws -> APIResponse<ForgotPasswordConfirmation>
 }
 
-public final class LoginAPIService: BaseClass, LoginAPIServicing {
+public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var loggerService: LoggerServicing
     private var network: Networking
-    let task = ApiTask.login
+    let task: ApiTask = ApiTask.forgotPassword
     
     init(dependencies: Dependencies) {
         self.loggerService = dependencies.logger
         self.network = dependencies.network
     }
     
-    func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse> {
-        let endpoint = Endpoint.login
+    func fetchPin(username: String, baseURL: URL) async throws -> APIResponse<ForgotPasswordData> {
+        let endpoint = Endpoint.request
         let headers = endpoint.headers(token: APIHeader.Authorization)
-        let data = try encodeParams(credentials: loginCredentials)
+        return try await network.performRequestWithDataDecoding(
+            url: try endpoint.urlWithPath(base: baseURL, username: username, logger: loggerService),
+            headers: headers,
+            sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self)
+    }
+    
+    func setNewPassword(credentials: ForgotPasswordCredentials, baseURL: URL) async throws -> APIResponse<ForgotPasswordConfirmation> {
+        let endpoint = Endpoint.confirm
+        let data = try encodeParams(credentials: credentials)
+        let headers = endpoint.headers(token: APIHeader.Authorization)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .POST,
+            method: .PUT,
             headers: headers,
             body: data,
             sensitiveRequestBodyData: true,
             errorObject: APIResponseError.self)
     }
     
-    private func encodeParams(credentials: LoginCredentials) throws -> Data {
+    private func encodeParams(credentials: ForgotPasswordCredentials) throws -> Data {
         var taskParams = task.taskParams
         let params = [
-            "user": credentials.username,
-            "pswd": credentials.password
+            "pin": credentials.pin,
+            "newPswd": credentials.newPassword,
+            "email": credentials.email
         ]
         taskParams.merge(params) { (_, new) in new }
         let jsonString = try JsonMapper.jsonString(from: taskParams)
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw BaseError(
                 context: .system,
-                message: "Could not encode login params",
+                message: "Could not encode forgot password params",
                 code: .general(.jsonEncoding),
                 logger: loggerService
             )
@@ -65,19 +78,21 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
     }
 }
 
-extension LoginAPIService {
+extension ForgotPasswordAPIService {
     enum Endpoint: CaseIterable {
-        case login
+        case request
+        case confirm
         
         var path: String {
             switch self {
-            case .login: "/login"
+            case .request: "/pswd/?user="
+            case .confirm: "/pswd"
             }
         }
         
         var typeHeaders: [String: String] {
             switch self {
-            case .login:
+            default:
                 ["accept": "application/json"]
             }
         }
@@ -96,8 +111,8 @@ extension LoginAPIService {
             return finalHeaders
         }
         
-        func urlWithPath(base: URL, logger: LoggerServicing) throws -> URL {
-            let finalURLString = base.absoluteString + path
+        func urlWithPath(base: URL, username: String? = nil, logger: LoggerServicing) throws -> URL {
+            let finalURLString = base.absoluteString + path + (username ?? "")
             guard let url = URL(string: finalURLString) else {
                 throw BaseError(
                     context: .network,

@@ -10,7 +10,9 @@ import Observation
 
 protocol ForgotPasswordViewModelDelegate: NSObject {
     func didRequestNewPin()
+    func failedRequestNewPin()
     func didValidatePin()
+    func failedValidatePin()
     func didRenewPassword()
     func failedRenewPassword()
     func timerRanOut()
@@ -22,8 +24,8 @@ protocol ForgotPasswordViewModeling: BaseClass, ObservableObject {
     var pin: String { get set }
     var newPassword: String { get set }
     var confirmPassword: String { get set }
-    var isSendButtonEnabled: Bool { get set }
-    var isConfirmButtonEnabled: Bool { get set }
+    var isSendEmailButtonEnabled: Bool { get set }
+    var isConfirmPinButtonEnabled: Bool { get set }
     var isChangePasswordButtonEnabled: Bool { get set }
     var isLoading: Bool { get set }
 
@@ -33,11 +35,12 @@ protocol ForgotPasswordViewModeling: BaseClass, ObservableObject {
 }
 
 final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, ObservableObject {
-    typealias Dependencies = HasLoggers
+    typealias Dependencies = HasLoggers & HasUserManager
     // MARK: - Private Properties
 
     private let logger: LoggerServicing
-    //private var data: ForgotPasswordData? // TODO: implement fetching of data
+    private let userManager: UserManaging
+    private var requestData: ForgotPasswordData?
     private var timer: Timer?
     private var timerExpirationDate: Date?
 
@@ -45,12 +48,12 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
     weak var delegate: ForgotPasswordViewModelDelegate?
     @Published var email: String = "" {
         didSet {
-            isSendButtonEnabled = !email.isEmpty
+            isSendEmailButtonEnabled = !email.isEmpty
         }
     }
     @Published var pin: String = "" {
         didSet {
-            isConfirmButtonEnabled = !pin.isEmpty
+            isConfirmPinButtonEnabled = !pin.isEmpty
         }
     }
     @Published var newPassword: String = "" {
@@ -63,8 +66,8 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
             validatePasswords()
         }
     }
-    @Published var isSendButtonEnabled: Bool = false
-    @Published var isConfirmButtonEnabled: Bool = false
+    @Published var isSendEmailButtonEnabled: Bool = false
+    @Published var isConfirmPinButtonEnabled: Bool = false
     @Published var isChangePasswordButtonEnabled: Bool = false
     @Published var isLoading: Bool = false
 
@@ -75,41 +78,73 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
         delegate: ForgotPasswordViewModelDelegate? = nil
     ) {
         self.logger = dependencies.logger
+        self.userManager = dependencies.userManager
         self.delegate = delegate
+    }
+    
+    deinit {
+        self.invalidateTimer()
     }
 
     // MARK: - Public Interface
 
     func sendEmail() {
-        isLoading = true
-        // Simulate an API call to send the email
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.isLoading = false
-            self.delegate?.didRequestNewPin()
-            self.startPinExpirationTimer() // Start the 15-minute timer after the pin is received
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            do {
+                self.requestData = try await self.userManager.requestPinForPasswordRenewal(username: self.email)
+                self.delegate?.didRequestNewPin()
+                self.startPinExpirationTimer()
+            } catch {
+                print("Forgot Password Request failed with error: \(error)")
+                self.delegate?.failedRequestNewPin()
+                return
+            }
         }
     }
 
     func validatePin() {
-        isLoading = true
-        // Simulate an API call to validate the PIN
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.isLoading = false
-            self.invalidateTimer() // Invalidate the timer if the password is successfully changed
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            guard self.pin == self.requestData?.pin else {
+                self.delegate?.failedValidatePin()
+                return
+            }
+            self.invalidateTimer()
             self.delegate?.didValidatePin()
         }
     }
 
     func changePassword() {
-        guard newPassword == confirmPassword else {
-            // Handle mismatched passwords
-            return
-        }
-        isLoading = true
-        // Simulate an API call to change the password
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.isLoading = false
-            self.delegate?.didRenewPassword()
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            guard self.newPassword == self.confirmPassword else {
+                // should never happen since passwords have to match for button to be enabled
+                return
+            }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            do {
+                guard let data = self.requestData else {
+                    throw BaseError(
+                        context: .system,
+                        message: "Cannot validate empty request data",
+                        logger: logger
+                    )
+                }
+                let credentials = ForgotPasswordCredentials(email: data.userEmail, newPassword: self.newPassword, pin: self.pin)
+                let response = try await userManager.validateNewPassword(credentials: credentials)
+                logger.log(message: "Password validated with result: \(response.description)")
+                self.delegate?.didRenewPassword()
+            } catch {
+                print("Forgot Password Request failed with error: \(error)")
+                self.delegate?.failedRenewPassword()
+                return
+            }
         }
     }
 
@@ -154,12 +189,12 @@ class MockForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling {
 
     @Published var email: String = "" {
         didSet {
-            isSendButtonEnabled = !email.isEmpty
+            isSendEmailButtonEnabled = !email.isEmpty
         }
     }
     @Published var pin: String = "" {
         didSet {
-            isConfirmButtonEnabled = !pin.isEmpty
+            isConfirmPinButtonEnabled = !pin.isEmpty
         }
     }
     @Published var newPassword: String = "" {
@@ -172,8 +207,8 @@ class MockForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling {
             validatePasswords()
         }
     }
-    @Published var isSendButtonEnabled: Bool = false
-    @Published var isConfirmButtonEnabled: Bool = false
+    @Published var isSendEmailButtonEnabled: Bool = false
+    @Published var isConfirmPinButtonEnabled: Bool = false
     @Published var isChangePasswordButtonEnabled: Bool = false
     @Published var isLoading: Bool = false
 

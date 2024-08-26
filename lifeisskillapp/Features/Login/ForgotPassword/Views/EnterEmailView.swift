@@ -62,7 +62,7 @@ private extension EnterEmailView {
                 disabledColorBackground: ForgotPasswordPagesConstants.Colors.disabledButton,
                 enabledColorText: ForgotPasswordPagesConstants.Colors.enabledText,
                 disabledColorText: ForgotPasswordPagesConstants.Colors.disabledText,
-                isEnabled: viewModel.isSendButtonEnabled
+                isEnabled: viewModel.isSendEmailButtonEnabled
             )
         }
     }
@@ -75,7 +75,7 @@ struct EnterEmailView_Previews: PreviewProvider {
 
         // Set initial state for the preview
         mockViewModel.email = "test@example.com"
-        mockViewModel.isSendButtonEnabled = true
+        mockViewModel.isSendEmailButtonEnabled = true
 
         // Return the EnterEmailView with the mock view model
         return EnterEmailView(viewModel: mockViewModel)

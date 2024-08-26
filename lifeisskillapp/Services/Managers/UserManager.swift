@@ -31,6 +31,8 @@ protocol UserManaging {
     var userGender: UserGender? { get }
     
     func initializeAppId() async throws
+    func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData
+    func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool
     func login(credentials: LoginCredentials) async throws
     func logout()
     func forceLogout()
@@ -47,6 +49,7 @@ final class UserManager: BaseClass, UserManaging {
     private var storage: PersistentUserDataStoraging
     private let registerAppAPI: RegisterAppAPIServicing
     private let loginAPI: LoginAPIServicing
+    private let forgotPasswordAPI: ForgotPasswordAPIServicing
     private let networkMonitor: NetworkMonitoring
     private let keychainStorage: KeychainStoraging
     private let gameDataManager: GameDataManaging
@@ -71,6 +74,7 @@ final class UserManager: BaseClass, UserManaging {
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
         self.loginAPI = dependencies.loginAPI
+        self.forgotPasswordAPI = dependencies.forgotPasswordAPI
         self.storage = dependencies.storage
         self.networkMonitor = dependencies.networkMonitor
         self.keychainStorage = dependencies.keychainStorage
@@ -96,6 +100,34 @@ final class UserManager: BaseClass, UserManaging {
             throw BaseError(
                 context: .system,
                 message: "Unable to obtain App Id",
+                logger: logger
+            )
+        }
+    }
+    
+    func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData {
+        do {
+            logger.log(message: "Requesting Pin for \(username)")
+            let response = try await forgotPasswordAPI.fetchPin(username: username, baseURL: APIUrl.baseURL)
+            return response.data
+        } catch {
+            throw BaseError(
+                context: .api,
+                message: "Unable to obtain Pin",
+                logger: logger
+            )
+        }
+    }
+    
+    func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool {
+        do {
+            logger.log(message: "New password for User: " + credentials.email)
+            let response = try await forgotPasswordAPI.setNewPassword(credentials: credentials, baseURL: APIUrl.baseURL)
+            return response.data.message
+        } catch {
+            throw BaseError(
+                context: .system,
+                message: "Unable to renew password for user: \(credentials.email)",
                 logger: logger
             )
         }
