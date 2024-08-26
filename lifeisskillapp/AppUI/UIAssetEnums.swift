@@ -13,6 +13,8 @@ enum SFSSymbols: String {
     case camera = "xmark"
     case list = "list.bullet"
     case map = "map"
+    case categorySelectorDropDown = "chevron.down"
+    case settingsMenu = "ellipsis.circle"
     
     var Image: Image {
         SwiftUI.Image(systemName: self.rawValue)
