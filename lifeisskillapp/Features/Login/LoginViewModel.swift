@@ -98,7 +98,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     }
     
     func forgotPassword() {
-        print("forgot password tapped")
+        delegate?.forgotPasswordTapped()
     }
     
     // MARK: Private Helpers

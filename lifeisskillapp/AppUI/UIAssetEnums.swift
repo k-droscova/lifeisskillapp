@@ -175,6 +175,15 @@ enum CustomImages {
             Map.basePath + self.rawValue
         }
     }
+    
+    enum ForgotPassword: String {
+        private static let basePath = "Ilustrations/"
+        case defaultImage = "howTo1"
+        
+        var fullPath: String {
+            ForgotPassword.basePath + self.rawValue
+        }
+    }
 }
 
 enum CustomColors {
@@ -306,5 +315,35 @@ enum CustomSizes {
                 300
             }
         }
+    }
+    
+    enum ForgotPasswordPageView {
+        case verticalSpacing, horizontalPadding, frameHeight
+        var size: CGFloat {
+            switch self {
+            case .verticalSpacing:
+                32
+            case .horizontalPadding:
+                32
+            case .frameHeight:
+                300
+            }
+        }
+    }
+}
+
+enum ForgotPasswordPagesConstants {
+    static let topPadding: CGFloat = 32
+    static let bottomPadding: CGFloat = 32
+    static let cornerRadius: CGFloat = 10
+
+    enum Colors {
+        static let textFieldBackground = Color.lighterGrey
+        static let button = Color.colorLisBlue
+        static let buttonText = Color.white
+        static let enabledButton = Color.colorLisGreen
+        static let disabledButton = Color.colorLisGrey
+        static let enabledText = Color.white
+        static let disabledText = Color.colorLisDarkGrey
     }
 }

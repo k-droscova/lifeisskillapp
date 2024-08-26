@@ -91,7 +91,7 @@ private extension LoginView {
     }
     
     private var loginButton: some View {
-        LoginButton(
+        EnablingButton(
             action: viewModel.login,
             text: Text("login.login"),
             enabledColorBackground: LoginViewConstants.Colors.enabledButton,
