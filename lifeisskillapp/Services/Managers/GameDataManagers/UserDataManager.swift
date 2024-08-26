@@ -11,20 +11,19 @@ protocol UserData: Codable, Identifiable {
     var id: String { get }
 }
 
-protocol UserDataManagerFlowDelegate: NSObject {
-    func onUpdate()
-}
-
-protocol UserDataManaging {
+protocol UserDataManaging where Self: HasNetworkMonitor {
     associatedtype DataType: UserData
     associatedtype DataContainer: DataProtocol
     
-    var data: DataContainer? { get set }
     var token: String? { get }
-    func fetch() async throws
-    func fetch(withToken token: String) async throws
+    func loadData() async throws
+    func loadFromRepository() async // for offline loading
+    func fetch() async throws // default implementation for online loading for all data managers
+    func fetch(withToken token: String) async throws // for online loading
     func getAll() -> [DataType]
     func getById(id: String) -> DataType?
+    func checkSum() -> String?
+    func onLogout()
 }
 
 extension UserDataManaging {
@@ -35,5 +34,13 @@ extension UserDataManaging {
                             logger: appDependencies.logger)
         }
         try await fetch(withToken: token) // Call the method with the token
+    }
+    
+    func loadData() async throws {
+        guard networkMonitor.onlineStatus else {
+            await loadFromRepository()
+            return
+        }
+        try await fetch()
     }
 }

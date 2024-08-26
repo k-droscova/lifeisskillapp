@@ -19,7 +19,7 @@ protocol HasNetworkMonitor {
 
 protocol NetworkMonitoring: AnyObject {
     var delegate: NetworkManagerFlowDelegate? { get set }
-    var isOnline: Bool { get }
+    var onlineStatus: Bool { get }
     var onlineStatusPublisher: AnyPublisher<Bool, Never> { get }
     func startMonitoring()
     func stopMonitoring()
@@ -38,7 +38,7 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
     // MARK: - Public Properties
     
     weak var delegate: NetworkManagerFlowDelegate?
-    @Published private(set) var isOnline: Bool = true
+    @Published private(set) var onlineStatus: Bool = true
     var onlineStatusPublisher: AnyPublisher<Bool, Never> {
         onlineStatusSubject.eraseToAnyPublisher()
     }
@@ -73,15 +73,17 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
     // MARK: - Private Helpers
     
     private func handleNetworkChange(path: NWPath) {
-        let status = path.status == .satisfied
-        updateOnlineStatus(status: status)
-        guard !status else { return }
+        let newStatus = path.status == .satisfied
+        guard newStatus != onlineStatus else { return } // update only if the status changed
+        updateOnlineStatus(status: newStatus)
+        guard !newStatus else { return }
         delegate?.onNoInternetConnection()
     }
     
     private func updateOnlineStatus(status: Bool) {
         Task { @MainActor [weak self] in
-            self?.isOnline = status
+            self?.onlineStatus = status
+            self?.logger.log(message: "New network status: \(status)")
             self?.onlineStatusSubject.send(status)
         }
     }

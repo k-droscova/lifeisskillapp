@@ -14,12 +14,12 @@ protocol NfcViewModeling: BaseClass {
 }
 
 final class NfcViewModel: BaseClass, NfcViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasScanningManager
+    typealias Dependencies = HasLoggerServicing & HasLocationManager & HasGameDataManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
-    private let scanningManager: ScanningManaging
+    private let gameDataManager: GameDataManaging
     private var session: NFCReaderSession?
     
     public var isNfcAvailable: Bool { NFCNDEFReaderSession.readingAvailable }
@@ -28,7 +28,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
         self.delegate = delegate
         self.logger = dependencies.logger
         self.locationManager = dependencies.locationManager
-        self.scanningManager = dependencies.scanningManager
+        self.gameDataManager = dependencies.gameDataManager
     }
     
     func startScanning() {
@@ -50,18 +50,17 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     
     // MARK: - Private Helpers
     
-    private func handleScannedPoint(_ pointID: String) {
-        logger.log(message: "Point scanned from NFC: \(pointID)")
-        let point = LoadPoint(code: pointID, codeSource: .nfc)
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendScannedPoint(point)
-                self?.stopScanning()
-                self?.delegate?.onSuccess(source: .nfc)
-            } catch {
-                self?.stopScanning()
-                self?.delegate?.onFailure(source: .nfc)
-            }
+    private func handleProcessedCode(_ code: String) {
+        logger.log(message: "Point scanned from NFC: \(code)")
+        locationManager.checkLocationAuthorization()
+        delegatePointScanningToGameDataManager(code)
+        self.stopScanning()
+    }
+    
+    private func delegatePointScanningToGameDataManager(_ code: String) {
+        Task { [weak self] in
+            let point = ScannedPoint(code: code, codeSource: .nfc, location: self?.locationManager.location)
+            await self?.gameDataManager.onPointScanned(point)
         }
     }
 }
@@ -82,7 +81,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 guard string.contains("Life is Skill") else {
                     continue
                 }
-                handleScannedPoint(string.parseMessage())
+                handleProcessedCode(string.parseMessage())
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                     session.invalidate()
                 }

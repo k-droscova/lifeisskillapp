@@ -11,16 +11,15 @@ import Observation
 protocol CategorySelectorViewModeling: BaseClass, ObservableObject {
     var selectedCategory: UserCategory? { get set }
     var userCategories: [UserCategory] { get }
-    func onAppear()
 }
 
 final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySelectorViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserLoginManager & HasUserCategoryManager
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasGameDataManager
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private let userDataManager: UserLoginDataManaging
+    private let gameDataManager: GameDataManaging
     private var userCategoryManager: any UserCategoryManaging
     
     // MARK: - Public Properties
@@ -36,30 +35,31 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
-        self.userDataManager = dependencies.userLoginManager
         self.userCategoryManager = dependencies.userCategoryManager
-    }
-    
-    // MARK: - Public Interface
-    
-    func onAppear() {
-        Task { @MainActor [weak self] in
-            await self?.fetchNewDataIfNeccessary()
-        }
+        self.gameDataManager = dependencies.gameDataManager
+        super.init()
+        /*
+         Fetching of user categories is performed only after login when CS VM is initialized in MainFC.
+         If online fetching fails then it falls back to the data that is loaded from Repo in userCategoryManager init
+         */
+        self.load()
     }
     
     // MARK: - Private Helpers
     
-    private func fetchNewDataIfNeccessary() async {
-        do {
-            try await userCategoryManager.fetch()
-            let categories = getAllUserCategories()
-            await MainActor.run {
-                self.userCategories = categories
-                self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.data?.data.first
-            }
-        } catch {
-            logger.log(message: "ERROR: Unable to fetch new user category data")
+    private func load() {
+        Task { @MainActor [weak self] in
+            await self?.fetchData()
+        }
+    }
+    
+    private func fetchData() async {
+        // TODO: ask martin if I should load new category data for every display of category selector or if it sufficed to keep the fetching limited to login
+        //await gameDataManager.loadData(for: .categories)
+        let categories = getAllUserCategories()
+        await MainActor.run {
+            self.userCategories = categories
+            self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.getAll().first
         }
     }
     

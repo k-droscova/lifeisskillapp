@@ -14,7 +14,7 @@ protocol HomeFlowCoordinatorDelegate: NSObject {
     func onboardingPressed()
 }
 
-protocol HomeFlowDelegate: NSObject {
+protocol HomeFlowDelegate: NSObject, ScanPointFlowDelegate {
     // MARK: - scanning flow
     func loadFromQR(viewModel: QRViewModeling)
     func dismissQR()
@@ -22,7 +22,6 @@ protocol HomeFlowDelegate: NSObject {
     func dismissCamera()
     // MARK: - message flow
     func featureUnavailable(source: CodeSource)
-    func onSuccess(source: CodeSource)
     func onFailure(source: CodeSource)
     // MARK: - navigation
     func showOnboarding()
@@ -52,12 +51,13 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
     ///
     /// - Returns: The home view controller to be presented.
     override func start() -> UIViewController {
+        super.start()
+        
         let viewModel = HomeViewModel<csVM, statusBarVM>(
             dependencies: .init(
-                scanningManager: appDependencies.scanningManager,
+                gameDataManager: appDependencies.gameDataManager,
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
-                userLoginManager: appDependencies.userLoginManager,
                 userDefaultsStorage: appDependencies.userDefaultsStorage,
                 userManager: appDependencies.userManager,
                 networkMonitor: appDependencies.networkMonitor
@@ -98,7 +98,7 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
             cameraViewController.modalPresentationStyle = .fullScreen
             present(cameraViewController, animated: true)
         } else {
-            self.featureUnavailable(source: .text)
+            featureUnavailable(source: .text)
         }
     }
     
@@ -114,13 +114,13 @@ extension HomeFlowCoordinator: HomeFlowDelegate {
 extension HomeFlowCoordinator {
     func featureUnavailable(source: CodeSource) {
         appDependencies.logger.log(message: "feature unavailable")
-        self.showAlert(
+        showAlert(
             titleKey: "home.scan_error.feature_unavailable.title",
             messageKey: "home.scan_error.feature_unavailable.message",
-            completion: self.returnToHomeScreen
+            completion: returnToHomeScreen
         )
     }
-    
+ 
     func onSuccess(source: CodeSource) {
         returnToHomeScreen()
         appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
@@ -136,41 +136,81 @@ extension HomeFlowCoordinator {
     // MARK: - Private Helpers
     
     private func returnToHomeScreen() {
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
-        }
+        dismiss()
     }
     
     private func showSuccessAlert() {
-        self.showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
+        showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message")
     }
     
     private func showFailureAlert(_ source: CodeSource) {
         switch source {
         case .qr:
-            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.qr.message")
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.qr.message")
         case .nfc:
-            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.nfc.message")
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.nfc.message")
         case .virtual:
-            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
         case .text:
-            self.showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
+            showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
+        case .unknown:
+            showAlert(titleKey: "alert.general_error.title", messageKey: "alert.general_error.message")
         }
     }
 }
 
-extension HomeFlowCoordinator {
-    @MainActor
-    private func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        let alertController = UIAlertController(
-            title: NSLocalizedString(titleKey, comment: ""),
-            message: NSLocalizedString(messageKey, comment: ""),
-            preferredStyle: .alert
-        )
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
-            completion?()
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true)
+extension HomeFlowCoordinator: ScanPointFlowDelegate {
+    func onScanPointNoLocation() {
+        returnToHomeScreen()
+        showNoLocationAlert()
+    }
+    
+    func onScanPointInvalidPoint() {
+        returnToHomeScreen()
+        showInvalidPointAlert()
+    }
+    
+    func onScanPointProcessSuccessOnline(_ source: CodeSource) {
+        returnToHomeScreen()
+        appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
+        showOnlineSuccessAlert()
+    }
+    
+    func onScanPointProcessSuccessOffline(_ source: CodeSource) {
+        returnToHomeScreen()
+        appDependencies.logger.log(message: "scanning success for source: \(source.rawValue)")
+        showOfflineSuccessAlert()
+    }
+    
+    func onScanPointOnlineProcessError(_ source: CodeSource) {
+        returnToHomeScreen()
+        appDependencies.logger.log(message: "scanning processing failure for source: \(source.rawValue)")
+    }
+    
+    func onScanPointOfflineProcessError() {
+        returnToHomeScreen()
+        showOfflineFailureAlert()
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func showNoLocationAlert() {
+        showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.no_location")
+    }
+    
+    private func showInvalidPointAlert() {
+        showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.invalid_point")
+    }
+    
+    private func showOnlineSuccessAlert() {
+        showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message_online")
+    }
+    
+    private func showOfflineSuccessAlert() {
+        showAlert(titleKey: "home.scan_success.title", messageKey: "home.scan_success.message_offline")
+    }
+    
+    private func showOfflineFailureAlert() {
+        showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.message_offline")
     }
 }

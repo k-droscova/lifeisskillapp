@@ -8,6 +8,7 @@
 import Foundation
 
 protocol SettingsBarFlowDelegate: NSObject {
+    func logoutPressedWhileOffline()
     func settingsPressed()
     func cameraPressed()
     func onboardingPressed()
@@ -33,6 +34,8 @@ final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: Bas
     private weak var delegate: SettingsBarFlowDelegate?
     private let logger: LoggerServicing
     private let userManager: UserManaging
+    private let networkMonitor: NetworkMonitoring
+    private var isOnline: Bool { networkMonitor.onlineStatus }
     
     // MARK: - Public Properties
     
@@ -46,6 +49,7 @@ final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: Bas
     required init(dependencies: Dependencies, delegate: SettingsBarFlowDelegate?) {
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
+        self.networkMonitor = dependencies.networkMonitor
         self.delegate = delegate
         self.locationVM = locationVM.init(dependencies: dependencies)
     }
@@ -53,6 +57,10 @@ final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: Bas
     // MARK: - Public Interface
     
     func logoutPressed() {
+        guard isOnline else {
+            delegate?.logoutPressedWhileOffline()
+            return
+        }
         userManager.logout()
     }
     

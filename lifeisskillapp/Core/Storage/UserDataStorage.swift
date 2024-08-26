@@ -2,7 +2,7 @@
 //  UserDataStorage.swift
 //  lifeisskillapp
 //
-//  Created by Karolína Droscová on 16.07.2024.
+//  Created by Karolína Droscová on 23.08.2024.
 //
 
 import Foundation
@@ -12,125 +12,34 @@ protocol HasUserDataStorage {
 }
 
 protocol UserDataStoraging {
-    var userCategoryData: UserCategoryData? { get set }
-    var userPointData: UserPointData? { get set }
-    var genericPointData: GenericPointData? { get set }
-    var userRankData: UserRankData? { get set }
-    var loginData: LoginUserData? { get set }
-}
-
-final class UserDataStorage: UserDataStoraging {
-    typealias Dependencies = HasLoggerServicing
+    // Storage Interface Based On Different Scenarios
+    func onLogin() async throws
+    func onLogout() async throws
+    func clearUserRelatedData() async throws
+    func clearScannedPointData() async throws
     
-    // MARK: - Private Properties
+    // Storage Savers and Getters
+    func userCategoryData() async throws -> UserCategoryData?
+    func saveUserCategoryData(_ data: UserCategoryData?) async throws
+    func userPointData() async throws -> UserPointData?
+    func saveUserPointData(_ data: UserPointData?) async throws
+    func userRankData() async throws -> UserRankData?
+    func saveUserRankData(_ data: UserRankData?) async throws
+    func genericPointData() async throws -> GenericPointData?
+    func saveGenericPointData(_ data: GenericPointData?) async throws
+    func checkSumData() async throws -> CheckSumData?
+    func saveCheckSumData(_ data: CheckSumData?) async throws
+    func scannedPoints() async throws -> [ScannedPoint]
+    func saveScannedPoint(_ point: ScannedPoint) async throws
+    func saveSponsorImage(for sponsorId: String, imageData: Data) async throws
+    func sponsorImage(for sponsorId: String) async throws -> Data?
     
-    private let logger: LoggerServicing
-    /*
-     Internal storage dictionary to store values, will be replaced with SwiftData/Realm later
-     Note: [String: Any] cannot store nil directly, hence we store NSNull instead when newValue is nil, and return nil when stored value is NSNull
-     */
-    private var internalStore: [String: Any] = [:]
-    
-    // MARK: - Public Properties
-    
-    var userCategoryData: UserCategoryData? {
-        get {
-            if let data = internalStore["userCategoryData"] as? UserCategoryData {
-                return data
-            } else if internalStore["userCategoryData"] is NSNull {
-                return nil
-            } else {
-                return nil
-            }
-        }
-        set {
-            if newValue == nil {
-                internalStore["userCategoryData"] = NSNull()
-            } else {
-                internalStore["userCategoryData"] = newValue
-            }
-        }
-    }
-    
-    var userPointData: UserPointData? {
-        get {
-            if let data = internalStore["userPointData"] as? UserPointData {
-                return data
-            } else if internalStore["userPointData"] is NSNull {
-                return nil
-            } else {
-                return nil
-            }
-        }
-        set {
-            if newValue == nil {
-                internalStore["userPointData"] = NSNull()
-            } else {
-                internalStore["userPointData"] = newValue
-            }
-        }
-    }
-    
-    var genericPointData: GenericPointData? {
-        get {
-            if let data = internalStore["pointData"] as? GenericPointData {
-                return data
-            } else if internalStore["pointData"] is NSNull {
-                return nil
-            } else {
-                return nil
-            }
-        }
-        set {
-            if newValue == nil {
-                internalStore["pointData"] = NSNull()
-            } else {
-                internalStore["pointData"] = newValue
-            }
-        }
-    }
-    
-    var userRankData: UserRankData? {
-        get {
-            if let data = internalStore["userRankData"] as? UserRankData {
-                return data
-            } else if internalStore["userRankData"] is NSNull {
-                return nil
-            } else {
-                return nil
-            }
-        }
-        set {
-            if newValue == nil {
-                internalStore["userRankData"] = NSNull()
-            } else {
-                internalStore["userRankData"] = newValue
-            }
-        }
-    }
-    
-    var loginData: LoginUserData? {
-        get {
-            if let data = internalStore["loginData"] as? LoginUserData {
-                return data
-            } else if internalStore["loginData"] is NSNull {
-                return nil
-            } else {
-                return nil
-            }
-        }
-        set {
-            if newValue == nil {
-                internalStore["loginData"] = NSNull()
-            } else {
-                internalStore["loginData"] = newValue
-            }
-        }
-    }
-    
-    // MARK: - Initialization
-    
-    init(dependencies: Dependencies) {
-        self.logger = dependencies.logger
-    }
+    // LOGIN USER DATA RELATED INTERFACE
+    func savedLoginDetails() async throws -> LoginUserData?
+    func loggedInUserDetails() async throws -> LoginUserData?
+    func login(_ user: LoggedInUser) async throws
+    func markUserAsLoggedOut() async throws
+    func markUserAsLoggedIn() async throws
+    var token: String? { get }
+    var isLoggedIn: Bool { get }
 }

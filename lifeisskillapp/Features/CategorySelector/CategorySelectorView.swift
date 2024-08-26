@@ -17,9 +17,6 @@ struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
         )
         .subheadline
         .foregroundsSecondary
-        .onAppear(
-            perform: viewModel.onAppear
-        )
     }
 }
 
@@ -30,7 +27,7 @@ final class MockCategorySelectorViewModel: BaseClass, ObservableObject, Category
     @Published var selectedCategory: UserCategory?
     var username: String = "TestUser"
     var userCategories: [UserCategory] = []
-    func onAppear() {
+    func onLogin() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             print("mock fetching complete")
             self.userCategories = [

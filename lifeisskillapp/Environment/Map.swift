@@ -10,6 +10,7 @@ import CoreLocation
 
 public struct MapConstants {
     static let mapDetailViewSheetHeight: CGFloat = 150
+    static let mapDetailImageHeight: CGFloat = 100
     static let latitudeDelta = 0.05
     static let longitudeDelta = 0.05
     static let defaultCoordinate = CLLocation(

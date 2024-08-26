@@ -54,7 +54,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     ) {
         userManager = dependencies.userManager
         self.delegate = delegate
-        self.settingsViewModel = settingBarVM.init(
+        settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
             delegate: settingsDelegate
         )
@@ -66,23 +66,30 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             self.isLoading = true
+            defer { self.isLoading = false }
             do {
-                try await self.userManager.login(loginCredentials: .init(username: username, password: password))
-                self.isLoading = false
-                if userManager.isLoggedIn {
-                    self.delegate?.loginSuccessful()
+                try await self.userManager.login(credentials: .init(username: username, password: password))
+                self.delegate?.loginSuccessful()
+            } catch let error as BaseError {
+                if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
+                    delegate?.offlineLoginFailed()
+                    return
                 }
-            } catch {
-                self.isLoading = false
-                // Handle the error appropriately on the main thread
                 print("Login failed with error: \(error)")
+                self.delegate?.loginFailed()
+                return
+            } catch {
+                print("Login failed with error: \(error)")
+                self.delegate?.loginFailed()
+                return
             }
         }
     }
     
     func onAppear() {
-        if !userManager.hasAppId {
+        guard userManager.hasAppId else {
             fetchData()
+            return
         }
     }
     
@@ -97,8 +104,8 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
     // MARK: Private Helpers
     
     private func fetchData() {
-        Task {
-            try await appDependencies.userManager.initializeAppId()
+        Task { [weak self] in
+            try await self?.userManager.initializeAppId()
         }
     }
     

@@ -11,16 +11,24 @@ import Combine
 protocol RankViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
     associatedtype settingBarVM: SettingsBarViewModeling
-    var categoryRankings: [Ranking] { get }
-    var isLoading: Bool { get }
-    var username: String { get }
     var csViewModel: categorySelectorVM { get }
     var settingsViewModel: settingBarVM { get }
+    
+    // Loading state
+    var isLoading: Bool { get }
+    
+    // User information
+    var username: String { get }
+    
+    // Points information
+    var categoryRankings: [Ranking] { get }
+    
+    // Actions
     func onAppear()
 }
 
 final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, RankViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserLoginManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserRankManager & HasGameDataManager & HasUserManager & HasLocationManager & HasUserDefaultsStorage & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
@@ -29,7 +37,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userRankManager: any UserRankManaging
-    private let userDataManager: any UserLoginDataManaging
+    private let userManager: UserManaging
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
@@ -55,8 +63,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         self.userCategoryManager = dependencies.userCategoryManager
         self.userRankManager = dependencies.userRankManager
         self.gameDataManager = dependencies.gameDataManager
-        self.userDataManager = dependencies.userLoginManager
-        gameDataManager.delegate = delegate
+        self.userManager = dependencies.userManager
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
@@ -72,7 +79,6 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     deinit {
         cancellables.forEach { $0.cancel() }
-        logger.log(message: "RankViewModel deinitialized and cancellables invalidated")
     }
     
     // MARK: - Public Interface
@@ -80,7 +86,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
-            self?.username = self?.userDataManager.userName ?? ""
+            self?.username = self?.userManager.userName ?? ""
             await self?.fetchData()
             self?.isLoading = false
         }
@@ -89,11 +95,9 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     // MARK: - Private Helpers
     
     private func setupBindings() {
-        print("BINDINGS: Setting up bindings in RankViewModel")
         userCategoryManager.selectedCategoryPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] category in
-                print("BINDINGS: Received new category in RankViewModel: \(String(describing: category?.id))")
                 Task { [weak self] in
                     await self?.getSelectedCategoryRanking()
                 }
@@ -103,13 +107,8 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     @MainActor
     private func fetchData() async {
-        do {
-            try await userCategoryManager.fetch()
-            await gameDataManager.fetchNewDataIfNeccessary(endpoint: .rank)
-            await getSelectedCategoryRanking()
-        } catch {
-            delegate?.onError(error)
-        }
+        await gameDataManager.loadData(for: .ranks)
+        await getSelectedCategoryRanking()
     }
     
     private func getAllUserRankData() -> [UserRank] {
@@ -122,7 +121,8 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     @MainActor
     private func getSelectedCategoryRanking() async {
-        guard let data = userRankManager.data?.data, data.isNotEmpty else {
+        let data = userRankManager.getAll()
+        guard data.isNotEmpty else {
             logger.log(message: "No user rank data available")
             delegate?.onNoDataAvailable()
             return

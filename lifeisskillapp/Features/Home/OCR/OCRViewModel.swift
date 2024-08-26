@@ -18,11 +18,11 @@ protocol OcrViewModeling: CameraViewModeling {
 }
 
 final class OcrViewModel: BaseClass, OcrViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasLocationManager
     
     private weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
-    private let scanningManager: ScanningManaging
+    private let gameDataManager: GameDataManaging
     private let locationManager: LocationManaging
     
     // MARK: - Public Properties
@@ -35,7 +35,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         self.delegate = delegate
         self.logger = dependencies.logger
         self.locationManager = dependencies.locationManager
-        self.scanningManager = dependencies.scanningManager
+        self.gameDataManager = dependencies.gameDataManager
     }
     
     // MARK: - Public Interface
@@ -50,7 +50,8 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func handleProcessedCode(_ code: String) {
-        sendScannedPointToAPI(code)
+        locationManager.checkLocationAuthorization()
+        delegatePointScanningToGameDataManager(code)
         dismissCamera()
     }
     
@@ -61,16 +62,10 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         return extractOldCode(from: text)
     }
     
-    private func sendScannedPointToAPI(_ code: String) {
-        locationManager.checkLocationAuthorization()
-        let point = LoadPoint(code: code, codeSource: .text)
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendScannedPoint(point)
-                self?.delegate?.onSuccess(source: .text)
-            } catch {
-                self?.delegate?.onFailure(source: .text)
-            }
+    private func delegatePointScanningToGameDataManager(_ code: String) {
+        Task { [weak self] in
+            let point = ScannedPoint(code: code, codeSource: .text, location: self?.locationManager.location)
+            await self?.gameDataManager.onPointScanned(point)
         }
     }
     

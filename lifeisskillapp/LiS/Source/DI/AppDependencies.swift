@@ -11,11 +11,12 @@ let appDependencies = AppDependency()
 
 typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper & HasNetworkMonitor
 typealias HasAPIDependencies = HasRegisterAppAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService
-typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage
-typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager & HasUserLoginManager
+typealias HasKeychain = HasKeychainHelper & HasKeychainStorage
+typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage & HasKeychainHelper & HasKeychain
+typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager
 typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager
 typealias HasLoggers = HasLoggerServicing
-
+typealias HasRealm = HasRealmStoraging & HasRepositoryContainer & HasPersistentUserDataStoraging
 
 final class AppDependency {
     // MARK: logger
@@ -35,7 +36,18 @@ final class AppDependency {
     // MARK: storage
     
     lazy var userDefaultsStorage: UserDefaultsStoraging = UserDefaultsStorage(dependencies: self)
-    lazy var userDataStorage: UserDataStoraging = UserDataStorage(dependencies: self)
+    lazy var userDataStorage: UserDataStoraging = InMemoryUserDataStorage(dependencies: self)
+    lazy var keychainHelper: KeychainHelping = KeychainHelper(dependencies: self)
+    lazy var keychainStorage: KeychainStoraging = KeychainStorage(dependencies: self)
+    
+    // MARK: realm
+    
+    lazy var realmStorage: RealmStoraging = RealmStorage(dependencies: self)
+    lazy var container: HasRealmRepositories = RepositoryContainer()
+    lazy var storage: any PersistentUserDataStoraging = {
+        let realmDependencies = RealmUserDataStorageDependencies(container: self.container, logger: self.logger)
+        return RealmUserDataStorage(dependencies: realmDependencies)
+    }()
     
     // MARK: user and data managers
     
@@ -46,7 +58,6 @@ final class AppDependency {
     lazy var userCategoryManager: any UserCategoryManaging = UserCategoryManager(dependencies: self)
     lazy var genericPointManager: any GenericPointManaging = GenericPointManager(dependencies: self)
     lazy var userRankManager: any UserRankManaging = UserRankManager(dependencies: self)
-    lazy var userLoginManager: UserLoginDataManaging = UserLoginDataManager(dependencies: self)
     lazy var scanningManager: ScanningManaging = ScanningManager(dependencies: self)
 }
 
@@ -55,5 +66,4 @@ extension AppDependency: HasAPIDependencies {}
 extension AppDependency: HasManagers {}
 extension AppDependency: HasLoggers {}
 extension AppDependency: HasStorage {}
-
-
+extension AppDependency: HasRealm {}

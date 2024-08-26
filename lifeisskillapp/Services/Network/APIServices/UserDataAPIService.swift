@@ -24,7 +24,9 @@ protocol UserDataAPIServicing: APITasking {
      */
     func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<GenericPointData>
     
-    func postUserPoints(baseURL: URL, userToken: String, point: LoadPoint) async throws -> APIResponse<UserPointData>
+    func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData>
+    
+    func getSponsorImage(baseURL: URL, userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data
 }
 
 public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
@@ -107,7 +109,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    func postUserPoints(baseURL: URL, userToken: String, point: LoadPoint) async throws -> APIResponse<UserPointData> {
+    func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData> {
         let endpoint = Endpoint.userpoints
         let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
         task = ApiTask.userPoints
@@ -121,19 +123,48 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    private func encodeParams(point: LoadPoint) throws -> Data {
+    func getSponsorImage(baseURL: URL, userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data {
+        let endpoint = Endpoint.sponsorImage(sponsorId: sponsorId, width: width, height: height)
+        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
+        let url = try endpoint.urlWithPath(base: baseURL, logger: loggerService)
+        return try await network.performRequestWithoutDataDecoding(
+            url: url,
+            method: .GET,
+            headers: headers,
+            sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self
+        )
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func encodeParams(point: ScannedPoint) throws -> Data {
         task = ApiTask.userPoints
         var taskParams = task.taskParams
+        guard let location = point.location else {
+            throw BaseError(
+                context: .system,
+                message: "Point is missing location",
+                code: .general(.missingConfigItem),
+                logger: loggerService
+            )
+        }
+        let date = location.timestamp
         let params = [
             "code": point.code,
-            "codeSource": point.codeSource.rawValue
+            "codeSource": point.codeSource.rawValue,
+            "lat": String(location.latitude),
+            "lng": String(location.longitude),
+            "acc": String(location.accuracy),
+            "alt": String(location.altitude),
+            "time": date.toPointListString()
         ]
         taskParams.merge(params) { (_, new) in new }
         let jsonString = try JsonMapper.jsonString(from: taskParams)
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw BaseError(
                 context: .system,
-                message: "Could not encode login params",
+                message: "Could not encode scan point params",
                 code: .general(.jsonEncoding),
                 logger: loggerService
             )
@@ -143,8 +174,8 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
 }
 
 extension UserDataAPIService {
-    enum Endpoint: CaseIterable {
-        case usercategory, userpoints, rank, events, messages, points
+    enum Endpoint {
+        case usercategory, userpoints, rank, events, messages, points, sponsorImage(sponsorId: String, width: Int, height: Int)
         
         var path: String {
             switch self {
@@ -160,11 +191,15 @@ extension UserDataAPIService {
                 return "/messages"
             case .points:
                 return "/points"
+            case .sponsorImage(let sponsorId, let width, let height):
+                return "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
             }
         }
         
         var typeHeaders: [String: String] {
             switch self {
+            case .sponsorImage(let sponsorId, let width, let height):
+                ["accept": "image/png"]
             default:
                 ["accept": "application/json"]
             }
@@ -198,4 +233,3 @@ extension UserDataAPIService {
         }
     }
 }
-

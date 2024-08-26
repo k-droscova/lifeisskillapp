@@ -2,16 +2,298 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@:" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%lld" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "%lld pts" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldbodů"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Punkts"
+          }
+        }
+      }
     },
     "%lld." : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "alert.button.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrušit"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "alert.button.ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "alert.forced_logout.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaznamenali jsme, že se tento uživatel přihlásil na jiném zařízení. V jeden moment je povoleno pouze jedno přihlášení."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir haben festgestellt, dass dieser Benutzer sich auf einem anderen Gerät angemeldet hat. Es ist nur eine Anmeldung gleichzeitig erlaubt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We detected that this user has logged in on another device. Only one log in is permitted at once."
+          }
+        }
+      }
+    },
+    "alert.forced_logout.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vynucené odhlášení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzwungenes Abmelden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forced logout"
+          }
+        }
+      }
+    },
+    "alert.general_error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doporučujeme restart aplikace aby se zachovaly všechna data."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir empfehlen dringend, die App neu zu starten, um sicherzustellen, dass alle Ihre Daten erhalten bleiben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We highly recommend restarting the app to ensure all your data is preserved."
+          }
+        }
+      }
+    },
+    "alert.general_error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oops, něco se pokazilo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ups, etwas ist schiefgelaufen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ooops, something went wrong"
+          }
+        }
+      }
+    },
+    "alert.internet.lost_connection.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vypadá to, že nemáš připojení k internetu. V offline režimu se může přihlašovat pouze poslední přihlášený uživatel. Pořád můžeš načítat body, avšak pokud se odhlásíš před připojením k internetu, budou všechny tyto body ztraceny."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte beachten Sie, dass das Netzwerk nicht verfügbar ist. Nur der zuletzt angemeldete Benutzer kann sich erneut einloggen. Sie können Punkte wie gewohnt scannen, aber wenn Sie sich vor dem Zugriff auf das Netzwerk abmelden, gehen alle gescannten Punkte verloren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please be aware that the network is not available. Only the most recently logged in user can log in again. You can scan points as usual, but if you log out before accessing network, all scanned points will be lost."
+          }
+        }
+      }
+    },
+    "alert.internet.lost_connection.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez připojení k internetu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internetverbindung verloren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internet Connection Lost"
+          }
+        }
+      }
+    },
+    "alert.logout_offline.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokud se odhlásíš tak ztratíš všechny body, které jsi načetl bez připojení k internetu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie fortfahren, verlieren Sie alle gescannten Punkte, die Sie im Offline-Modus gesammelt haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you proceed, you will lost all scanned points that you have collected while offline."
+          }
+        }
+      }
+    },
+    "alert.logout_offline.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skutečně se chceš odhlásit?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchten Sie sich wirklich abmelden?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you really want to logout?"
+          }
+        }
+      }
     },
     "basic.attention" : {
       "extractionState" : "manual",
@@ -728,6 +1010,52 @@
         }
       }
     },
+    "home.scan_error.invalid_point" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bod, který byl právě naskenován, není validní. Ujisti se, že skanduješ jen body v souladu s pravidly LiS."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Punkt, den Sie gerade versucht haben zu scannen, ist ungültig. Stellen Sie sicher, dass Sie nur gültige Punkte scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The point you just tried to scan is invalid. Make sure you only scan valid points."
+          }
+        }
+      }
+    },
+    "home.scan_error.message_offline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nepodařilo se nám ověřit bod, který jsi načetl v offline režimu. Ujisti se, že načítáš pouze platné LiS body."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir konnten einen Punkt, den Sie im Offline-Modus gescannt haben, nicht validieren. Stellen Sie sicher, dass Sie nur gültige LiS-Punkte scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We failed to validate a point you scanned in offline mode. Make sure to scan only valid LiS points."
+          }
+        }
+      }
+    },
     "home.scan_error.nfc.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -751,25 +1079,25 @@
         }
       }
     },
-    "home.scan_error.no_internet" : {
+    "home.scan_error.no_location" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bod byl naskenován, ale telefon není připojen k internetu. Bod byl uložen a bude ověřen až se připojíte k internetu. Zkontrolujte připojení k internetu."
+            "value" : "Vypadá to, že nemáš gps signál, který je potřeba k načítání bodů."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keine Internetverbindung"
+            "value" : "Es scheint, dass Sie keine GPS-Daten haben. Sie benötigen GPS-Daten, um Punkte zu scannen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No internet connection"
+            "value" : "It appears that you have no gps data. You need gps data to scan points."
           }
         }
       }
@@ -843,25 +1171,48 @@
         }
       }
     },
-    "home.scan_success.message" : {
+    "home.scan_success.message_offline" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bod ještě projde validací a bude přičten."
+            "value" : "Vypadá to, že jsi offline. Bod bude automaticky zpracován po připojení k internetu."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Punkt wird nach der Validierung gezählt"
+            "value" : "Sie scheinen offline zu sein, der Punkt wird automatisch verarbeitet, sobald eine Internetverbindung hergestellt wird"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Point will be counted after validation"
+            "value" : "You seem to be offline, the point will be processed automatically after connecting to internet."
+          }
+        }
+      }
+    },
+    "home.scan_success.message_online" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bod byl úspěšně zpracován. Můžeš si ho prohlédnout v přehledu svých bodů."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkt wurde erfolgreich verarbeitet. Sie können ihn in Ihren Punkten überprüfen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Point was processed successfully. You can check it in your Points."
           }
         }
       }
@@ -931,6 +1282,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scan point"
+          }
+        }
+      }
+    },
+    "location.access.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potřebujeme použít tvoji polohu pro validaci bodů. "
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir benötigen Zugriff auf Ihren Standort, um Punkte ordnungsgemäß zu validieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We need access to your location to properly validate points."
+          }
+        }
+      }
+    },
+    "location.access.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je vyžadován přístup k lpolohovým službám"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriff auf Standort erforderlich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location Access Required"
           }
         }
       }
@@ -1028,25 +1425,48 @@
         }
       }
     },
-    "login.error.emptyFields" : {
+    "login.error_offline.message" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyplňte všechny položky."
+            "value" : "Vypadá to, že nemáš internet. Bez připojení se může přihlásit pouze poslední přihlášený uživatel."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Füllen Sie alle Felder aus."
+            "value" : "Sie scheinen offline zu sein. Nur der zuletzt angemeldete Benutzer kann sich ohne Verbindung anmelden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fill every field."
+            "value" : "You appear to be offline. Only the most recently logged in user can log in without connection."
+          }
+        }
+      }
+    },
+    "login.error_online.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedokázali jsme rozpoznat uživatele. Ujisti se, že při přihlášení používáš správné přihlašovací údaje."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir konnten die Anmeldedaten nicht überprüfen. Bitte stellen Sie sicher, dass Sie den richtigen Benutzernamen und das richtige Passwort verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We could not validate the credentials. Please make sure you are using correct username and password."
           }
         }
       }
@@ -1074,48 +1494,25 @@
         }
       }
     },
-    "login.error.network" : {
+    "login.error.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chyba sítě. Připojte se k internetu."
+            "value" : "Přihlášení selhalo"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Netzwerkfehler. Verbinden Sie Ihr Gerät mit dem Internet."
+            "value" : "Anmeldung fehlgeschlagen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Network error. Connect your device to the Internet."
-          }
-        }
-      }
-    },
-    "login.error.server" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chyba serveru. Připojte se později."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serverfehler. Versuchen Sie es später noch einmal."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server error. Try it later."
+            "value" : "Login Failed"
           }
         }
       }
@@ -1390,7 +1787,20 @@
       }
     },
     "OK" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
     },
     "onboarding.description.activity" : {
       "extractionState" : "manual",
@@ -1549,29 +1959,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Several points are waiting to be sent for validation. Connect to the internet."
-          }
-        }
-      }
-    },
-    "point_list.outbox.help.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Telefon není připojen k internetu a proto nelze některé načtené body ověřit. Připojte se k internetu a vyčkejte. Body se automaticky odešlou po připojení k internetu. \n \n Pokud načtete stejný bod vícekrát v jedné minutě, pak se uloží nejnovější (poslední) načtení."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das Telefon ist nicht mit dem Internet verbunden, daher können einige gescannte Punkte nicht validiert werden. Verbinden Sie sich mit dem Internet und warten Sie. Punkte werden automatisch gesendet, sobald die Verbindung hergestellt ist. \n \n Wenn Sie denselben Punkt innerhalb einer Minute mehrmals scannen, wird der letzte Scan gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The phone is not connected to the internet, so some scanned points cannot be validated. Connect to the internet and wait. Points will be sent automatically once connected. \n \n If you scan the same point multiple times within a minute, the latest scan will be saved."
           }
         }
       }

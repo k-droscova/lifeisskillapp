@@ -26,14 +26,14 @@ protocol MapViewModeling: BaseClass, ObservableObject {
 
 final class MapViewModel<settingBarVM: SettingsBarViewModeling>
 : BaseClass, ObservableObject, MapViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasGenericPointManager & SettingsBarViewModel.Dependencies
+    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasGenericPointManager & SettingsBarViewModel.Dependencies & HasLocationManager
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
     private var gameDataManager: GameDataManaging
     private let genericPointManager: any GenericPointManaging
-    private let locationStorage: UserDefaultsStoraging // TODO: change to location manager as in realm feature branch
+    private let locationStorage: LocationManaging
     
     // MARK: - Public Properties
 
@@ -53,7 +53,7 @@ final class MapViewModel<settingBarVM: SettingsBarViewModeling>
         self.logger = dependencies.logger
         self.gameDataManager = dependencies.gameDataManager
         self.genericPointManager = dependencies.genericPointManager
-        self.locationStorage = dependencies.userDefaultsStorage // TODO: change to location manager
+        self.locationStorage = dependencies.locationManager
         self.settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
             delegate: settingsDelegate
@@ -75,7 +75,7 @@ final class MapViewModel<settingBarVM: SettingsBarViewModeling>
     
     @MainActor
     private func fetchData() async {
-        await gameDataManager.fetchNewDataIfNeccessary(endpoint: .points)
+        await gameDataManager.loadData(for: .genericPoints)
         await setupMapPoints()
     }
     

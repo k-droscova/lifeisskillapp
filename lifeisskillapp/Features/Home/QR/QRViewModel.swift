@@ -15,20 +15,20 @@ protocol QRViewModeling: CameraViewModeling {
     func setUpScanner()
     func dismissScanner()
     func scanningFailed()
-    func handleScannedQRCode(_ code: String)
+    func handleProcessedCode(_ code: String)
     func startScanning()
     func stopScanning()
     func setupPreviewLayer()
 }
 
 final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
-    typealias Dependencies = HasLoggerServicing & HasScanningManager & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasGameDataManager & HasLocationManager
     
     // MARK: - Private Properties
     
     weak var delegate: HomeFlowDelegate?
     private let logger: LoggerServicing
-    private let scanningManager: ScanningManaging
+    private let gameDataManager: GameDataManaging
     private let locationManager: LocationManaging
     
     // MARK: - Public Properties
@@ -43,7 +43,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate
         self.logger = dependencies.logger
-        self.scanningManager = dependencies.scanningManager
+        self.gameDataManager = dependencies.gameDataManager
         self.locationManager = dependencies.locationManager
         super.init()
         setUpScanner()
@@ -64,17 +64,9 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         delegate?.onFailure(source: .qr)
     }
     
-    func handleScannedQRCode(_ code: String) {
+    func handleProcessedCode(_ code: String) {
         locationManager.checkLocationAuthorization()
-        let point = LoadPoint(code: code, codeSource: .text)
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.scanningManager.sendScannedPoint(point)
-                self?.delegate?.onSuccess(source: .qr)
-            } catch {
-                self?.delegate?.onFailure(source: .qr)
-            }
-        }
+        delegatePointScanningToGameDataManager(code)
     }
     
     func startScanning() {
@@ -135,6 +127,13 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         captureSession = nil
         previewLayer = nil
     }
+    
+    private func delegatePointScanningToGameDataManager(_ code: String) {
+        Task { [weak self] in
+            let point = ScannedPoint(code: code, codeSource: .qr, location: self?.locationManager.location)
+            await self?.gameDataManager.onPointScanned(point)
+        }
+    }
 }
 
 extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
@@ -148,10 +147,9 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
 
             if string.contains("lifeisskill.cz") {
-                handleScannedQRCode(string.parseMessage())
+                handleProcessedCode(string.parseMessage())
             } else {
                 scanningFailed()
-                delegate?.onFailure(source: .qr)
             }
         }
     }

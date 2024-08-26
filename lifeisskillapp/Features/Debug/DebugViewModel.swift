@@ -43,8 +43,8 @@ final class DebugViewModel: DebugViewModeling, ObservableObject {
     }
     
     func onAppear() {
-        Task {
-            await fetchData()
+        Task { [weak self] in
+            await self?.fetchData()
         }
     }
     
@@ -71,6 +71,6 @@ final class DebugViewModel: DebugViewModeling, ObservableObject {
     
     private func fetchData() async {
         locationManager.checkLocationAuthorization()
-        await gameDataManager.fetchNewDataIfNeccessary(endpoint: nil)
+        await gameDataManager.loadData(for: nil)
     }
 }

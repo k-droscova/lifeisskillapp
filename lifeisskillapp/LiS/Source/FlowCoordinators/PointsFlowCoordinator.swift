@@ -9,17 +9,15 @@ import Foundation
 import ACKategories
 import UIKit
 
-protocol PointsFlowCoordinatorDelegate: NSObject {
+protocol PointsFlowCoordinatorDelegate: NSObject {}
 
-}
-
-protocol PointsFlowDelegate: GameDataManagerFlowDelegate, NSObject {
+protocol PointsFlowDelegate: NSObject {
     func onError(_ error: Error)
     func onNoDataAvailable()
     func selectCategoryPrompt()
 }
 
-final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, MapViewFlowDelegate {
+final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator, MapViewFlowDelegate {
     private weak var delegate: PointsFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?
     private var categorySelectorVM: csVM
@@ -38,6 +36,8 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
     }
     
     override func start() -> UIViewController {
+        super.start()
+        
         let viewModel = PointsViewModel<csVM, statusBarVM>(
             dependencies: appDependencies,
             categorySelectorVM: self.categorySelectorVM,
@@ -56,13 +56,6 @@ final class PointsFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarV
 }
 
 extension PointsFlowCoordinator: PointsFlowDelegate {
-    
-    // TODO: present approppriate alerts
-
-    func onError(_ error: any Error) {
-        print("ERROR: \(error.localizedDescription)")
-    }
-    
     func onNoDataAvailable() {
         print("No data available")
     }
@@ -70,8 +63,4 @@ extension PointsFlowCoordinator: PointsFlowDelegate {
     func selectCategoryPrompt() {
         print("Please select category")
     }
-}
-
-extension PointsFlowCoordinator {
-    var root: UIViewController? { self.navigationController }
 }

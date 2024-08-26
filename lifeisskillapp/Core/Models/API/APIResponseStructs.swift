@@ -68,6 +68,10 @@ public struct LoginAPIResponse: DataProtocol {
         try container.encode(user.mainCategory, forKey: .mainCategory)
         try container.encode(user.fullActivation, forKey: .fullActivation)
     }
+    
+    internal init(from user: LoggedInUser) {
+        self.user = user
+    }
 }
 
 public struct CheckSumUserPointsData: DataProtocol {
@@ -114,6 +118,11 @@ struct UserCategoryData: DataProtocol {
         self.main = mainCategory
         self.data = allUserCategories
     }
+    
+    internal init(main: UserCategory, data: [UserCategory]) {
+        self.main = main
+        self.data = data
+    }
 }
 
 struct UserPointData: DataProtocol {
@@ -129,6 +138,11 @@ struct UserPointData: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserPoint].self, forKey: .data)
+    }
+    
+    internal init(checkSum: String, data: [UserPoint]) {
+        self.checkSum = checkSum
+        self.data = data
     }
 }
 
@@ -146,6 +160,11 @@ struct GenericPointData: DataProtocol {
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([GenericPoint].self, forKey: .data)
     }
+    
+    internal init(checkSum: String, data: [GenericPoint]) {
+        self.checkSum = checkSum
+        self.data = data
+    }
 }
 
 struct UserRankData: DataProtocol {
@@ -161,5 +180,10 @@ struct UserRankData: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserRank].self, forKey: .data)
+    }
+    
+    internal init(checkSum: String, data: [UserRank]) {
+        self.checkSum = checkSum
+        self.data = data
     }
 }

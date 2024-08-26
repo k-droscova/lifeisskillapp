@@ -9,12 +9,14 @@ import Foundation
 import UIKit
 import ACKategories
 
-final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     private weak var window: UIWindow?
     
     override func start(in window: UIWindow) {
         self.window = window
         super.start(in: window)
+        appDependencies.networkMonitor.delegate = self // present alert if connection lost on all screens
+        appDependencies.userManager.delegate = self // login logout
         prepareWindow()
     }
     
@@ -23,9 +25,9 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     private func prepareWindow() {
         childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
         if appDependencies.userManager.isLoggedIn {
-            self.showHome()
+            showHome()
         } else {
-            self.showLogin()
+            showLogin()
         }
     }
     
@@ -34,12 +36,12 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         mainFC.delegate = self
         self.addChild(mainFC)
         let mainVC = mainFC.start()
-
+        
         window?.rootViewController = mainVC
         rootViewController = window?.rootViewController
         window?.makeKeyAndVisible()
     }
-
+    
     private func showLogin() {
         let loginFC = LoginFlowCoordinator<SettingsBarViewModel<LocationStatusBarViewModel>>(
             delegate: self
@@ -51,20 +53,35 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
         rootViewController = window?.rootViewController
         window?.makeKeyAndVisible()
     }
-}
-
-extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
-    func loginDidSucceed() {
+    
+    private func reload() {
         DispatchQueue.main.async { [weak self] in
             self?.prepareWindow()
         }
     }
 }
 
-extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
-    func reload() {
-        DispatchQueue.main.async { [weak self] in
-            self?.prepareWindow()
-        }
+extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
+    func loginDidSucceed() {
+        reload()
+    }
+}
+
+extension AppFlowCoordinator: UserManagerFlowDelegate {
+    func onLogout() {
+        reload()
+    }
+    
+    func onForceLogout() {
+        reload()
+        showAlert(titleKey: "alert.forced_logout.title", messageKey: "alert.forced_logout.message")
+    }
+}
+
+extension AppFlowCoordinator: MainFlowCoordinatorDelegate {}
+
+extension AppFlowCoordinator: NetworkManagerFlowDelegate {
+    func onNoInternetConnection() {
+        showAlert(titleKey: "alert.internet.lost_connection.title", messageKey: "alert.internet.lost_connection.message")
     }
 }

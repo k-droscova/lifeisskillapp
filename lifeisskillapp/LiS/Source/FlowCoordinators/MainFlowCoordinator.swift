@@ -10,21 +10,15 @@ import UIKit
 import ACKategories
 import SwiftUI
 
-protocol MainFlowCoordinatorDelegate: NSObject {
-    func reload()
-}
-
-protocol MainFlowDelegate: NSObject {
-    
-}
+protocol MainFlowCoordinatorDelegate: NSObject {}
 
 final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     weak var delegate: MainFlowCoordinatorDelegate?
     
     override init() {
         super.init()
-        appDependencies.userManager.delegate = self
-        appDependencies.locationManager.delegate = self
+        appDependencies.locationManager.delegate = self // MainFC presents alerts linked to location, since we need location AFTER login for point scanning
+        appDependencies.gameDataManager.delegate = self // present alert if any fatal error with game data occurs anywhere in the app
     }
     
     override func start() -> UIViewController {
@@ -42,15 +36,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
     // MARK: - Private helpers
     
     private func setupTabBar() -> UITabBarController{
-        // MARK: DEBUG
-        let debugVM = DebugViewModel(dependencies: appDependencies)
-        let debugVC = DebugView(viewModel: debugVM).hosting()
-        debugVC.tabBarItem = UITabBarItem(
-            title: "debug",
-            image: UIImage(systemName: "ladybug.circle"),
-            selectedImage: UIImage(systemName: "ladybug.circle.fill")
-        )
-        
         // MARK: CATEGORY SELECTOR
         let csVM = CategorySelectorViewModel(dependencies: appDependencies)
         
@@ -95,13 +80,14 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
             image: Constants.TabBar.Home.unselected.icon,
             selectedImage: Constants.TabBar.Home.selected.icon
         )
+        appDependencies.userPointManager.scanningDelegate = homeFC // homeFC handles alerts related to point scanning
         
         // MARK: RANK
         let rankFC = RankFlowCoordinator<CategorySelectorViewModel, SettingsBarViewModel<LocationStatusBarViewModel>>(
+            delegate: self,
             settingsDelegate: self,
             categorySelectorVM: csVM
         )
-        
         addChild(rankFC)
         let rankVC = rankFC.start()
         rankVC.tabBarItem = UITabBarItem(
@@ -113,7 +99,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
         // MARK: - SETUP TabBar
         let tabVC = UITabBarController()
         tabVC.viewControllers = [
-            debugVC,
             pointsVC,
             mapVC,
             homeVC,
@@ -197,45 +182,55 @@ extension MainFlowCoordinator {
     }
 }
 
-extension MainFlowCoordinator: UserManagerFlowDelegate {
-    func onLogout() {
-        delegate?.reload()
-    }
-    func onDataError(_ error: Error) {
-        // TODO: HANDLE ERROR BETTER
-        appDependencies.logger.log(message: "ERROR: \(error.localizedDescription)")
-        let alert = UIAlertController(title: "Data Fetching Error", message: "Failed to get data: \(error.localizedDescription)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            
-        })
-        present(alert, animated: true)
-    }
-}
-
 extension MainFlowCoordinator: LocationManagerFlowDelegate {
     func onLocationUnsuccess() {
         showLocationAccessAlert()
     }
     
     private func showLocationAccessAlert() {
-        let alert = UIAlertController(title: "Location Access Denied", message: "Please enable location services in Settings.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Settings", style: .default) { _ in
+        let settingsAction = UIAlertAction(
+            title: NSLocalizedString("settings.settings", comment: ""),
+            style: .default
+        ) { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            
-        })
-        present(alert, animated: true)
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.cancel", comment: ""),
+            style: .cancel
+        )
+        
+        showAlert(
+            titleKey: "location.access.title",
+            messageKey: "location.access.message",
+            actions: [settingsAction, cancelAction]
+        )
     }
 }
 
-extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
-    
-}
+extension MainFlowCoordinator: HomeFlowCoordinatorDelegate, PointsFlowCoordinatorDelegate, RankFlowCoordinatorDelegate, MapFlowCoordinatorDelegate {}
 
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
+    func logoutPressedWhileOffline() {
+        let okAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.ok", comment: ""),
+            style: .default
+        ) { _ in
+            appDependencies.userManager.offlineLogout()
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.cancel", comment: ""),
+            style: .cancel
+        )
+        
+        showAlert(
+            titleKey: "alert.logout_offline.title",
+            messageKey: "alert.logout_offline.message",
+            actions: [okAction, cancelAction]
+        )
+    }
+    
     // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
     func settingsPressed() {
         print("Need to navigate to settings")
@@ -252,8 +247,12 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
     }
 }
 
-extension MainFlowCoordinator: RankFlowCoordinatorDelegate {}
-
-extension MainFlowCoordinator: PointsFlowCoordinatorDelegate {}
-
-extension MainFlowCoordinator: MapFlowCoordinatorDelegate {}
+extension MainFlowCoordinator: GameDataManagerFlowDelegate {
+    func onInvalidToken() {
+        appDependencies.userManager.forceLogout()
+    }
+    
+    func storedScannedPointsFailedToSend() {
+        showAlert(titleKey: "alert.scanning.processing.stored.title", messageKey: "alert.scanning.processing.stored.message")
+    }
+}

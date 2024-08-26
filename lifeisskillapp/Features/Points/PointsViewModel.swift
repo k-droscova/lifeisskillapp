@@ -31,13 +31,14 @@ protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling where 
     
     // Actions
     func onAppear()
+    func onDisappear()
     func mapButtonPressed()
     func listButtonPressed()
     func showPointOnMap(point: Point)
 }
 
 final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, PointsViewModeling {
-    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & HasUserLoginManager & SettingsBarViewModel.Dependencies & HasGenericPointManager & HasUserDefaultsStorage
+    typealias Dependencies = HasLoggerServicing & HasUserCategoryManager & HasUserPointManager & HasGameDataManager & SettingsBarViewModel.Dependencies & HasGenericPointManager & HasLocationManager
     
     // MARK: - Private Properties
     
@@ -46,13 +47,13 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     private var gameDataManager: GameDataManaging
     private let userCategoryManager: any UserCategoryManaging
     private let userPointManager: any UserPointManaging
+    private let userManager: UserManaging
     private let genericPointManager: any GenericPointManaging
-    private let userDataManager: any UserLoginDataManaging
     private var selectedCategory: UserCategory? {
         getSelectedCategory()
     }
     private var cancellables = Set<AnyCancellable>()
-    private let locationStorage: UserDefaultsStoraging // TODO: change to location manager as in realm feature branch
+    private let locationStorage: LocationManaging
     private var mapPoints: [Point] = []
     
     // MARK: - Public Properties
@@ -87,15 +88,15 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         self.userCategoryManager = dependencies.userCategoryManager
         self.userPointManager = dependencies.userPointManager
         self.gameDataManager = dependencies.gameDataManager
+        self.userManager = dependencies.userManager
         self.genericPointManager = dependencies.genericPointManager
-        self.userDataManager = dependencies.userLoginManager
-        self.locationStorage = dependencies.userDefaultsStorage // TODO: change to location manager
+        self.locationStorage = dependencies.locationManager
         self.csViewModel = categorySelectorVM
         self.settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
             delegate: settingsDelegate
         )
-        self.userGender = userDataManager.data?.user.sex ?? .male
+        self.userGender = userManager.userGender ?? .male
         self.delegate = delegate
         self.mapDelegate = mapDelegate
         super.init()
@@ -106,7 +107,6 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     deinit {
         cancellables.forEach { $0.cancel() }
-        logger.log(message: "PointsViewModel deinitialized and cancellables invalidated")
     }
     
     // MARK: Public Interface
@@ -115,12 +115,18 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             self.isLoading = true
-            self.username = self.userDataManager.userName ?? ""
+            self.username = self.userManager.userName ?? ""
             await self.fetchData()
             if self.isMapButtonPressed {
                 await self.setupMapPoints(self.mapPoints)
             }
             self.isLoading = false
+        }
+    }
+    
+    func onDisappear() {
+        Task { @MainActor [weak self] in
+            self?.totalPoints = 0
         }
     }
     
@@ -208,19 +214,8 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     @MainActor
     private func fetchData() async {
-        do {
-            async let categoryFetch: () = userCategoryManager.fetch()
-            async let userPointsFetch: () = gameDataManager.fetchNewDataIfNeccessary(endpoint: .userpoints)
-            async let pointsFetch: () = gameDataManager.fetchNewDataIfNeccessary(endpoint: .points)
-            
-            try await categoryFetch
-            await userPointsFetch
-            await pointsFetch
-            
-            await getSelectedCategoryPoints()
-        } catch {
-            delegate?.onError(error)
-        }
+        await gameDataManager.loadData(for: .userPoints)
+        await getSelectedCategoryPoints()
     }
     
     @MainActor
