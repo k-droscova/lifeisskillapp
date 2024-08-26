@@ -57,6 +57,10 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
         
         return navigationController
     }
+    
+    override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        returnToLogin()
+    }
 }
 
 extension LoginFlowCoordinator: LoginFlowDelegate {
@@ -69,6 +73,7 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         let forgetPasswordFC = ForgotPasswordFlowCoordinator(delegate: self, viewModel: forgetPasswordVM)
         addChild(forgetPasswordFC)
         let vc = forgetPasswordFC.start()
+        // TODO: figure out how to call returnToLogin on dismiss of vc
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
     }
