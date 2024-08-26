@@ -136,7 +136,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     private func updateClosestVirtualPoint(for userLocation: UserLocation) {
         guard let closestPoint = findClosestVirtualPoint(for: userLocation) else { return }
-        print("DEBUG: closest virtual point is \(userLocation.distance(to: closestPoint.location))")
         // Check if it's within 100 meters
         guard userLocation.distance(to: closestPoint.location) < MapConstants.virtualPointDistance else {
             closestVirtualPointSubject.send(nil)

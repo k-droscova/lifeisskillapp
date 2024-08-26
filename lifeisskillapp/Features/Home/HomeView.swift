@@ -74,42 +74,12 @@ private extension HomeView {
     private var buttonsView: some View {
         VStack(spacing: HomeViewConstants.buttonVerticalSpacing) {
             HStack(spacing: HomeViewConstants.buttonHorizontalSpacing) {
-                HomeButton(
-                    action: viewModel.loadWithNFC,
-                    background: HomeViewConstants.Colors.nfc,
-                    foregroundColor: HomeViewConstants.Colors.white
-                ) {
-                    SFSSymbols.nfc.Image
-                }
-                
-                HomeButton(
-                    action: viewModel.loadWithQRCode,
-                    background: HomeViewConstants.Colors.qr,
-                    foregroundColor: HomeViewConstants.Colors.white
-                ) {
-                    SFSSymbols.qr.Image
-                }
-                
-                
-                HomeButton(
-                    action: viewModel.loadFromCamera,
-                    background: HomeViewConstants.Colors.camera,
-                    foregroundColor: HomeViewConstants.Colors.black
-                ) {
-                    SFSSymbols.camera.Image
-                }
-                
-                if viewModel.isVirtualAvailable {
-                    HomeButton(
-                        action: viewModel.loadVirtual,
-                        background: HomeViewConstants.Colors.virtual,
-                        foregroundColor: HomeViewConstants.Colors.white
-                    ) {
-                        SFSSymbols.virtual.Image
-                    }
-                }
-                
+                nfcButton
+                qrButton
+                textButton
+                if viewModel.isVirtualAvailable { virtualButton }
             }
+            .caption
             HomeButton(
                 action: viewModel.showOnboarding,
                 background: HomeViewConstants.Colors.transparent,
@@ -119,6 +89,46 @@ private extension HomeView {
             }
         }
         .padding(.top, HomeViewConstants.buttonTopPadding)
+    }
+    
+    private var nfcButton: some View {
+        HomeButton(
+            action: viewModel.loadWithNFC,
+            background: HomeViewConstants.Colors.nfc,
+            foregroundColor: HomeViewConstants.Colors.white
+        ) {
+            SFSSymbols.nfc.Image
+        }
+    }
+    
+    private var qrButton: some View {
+        HomeButton(
+            action: viewModel.loadWithQRCode,
+            background: HomeViewConstants.Colors.qr,
+            foregroundColor: HomeViewConstants.Colors.white
+        ) {
+            SFSSymbols.qr.Image
+        }
+    }
+    
+    private var textButton: some View {
+        HomeButton(
+            action: viewModel.loadFromCamera,
+            background: HomeViewConstants.Colors.camera,
+            foregroundColor: HomeViewConstants.Colors.black
+        ) {
+            SFSSymbols.camera.Image
+        }
+    }
+    
+    private var virtualButton: some View {
+        HomeButton(
+            action: viewModel.loadVirtual,
+            background: HomeViewConstants.Colors.virtual,
+            foregroundColor: HomeViewConstants.Colors.white
+        ) {
+            SFSSymbols.virtual.Image
+        }
     }
 }
 

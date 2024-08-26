@@ -1286,6 +1286,9 @@
         }
       }
     },
+    "home.virtual.button" : {
+
+    },
     "location.access.message" : {
       "extractionState" : "manual",
       "localizations" : {
