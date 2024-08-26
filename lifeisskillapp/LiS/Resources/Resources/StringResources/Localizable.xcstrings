@@ -1287,7 +1287,27 @@
       }
     },
     "home.virtual.button" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virtuální bod"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virtuell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virtual"
+          }
+        }
+      }
     },
     "location.access.message" : {
       "extractionState" : "manual",
