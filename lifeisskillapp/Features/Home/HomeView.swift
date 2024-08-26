@@ -68,101 +68,66 @@ private extension HomeView {
         Text("home.description")
             .body1Regular
             .padding(.horizontal, HomeViewConstants.horizontalPadding)
-            .padding()
+            .multilineTextAlignment(.center)
     }
     
     private var buttonsView: some View {
-        VStack(spacing: HomeViewConstants.buttonSpacing) {
-            HomeButton(
-                action: viewModel.loadWithNFC,
-                text: Text("home.nfc.button"),
-                background: HomeViewConstants.Colors.nfc,
-                textColor: HomeViewConstants.Colors.white
-            )
-            
-            HomeButton(
-                action: viewModel.loadWithQRCode,
-                text: Text("home.qr.button"),
-                background: HomeViewConstants.Colors.qr,
-                textColor: HomeViewConstants.Colors.white
-            )
-            
-            HomeButton(
-                action: viewModel.loadFromCamera,
-                text: Text("home.camera.button"),
-                background: HomeViewConstants.Colors.camera,
-                textColor: HomeViewConstants.Colors.black
-            )
-            
+        VStack(spacing: HomeViewConstants.buttonVerticalSpacing) {
+            HStack(spacing: HomeViewConstants.buttonHorizontalSpacing) {
+                HomeButton(
+                    action: viewModel.loadWithNFC,
+                    background: HomeViewConstants.Colors.nfc,
+                    foregroundColor: HomeViewConstants.Colors.white
+                ) {
+                    SFSSymbols.nfc.Image
+                }
+                
+                HomeButton(
+                    action: viewModel.loadWithQRCode,
+                    background: HomeViewConstants.Colors.qr,
+                    foregroundColor: HomeViewConstants.Colors.white
+                ) {
+                    SFSSymbols.qr.Image
+                }
+                
+                
+                HomeButton(
+                    action: viewModel.loadFromCamera,
+                    background: HomeViewConstants.Colors.camera,
+                    foregroundColor: HomeViewConstants.Colors.black
+                ) {
+                    SFSSymbols.camera.Image
+                }
+                
+            }
             HomeButton(
                 action: viewModel.showOnboarding,
-                text: Text("home.button.how"),
                 background: HomeViewConstants.Colors.transparent,
-                textColor: HomeViewConstants.Colors.help
-            )
+                foregroundColor: HomeViewConstants.Colors.help
+            ) {
+                Text("home.button.how")
+            }
         }
+        .padding(.top, HomeViewConstants.buttonTopPadding)
     }
 }
 
 enum HomeViewConstants {
     static let vStackSpacing: CGFloat = 16
+    static let buttonTopPadding: CGFloat = 16
     static let imageSize: CGFloat = 200
     static let horizontalPadding: CGFloat = 32
-    static let buttonSpacing: CGFloat = 24
+    static let buttonVerticalSpacing: CGFloat = 24
+    static let buttonHorizontalSpacing: CGFloat = 24
     
     enum Colors {
         static let nfc = Color.colorLisRose
         static let qr = Color.colorLisGreen
         static let camera = Color.colorLisOchre
+        static let virtual = Color.colorLisBlue
         static let white = Color.colorLisWhite
         static let transparent = Color.transparent
         static let help = Color.colorLisDarkGrey
         static let black = Color.black
     }
 }
-
-/*class MockHomeViewModel: BaseClass, HomeViewModeling {
-    typealias categorySelectorVM = MockCategorySelectorViewModel
-    
-    @StateObject var csViewModel = MockCategorySelectorViewModel()
-    
-    var isLoading: Bool = false
-    
-    var username: String = "TestUser"
-    
-    func onAppear() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            print("Mock onAppear")
-            self.username = "Mock done"
-        }
-        isLoading = false
-    }
-    
-    func loadWithNFC() {
-        print("I was tapped: loadWithNFC")
-    }
-    
-    func loadWithQRCode() {
-        print("I was tapped: loadWithQRCode")
-    }
-    
-    func loadFromCamera() {
-        print("I was tapped: loadFromCamera")
-    }
-    
-    func dismissCamera() {
-        print("I was tapped: dismissCamera")
-    }
-    
-    func showOnboarding() {
-        print("I was tapped: showOnboarding")
-    }
-}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(viewModel: MockHomeViewModel())
-    }
-}
-*/

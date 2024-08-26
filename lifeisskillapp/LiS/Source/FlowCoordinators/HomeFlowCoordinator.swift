@@ -58,7 +58,6 @@ final class HomeFlowCoordinator<csVM: CategorySelectorViewModeling, statusBarVM:
                 gameDataManager: appDependencies.gameDataManager,
                 logger: appDependencies.logger,
                 locationManager: appDependencies.locationManager,
-                userDefaultsStorage: appDependencies.userDefaultsStorage,
                 userManager: appDependencies.userManager,
                 networkMonitor: appDependencies.networkMonitor
             ),

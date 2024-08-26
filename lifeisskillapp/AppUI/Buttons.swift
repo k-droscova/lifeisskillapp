@@ -8,13 +8,12 @@
 import Foundation
 import SwiftUI
 
-// Example Button Views using the new styles
-struct CameraButton: View {
+struct ExitButton: View {
     let action: () -> Void
     
     var body: some View {
         Button(action: action) {
-            SFSSymbols.camera.Image
+            SFSSymbols.close.Image
         }
         .buttonStyle(CameraButtonStyle())
     }
@@ -27,29 +26,26 @@ struct FlashButton: View {
     var body: some View {
         Button(action: action) {
             flashOn ?
-            Image(CustomImages.CornerIcons.flashOn.fullPath)
-                .resizable()
-                .frame(width: 16, height: 24)
+            SFSSymbols.flashOn.Image
             :
-            Image(CustomImages.CornerIcons.flashOff.fullPath)
-                .resizable()
-                .frame(width: 16, height: 24)
+            SFSSymbols.flashOff.Image
         }
         .buttonStyle(CameraButtonStyle())
     }
 }
 
-struct HomeButton: View {
+struct HomeButton<Content: View>: View {
     let action: () -> Void
-    let text: Text
     let background: Color
-    let textColor: Color
-    
+    let foregroundColor: Color
+    @ViewBuilder let content: Content
+
     var body: some View {
         Button(action: action) {
-            text
+            content
+                .foregroundColor(foregroundColor)
         }
-        .buttonStyle(HomeButtonStyle(color: background, textColor: textColor))
+        .buttonStyle(HomeButtonStyle(color: background, textColor: foregroundColor))
     }
 }
 

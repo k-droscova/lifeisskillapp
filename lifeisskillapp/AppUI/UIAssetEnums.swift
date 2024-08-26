@@ -10,9 +10,17 @@ import UIKit
 import SwiftUI
 
 enum SFSSymbols: String {
-    case camera = "xmark"
+    case close = "xmark"
+    case flashOn = "bolt.fill"
+    case flashOff = "bolt.slash.fill"
     case list = "list.bullet"
     case map = "map"
+    case categorySelectorDropDown = "chevron.down"
+    case settingsMenu = "ellipsis.circle"
+    case qr = "qrcode.viewfinder"
+    case camera = "camera.viewfinder"
+    case nfc = "tag.square"
+    case virtual = "paperplane.circle"
     
     var Image: Image {
         SwiftUI.Image(systemName: self.rawValue)
@@ -45,23 +53,6 @@ enum CustomImages {
         
         var fullPath: String {
             Screens.basePath + self.rawValue
-        }
-    }
-    
-    enum CornerIcons: String {
-        private static let basePath = "Icons/CornerIcons/"
-        
-        case backPink = "back_pink"
-        case backBlack = "back"
-        case changeUserData = "changeUserData"
-        case flashOn = "flashOn"
-        case flashOff = "flashOff"
-        case message = "message"
-        case prizes = "prizes"
-        case settings = "settings"
-        
-        var fullPath: String {
-            CornerIcons.basePath + self.rawValue
         }
     }
     

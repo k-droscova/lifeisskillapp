@@ -41,7 +41,7 @@ struct HomeQRView: View {
     
     private var topButtons: some View {
         HStack {
-            CameraButton(action: viewModel.dismissScanner)
+            ExitButton(action: viewModel.dismissScanner)
             .padding(.leading, 20)
             .padding(.top, 20)
             

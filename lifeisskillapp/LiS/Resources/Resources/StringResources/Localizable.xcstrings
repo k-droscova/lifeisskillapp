@@ -1055,19 +1055,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Načíst pomocí foťáku"
+            "value" : "Foťák"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Punkt von Camera laden"
+            "value" : "Camera"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Load from camera"
+            "value" : "Camera"
           }
         }
       }
@@ -1215,19 +1215,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Načíst NFC"
+            "value" : "NFC"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NFC scannen"
+            "value" : "NFC"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan NFC"
+            "value" : "NFC"
           }
         }
       }
@@ -1284,19 +1284,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Načíst QR kód"
+            "value" : "QR"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "QR-Code scannen"
+            "value" : "QR"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan QR code"
+            "value" : "QR"
           }
         }
       }

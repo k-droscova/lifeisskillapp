@@ -89,7 +89,7 @@ struct PointListItem: View {
         HStack {
             Spacer()
             Button(action: mapButtonAction) {
-                Image(systemName: "map")
+                SFSSymbols.map.Image
                     .resizable()
                     .squareFrame(size: PointListItemConstants.mapIconSize)
                     .foregroundStyle(CustomColors.ListPointCard.foreground.color)

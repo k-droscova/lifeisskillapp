@@ -53,7 +53,7 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
         Button(action: {
             viewModel.cameraPressed()
         }) {
-            Image(systemName: "camera")
+            SFSSymbols.camera.Image
         }
     }
     
@@ -75,7 +75,7 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
                 Text("settings.onboarding")
             }
         } label: {
-            Image(systemName: "ellipsis.circle")
+            SFSSymbols.settingsMenu.Image
         }
     }
 }

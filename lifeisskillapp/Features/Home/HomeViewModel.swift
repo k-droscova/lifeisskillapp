@@ -29,7 +29,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         let gameDataManager: GameDataManaging
         let logger: LoggerServicing
         let locationManager: LocationManaging
-        var userDefaultsStorage: UserDefaultsStoraging
         let userManager: UserManaging
         let networkMonitor: NetworkMonitoring
     }
@@ -44,7 +43,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     private let gameDataManager: GameDataManaging
     private let logger: LoggerServicing
     private let locationManager: LocationManaging
-    private var userDefaultsStorage: UserDefaultsStoraging
     private let userManager: UserManaging
     private let networkMonitor: NetworkMonitoring
     
@@ -65,7 +63,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         self.gameDataManager = dependencies.gameDataManager
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
-        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.networkMonitor = dependencies.networkMonitor
         self.delegate = delegate
         self.csViewModel = categorySelectorVM
@@ -91,7 +88,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
                 gameDataManager: self.gameDataManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userDefaultsStorage: self.userDefaultsStorage,
                 userManager: self.userManager,
                 networkMonitor: self.networkMonitor
             ),
@@ -106,7 +102,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
                 gameDataManager: self.gameDataManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userDefaultsStorage: self.userDefaultsStorage,
                 userManager: self.userManager,
                 networkMonitor: self.networkMonitor
             ),
@@ -125,7 +120,6 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
                 gameDataManager: self.gameDataManager,
                 logger: self.logger,
                 locationManager: self.locationManager,
-                userDefaultsStorage: self.userDefaultsStorage,
                 userManager: self.userManager,
                 networkMonitor: self.networkMonitor
             ),

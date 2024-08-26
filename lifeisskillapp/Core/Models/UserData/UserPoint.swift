@@ -143,10 +143,10 @@ extension Point {
         self.type = type
         self.time = Date()
         self.location = UserLocation(
-            latitude: 49.14172200,
-            longitude: 20.21872200,
-            altitude: 760,
-            accuracy: 12.4,
+            latitude: MapConstants.defaultCoordinate.coordinate.latitude,
+            longitude: MapConstants.defaultCoordinate.coordinate.longitude,
+            altitude: MapConstants.defaultCoordinate.altitude,
+            accuracy: MapConstants.defaultCoordinate.horizontalAccuracy,
             timestamp: Calendar.current.date(byAdding: .hour, value: -48, to: self.time)!
         )
         self.doesPointCount = doesPointCount
