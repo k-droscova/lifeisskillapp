@@ -65,11 +65,6 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
                 Text("settings.logout")
             }
             Button(action: {
-                viewModel.settingsPressed()
-            }) {
-                Text("settings.settings")
-            }
-            Button(action: {
                 viewModel.onboardingPressed()
             }) {
                 Text("settings.onboarding")
