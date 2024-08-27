@@ -169,7 +169,7 @@ enum CustomImages {
     
     enum ForgotPassword: String {
         private static let basePath = "Ilustrations/"
-        case defaultImage = "howTo1"
+        case defaultImage = "howTo2"
         
         var fullPath: String {
             ForgotPassword.basePath + self.rawValue

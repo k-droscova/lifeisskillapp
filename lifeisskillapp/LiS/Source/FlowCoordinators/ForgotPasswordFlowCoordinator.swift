@@ -18,13 +18,15 @@ final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling
     private weak var delegate: ForgotPasswordFlowCoordinatorDelegate?
     private var viewModel: passwordVM
     
-    // Step Enum (defined inside the coordinator)
+    // Step Enum
     enum Step {
         case enterEmail
         case enterPin
         case enterPassword
     }
+    
     private var currentStep: Step = .enterEmail
+    private var previousStep: Step?
     
     init(delegate: ForgotPasswordFlowCoordinatorDelegate? = nil, viewModel: passwordVM) {
         self.delegate = delegate
@@ -37,7 +39,7 @@ final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling
     override func start() -> UIViewController {
         super.start()
         
-        let vc = EnterEmailView(viewModel: self.viewModel).hosting()
+        let vc = createViewController(for: .enterEmail)
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController = navigationController
@@ -45,35 +47,50 @@ final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling
         return navigationController
     }
     
-    // TODO: figure out how to stop this FC when I dismiss the form sheet
     override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         super.presentationControllerDidDismiss(presentationController)
         delegate?.returnToLogin()
     }
     
     @MainActor
-    private func showCurrentStep() {
-        var nextVC: UIViewController
-        switch currentStep {
-        case .enterEmail:
-            nextVC = EnterEmailView(viewModel: self.viewModel).hosting()
-        case .enterPin:
-            nextVC = EnterPinView(viewModel: self.viewModel).hosting()
-        case .enterPassword:
-            nextVC = EnterPasswordView(viewModel: self.viewModel).hosting()
+    private func navigateToCurrentStep(animated: Bool = true) {
+        guard let navigationController = navigationController else { return }
+        
+        // Determine if we need to pop or push based on previous and current steps
+        if let previousStep = previousStep, shouldPop(from: previousStep, to: currentStep) {
+            navigationController.popViewController(animated: animated)
+        } else {
+            let nextVC = createViewController(for: currentStep)
+            navigationController.pushViewController(nextVC, animated: animated)
         }
-        navigationController?.pushViewController(nextVC, animated: true)
     }
     
     @MainActor
-    private func goToPinSent() {
-        navigationController?.popToRootViewController(animated: false)
-        currentStep = .enterEmail
-        goToNextStep()
+    private func createViewController(for step: Step) -> UIViewController {
+        switch step {
+        case .enterEmail:
+            return EnterEmailView(viewModel: self.viewModel).hosting()
+        case .enterPin:
+            return EnterPinView(viewModel: self.viewModel).hosting()
+        case .enterPassword:
+            return EnterPasswordView(viewModel: self.viewModel).hosting()
+        }
     }
     
     @MainActor
-    private func goToNextStep() {
+    private func shouldPop(from previous: Step, to current: Step) -> Bool {
+        // Determine if the transition is going back
+        switch (previous, current) {
+        case (.enterPassword, .enterPin):
+            return true
+        default:
+            return false
+        }
+    }
+    
+    @MainActor
+    private func proceedToNextStep() {
+        previousStep = currentStep // Track the previous step
         switch currentStep {
         case .enterEmail:
             currentStep = .enterPin
@@ -81,22 +98,43 @@ final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling
             currentStep = .enterPassword
         case .enterPassword:
             delegate?.forgotPasswordDidSucceed()
+            return
         }
-        showCurrentStep()
+        navigateToCurrentStep()
+    }
+    
+    @MainActor
+    private func returnToPreviousStep() {
+        previousStep = currentStep // Track the previous step
+        switch currentStep {
+        case .enterEmail:
+            currentStep = .enterEmail
+            return
+        case .enterPin:
+            currentStep = .enterEmail
+        case .enterPassword:
+            currentStep = .enterPin
+        }
+        navigateToCurrentStep()
     }
 }
 
 extension ForgotPasswordFlowCoordinator: ForgotPasswordViewModelDelegate {
     func didRenewPassword() {
-        goToNextStep()
+        proceedToNextStep()
     }
+    
     func didValidatePin() {
-        goToNextStep()
+        proceedToNextStep()
     }
     
     @MainActor
     func didRequestNewPin() {
-        goToPinSent()  // Move to next step after email is sent
+        if currentStep == .enterEmail {
+            proceedToNextStep()
+        } else if currentStep == .enterPassword {
+            returnToPreviousStep()
+        }
         let alert = UIAlertController(
             title: NSLocalizedString("forgot_password.alert.request.title", comment: ""),
             message: NSLocalizedString("forgot_password.alert.request.message", comment: ""),

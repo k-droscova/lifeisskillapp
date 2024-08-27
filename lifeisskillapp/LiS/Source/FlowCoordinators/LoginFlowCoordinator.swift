@@ -73,8 +73,8 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         let forgetPasswordFC = ForgotPasswordFlowCoordinator(delegate: self, viewModel: forgetPasswordVM)
         addChild(forgetPasswordFC)
         let vc = forgetPasswordFC.start()
-        // TODO: figure out how to call returnToLogin on dismiss of vc
         vc.modalPresentationStyle = .formSheet
+        vc.presentationController?.delegate = self // ensures that returnToLogin() is called on presentation dismissal
         present(vc, animated: true)
     }
     func loginSuccessful() {

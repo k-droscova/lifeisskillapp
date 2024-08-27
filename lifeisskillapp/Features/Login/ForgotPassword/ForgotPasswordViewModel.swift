@@ -95,6 +95,7 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
             defer { self.isLoading = false }
             do {
                 self.requestData = try await self.userManager.requestPinForPasswordRenewal(username: self.email)
+                self.pin = "" // reset the textfield
                 self.delegate?.didRequestNewPin()
                 self.startPinExpirationTimer()
             } catch {
@@ -141,7 +142,7 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
                 logger.log(message: "Password validated with result: \(response.description)")
                 self.delegate?.didRenewPassword()
             } catch {
-                print("Forgot Password Request failed with error: \(error)")
+                logger.log(message: "Forgot Password Request failed with error: \(error.localizedDescription)")
                 self.delegate?.failedRenewPassword()
                 return
             }
