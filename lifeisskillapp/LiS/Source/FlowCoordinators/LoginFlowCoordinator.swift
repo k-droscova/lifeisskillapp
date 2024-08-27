@@ -59,7 +59,7 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
     }
     
     override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        returnToLogin()
+        reload()
     }
 }
 
@@ -68,7 +68,6 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         print("Register Tapped")
     }
     func forgotPasswordTapped() {
-        print("Forgot password tapped")
         let forgetPasswordVM = ForgotPasswordViewModel(dependencies: appDependencies)
         let forgetPasswordFC = ForgotPasswordFlowCoordinator(delegate: self, viewModel: forgetPasswordVM)
         addChild(forgetPasswordFC)
@@ -96,26 +95,20 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     private func showOnlineLoginFailureAlert() {
         showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
     }
+    
+    private func reload() {
+        childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
+    }
 }
 
 extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
     func forgotPasswordDidSucceed() {
         returnToLogin()
-        let alert = UIAlertController(
-            title: NSLocalizedString("forgot_password.alert.success.title", comment: ""),
-            message: NSLocalizedString("forgot_password.alert.success.message", comment: ""),
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        present(alert, animated: true)
+        showAlert(titleKey: "forgot_password.alert.success.title", messageKey: "forgot_password.alert.success.message")
     }
 
     func returnToLogin() {
-        reload()
         dismiss()
-    }
-    
-    private func reload() {
-        childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
+        reload()
     }
 }

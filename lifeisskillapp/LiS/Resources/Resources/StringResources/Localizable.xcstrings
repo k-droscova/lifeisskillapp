@@ -681,6 +681,7 @@
       }
     },
     "forgot_password.alert.request.message" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -703,6 +704,7 @@
       }
     },
     "forgot_password.alert.request.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

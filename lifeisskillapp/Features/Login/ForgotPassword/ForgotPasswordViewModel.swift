@@ -164,7 +164,7 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
     }
 
     private func startPinExpirationTimer() {
-        timerExpirationDate = Date().addingTimeInterval(15 * 60) // 15 minutes from now
+        timerExpirationDate = Date().addingTimeInterval(Password.pinValidityTime * 60) // 15 minutes from now
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             self?.checkTimer()
         }

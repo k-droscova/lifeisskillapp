@@ -105,7 +105,7 @@ final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling
     
     @MainActor
     private func returnToPreviousStep() {
-        previousStep = currentStep // Track the previous step
+        previousStep = currentStep
         switch currentStep {
         case .enterEmail:
             currentStep = .enterEmail
@@ -135,56 +135,40 @@ extension ForgotPasswordFlowCoordinator: ForgotPasswordViewModelDelegate {
         } else if currentStep == .enterPassword {
             returnToPreviousStep()
         }
-        let alert = UIAlertController(
-            title: NSLocalizedString("forgot_password.alert.request.title", comment: ""),
-            message: NSLocalizedString("forgot_password.alert.request.message", comment: ""),
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        present(alert, animated: true, completion: nil)
+        showAlert(titleKey: "forgot_password.alert.request.title", messageKey: "forgot_password.alert.request.message")
     }
     
     @MainActor
     func failedRequestNewPin() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("forgot_password.alert.request_error.title", comment: ""),
-            message: NSLocalizedString("forgot_password.alert.request_error.message", comment: ""),
-            preferredStyle: .alert
+        showAlert(
+            titleKey: "forgot_password.alert.request_error.title",
+            messageKey: "forgot_password.alert.request_error.message"
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        present(alert, animated: true, completion: nil)
     }
-    
+
     @MainActor
     func failedValidatePin() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("forgot_password.alert.pin_error.title", comment: ""),
-            message: NSLocalizedString("forgot_password.alert.pin_error.message", comment: ""),
-            preferredStyle: .alert
+        showAlert(
+            titleKey: "forgot_password.alert.pin_error.title",
+            messageKey: "forgot_password.alert.pin_error.message"
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        present(alert, animated: true, completion: nil)
     }
-    
+
     @MainActor
     func timerRanOut() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("forgot_password.alert.timer.title", comment: ""),
-            message: NSLocalizedString("forgot_password.alert.timer.message", comment: ""),
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in self?.delegate?.returnToLogin() })
-        present(alert, animated: true, completion: nil)
+        showAlert(
+            titleKey: "forgot_password.alert.timer.title",
+            messageKey: "forgot_password.alert.timer.message"
+        ) { [weak self] in
+            self?.delegate?.returnToLogin()
+        }
     }
-    
+
     @MainActor
     func failedRenewPassword() {
-        let alert = UIAlertController(
-            title: NSLocalizedString("forgot_password.alert.password_error.title", comment: ""),
-            message: NSLocalizedString("forgot_password.alert.password_error.message", comment: ""),
-            preferredStyle: .alert
+        showAlert(
+            titleKey: "forgot_password.alert.password_error.title",
+            messageKey: "forgot_password.alert.password_error.message"
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        present(alert, animated: true, completion: nil)
     }
 }
