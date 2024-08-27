@@ -7,12 +7,14 @@
 
 import Foundation
 import Observation
+import Combine
 
 protocol HomeViewModeling: BaseClass, ObservableObject {
     associatedtype categorySelectorVM: CategorySelectorViewModeling
     associatedtype settingBarVM: SettingsBarViewModeling
     var username: String { get }
     var isLoading: Bool { get }
+    var isVirtualAvailable: Bool { get }
     var csViewModel: categorySelectorVM { get }
     var settingsViewModel: settingBarVM { get }
     func onAppear()
@@ -20,6 +22,7 @@ protocol HomeViewModeling: BaseClass, ObservableObject {
     func loadWithQRCode()
     func loadFromCamera()
     func dismissCamera()
+    func loadVirtual()
     func showOnboarding()
 }
 
@@ -39,6 +42,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     private var nfcVM: NfcViewModeling?
     private var ocrVM: OcrViewModeling?
     private var qrVM: QRViewModeling?
+    private var cancellables = Set<AnyCancellable>()
     
     private let gameDataManager: GameDataManaging
     private let logger: LoggerServicing
@@ -50,8 +54,11 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     @Published var username: String = ""
     @Published private(set) var isLoading: Bool = false
+    @Published private(set) var isVirtualAvailable: Bool = false
     var csViewModel: csVM
     var settingsViewModel: settingBarVM
+    
+    // MARK: - Initialization
     
     init(
         dependencies: Dependencies,
@@ -70,6 +77,9 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
             dependencies: dependencies,
             delegate: settingsDelegate
         )
+        
+        super.init()
+        setupBindings()
     }
     
     // MARK: - Public Interface
@@ -138,5 +148,22 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     func showOnboarding() {
         delegate?.showOnboarding()
+    }
+    
+    func loadVirtual() {
+        Task { @MainActor [weak self] in
+            await self?.gameDataManager.processVirtual()
+        }
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func setupBindings() {
+        gameDataManager.isVirtualAvailablePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isAvailable in
+                self?.isVirtualAvailable = isAvailable
+            }
+            .store(in: &cancellables)
     }
 }

@@ -30,3 +30,11 @@ struct UserLocation: Codable {
         String(format: "%.5f, %.5f, %.2f, %.2f", latitude, longitude, altitude, accuracy)
     }
 }
+
+extension UserLocation {
+    func distance(to location: UserLocation) -> Double {
+        let currentLocation = self.toCLLocation()
+        let targetLocation = location.toCLLocation()
+        return currentLocation.distance(from: targetLocation)
+    }
+}

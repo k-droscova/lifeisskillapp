@@ -40,8 +40,10 @@ enum DataType: CaseIterable {
 
 protocol GameDataManaging {
     var delegate: GameDataManagerFlowDelegate? { get set }
+    var isVirtualAvailablePublisher: AnyPublisher<Bool, Never> { get }
     func loadData(for dataType: DataType?) async
     func onPointScanned(_ point: ScannedPoint) async
+    func processVirtual() async
 }
 
 public final class GameDataManager: BaseClass, GameDataManaging {
@@ -60,10 +62,15 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     private var isOnline: Bool
     private var cancellables = Set<AnyCancellable>()
     private var isUserLoggedIn: Bool { storage.isLoggedIn }
+    private var closestVirtualPoint: GenericPoint?
+    private let isVirtualAvailableSubject = CurrentValueSubject<Bool, Never>(false)
     
     // MARK: - Public Properties
     
     weak var delegate: GameDataManagerFlowDelegate?
+    var isVirtualAvailablePublisher: AnyPublisher<Bool, Never> {
+        isVirtualAvailableSubject.eraseToAnyPublisher()
+    }
     
     // MARK: - Initialization
     
@@ -105,6 +112,31 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     func onPointScanned(_ point: ScannedPoint) async {
         do {
             try await userPointManager.handleScannedPoint(point)
+        } catch let error as BaseError {
+            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                delegate?.onInvalidToken()
+                return
+            }
+        } catch {
+            delegate?.onError(error)
+        }
+    }
+    
+    func processVirtual() async {
+        do {
+            guard let point = closestVirtualPoint else {
+                throw BaseError(
+                    context: .system,
+                    message: "virtual point is nil",
+                    logger: logger
+                )
+            }
+            try await userPointManager.handleScannedPoint(
+                ScannedPoint(
+                    code: point.id,
+                    codeSource: .virtual,
+                    location: point.location)
+            )
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 delegate?.onInvalidToken()
@@ -305,6 +337,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isOnline in
                 self?.handleNetworkStatusChange(isOnline: isOnline)
+            }
+            .store(in: &cancellables)
+        
+        genericPointManager.closestVirtualPointPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] closestPoint in
+                self?.closestVirtualPoint = closestPoint
+                self?.isVirtualAvailableSubject.send(closestPoint != nil)
             }
             .store(in: &cancellables)
     }
