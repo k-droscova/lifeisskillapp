@@ -135,7 +135,14 @@ public final class GameDataManager: BaseClass, GameDataManaging {
                 ScannedPoint(
                     code: point.id,
                     codeSource: .virtual,
-                    location: point.location)
+                    location: .init(
+                        latitude: point.pointLat,
+                        longitude: point.pointLng,
+                        altitude: point.pointAlt,
+                        accuracy: 0,
+                        timestamp: Date.now
+                    )
+                )
             )
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
