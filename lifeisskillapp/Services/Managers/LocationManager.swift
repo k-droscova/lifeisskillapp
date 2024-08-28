@@ -52,10 +52,10 @@ public final class LocationManager: BaseClass, LocationManaging {
         gpsSubject.value
     }
     var gpsStatusPublisher: AnyPublisher<Bool, Never> {
-        return gpsSubject.eraseToAnyPublisher()
+        gpsSubject.eraseToAnyPublisher()
     }
     var locationPublisher: AnyPublisher<UserLocation?, Never> {
-        return locationSubject.eraseToAnyPublisher()
+        locationSubject.eraseToAnyPublisher()
     }
     
     // MARK: - Initialization
@@ -127,6 +127,7 @@ extension LocationManager: CLLocationManagerDelegate {
         // Update gps status only if the last value has been true
         guard gpsSubject.value else { return }
         triggerGPSPublisher(false)
+        checkLocationAuthorization()
     }
     
     /// Called when the location authorization status changes.
@@ -134,6 +135,6 @@ extension LocationManager: CLLocationManagerDelegate {
     ///   - manager: The location manager object that generated the update event.
     ///   - status: The new authorization status.
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        self.checkLocationAuthorization()
+        checkLocationAuthorization()
     }
 }
