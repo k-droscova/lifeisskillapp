@@ -135,6 +135,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
                 ScannedPoint(
                     code: point.id,
                     codeSource: .virtual,
+                    // TODO: posilat user location ne point location
                     location: .init(
                         latitude: point.pointLat,
                         longitude: point.pointLng,
