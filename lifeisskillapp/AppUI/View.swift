@@ -94,7 +94,7 @@ public extension View {
     // MARK: - Foregrounds
     
     var foregroundsPrimary: some View {
-        foregroundColor(.primary) // TODO: implement colors based on resources Martin provided
+        foregroundColor(.primary) 
     }
     
     var foregroundsSecondary: some View {
