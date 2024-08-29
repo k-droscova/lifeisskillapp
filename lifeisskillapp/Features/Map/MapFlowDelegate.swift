@@ -16,7 +16,8 @@ protocol MapViewFlowDelegate: BaseFlowCoordinator {
 
 extension MapViewFlowDelegate {
     func onPointTapped(for point: GenericPoint) {
-        let vc = MapPointDetailView(dependencies: appDependencies, point: point).hosting()
+        let vm = MapPointDetailViewModel(dependencies: appDependencies, point: point)
+        let vc = MapPointDetailView(viewModel: vm).hosting()
         vc.modalPresentationStyle = .pageSheet
         
         if let sheet = vc.sheetPresentationController {

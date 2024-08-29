@@ -12,6 +12,7 @@ protocol MapPointDetailViewModeling: ObservableObject {
     var pointName: String { get }
     var pointValueText: String { get }
     var sponsorImage: Image? { get }
+    var sponsorText: String { get }
     var detailURL: URL? { get }
     var hasDetail: Bool { get }
     var icon: Image { get }
@@ -36,10 +37,7 @@ final class MapPointDetailViewModel: ObservableObject, MapPointDetailViewModelin
     }
     // TODO: fix image sizes
     @Published var sponsorImage: Image?
-    // TODO: get rid of sponsor id in text
-    var sponsorText: String {
-        String(format: NSLocalizedString("map.detail.sponsor", comment: ""), String(point.sponsorId))
-    }
+    var sponsorText: String { NSLocalizedString("map.detail.sponsor", comment: "") }
     var detailURL: URL? {
         #if DEBUG
         let urlString = APIUrl.detailUrlDebug + "\(point.id)"

@@ -1701,19 +1701,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Podporovatel: %@"
+            "value" : "Podporovatel: "
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sponsor: %@"
+            "value" : "Sponsor: "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sponsor: %@"
+            "value" : "Sponsor:"
           }
         }
       }

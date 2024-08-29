@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct MapPointDetailView: View {
-    @ObservedObject private var viewModel: MapPointDetailViewModel
+struct MapPointDetailView<ViewModel: MapPointDetailViewModeling>: View {
+    @StateObject private var viewModel: ViewModel
     
     // Custom initializer that accepts a GenericPoint
-    init(dependencies: MapPointDetailViewModel.Dependencies, point: GenericPoint) {
-        self.viewModel = MapPointDetailViewModel(dependencies: dependencies, point: point)
+    init(viewModel: ViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
