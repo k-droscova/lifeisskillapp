@@ -35,7 +35,6 @@ final class MapPointDetailViewModel: ObservableObject, MapPointDetailViewModelin
     var pointValueText: String {
         String(format: NSLocalizedString("map.detail.value", comment: ""), String(point.pointValue))
     }
-    // TODO: fix image sizes
     @Published var sponsorImage: Image?
     var sponsorText: String { NSLocalizedString("map.detail.sponsor", comment: "") }
     var detailURL: URL? {

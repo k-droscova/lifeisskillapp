@@ -32,7 +32,6 @@ struct MapPointDetailView<ViewModel: MapPointDetailViewModeling>: View {
                 .body2Regular
             
             HStack {
-                // TODO: need to fix formatting of the height of the sheet somehow
                 if let sponsorImage = viewModel.sponsorImage {
                     sponsorImage
                 }
