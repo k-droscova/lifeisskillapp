@@ -203,7 +203,7 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
         )
     }
     
-    // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
+    // MARK: Settings not yet implemented, to be determined what settings will contain
     func settingsPressed() {
         print("Need to navigate to settings")
     }
