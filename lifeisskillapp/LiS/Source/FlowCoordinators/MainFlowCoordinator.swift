@@ -208,10 +208,6 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
         print("Need to navigate to settings")
     }
     
-    func cameraPressed() {
-        print("need to open camera")
-    }
-    
     func onboardingPressed() {
         let onboardingVC = OnboardingView().hosting()
         onboardingVC.modalPresentationStyle = .formSheet

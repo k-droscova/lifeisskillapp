@@ -43,7 +43,7 @@ protocol GameDataManaging {
     var isVirtualAvailablePublisher: AnyPublisher<Bool, Never> { get }
     func loadData(for dataType: DataType?) async
     func onPointScanned(_ point: ScannedPoint) async
-    func processVirtual() async
+    func processVirtual(location: UserLocation?) async
 }
 
 public final class GameDataManager: BaseClass, GameDataManaging {
@@ -122,29 +122,17 @@ public final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    func processVirtual() async {
+    func processVirtual(location: UserLocation?) async {
         do {
             guard let point = closestVirtualPoint else {
-                throw BaseError(
-                    context: .system,
-                    message: "virtual point is nil",
-                    logger: logger
-                )
+                logger.log(message: "virtual point is nil")
+                return
             }
-            try await userPointManager.handleScannedPoint(
-                ScannedPoint(
-                    code: point.id,
-                    codeSource: .virtual,
-                    // TODO: posilat user location ne point location
-                    location: .init(
-                        latitude: point.pointLat,
-                        longitude: point.pointLng,
-                        altitude: point.pointAlt,
-                        accuracy: 0,
-                        timestamp: Date.now
-                    )
-                )
-            )
+            let scannedPoint = ScannedPoint(
+                code: point.id,
+                codeSource: .virtual,
+                location: location)
+            try await userPointManager.handleScannedPoint(scannedPoint)
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 delegate?.onInvalidToken()

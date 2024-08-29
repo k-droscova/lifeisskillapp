@@ -152,7 +152,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     
     func loadVirtual() {
         Task { @MainActor [weak self] in
-            await self?.gameDataManager.processVirtual()
+            await self?.gameDataManager.processVirtual(location: self?.locationManager.location)
         }
     }
     
