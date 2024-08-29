@@ -17,7 +17,7 @@ protocol HasLoginAPIService {
 }
 
 protocol LoginAPIServicing: APITasking {
-    func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse>
+    func login(credentials: LoginCredentials, location: UserLocation?, baseURL: URL) async throws -> APIResponse<LoginAPIResponse>
 }
 
 public final class LoginAPIService: BaseClass, LoginAPIServicing {
@@ -32,10 +32,17 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
         self.network = dependencies.network
     }
     
-    func login(loginCredentials: LoginCredentials, baseURL: URL) async throws -> APIResponse<LoginAPIResponse> {
+    func login(credentials: LoginCredentials, location: UserLocation?, baseURL: URL) async throws -> APIResponse<LoginAPIResponse> {
+        guard let location else {
+            throw BaseError(
+                context: .location,
+                message: "User Location Required for login",
+                logger: loggerService
+            )
+        }
         let endpoint = Endpoint.login
         let headers = endpoint.headers(token: APIHeader.Authorization)
-        let data = try encodeParams(loginCredentials: loginCredentials)
+        let data = try encodeParams(credentials: credentials, location: location)
         return try await network.performRequestWithDataDecoding(
             url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
             method: .POST,
@@ -45,11 +52,13 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
             errorObject: APIResponseError.self)
     }
     
-    private func encodeParams(loginCredentials: LoginCredentials) throws -> Data {
+    private func encodeParams(credentials: LoginCredentials, location: UserLocation) throws -> Data {
         var taskParams = task.taskParams
         let params = [
-            "user": loginCredentials.username,
-            "pswd": loginCredentials.password
+            "user": credentials.username,
+            "pswd": credentials.password,
+            "lat": String(location.latitude),
+            "lng": String(location.longitude)
         ]
         taskParams.merge(params) { (_, new) in new }
         let jsonString = try JsonMapper.jsonString(from: taskParams)

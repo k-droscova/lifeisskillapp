@@ -38,7 +38,7 @@ protocol UserManaging {
 }
 
 final class UserManager: BaseClass, UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage & HasGameDataManager
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage & HasGameDataManager & HasLocationManager
     
     // MARK: - Private Properties
     
@@ -48,6 +48,7 @@ final class UserManager: BaseClass, UserManaging {
     private let registerAppAPI: RegisterAppAPIServicing
     private let loginAPI: LoginAPIServicing
     private let networkMonitor: NetworkMonitoring
+    private let locationManager: LocationManaging
     private let keychainStorage: KeychainStoraging
     private let gameDataManager: GameDataManaging
     
@@ -73,6 +74,7 @@ final class UserManager: BaseClass, UserManaging {
         self.loginAPI = dependencies.loginAPI
         self.storage = dependencies.storage
         self.networkMonitor = dependencies.networkMonitor
+        self.locationManager = dependencies.locationManager
         self.keychainStorage = dependencies.keychainStorage
         self.gameDataManager = dependencies.gameDataManager
         
@@ -172,7 +174,7 @@ final class UserManager: BaseClass, UserManaging {
     
     private func performOnlineLogin(credentials: LoginCredentials) async throws {
         do {
-            let response = try await loginAPI.login(loginCredentials: credentials, baseURL: APIUrl.baseURL)
+            let response = try await loginAPI.login(credentials: credentials, location: locationManager.location, baseURL: APIUrl.baseURL)
             let loggedInUser = response.data.user
             
             // check if there is existing user in realm
