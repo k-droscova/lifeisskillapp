@@ -42,19 +42,8 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
     }
     
     private var buttons: some View {
-        HStack(spacing: 24) {
-            // cameraButton MARK: not implemented at the moment
-            menuButton
-        }
+        menuButton
         .padding(.trailing, 4)
-    }
-    
-    private var cameraButton: some View {
-        Button(action: {
-            viewModel.cameraPressed()
-        }) {
-            SFSSymbols.camera.Image
-        }
     }
     
     private var menuButton: some View {
@@ -65,15 +54,11 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
                 Text("settings.logout")
             }
             Button(action: {
-                viewModel.settingsPressed()
-            }) {
-                Text("settings.settings")
-            }
-            Button(action: {
                 viewModel.onboardingPressed()
             }) {
                 Text("settings.onboarding")
             }
+            // MARK: settings will be implemented in the future once Martin determines what will be done in the settings
         } label: {
             SFSSymbols.settingsMenu.Image
         }

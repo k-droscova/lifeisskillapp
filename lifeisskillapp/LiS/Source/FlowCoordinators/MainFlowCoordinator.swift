@@ -17,7 +17,6 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
     
     override init() {
         super.init()
-        appDependencies.locationManager.delegate = self // MainFC presents alerts linked to location, since we need location AFTER login for point scanning
         appDependencies.gameDataManager.delegate = self // present alert if any fatal error with game data occurs anywhere in the app
     }
     
@@ -182,33 +181,6 @@ extension MainFlowCoordinator {
     }
 }
 
-extension MainFlowCoordinator: LocationManagerFlowDelegate {
-    func onLocationUnsuccess() {
-        showLocationAccessAlert()
-    }
-    
-    private func showLocationAccessAlert() {
-        let settingsAction = UIAlertAction(
-            title: NSLocalizedString("settings.settings", comment: ""),
-            style: .default
-        ) { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
-        let cancelAction = UIAlertAction(
-            title: NSLocalizedString("alert.button.cancel", comment: ""),
-            style: .cancel
-        )
-        
-        showAlert(
-            titleKey: "location.access.title",
-            messageKey: "location.access.message",
-            actions: [settingsAction, cancelAction]
-        )
-    }
-}
-
 extension MainFlowCoordinator: HomeFlowCoordinatorDelegate, PointsFlowCoordinatorDelegate, RankFlowCoordinatorDelegate, MapFlowCoordinatorDelegate {}
 
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
@@ -231,13 +203,9 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
         )
     }
     
-    // TODO: NEED TO IMPLEMENT NAVIGATION TO DIFFERENT VIEWS
+    // MARK: Settings not yet implemented, to be determined what settings will contain
     func settingsPressed() {
         print("Need to navigate to settings")
-    }
-    
-    func cameraPressed() {
-        print("need to open camera")
     }
     
     func onboardingPressed() {

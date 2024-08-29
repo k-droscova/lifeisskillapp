@@ -13,24 +13,33 @@ protocol HasGenericPointManager {
 }
 
 protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, DataContainer == GenericPointData {
+    var closestVirtualPoint: GenericPoint? { get }
+    var closestVirtualPointPublisher: AnyPublisher<GenericPoint?, Never> { get }
     func sponsorImage(for sponsorId: String, width: Int, height: Int) async throws -> Data?
 }
 
 public final class GenericPointManager: BaseClass, GenericPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor & HasLocationManager
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
     private let logger: LoggerServicing
     private let userDataAPIService: UserDataAPIServicing
+    private let locationManager: LocationManaging
     private var _data: GenericPointData?
+    private var cancellables = Set<AnyCancellable>()
+    private let closestVirtualPointSubject = CurrentValueSubject<GenericPoint?, Never>(nil)
     
     internal let networkMonitor: NetworkMonitoring
     
     // MARK: - Public Properties
     
     var token: String? { storage.token }
+    var closestVirtualPoint: GenericPoint? { closestVirtualPointSubject.value }
+    var closestVirtualPointPublisher: AnyPublisher<GenericPoint?, Never> {
+        closestVirtualPointSubject.eraseToAnyPublisher()
+    }
     
     // MARK: - Initialization
     
@@ -38,7 +47,17 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         self.storage = dependencies.storage
         self.logger = dependencies.logger
         self.userDataAPIService = dependencies.userDataAPI
+        self.locationManager = dependencies.locationManager
         self.networkMonitor = dependencies.networkMonitor
+        
+        super.init()
+        self.setupBindings()
+    }
+    
+    // MARK: - deinit
+    
+    deinit {
+        cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Public Interface
@@ -102,5 +121,33 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
         )
         try await storage.saveSponsorImage(for: sponsorId, imageData: imageData)
         return imageData
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func setupBindings() {
+        locationManager.locationPublisher
+            .compactMap { $0 } // Filter out nil values
+            .sink { [weak self] userLocation in
+                self?.updateClosestVirtualPoint(for: userLocation)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateClosestVirtualPoint(for userLocation: UserLocation) {
+        guard let closestPoint = findClosestVirtualPoint(for: userLocation) else { return }
+        // Check if it's within 100 meters
+        guard userLocation.distance(to: closestPoint.location) < MapConstants.virtualPointDistance else {
+            closestVirtualPointSubject.send(nil)
+            return
+        }
+        closestVirtualPointSubject.send(closestPoint)
+    }
+    
+    private func findClosestVirtualPoint(for userLocation: UserLocation) -> GenericPoint? {
+        guard let points = _data?.data else { return nil }
+        return points
+            .filter { $0.pointType == .virtual }
+            .min(by: { userLocation.distance(to: $0.location) < userLocation.distance(to: $1.location) })
     }
 }

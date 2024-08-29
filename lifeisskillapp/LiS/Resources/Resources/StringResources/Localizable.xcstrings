@@ -88,6 +88,29 @@
         }
       }
     },
+    "alert.button.exit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukončit"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beenden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit"
+          }
+        }
+      }
+    },
     "alert.button.ok" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1769,19 +1792,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potřebujeme použít tvoji polohu pro validaci bodů. "
+            "value" : "Jdi do nastavení a povol používání polohy. Pokud odmítneš, aplikace se vypne."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wir benötigen Zugriff auf Ihren Standort, um Punkte ordnungsgemäß zu validieren."
+            "value" : "Wechseln Sie zu den Einstellungen, um den Zugriff auf Ihren Standort zu erlauben. Wenn Sie ablehnen, wird die App beendet."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We need access to your location to properly validate points."
+            "value" : "Navigate to settings to allow access to your location. If you deny then the app exits."
           }
         }
       }
@@ -1792,7 +1815,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Je vyžadován přístup k lpolohovým službám"
+            "value" : "Je vyžadován přístup k polohovým službám"
           }
         },
         "de" : {
@@ -2155,19 +2178,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Podporovatel: %@"
+            "value" : "Podporovatel: "
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sponsor: %@"
+            "value" : "Sponsor: "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sponsor: %@"
+            "value" : "Sponsor:"
           }
         }
       }

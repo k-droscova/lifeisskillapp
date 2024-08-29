@@ -198,7 +198,7 @@ extension UserDataAPIService {
         
         var typeHeaders: [String: String] {
             switch self {
-            case .sponsorImage(let sponsorId, let width, let height):
+            case .sponsorImage(_, _, _):
                 ["accept": "image/png"]
             default:
                 ["accept": "application/json"]
