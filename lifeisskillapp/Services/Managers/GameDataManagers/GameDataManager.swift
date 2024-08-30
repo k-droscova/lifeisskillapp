@@ -20,20 +20,12 @@ protocol HasGameDataManager {
 
 enum DataType: CaseIterable {
     case userPoints, categories, ranks, messages, events, genericPoints
-    var checkSumApiEndpoint: CheckSumAPIService.Endpoint? {
+    var hasCheckSumEndpoint: Bool {
         switch self {
-        case .userPoints:
-                .userpoints
-        case .ranks:
-                .rank
-        case .messages:
-                .messages
-        case .events:
-                .events
-        case .genericPoints:
-                .points
+        case .categories:
+            false
         default:
-            nil
+            true
         }
     }
 }
@@ -200,78 +192,86 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     
     private func fetchData(for dataType: DataType) async throws {
         logger.log(message: "Fetching data for \(dataType)")
-        guard let endpoint = dataType.checkSumApiEndpoint else {
+        guard dataType.hasCheckSumEndpoint else {
             try await fetchNewUserCategories()
             return
         }
-        let checkSum = try await fetchNewCheckSumData(for: endpoint)
-        if try await shouldFetchData(for: endpoint, newCheckSum: checkSum) {
-            switch endpoint {
-            case .userpoints:
+        let checkSum = try await fetchNewCheckSumData(for: dataType)
+        if try await shouldFetchData(for: dataType, newCheckSum: checkSum) {
+            switch dataType {
+            case .userPoints:
                 try await fetchNewUserPoints()
-            case .rank:
+            case .ranks:
                 try await fetchNewUserRank()
             case .events:
                 try await fetchNewUserEvents()
             case .messages:
                 try await fetchNewUserMessages()
-            case .points:
+            case .genericPoints:
                 try await fetchNewPoints()
+            default:
+                return
             }
         }
     }
     
-    private func fetchNewCheckSumData(for endpoint: CheckSumAPIService.Endpoint) async throws -> String {
-        switch endpoint {
-        case .userpoints:
-            let response = try await checkSumAPI.getUserPoints(baseURL: APIUrl.baseURL)
+    private func fetchNewCheckSumData(for dataType: DataType) async throws -> String {
+        switch dataType {
+        case .userPoints:
+            let response = try await checkSumAPI.userPoints()
             return response.data.pointsProtect
-        case .rank:
-            let response = try await checkSumAPI.getRank(baseURL: APIUrl.baseURL)
+        case .ranks:
+            let response = try await checkSumAPI.userRank()
             return response.data.rankProtect
         case .events:
-            let response = try await checkSumAPI.getEvents(baseURL: APIUrl.baseURL)
+            let response = try await checkSumAPI.userEvents()
             return response.data.eventsProtect
         case .messages:
-            let response = try await checkSumAPI.getMessages(baseURL: APIUrl.baseURL)
+            let response = try await checkSumAPI.userMessages()
             return response.data.msgProtect
-        case .points:
-            let response = try await checkSumAPI.getPoints(baseURL: APIUrl.baseURL)
+        case .genericPoints:
+            let response = try await checkSumAPI.genericPoints()
             return response.data.pointsProtect
+        default:
+            return "" // should never happen
         }
     }
     
-    private func shouldFetchData(for endpoint: CheckSumAPIService.Endpoint, newCheckSum: String) async throws -> Bool {
+    private func shouldFetchData(for dataType: DataType, newCheckSum: String) async throws -> Bool {
         let currentData = try await storage.checkSumData() ?? CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         
-        switch endpoint {
-        case .userpoints:
+        switch dataType {
+        case .userPoints:
             return currentData.userPoints != newCheckSum
-        case .rank:
+        case .ranks:
             return currentData.rank != newCheckSum
         case .events:
             return currentData.events != newCheckSum
         case .messages:
             return currentData.messages != newCheckSum
-        case .points:
+        case .genericPoints:
             return currentData.points != newCheckSum
+        default:
+            return false
         }
     }
     
-    private func updateCheckSum(newCheckSum: String, for endpoint: CheckSumAPIService.Endpoint) async throws {
+    private func updateCheckSum(newCheckSum: String, for dataType: DataType) async throws {
         var currentData = try await storage.checkSumData() ?? CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         
-        switch endpoint {
-        case .userpoints:
+        switch dataType {
+        case .userPoints:
             currentData.userPoints = newCheckSum
-        case .rank:
+        case .ranks:
             currentData.rank = newCheckSum
         case .events:
             currentData.events = newCheckSum
         case .messages:
             currentData.messages = newCheckSum
-        case .points:
+        case .genericPoints:
             currentData.points = newCheckSum
+        default:
+            return
         }
         
         try await storage.saveCheckSumData(currentData)
@@ -287,7 +287,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             logger.log(message: "ERROR: User points checksum is null")
             return
         }
-        try await updateCheckSum(newCheckSum: newCheckSum, for: .userpoints)
+        try await updateCheckSum(newCheckSum: newCheckSum, for: .userPoints)
     }
     
     private func fetchNewUserRank() async throws {
@@ -296,7 +296,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             logger.log(message: "ERROR: User rank checksum is null")
             return
         }
-        try await updateCheckSum(newCheckSum: newCheckSum, for: .rank)
+        try await updateCheckSum(newCheckSum: newCheckSum, for: .ranks)
     }
     
     private func fetchNewUserMessages() async throws {
@@ -315,7 +315,7 @@ public final class GameDataManager: BaseClass, GameDataManaging {
             logger.log(message: "ERROR: Points checksum is null")
             return
         }
-        try await updateCheckSum(newCheckSum: newCheckSum, for: .points)
+        try await updateCheckSum(newCheckSum: newCheckSum, for: .genericPoints)
     }
     
     private func load() {

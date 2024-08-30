@@ -74,7 +74,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Loading user points")
-        let response = try await userDataAPIService.getUserPoints(baseURL: APIUrl.baseURL, userToken: token)
+        let response = try await userDataAPIService.userPoints(userToken: token)
         try await storage.saveUserPointData(response.data)
         _data = response.data
     }

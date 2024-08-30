@@ -75,7 +75,7 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Fetching generic points")
-        let response = try await userDataAPIService.getPoints(baseURL: APIUrl.baseURL, userToken: token)
+        let response = try await userDataAPIService.genericPoints(userToken: token)
         try await storage.saveGenericPointData(response.data)
         _data = response.data
     }
@@ -112,8 +112,7 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
                 logger: logger
             )
         }
-        let imageData = try await userDataAPIService.getSponsorImage(
-            baseURL: APIUrl.baseURL,
+        let imageData = try await userDataAPIService.sponsorImage(
             userToken: token,
             sponsorId: sponsorId,
             width: width,

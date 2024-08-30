@@ -51,7 +51,7 @@ public final class ScanningManager: ScanningManaging {
                 message: "Cannot send data to API, no access to userToken",
                 logger: logger)
         }
-        let response = try await userDataAPI.postUserPoints(baseURL: APIUrl.baseURL, userToken: token, point: point)
+        let response = try await userDataAPI.updateUserPoints(userToken: token, point: point)
         // Handle response if needed
         guard checkValidity(response) else {
             throw BaseError(

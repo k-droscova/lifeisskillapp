@@ -100,6 +100,7 @@
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
+		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
 		276ADDBD2C6E7E2000DA2301 /* ScannedPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */; };
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
@@ -305,6 +306,7 @@
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
 		276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepository.swift; sourceTree = "<group>"; };
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
@@ -696,11 +698,10 @@
 		27274FB82C3322B7003453E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				275EA0912C81E8E200F07BB8 /* GeneralNetworking */,
 				2754571B2C33303B00F3B55A /* NetworkStructs */,
 				27C619842C3A9D760067498F /* APIServices */,
 				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
-				2754570A2C33259200F3B55A /* Network.swift */,
-				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -909,6 +910,16 @@
 				275472CF2C5D110400F5578F /* CategorySelectorView.swift */,
 			);
 			path = CategorySelector;
+			sourceTree = "<group>";
+		};
+		275EA0912C81E8E200F07BB8 /* GeneralNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
+				2754570A2C33259200F3B55A /* Network.swift */,
+				275EA0922C81E90600F07BB8 /* Endpoint.swift */,
+			);
+			path = GeneralNetworking;
 			sourceTree = "<group>";
 		};
 		276CA9CC2C5E5FAF001D6394 /* Rank */ = {
@@ -1320,6 +1331,7 @@
 				27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
+				275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */,
 				278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */,
 				275457142C332DAB00F3B55A /* LoginView.swift in Sources */,
 				27066A952C4570180092B499 /* GenericPoint.swift in Sources */,

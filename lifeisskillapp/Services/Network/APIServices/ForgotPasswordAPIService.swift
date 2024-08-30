@@ -18,43 +18,40 @@ protocol HasForgotPasswordAPIService {
 }
 
 protocol ForgotPasswordAPIServicing: APITasking {
-    func fetchPin(username: String, baseURL: URL) async throws -> APIResponse<ForgotPasswordData>
-    func setNewPassword(credentials: ForgotPasswordCredentials, baseURL: URL) async throws -> APIResponse<ForgotPasswordConfirmation>
+    func fetchPin(username: String) async throws -> APIResponse<ForgotPasswordData>
+    func setNewPassword(credentials: ForgotPasswordCredentials) async throws -> APIResponse<ForgotPasswordConfirmation>
 }
 
 public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
-    private var loggerService: LoggerServicing
     private var network: Networking
+    private var logger: LoggerServicing
     let task: ApiTask = ApiTask.forgotPassword
     
     init(dependencies: Dependencies) {
-        self.loggerService = dependencies.logger
         self.network = dependencies.network
+        self.logger = dependencies.logger
     }
     
-    func fetchPin(username: String, baseURL: URL) async throws -> APIResponse<ForgotPasswordData> {
-        let endpoint = Endpoint.request
-        let headers = endpoint.headers(token: APIHeader.Authorization)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, username: username, logger: loggerService),
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            errorObject: APIResponseError.self)
+    func fetchPin(username: String) async throws -> APIResponse<ForgotPasswordData> {
+        let endpoint = Endpoint.request(username: username)
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
+            errorObject: APIResponseError.self
+        )
     }
     
-    func setNewPassword(credentials: ForgotPasswordCredentials, baseURL: URL) async throws -> APIResponse<ForgotPasswordConfirmation> {
+    func setNewPassword(credentials: ForgotPasswordCredentials) async throws -> APIResponse<ForgotPasswordConfirmation> {
         let endpoint = Endpoint.confirm
         let data = try encodeParams(credentials: credentials)
-        let headers = endpoint.headers(token: APIHeader.Authorization)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
             method: .PUT,
-            headers: headers,
             body: data,
             sensitiveRequestBodyData: true,
-            errorObject: APIResponseError.self)
+            errorObject: APIResponseError.self
+        )
     }
     
     private func encodeParams(credentials: ForgotPasswordCredentials) throws -> Data {
@@ -71,56 +68,9 @@ public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServici
                 context: .system,
                 message: "Could not encode forgot password params",
                 code: .general(.jsonEncoding),
-                logger: loggerService
+                logger: logger
             )
         }
         return jsonData
-    }
-}
-
-extension ForgotPasswordAPIService {
-    enum Endpoint: CaseIterable {
-        case request
-        case confirm
-        
-        var path: String {
-            switch self {
-            case .request: "/pswd/?user="
-            case .confirm: "/pswd"
-            }
-        }
-        
-        var typeHeaders: [String: String] {
-            switch self {
-            default:
-                ["accept": "application/json"]
-            }
-        }
-        
-        func headers(headers: [String: String]? = nil, token: String? = nil) -> [String: String] {
-            var finalHeaders = typeHeaders
-            if let headers {
-                finalHeaders.merge(headers) { (current, _) in current }
-            }
-            let apiHeader = Network.apiKeyHeader(apiKey: APIHeader.ApiKey)
-            finalHeaders[apiHeader.key] = apiHeader.val
-            if let token {
-                let authHeader = Network.authorizationHeader(token: token)
-                finalHeaders[authHeader.key] = authHeader.val
-            }
-            return finalHeaders
-        }
-        
-        func urlWithPath(base: URL, username: String? = nil, logger: LoggerServicing) throws -> URL {
-            let finalURLString = base.absoluteString + path + (username ?? "")
-            guard let url = URL(string: finalURLString) else {
-                throw BaseError(
-                    context: .network,
-                    message: "Invalid URL",
-                    logger: logger
-                )
-            }
-            return url
-        }
     }
 }
