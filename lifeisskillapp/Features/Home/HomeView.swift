@@ -97,7 +97,7 @@ private extension HomeView {
             background: HomeViewConstants.Colors.nfc,
             foregroundColor: HomeViewConstants.Colors.white
         ) {
-            SFSSymbols.nfc.Image
+            SFSSymbols.nfc.image
         }
     }
     
@@ -107,7 +107,7 @@ private extension HomeView {
             background: HomeViewConstants.Colors.qr,
             foregroundColor: HomeViewConstants.Colors.white
         ) {
-            SFSSymbols.qr.Image
+            SFSSymbols.qr.image
         }
     }
     
@@ -117,7 +117,7 @@ private extension HomeView {
             background: HomeViewConstants.Colors.camera,
             foregroundColor: HomeViewConstants.Colors.black
         ) {
-            SFSSymbols.camera.Image
+            SFSSymbols.camera.image
         }
     }
     
@@ -127,7 +127,7 @@ private extension HomeView {
             background: HomeViewConstants.Colors.virtual,
             foregroundColor: HomeViewConstants.Colors.white
         ) {
-            SFSSymbols.virtual.Image
+            SFSSymbols.virtual.image
         }
     }
 }

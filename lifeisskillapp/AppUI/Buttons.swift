@@ -13,7 +13,7 @@ struct ExitButton: View {
     
     var body: some View {
         Button(action: action) {
-            SFSSymbols.close.Image
+            SFSSymbols.close.image
         }
         .buttonStyle(CameraButtonStyle())
     }
@@ -26,9 +26,9 @@ struct FlashButton: View {
     var body: some View {
         Button(action: action) {
             flashOn ?
-            SFSSymbols.flashOn.Image
+            SFSSymbols.flashOn.image
             :
-            SFSSymbols.flashOff.Image
+            SFSSymbols.flashOff.image
         }
         .buttonStyle(CameraButtonStyle())
     }

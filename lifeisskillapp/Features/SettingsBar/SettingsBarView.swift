@@ -60,7 +60,7 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
             }
             // MARK: settings will be implemented in the future once Martin determines what will be done in the settings
         } label: {
-            SFSSymbols.settingsMenu.Image
+            SFSSymbols.settingsMenu.image
         }
     }
 }
