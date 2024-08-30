@@ -52,7 +52,6 @@ public final class ScanningManager: ScanningManaging {
                 logger: logger)
         }
         let response = try await userDataAPI.updateUserPoints(userToken: token, point: point)
-        // Handle response if needed
         guard checkValidity(response) else {
             throw BaseError(
                 context: .system,
