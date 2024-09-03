@@ -247,6 +247,19 @@ enum CustomColors {
             }
         }
     }
+    
+    enum TextFieldView {
+        case foreground
+        case background
+        var color: Color {
+            switch self {
+            case .foreground:
+                Color.colorLisDarkGrey
+            case .background:
+                Color.lighterGrey
+            }
+        }
+    }
 }
 
 enum CustomSizes {
@@ -340,13 +353,26 @@ enum CustomSizes {
             }
         }
     }
+    
+    enum TextFieldView {
+        case cornerRadius
+        case kernig
+        var size: CGFloat {
+            switch self {
+            case .cornerRadius:
+                10
+            case .kernig:
+                1.2
+            }
+        }
+    }
 }
 
 enum ForgotPasswordPagesConstants {
     static let topPadding: CGFloat = 32
     static let bottomPadding: CGFloat = 32
     static let cornerRadius: CGFloat = 10
-
+    
     enum Colors {
         static let textFieldBackground = Color.lighterGrey
         static let button = Color.colorLisBlue

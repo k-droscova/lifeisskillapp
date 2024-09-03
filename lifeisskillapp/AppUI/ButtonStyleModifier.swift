@@ -26,45 +26,19 @@ struct CustomButtonStyle: ButtonStyle {
     }
 }
 
-// Specific Button Styles
-struct LoginButtonStyle: ButtonStyle {
+struct EnablingButtonStyle: ButtonStyle {
     var isEnabled: Bool
-    var enabledColor: Color
-    var disabledColor: Color
+    let enabledColor: Color
+    let disabledColor: Color
+    let enabledTextColor: Color
+    let disabledTextColor: Color
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .subheadline
-            .foregroundColor(Color.white)
+            .foregroundColor(isEnabled ? enabledTextColor : disabledTextColor)
             .padding()
             .padding(.horizontal, 20)
             .background(isEnabled ? enabledColor : disabledColor)
-            .cornerRadius(20)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
-
-struct RegisterButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .body2Regular
-            .frame(maxWidth: .infinity, maxHeight: 20)
-            .foregroundColor(.red)
-            .background(Color.white)
-            .cornerRadius(10)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
-
-struct LogoutButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .subheadline
-            .frame(maxWidth: .infinity, maxHeight: 20)
-            .foregroundColor(Color.black)
-            .background(Color.white)
-            .cornerRadius(10)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
 

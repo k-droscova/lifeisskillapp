@@ -57,47 +57,25 @@ private extension LoginView {
             .padding(.bottom, LoginViewConstants.imageBottomPadding)
     }
     
-    private var usernameTextField: some View {
-        TextField(
-            "login.username",
-            text: $viewModel.username
-        )
-        .autocapitalization(.none)
-        .disableAutocorrection(true)
-        .padding()
-        .background(LoginViewConstants.Colors.textFieldBackground)
-        .cornerRadius(LoginViewConstants.cornerRadius)
-    }
-    
     private var textFields: some View {
         VStack(spacing: LoginViewConstants.spacing) {
-            usernameTextField
-            passwordSecureField
+            CustomTextField(
+                placeholder: "login.username",
+                text: $viewModel.username
+            )
+            CustomTextField(
+                placeholder: "login.password",
+                text: $viewModel.password,
+                isSecure: true
+            )
         }
-        .body1Regular
-        .foregroundStyle(Color.colorLisDarkGrey)
-        .kerning(1.2)
         .padding(.horizontal, LoginViewConstants.horizontalPadding)
-    }
-    
-    private var passwordSecureField: some View {
-        SecureField(
-            "login.password",
-            text: $viewModel.password
-        )
-        .padding()
-        .background(LoginViewConstants.Colors.textFieldBackground)
-        .cornerRadius(LoginViewConstants.cornerRadius)
     }
     
     private var loginButton: some View {
         EnablingButton(
             action: viewModel.login,
-            text: Text("login.login"),
-            enabledColorBackground: LoginViewConstants.Colors.enabledButton,
-            disabledColorBackground: LoginViewConstants.Colors.disabledButton,
-            enabledColorText: LoginViewConstants.Colors.enabledText,
-            disabledColorText: LoginViewConstants.Colors.disabledText,
+            text: "login.login",
             isEnabled: viewModel.isLoginEnabled
         )
         .disabled(!viewModel.isLoginEnabled)
@@ -126,13 +104,4 @@ enum LoginViewConstants {
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
     static let imageBottomPadding: CGFloat = 20
-    static let cornerRadius: CGFloat = 10
-    
-    enum Colors {
-        static let textFieldBackground = Color.lighterGrey
-        static let enabledButton = Color.colorLisGreen
-        static let disabledButton = Color.colorLisGrey
-        static let enabledText = Color.white
-        static let disabledText = Color.colorLisDarkGrey
-    }
 }

@@ -246,3 +246,58 @@ struct OnboardingPageView: View {
             .multilineTextAlignment(.center)
     }
 }
+
+struct CustomTextField: View {
+    let placeholder: LocalizedStringKey
+    @Binding var text: String
+    
+    // MARK: optional arguments, can be customized in init, defaults to generic LiS textfield style
+    var isSecure: Bool = false
+    var backgroundColor: Color = CustomColors.TextFieldView.background.color
+    var foregroundColor: Color = CustomColors.TextFieldView.foreground.color
+    var cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size
+    var kernig: CGFloat = CustomSizes.TextFieldView.kernig.size
+    var showsValidationMessage: Bool = false
+    var validationMessage: LocalizedStringKey? = nil
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            textField
+                .padding()
+                .background(backgroundColor)
+                .cornerRadius(cornerRadius)
+                .foregroundStyle(foregroundColor)
+                .kerning(kernig)
+                .body1Regular
+            
+            if showsValidationMessage {
+                validatioMessageField
+                    .caption
+                    .foregroundStyle(.colorLisRed)
+            }
+        }
+    }
+    
+    private var textField: some View {
+        Group {
+            if isSecure {
+                SecureField(placeholder, text: $text)
+            } else {
+                TextField(placeholder, text: $text)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+            }
+        }
+    }
+    
+    private var validatioMessageField: some View {
+        Group {
+            if let validationMessage = validationMessage {
+                Text(validationMessage)
+            } else {
+                Text(" ")  // Placeholder text to maintain layout stability
+            }
+        }
+        .frame(height: 16)  // Reserve space for validation message, should equal lineHeight of .caption
+    }
+}

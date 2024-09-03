@@ -57,7 +57,7 @@ extension BaseFlowCoordinator {
     // MARK: - Presenting Alerts
     
     func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             completion?()
         }
         showAlert(titleKey: titleKey, messageKey: messageKey, actions: [okAction])
