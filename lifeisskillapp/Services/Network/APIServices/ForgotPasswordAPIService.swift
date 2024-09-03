@@ -36,7 +36,7 @@ public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServici
     
     func fetchPin(username: String) async throws -> APIResponse<ForgotPasswordData> {
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: Endpoint.resetPasswordRequest(username: username),
+            endpoint: Endpoint.resetPassword(.request(username: username)),
             errorObject: APIResponseError.self
         )
     }
@@ -44,7 +44,7 @@ public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServici
     func setNewPassword(credentials: ForgotPasswordCredentials) async throws -> APIResponse<ForgotPasswordConfirmation> {
         let data = try encodeParams(credentials: credentials)
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: Endpoint.resetPasswordConfirm,
+            endpoint: Endpoint.resetPassword(.confirm),
             method: .PUT,
             body: data,
             sensitiveRequestBodyData: true,

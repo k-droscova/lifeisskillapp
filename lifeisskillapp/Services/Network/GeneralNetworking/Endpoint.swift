@@ -15,55 +15,69 @@ protocol Endpointing {
 }
 
 enum Endpoint: Endpointing {
+    case resetPassword(ResetPassword)
+    case registration(Registration)
     case appId
     case login
     case usercategory, userpoints, rank, events, messages, points
     case sponsorImage(sponsorId: String, width: Int, height: Int)
-    case resetPasswordRequest(username: String)
-    case resetPasswordConfirm
     
     var path: String {
         switch self {
+        case .resetPassword(let action):
+            switch action {
+            case .request(let username):
+                return "/pswd/?user=\(username)"
+            case .confirm:
+                return "/pswd"
+            }
+            
+        case .registration(let action):
+            switch action {
+            case .checkUsernameAvailability(let username):
+                return "/nick/\(username)/check"
+            case .checkEmailAvailability(let email):
+                return "/email/\(email)/check"
+            case .registerUser:
+                return "/register"
+            }
+            
         case .appId:
-            "/appid"
+            return "/appid"
         case .login:
-            "/login"
+            return "/login"
         case .usercategory:
-            "/usercategory"
+            return "/usercategory"
         case .userpoints:
-            "/userpoints"
+            return "/userpoints"
         case .rank:
-            "/rank"
+            return "/rank"
         case .events:
-            "/events"
+            return "/events"
         case .messages:
-            "/messages"
+            return "/messages"
         case .points:
-            "/points"
+            return "/points"
         case .sponsorImage(let sponsorId, let width, let height):
-            "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
-        case .resetPasswordRequest(let username):
-            "/pswd/?user=\(username)"
-        case .resetPasswordConfirm:
-            "/pswd"
+            return "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
         }
     }
     
     var typeHeaders: [String: String] {
         switch self {
         case .sponsorImage:
-            ["accept": "image/png"]
+            return ["accept": "image/png"]
         default:
-            ["accept": "application/json"]
+            return ["accept": "application/json"]
         }
     }
     
     var isUserTokenRequired: Bool {
         switch self {
-        case .appId, .login, .resetPasswordRequest, .resetPasswordConfirm:
-            false
+        case .resetPassword, .registration, .appId, .login:
+            return false
         case .usercategory, .userpoints, .rank, .events, .messages, .points, .sponsorImage:
-            true
+            return true
         }
     }
     
@@ -89,5 +103,18 @@ enum Endpoint: Endpointing {
             )
         }
         return url
+    }
+}
+
+extension Endpoint {
+    // MARK: nested enums for separate flows
+    enum ResetPassword {
+        case request(username: String)
+        case confirm
+    }
+    enum Registration {
+        case checkUsernameAvailability(username: String)
+        case checkEmailAvailability(email: String)
+        case registerUser(details: [String: Any]) // Example additional case
     }
 }

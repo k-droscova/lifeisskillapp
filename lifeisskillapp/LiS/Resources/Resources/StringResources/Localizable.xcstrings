@@ -706,6 +706,52 @@
         }
       }
     },
+    "forgot_password.alert.request.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poslali jsme ti do emailu, který je spojený s tímto účtem, pin na obnovu hesla. Pin je platný 15 min."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir haben einen PIN an die E-Mail-Adresse gesendet, die Sie für dieses Konto verwendet haben. Der PIN ist 15 Minuten lang gültig."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We sent pin to your email you used for this account. The pin is valid for 15 mins."
+          }
+        }
+      }
+    },
+    "forgot_password.alert.request.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zkontroluj si email"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überprüfen Sie Ihre E-Mails"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your email"
+          }
+        }
+      }
+    },
     "forgot_password.alert.success.message" : {
       "extractionState" : "manual",
       "localizations" : {
