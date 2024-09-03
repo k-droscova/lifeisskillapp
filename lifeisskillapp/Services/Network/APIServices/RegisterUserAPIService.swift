@@ -14,7 +14,7 @@ protocol HasRegisterUserAPIService {
 protocol RegisterUserAPIServicing {
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse>
     func checkEmailAvailability(_ email: String) async throws -> APIResponse<EmailAvailabilityResponse>
-    //func registerUser(credentials: RegistrationCredentials) async throws -> APIResponse<
+    func registerUser(credentials: RegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse>
 }
 
 public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
@@ -27,7 +27,7 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
         self.network = dependencies.network
         self.logger = dependencies.logger
     }
-
+    
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse> {
         return try await network.performAuthorizedRequestWithDataDecoding(
             endpoint: Endpoint.registration(.checkUsernameAvailability(username: username)),
@@ -38,6 +38,27 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
     func checkEmailAvailability(_ email: String) async throws -> APIResponse<EmailAvailabilityResponse> {
         return try await network.performAuthorizedRequestWithDataDecoding(
             endpoint: Endpoint.registration(.checkEmailAvailability(email: email)),
+            errorObject: APIResponseError.self
+        )
+    }
+    
+    func registerUser(credentials: RegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse> {
+        guard let location else {
+            throw BaseError(
+                context: .location,
+                message: "User Location Required for registration",
+                logger: logger
+            )
+        }
+        
+        let task = ApiTask.registerUser(credentials: credentials, location: location)
+        let data = try task.encodeParams()
+        
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: Endpoint.registration(.registerUser),
+            method: .POST,
+            body: data,
+            sensitiveRequestBodyData: true,
             errorObject: APIResponseError.self
         )
     }

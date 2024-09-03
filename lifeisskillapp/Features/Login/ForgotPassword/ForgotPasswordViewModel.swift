@@ -20,6 +20,7 @@ protocol ForgotPasswordViewModelDelegate: NSObject {
 
 protocol ForgotPasswordViewModeling: BaseClass, ObservableObject {
     var delegate: ForgotPasswordViewModelDelegate? { get set }
+    var isLoading: Bool { get }
     var email: String { get set }
     var pin: String { get set }
     var newPassword: String { get set }
@@ -27,7 +28,6 @@ protocol ForgotPasswordViewModeling: BaseClass, ObservableObject {
     var isSendEmailButtonEnabled: Bool { get set }
     var isConfirmPinButtonEnabled: Bool { get set }
     var isChangePasswordButtonEnabled: Bool { get set }
-    var isLoading: Bool { get set }
 
     func sendEmail()
     func validatePin()
@@ -46,6 +46,7 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
 
     // MARK: - Public Properties
     weak var delegate: ForgotPasswordViewModelDelegate?
+    @Published private(set) var isLoading: Bool = false
     @Published var email: String = "" {
         didSet {
             isSendEmailButtonEnabled = !email.isEmpty
@@ -69,7 +70,6 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
     @Published var isSendEmailButtonEnabled: Bool = false
     @Published var isConfirmPinButtonEnabled: Bool = false
     @Published var isChangePasswordButtonEnabled: Bool = false
-    @Published var isLoading: Bool = false
 
     // MARK: - Initialization
 

@@ -22,6 +22,7 @@ protocol RegistrationViewModelDelegate: AnyObject {
 protocol RegistrationViewModeling: BaseClass, ObservableObject {
     var delegate: RegistrationViewModelDelegate? { get set }
     
+    var isLoading: Bool { get }
     var username: String { get set }
     var email: String { get set }
     var password: String { get set }
@@ -50,7 +51,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     // MARK: - Public Properties
     
     weak var delegate: RegistrationViewModelDelegate?
-    
+    @Published private(set) var isLoading: Bool = false
     @Published var username: String = "" {
         didSet {
             validateUsername()
@@ -172,23 +173,22 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     // MARK: - Public Methods
     
     func submitRegistration() {
-        guard isFormValid else {
-            logger.log(message: "Form is not valid")
-            delegate?.registrationDidFail()
-            return
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            guard self.isFormValid else {
+                self.logger.log(message: "Form is not valid")
+                self.delegate?.registrationDidFail()
+                return
+            }
+            let credentials = RegistrationCredentials(username: username, email: email, password: password)
+            do {
+                try await self.userManager.registerUser(credentials: credentials)
+                self.delegate?.registrationDidSucceed()
+            } catch {
+                self.delegate?.registrationDidFail()
+            }
         }
-        // TODO: implement api registration
-        // Simulate registration process
-        /*
-         let credentials = RegistrationCredentials(username: username, email: email, password: password)
-         userManager.registerUser(with: credentials) { [weak self] success in
-         if success {
-         self?.delegate?.registrationDidSucceed()
-         } else {
-         self?.delegate?.registrationDidFail()
-         }
-         }
-         */
-        delegate?.registrationDidSucceed()
     }
 }

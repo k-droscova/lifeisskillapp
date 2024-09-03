@@ -39,7 +39,7 @@ enum Endpoint: Endpointing {
             case .checkEmailAvailability(let email):
                 return "/email/\(email)/check"
             case .registerUser:
-                return "/register"
+                return "/users"
             }
             
         case .appId:
@@ -115,6 +115,6 @@ extension Endpoint {
     enum Registration {
         case checkUsernameAvailability(username: String)
         case checkEmailAvailability(email: String)
-        case registerUser(details: [String: Any]) // Example additional case
+        case registerUser
     }
 }

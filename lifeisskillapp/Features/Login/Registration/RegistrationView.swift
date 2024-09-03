@@ -26,6 +26,13 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
         .onTapGesture {
             hideKeyboard()
         }
+        .overlay(
+            Group {
+                if viewModel.isLoading {
+                    CustomProgressView()
+                }
+            }
+        )
     }
     
     // MARK: - Form Fields

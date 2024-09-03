@@ -254,3 +254,16 @@ struct EmailAvailabilityResponse: DataProtocol {
         isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
     }
 }
+
+struct RegistrationResponse: DataProtocol {
+    let message: String
+    
+    enum CodingKeys: String, CodingKey {
+        case message = "newUser"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        message = try container.decode(String.self, forKey: .message)
+    }
+}

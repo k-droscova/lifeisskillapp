@@ -930,6 +930,7 @@
 				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
 				2754570A2C33259200F3B55A /* Network.swift */,
 				275EA0922C81E90600F07BB8 /* Endpoint.swift */,
+				27B25C4E2C3AFE4F00864028 /* APITask.swift */,
 			);
 			path = GeneralNetworking;
 			sourceTree = "<group>";
@@ -1039,7 +1040,6 @@
 			children = (
 				27C6198A2C3AA6EE0067498F /* RegisterAppService.swift */,
 				27B25C4C2C3AF50100864028 /* LoginAPIService.swift */,
-				27B25C4E2C3AFE4F00864028 /* APITask.swift */,
 				27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */,
 				2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */,
 				27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */,
