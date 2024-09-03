@@ -39,25 +39,23 @@ enum ApiTask: ApiTasking {
         var params: [String: String] = ["task": taskName]
         
         switch self {
-        case .login, .postScannedPoint: // forgot password and
+        case .login, .postScannedPoint:
             params.merge(appParams) { (_, new) in new }
         default:
             break
         }
         
-        // Add specific parameters based on the case
         switch self {
         case .login(let credentials, let location):
+            params.merge(credentials.params) { (_, new) in new }
             params.merge([
-                "user": credentials.username,
-                "pswd": credentials.password,
                 "lat": String(location.latitude),
                 "lng": String(location.longitude)
             ]) { (_, new) in new }
             
         case .postScannedPoint(let point):
             guard let location = point.location else {
-                return [:] // will throw error when sent to API, but that is a good thing
+                return [:]
             }
             let date = location.timestamp
             params.merge([
@@ -71,17 +69,11 @@ enum ApiTask: ApiTasking {
             ]) { (_, new) in new }
             
         case .renewPassword(let credentials):
-            params.merge([
-                "pin": credentials.pin,
-                "newPswd": credentials.newPassword,
-                "email": credentials.email
-            ]) { (_, new) in new }
+            params.merge(credentials.params) { (_, new) in new }
             
         case .registerUser(let credentials, let location):
+            params.merge(credentials.params) { (_, new) in new }
             params.merge([
-                "nick": credentials.username,
-                "email": credentials.email,
-                "pswd": credentials.password,
                 "lat": String(location.latitude),
                 "lng": String(location.longitude)
             ]) { (_, new) in new }

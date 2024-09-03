@@ -8,12 +8,6 @@
 import Foundation
 import Combine
 
-struct RegistrationCredentials {
-    let username: String
-    let email: String
-    let password: String
-}
-
 protocol RegistrationViewModelDelegate: AnyObject {
     func registrationDidSucceed()
     func registrationDidFail()

@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct LoginCredentials: Codable {
-    let username: String
-    let password: String
-}
-
 protocol HasLoginAPIService {
     var loginAPI: LoginAPIServicing { get }
 }

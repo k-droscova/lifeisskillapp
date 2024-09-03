@@ -106,6 +106,7 @@
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
 		276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */; };
 		276CA9D22C5E6D3D001D6394 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9D12C5E6D3D001D6394 /* RankView.swift */; };
+		27774B7B2C87A1CB00B968FA /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27774B7A2C87A1CB00B968FA /* Credentials.swift */; };
 		278174842C4BF96B00138376 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174832C4BF96B00138376 /* View.swift */; };
 		278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174872C4BFBB500138376 /* AssetFontFamily.swift */; };
 		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
@@ -317,6 +318,7 @@
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
 		276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankFlowCoordinator.swift; sourceTree = "<group>"; };
 		276CA9D12C5E6D3D001D6394 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
+		27774B7A2C87A1CB00B968FA /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		278174832C4BF96B00138376 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		278174872C4BFBB500138376 /* AssetFontFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
 		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				27066A8D2C4562320092B499 /* Points */,
 				27C6198C2C3AAA540067498F /* API */,
 				27C619922C3AAD260067498F /* User.swift */,
+				27774B7A2C87A1CB00B968FA /* Credentials.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1406,6 +1409,7 @@
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
 				271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */,
+				27774B7B2C87A1CB00B968FA /* Credentials.swift in Sources */,
 				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
 				273022332C624DBE00F9D572 /* LocationStatusBarViewModel.swift in Sources */,

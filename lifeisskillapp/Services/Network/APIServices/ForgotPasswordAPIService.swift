@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct ForgotPasswordCredentials: Codable {
-    let email: String
-    let newPassword: String
-    let pin: String
-}
-
 protocol HasForgotPasswordAPIService {
     var forgotPasswordAPI: ForgotPasswordAPIServicing { get }
 }
