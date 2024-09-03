@@ -2978,6 +2978,7 @@
       }
     },
     "register.success.button.web" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

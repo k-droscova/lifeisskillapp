@@ -79,8 +79,12 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
                 .headline3
             
             HStack(spacing: RegistrationViewConstants.consentToggleSpacing) {
-                Toggle("register.consent.gdpr", isOn: $viewModel.isGdprConfirmed)
-                Toggle("register.consent.rules", isOn: $viewModel.isConsentGiven)
+                Toggle(isOn: $viewModel.isGdprConfirmed) {
+                    Link(LocalizedStringKey("register.consent.gdpr"), destination: URL(string: APIUrl.gdprUrl)!)
+                }
+                Toggle(isOn: $viewModel.isConsentGiven) {
+                    Link(LocalizedStringKey("register.consent.rules"), destination: URL(string: APIUrl.rulesUrl)!)
+                }
             }
         }
         .padding(.horizontal, RegistrationViewConstants.consentTogglesPadding)
