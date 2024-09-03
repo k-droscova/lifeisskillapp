@@ -20,23 +20,25 @@ protocol UserManaging {
     var delegate: UserManagerFlowDelegate? { get set }
     
     // MARK: APP SETUP RELATED PROPERTIES
-    
     var isLoggedIn: Bool { get }
     var hasAppId: Bool { get }
     
     // MARK: LOGGED IN USER PROPERTIES FOR VIEWMODELS
-    
-    //var token: String? { get }
     var userName: String? { get }
     var userGender: UserGender? { get }
     
     func initializeAppId() async throws
-    func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData
-    func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool
+    // login/logout
     func login(credentials: LoginCredentials) async throws
     func logout()
     func forceLogout()
     func offlineLogout()
+    // password renewal
+    func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData
+    func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool
+    // registration
+    func checkUsernameAvailability(_ username: String) async throws -> Bool
+    func checkEmailAvailability(_ email: String) async throws -> Bool
 }
 
 final class UserManager: BaseClass, UserManaging {
@@ -48,6 +50,7 @@ final class UserManager: BaseClass, UserManaging {
     private var userDefaultsStorage: UserDefaultsStoraging
     private var storage: PersistentUserDataStoraging
     private let registerAppAPI: RegisterAppAPIServicing
+    private let registerUserAPI: RegisterUserAPIServicing
     private let loginAPI: LoginAPIServicing
     private let forgotPasswordAPI: ForgotPasswordAPIServicing
     private let networkMonitor: NetworkMonitoring
@@ -74,6 +77,7 @@ final class UserManager: BaseClass, UserManaging {
         self.logger = dependencies.logger
         self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.registerAppAPI = dependencies.registerAppAPI
+        self.registerUserAPI = dependencies.registerUserAPI
         self.loginAPI = dependencies.loginAPI
         self.forgotPasswordAPI = dependencies.forgotPasswordAPI
         self.storage = dependencies.storage
@@ -105,6 +109,18 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
+    }
+    
+    func checkUsernameAvailability(_ username: String) async throws -> Bool {
+        logger.log(message: "Checking availability for: \(username)")
+        let response = try await registerUserAPI.checkUsernameAvailability(username)
+        return response.data.isAvailable
+    }
+    
+    func checkEmailAvailability(_ email: String) async throws -> Bool {
+        logger.log(message: "Checking availability for: \(email)")
+        let response = try await registerUserAPI.checkEmailAvailability(email)
+        return response.data.isAvailable
     }
     
     func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData {

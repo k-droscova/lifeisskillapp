@@ -99,26 +99,32 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     // MARK: - Private Helpers
     
     private func validateUsername() {
-        if username.isEmpty {
-            usernameValidationState = UsernameValidationState.empty
-        } else if username.count < Username.minLength {
-            usernameValidationState = UsernameValidationState.short
-        } else if isUsernameTaken(username) {
-            usernameValidationState = UsernameValidationState.alreadyTaken
-        } else {
-            usernameValidationState = UsernameValidationState.valid
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            if self.username.isEmpty {
+                self.usernameValidationState = UsernameValidationState.empty
+            } else if self.username.count < Username.minLength {
+                self.usernameValidationState = UsernameValidationState.short
+            } else if await !self.isUsernameAvailable(self.username) {
+                self.usernameValidationState = UsernameValidationState.alreadyTaken
+            } else {
+                self.usernameValidationState = UsernameValidationState.valid
+            }
         }
     }
     
     private func validateEmail() {
-        if email.isEmpty {
-            emailValidationState = EmailValidationState.empty
-        } else if !isValidEmailFormat(email) {
-            emailValidationState = EmailValidationState.invalidFormat
-        } else if isEmailTaken(email) {
-            emailValidationState = EmailValidationState.alreadyTaken
-        } else {
-            emailValidationState = EmailValidationState.valid
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            if self.email.isEmpty {
+                self.emailValidationState = EmailValidationState.empty
+            } else if !self.isValidEmailFormat(email) {
+                self.emailValidationState = EmailValidationState.invalidFormat
+            } else if await !self.isEmailAvailable(email) {
+                self.emailValidationState = EmailValidationState.alreadyTaken
+            } else {
+                self.emailValidationState = EmailValidationState.valid
+            }
         }
     }
     
@@ -140,16 +146,22 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         }
     }
     
-    // TODO: implement api checks
-    private func isUsernameTaken(_ username: String) -> Bool {
-        let takenUsernames = ["user1", "user2", "takenUser"]
-        return takenUsernames.contains(username)
+    private func isUsernameAvailable(_ username: String) async -> Bool {
+        do {
+            return try await userManager.checkUsernameAvailability(username)
+        } catch {
+            logger.log(message: "Unable to check username \(username)")
+            return false // will result in error upon final registration, but enables smoother registration process
+        }
     }
     
-    // TODO: implement api checks
-    private func isEmailTaken(_ email: String) -> Bool {
-        let takenEmails = ["test@example.com", "user@example.com"]
-        return takenEmails.contains(email)
+    private func isEmailAvailable(_ email: String) async -> Bool {
+        do {
+            return try await userManager.checkEmailAvailability(email)
+        } catch {
+            logger.log(message: "Unable to check email \(email)")
+            return false // will result in error upon final registration, but enables smoother registration process
+        }
     }
     
     private func isValidEmailFormat(_ email: String) -> Bool {
