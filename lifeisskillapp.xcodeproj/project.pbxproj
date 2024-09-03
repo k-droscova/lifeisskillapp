@@ -117,6 +117,9 @@
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
 		27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4E2C3AFE4F00864028 /* APITask.swift */; };
+		27B5DEFC2C870FFF003B9AEE /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */; };
+		27B5DEFE2C871032003B9AEE /* ValidationStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFD2C871032003B9AEE /* ValidationStates.swift */; };
+		27B5DF002C871090003B9AEE /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFF2C871090003B9AEE /* RegistrationView.swift */; };
 		27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */; };
 		27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6194D2C36E6000067498F /* HttpStatusCode.swift */; };
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
@@ -323,6 +326,9 @@
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
 		27B25C4E2C3AFE4F00864028 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
+		27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		27B5DEFD2C871032003B9AEE /* ValidationStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStates.swift; sourceTree = "<group>"; };
+		27B5DEFF2C871090003B9AEE /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIService.swift; sourceTree = "<group>"; };
 		27C6194D2C36E6000067498F /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
@@ -688,6 +694,7 @@
 		27274FB62C3322A1003453E2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				27B5DEFA2C870FEF003B9AEE /* Registration */,
 				271303412C7C8D550005FC46 /* ForgotPassword */,
 				275457132C332DAB00F3B55A /* LoginView.swift */,
 				275457152C332DB400F3B55A /* LoginViewModel.swift */,
@@ -947,6 +954,16 @@
 				2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */,
 			);
 			path = MapComponent;
+			sourceTree = "<group>";
+		};
+		27B5DEFA2C870FEF003B9AEE /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				27B5DEFF2C871090003B9AEE /* RegistrationView.swift */,
+				27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */,
+				27B5DEFD2C871032003B9AEE /* ValidationStates.swift */,
+			);
+			path = Registration;
 			sourceTree = "<group>";
 		};
 		27C619502C36E69C0067498F /* Mappers */ = {
@@ -1323,6 +1340,7 @@
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
 				276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */,
+				27B5DEFE2C871032003B9AEE /* ValidationStates.swift in Sources */,
 				2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
 				271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */,
@@ -1371,6 +1389,7 @@
 				271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */,
 				2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */,
 				27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */,
+				27B5DF002C871090003B9AEE /* RegistrationView.swift in Sources */,
 				27540E4F2C70D943005A0B49 /* MapViewComponent.swift in Sources */,
 				27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
@@ -1411,6 +1430,7 @@
 				27E9D6112C63EC010098CB96 /* Repository.swift in Sources */,
 				27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */,
 				274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */,
+				27B5DEFC2C870FFF003B9AEE /* RegistrationViewModel.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
 				271303482C7C8DE90005FC46 /* EnterPinView.swift in Sources */,

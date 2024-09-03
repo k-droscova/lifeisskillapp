@@ -15,3 +15,7 @@ enum Password {
     static let pinValidityTime = 15.0 // in minutes
     #endif
 }
+
+enum Username {
+    static let minLength = 4
+}
