@@ -93,13 +93,13 @@ enum ApiTask: ApiTasking {
     private var taskName: String {
         switch self {
         case .login:
-            return "login"
+            "login"
         case .postScannedPoint:
-            return "userPoints"
+            "userPoints"
         case .renewPassword:
-            return "renewPswd"
+            "renewPswd"
         case .registerUser:
-            return "registerNewUser"
+            "registerNewUser"
         }
     }
     
