@@ -228,3 +228,29 @@ struct ForgotPasswordConfirmation: DataProtocol {
         message = try container.decode(Bool.self, forKey: .message)
     }
 }
+
+struct UsernameAvailabilityResponse: DataProtocol {
+    let isAvailable: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isAvailable = "isNickAvailable"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
+    }
+}
+
+struct EmailAvailabilityResponse: DataProtocol {
+    let isAvailable: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isAvailable = "isEmailAvailable"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
+    }
+}

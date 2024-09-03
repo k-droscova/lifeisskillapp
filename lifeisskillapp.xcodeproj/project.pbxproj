@@ -121,6 +121,7 @@
 		27B5DEFE2C871032003B9AEE /* ValidationStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFD2C871032003B9AEE /* ValidationStates.swift */; };
 		27B5DF002C871090003B9AEE /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFF2C871090003B9AEE /* RegistrationView.swift */; };
 		27B5DF022C871C85003B9AEE /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DF012C871C85003B9AEE /* Alert.swift */; };
+		27B5DF042C872938003B9AEE /* RegisterUserAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */; };
 		27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */; };
 		27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6194D2C36E6000067498F /* HttpStatusCode.swift */; };
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
@@ -331,6 +332,7 @@
 		27B5DEFD2C871032003B9AEE /* ValidationStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStates.swift; sourceTree = "<group>"; };
 		27B5DEFF2C871090003B9AEE /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		27B5DF012C871C85003B9AEE /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserAPIService.swift; sourceTree = "<group>"; };
 		27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIService.swift; sourceTree = "<group>"; };
 		27C6194D2C36E6000067498F /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
@@ -1041,6 +1043,7 @@
 				27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */,
 				2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */,
 				27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */,
+				27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */,
 			);
 			path = APIServices;
 			sourceTree = "<group>";
@@ -1430,6 +1433,7 @@
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
 				2713034A2C7C8E160005FC46 /* EnterEmailView.swift in Sources */,
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
+				27B5DF042C872938003B9AEE /* RegisterUserAPIService.swift in Sources */,
 				27E9D6112C63EC010098CB96 /* Repository.swift in Sources */,
 				27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */,
 				274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */,
