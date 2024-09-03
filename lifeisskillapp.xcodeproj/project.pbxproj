@@ -120,6 +120,7 @@
 		27B5DEFC2C870FFF003B9AEE /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */; };
 		27B5DEFE2C871032003B9AEE /* ValidationStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFD2C871032003B9AEE /* ValidationStates.swift */; };
 		27B5DF002C871090003B9AEE /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DEFF2C871090003B9AEE /* RegistrationView.swift */; };
+		27B5DF022C871C85003B9AEE /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DF012C871C85003B9AEE /* Alert.swift */; };
 		27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */; };
 		27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6194D2C36E6000067498F /* HttpStatusCode.swift */; };
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
@@ -329,6 +330,7 @@
 		27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		27B5DEFD2C871032003B9AEE /* ValidationStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStates.swift; sourceTree = "<group>"; };
 		27B5DEFF2C871090003B9AEE /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		27B5DF012C871C85003B9AEE /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIService.swift; sourceTree = "<group>"; };
 		27C6194D2C36E6000067498F /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 				27187B662C57D866003D22C6 /* Buttons.swift */,
 				27F528FD2C5A6FB50042F537 /* UIAssetEnums.swift */,
 				2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */,
+				27B5DF012C871C85003B9AEE /* Alert.swift */,
 			);
 			path = AppUI;
 			sourceTree = "<group>";
@@ -1460,6 +1463,7 @@
 				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,
+				27B5DF022C871C85003B9AEE /* Alert.swift in Sources */,
 				27F528FE2C5A6FB50042F537 /* UIAssetEnums.swift in Sources */,
 				27E9D6222C63FE7E0098CB96 /* RealmDependencies.swift in Sources */,
 				27E32DE82C493BF900E69C58 /* UserDataManager.swift in Sources */,

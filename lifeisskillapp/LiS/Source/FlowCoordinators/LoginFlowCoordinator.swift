@@ -65,8 +65,13 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
 
 extension LoginFlowCoordinator: LoginFlowDelegate {
     func registerTapped() {
-        print("Register Tapped")
+        let vm = RegistrationViewModel(dependencies: appDependencies, delegate: self)
+        let vc = RegistrationView(viewModel: vm).hosting()
+        vc.modalPresentationStyle = .formSheet
+        vc.presentationController?.delegate = self
+        present(vc, animated: true)
     }
+    
     func forgotPasswordTapped() {
         let forgetPasswordVM = ForgotPasswordViewModel(dependencies: appDependencies)
         let forgetPasswordFC = ForgotPasswordFlowCoordinator(delegate: self, viewModel: forgetPasswordVM)
@@ -106,9 +111,35 @@ extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
         returnToLogin()
         showAlert(titleKey: "forgot_password.alert.success.title", messageKey: "forgot_password.alert.success.message")
     }
-
+    
     func returnToLogin() {
         dismiss()
         reload()
+    }
+}
+
+extension LoginFlowCoordinator: RegistrationViewModelDelegate {
+    func registrationDidSucceed() {
+        dismiss()
+        
+        let visitLisWebsiteAction = UIAlertAction(
+            title: NSLocalizedString("register.success.button.web", comment: ""),
+            style: .default)
+        { _ in
+            if let url = URL(string: APIUrl.registrationURL) { // Replace with your desired URL
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+        
+        let okAction = Alert.okAction()
+        
+        showAlert(titleKey: "register.success.title", 
+                  messageKey: "register.success.message",
+                  actions: [visitLisWebsiteAction, okAction]
+        )
+    }
+    
+    func registrationDidFail() {
+        showAlert(titleKey: "register.error.title", messageKey: "register.error.message")
     }
 }

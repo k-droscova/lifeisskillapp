@@ -19,7 +19,7 @@ protocol RegistrationViewModelDelegate: AnyObject {
     func registrationDidFail()
 }
 
-protocol RegistrationViewModeling: ObservableObject {
+protocol RegistrationViewModeling: BaseClass, ObservableObject {
     var delegate: RegistrationViewModelDelegate? { get set }
     
     var username: String { get set }
@@ -38,7 +38,7 @@ protocol RegistrationViewModeling: ObservableObject {
     func submitRegistration()
 }
 
-class RegistrationViewModel: ObservableObject, RegistrationViewModeling {
+class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeling {
     typealias Dependencies = HasLoggers & HasUserManager
     
     // MARK: - Private Properties
@@ -153,8 +153,7 @@ class RegistrationViewModel: ObservableObject, RegistrationViewModeling {
     }
     
     private func isValidEmailFormat(_ email: String) -> Bool {
-        let emailRegEx = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
-        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        let emailPred = NSPredicate(format: "SELF MATCHES %@", Email.emailPattern)
         return emailPred.evaluate(with: email)
     }
     

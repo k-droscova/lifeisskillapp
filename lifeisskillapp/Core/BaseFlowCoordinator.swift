@@ -57,10 +57,11 @@ extension BaseFlowCoordinator {
     // MARK: - Presenting Alerts
     
     func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)? = nil) {
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            completion?()
-        }
-        showAlert(titleKey: titleKey, messageKey: messageKey, actions: [okAction])
+        showAlert(
+            titleKey: titleKey,
+            messageKey: messageKey,
+            actions: [Alert.okAction(completion: completion)]
+        )
     }
     
     func showAlert(titleKey: String, messageKey: String, actions: [UIAlertAction]) {
