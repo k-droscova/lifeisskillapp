@@ -646,6 +646,12 @@
     "forgot_password.alert.pin_error.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nevalidní pin"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
