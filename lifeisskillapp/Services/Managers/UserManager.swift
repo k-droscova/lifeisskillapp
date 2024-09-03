@@ -39,7 +39,7 @@ protocol UserManaging {
     // registration
     func checkUsernameAvailability(_ username: String) async throws -> Bool
     func checkEmailAvailability(_ email: String) async throws -> Bool
-    func registerUser(credentials: RegistrationCredentials) async throws
+    func registerUser(credentials: NewRegistrationCredentials) async throws
 }
 
 final class UserManager: BaseClass, UserManaging {
@@ -124,7 +124,7 @@ final class UserManager: BaseClass, UserManaging {
         return response.data.isAvailable
     }
     
-    func registerUser(credentials: RegistrationCredentials) async throws {
+    func registerUser(credentials: NewRegistrationCredentials) async throws {
         logger.log(message: "Registering User: " + credentials.username)
         do {
             let _ = try await registerUserAPI.registerUser(credentials: credentials, location: locationManager.location)

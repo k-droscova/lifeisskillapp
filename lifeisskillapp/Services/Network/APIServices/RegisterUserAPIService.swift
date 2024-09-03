@@ -14,7 +14,7 @@ protocol HasRegisterUserAPIService {
 protocol RegisterUserAPIServicing {
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse>
     func checkEmailAvailability(_ email: String) async throws -> APIResponse<EmailAvailabilityResponse>
-    func registerUser(credentials: RegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse>
+    func registerUser(credentials: NewRegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse>
 }
 
 public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
@@ -42,7 +42,7 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
         )
     }
     
-    func registerUser(credentials: RegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse> {
+    func registerUser(credentials: NewRegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse> {
         guard let location else {
             throw BaseError(
                 context: .location,

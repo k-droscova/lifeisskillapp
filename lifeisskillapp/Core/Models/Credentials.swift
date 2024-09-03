@@ -23,7 +23,7 @@ struct LoginCredentials: Codable, Credentials {
     }
 }
 
-struct RegistrationCredentials: Credentials {
+struct NewRegistrationCredentials: Credentials {
     let username: String
     let email: String
     let password: String

@@ -15,7 +15,7 @@ enum ApiTask: ApiTasking {
     case login(credentials: LoginCredentials, location: UserLocation)
     case postScannedPoint(point: ScannedPoint)
     case renewPassword(credentials: ForgotPasswordCredentials)
-    case registerUser(credentials: RegistrationCredentials, location: UserLocation)
+    case registerUser(credentials: NewRegistrationCredentials, location: UserLocation)
     
     // MARK: - Public Interface
     

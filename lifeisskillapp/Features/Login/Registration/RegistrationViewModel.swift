@@ -180,7 +180,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
                 self.delegate?.registrationDidFail()
                 return
             }
-            let credentials = RegistrationCredentials(username: username, email: email, password: password)
+            let credentials = NewRegistrationCredentials(username: username, email: email, password: password)
             do {
                 try await self.userManager.registerUser(credentials: credentials)
                 self.delegate?.registrationDidSucceed()
