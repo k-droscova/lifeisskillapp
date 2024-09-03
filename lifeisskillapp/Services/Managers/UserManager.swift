@@ -95,7 +95,7 @@ final class UserManager: BaseClass, UserManaging {
         }
         do {
             logger.log(message: "Initializing App Id")
-            let response = try await registerAppAPI.registerApp(baseURL: APIUrl.baseURL)
+            let response = try await registerAppAPI.registerApp()
             let responseAppId = response.data.appId
             userDefaultsStorage.appId = responseAppId
         } catch {
@@ -110,7 +110,7 @@ final class UserManager: BaseClass, UserManaging {
     func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData {
         do {
             logger.log(message: "Requesting Pin for \(username)")
-            let response = try await forgotPasswordAPI.fetchPin(username: username, baseURL: APIUrl.baseURL)
+            let response = try await forgotPasswordAPI.fetchPin(username: username)
             return response.data
         } catch {
             throw BaseError(
@@ -124,7 +124,7 @@ final class UserManager: BaseClass, UserManaging {
     func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool {
         do {
             logger.log(message: "New password for User: " + credentials.email)
-            let response = try await forgotPasswordAPI.setNewPassword(credentials: credentials, baseURL: APIUrl.baseURL)
+            let response = try await forgotPasswordAPI.setNewPassword(credentials: credentials)
             return response.data.message
         } catch {
             throw BaseError(
@@ -206,7 +206,7 @@ final class UserManager: BaseClass, UserManaging {
     
     private func performOnlineLogin(credentials: LoginCredentials) async throws {
         do {
-            let response = try await loginAPI.login(credentials: credentials, location: locationManager.location, baseURL: APIUrl.baseURL)
+            let response = try await loginAPI.login(credentials: credentials, location: locationManager.location)
             let loggedInUser = response.data.user
             
             // check if there is existing user in realm

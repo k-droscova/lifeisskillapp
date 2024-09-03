@@ -71,7 +71,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Fetching user categories")
-        let response = try await userDataAPIService.getUserCategory(baseURL: APIUrl.baseURL, userToken: token)
+        let response = try await userDataAPIService.userCategories(userToken: token)
         try await storage.saveUserCategoryData(response.data)
         _data = response.data
         if selectedCategory == nil {

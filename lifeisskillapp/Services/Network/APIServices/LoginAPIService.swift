@@ -17,39 +17,39 @@ protocol HasLoginAPIService {
 }
 
 protocol LoginAPIServicing: APITasking {
-    func login(credentials: LoginCredentials, location: UserLocation?, baseURL: URL) async throws -> APIResponse<LoginAPIResponse>
+    func login(credentials: LoginCredentials, location: UserLocation?) async throws -> APIResponse<LoginAPIResponse>
 }
 
 public final class LoginAPIService: BaseClass, LoginAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
-    private var loggerService: LoggerServicing
     private var network: Networking
+    private var logger: LoggerServicing
     let task = ApiTask.login
     
     init(dependencies: Dependencies) {
-        self.loggerService = dependencies.logger
         self.network = dependencies.network
+        self.logger = dependencies.logger
     }
     
-    func login(credentials: LoginCredentials, location: UserLocation?, baseURL: URL) async throws -> APIResponse<LoginAPIResponse> {
+    func login(credentials: LoginCredentials, location: UserLocation?) async throws -> APIResponse<LoginAPIResponse> {
         guard let location else {
             throw BaseError(
                 context: .location,
                 message: "User Location Required for login",
-                logger: loggerService
+                logger: logger
             )
         }
-        let endpoint = Endpoint.login
-        let headers = endpoint.headers(token: APIHeader.Authorization)
+        
         let data = try encodeParams(credentials: credentials, location: location)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+        
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: Endpoint.login,
             method: .POST,
-            headers: headers,
             body: data,
             sensitiveRequestBodyData: true,
-            errorObject: APIResponseError.self)
+            errorObject: APIResponseError.self
+        )
     }
     
     private func encodeParams(credentials: LoginCredentials, location: UserLocation) throws -> Data {
@@ -67,54 +67,9 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
                 context: .system,
                 message: "Could not encode login params",
                 code: .general(.jsonEncoding),
-                logger: loggerService
+                logger: logger
             )
         }
         return jsonData
-    }
-}
-
-extension LoginAPIService {
-    enum Endpoint: CaseIterable {
-        case login
-        
-        var path: String {
-            switch self {
-            case .login: "/login"
-            }
-        }
-        
-        var typeHeaders: [String: String] {
-            switch self {
-            case .login:
-                ["accept": "application/json"]
-            }
-        }
-        
-        func headers(headers: [String: String]? = nil, token: String? = nil) -> [String: String] {
-            var finalHeaders = typeHeaders
-            if let headers {
-                finalHeaders.merge(headers) { (current, _) in current }
-            }
-            let apiHeader = Network.apiKeyHeader(apiKey: APIHeader.ApiKey)
-            finalHeaders[apiHeader.key] = apiHeader.val
-            if let token {
-                let authHeader = Network.authorizationHeader(token: token)
-                finalHeaders[authHeader.key] = authHeader.val
-            }
-            return finalHeaders
-        }
-        
-        func urlWithPath(base: URL, logger: LoggerServicing) throws -> URL {
-            let finalURLString = base.absoluteString + path
-            guard let url = URL(string: finalURLString) else {
-                throw BaseError(
-                    context: .network,
-                    message: "Invalid URL",
-                    logger: logger
-                )
-            }
-            return url
-        }
     }
 }
