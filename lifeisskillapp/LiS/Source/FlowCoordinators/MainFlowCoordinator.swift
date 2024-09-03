@@ -186,7 +186,7 @@ extension MainFlowCoordinator: HomeFlowCoordinatorDelegate, PointsFlowCoordinato
 extension MainFlowCoordinator: SettingsBarFlowDelegate {
     func logoutPressedWhileOffline() {
         let okAction = UIAlertAction(
-            title: NSLocalizedString("alert.button.ok", comment: ""),
+            title: "OK",
             style: .default
         ) { _ in
             appDependencies.userManager.offlineLogout()
