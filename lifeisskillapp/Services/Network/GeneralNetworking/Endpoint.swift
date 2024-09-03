@@ -21,78 +21,78 @@ enum Endpoint: Endpointing {
     case login
     case usercategory, userpoints, rank, events, messages, points
     case sponsorImage(sponsorId: String, width: Int, height: Int)
-    
+
     var path: String {
         switch self {
         case .resetPassword(let action):
             switch action {
             case .request(let username):
-                return "/pswd/?user=\(username)"
+                "/pswd/?user=\(username)"
             case .confirm:
-                return "/pswd"
+                "/pswd"
             }
-            
+
         case .registration(let action):
             switch action {
             case .checkUsernameAvailability(let username):
-                return "/nick/\(username)/check"
+                "/nick/\(username)/check"
             case .checkEmailAvailability(let email):
-                return "/email/\(email)/check"
+                "/email/\(email)/check"
             case .registerUser:
-                return "/users"
+                "/users"
             }
-            
+
         case .appId:
-            return "/appid"
+            "/appid"
         case .login:
-            return "/login"
+            "/login"
         case .usercategory:
-            return "/usercategory"
+            "/usercategory"
         case .userpoints:
-            return "/userpoints"
+            "/userpoints"
         case .rank:
-            return "/rank"
+            "/rank"
         case .events:
-            return "/events"
+            "/events"
         case .messages:
-            return "/messages"
+            "/messages"
         case .points:
-            return "/points"
+            "/points"
         case .sponsorImage(let sponsorId, let width, let height):
-            return "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
+            "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
         }
     }
-    
+
     var typeHeaders: [String: String] {
         switch self {
         case .sponsorImage:
-            return ["accept": "image/png"]
+            ["accept": "image/png"]
         default:
-            return ["accept": "application/json"]
+            ["accept": "application/json"]
         }
     }
-    
+
     var isUserTokenRequired: Bool {
         switch self {
         case .resetPassword, .registration, .appId, .login:
-            return false
+            false
         case .usercategory, .userpoints, .rank, .events, .messages, .points, .sponsorImage:
-            return true
+            true
         }
     }
-    
+
     func headers(userToken: String? = nil) -> [String: String] {
         var finalHeaders = typeHeaders
-        
+
         // Conditionally add the User-Token header if required
         if isUserTokenRequired, let userToken = userToken {
             let userHeader = APIHeader.apiTokenHeader(token: userToken)
             finalHeaders[userHeader.key] = userHeader.val
         }
-        
+
         return finalHeaders
     }
-    
+
     func urlWithPath() throws -> URL {
         let finalURLString = APIUrl.base + path
         guard let url = URL(string: finalURLString) else {
