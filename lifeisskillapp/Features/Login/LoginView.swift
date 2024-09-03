@@ -20,6 +20,9 @@ struct LoginView<ViewModel: LoginViewModeling>: View {
         .onAppear {
             viewModel.onAppear()
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
         .overlay(
             Group {
                 if viewModel.isLoading {

@@ -17,6 +17,9 @@ struct EnterPinView<ViewModel: ForgotPasswordViewModeling>: View {
             contentView
         }
         .padding(.top, ForgotPasswordPagesConstants.topPadding)
+        .onTapGesture {
+            hideKeyboard()
+        }
         .overlay(
             Group {
                 if viewModel.isLoading {

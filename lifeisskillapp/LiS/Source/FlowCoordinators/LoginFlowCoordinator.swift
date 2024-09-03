@@ -121,22 +121,7 @@ extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
 extension LoginFlowCoordinator: RegistrationViewModelDelegate {
     func registrationDidSucceed() {
         dismiss()
-        
-        let visitLisWebsiteAction = UIAlertAction(
-            title: NSLocalizedString("register.success.button.web", comment: ""),
-            style: .default)
-        { _ in
-            if let url = URL(string: APIUrl.registrationURL) { // Replace with your desired URL
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
-        
-        let okAction = Alert.okAction()
-        
-        showAlert(titleKey: "register.success.title", 
-                  messageKey: "register.success.message",
-                  actions: [visitLisWebsiteAction, okAction]
-        )
+        showAlert(titleKey: "register.success.title", messageKey: "register.success.message")
     }
     
     func registrationDidFail() {
