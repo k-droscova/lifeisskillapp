@@ -46,7 +46,7 @@ enum UsernameValidationState: BaseValidationState {
         case .alreadyTaken:
             return "register.validation.username.taken"
         case .short:
-            return LocalizedStringKey(String(format: NSLocalizedString("register.validation.username.short", comment: ""), String(Constants.usernameMinLength)))
+            return LocalizedStringKey(String(format: NSLocalizedString("register.validation.username.short", comment: ""), String(Username.minLength)))
         default:
             return nil
         }
@@ -81,7 +81,7 @@ enum PasswordValidationState: BaseValidationState {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case .invalidFormat:
-            return LocalizedStringKey(String(format: NSLocalizedString("register.validation.password.format", comment: ""), String(Constants.passwordMinLength)))
+            return LocalizedStringKey(String(format: NSLocalizedString("register.validation.password.format", comment: ""), String(Password.minLenght)))
         default:
             return nil
         }

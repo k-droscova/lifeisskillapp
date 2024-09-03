@@ -39,6 +39,8 @@ struct EnablingButtonStyle: ButtonStyle {
             .padding()
             .padding(.horizontal, 20)
             .background(isEnabled ? enabledColor : disabledColor)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
 

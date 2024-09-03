@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " " : {
+
+    },
     "%@:" : {
       "localizations" : {
         "cs" : {
@@ -2287,6 +2290,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2830,6 +2834,9 @@
         }
       }
     },
+    "register.button" : {
+
+    },
     "register.button.cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2921,6 +2928,18 @@
           }
         }
       }
+    },
+    "register.consent" : {
+
+    },
+    "register.consent.gdpr" : {
+
+    },
+    "register.consent.rules" : {
+
+    },
+    "register.email" : {
+
     },
     "register.error.age.old" : {
       "extractionState" : "manual",
@@ -3612,6 +3631,12 @@
         }
       }
     },
+    "register.password" : {
+
+    },
+    "register.password_confirm" : {
+
+    },
     "register.success.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3680,6 +3705,30 @@
           }
         }
       }
+    },
+    "register.username" : {
+
+    },
+    "register.validation.email.format" : {
+
+    },
+    "register.validation.email.taken" : {
+
+    },
+    "register.validation.empty" : {
+
+    },
+    "register.validation.password.format" : {
+
+    },
+    "register.validation.password.mismatch" : {
+
+    },
+    "register.validation.username.short" : {
+
+    },
+    "register.validation.username.taken" : {
+
     },
     "settings.field.account.title" : {
       "extractionState" : "manual",
