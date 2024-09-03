@@ -19,8 +19,8 @@ enum Endpoint: Endpointing {
     case login
     case usercategory, userpoints, rank, events, messages, points
     case sponsorImage(sponsorId: String, width: Int, height: Int)
-    case request(username: String)
-    case confirm
+    case resetPasswordRequest(username: String)
+    case resetPasswordConfirm
     
     var path: String {
         switch self {
@@ -42,9 +42,9 @@ enum Endpoint: Endpointing {
             "/points"
         case .sponsorImage(let sponsorId, let width, let height):
             "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
-        case .request(let username):
+        case .resetPasswordRequest(let username):
             "/pswd/?user=\(username)"
-        case .confirm:
+        case .resetPasswordConfirm:
             "/pswd"
         }
     }
@@ -60,7 +60,7 @@ enum Endpoint: Endpointing {
     
     var isUserTokenRequired: Bool {
         switch self {
-        case .appId, .login, .request, .confirm:
+        case .appId, .login, .resetPasswordRequest, .resetPasswordConfirm:
             false
         case .usercategory, .userpoints, .rank, .events, .messages, .points, .sponsorImage:
             true

@@ -41,11 +41,10 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
             )
         }
         
-        let endpoint = Endpoint.login
         let data = try encodeParams(credentials: credentials, location: location)
         
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: endpoint,
+            endpoint: Endpoint.login,
             method: .POST,
             body: data,
             sensitiveRequestBodyData: true,

@@ -35,9 +35,8 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userPoints() async throws -> APIResponse<CheckSumUserPointsData> {
-        let endpoint = Endpoint.userpoints
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: endpoint,
+            endpoint: Endpoint.userpoints,
             method: .PATCH,
             errorObject: APIResponseError.self,
             userToken: token
@@ -45,9 +44,8 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userRank() async throws -> APIResponse<CheckSumRankData> {
-        let endpoint = Endpoint.rank
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: endpoint,
+            endpoint: Endpoint.rank,
             method: .PATCH,
             errorObject: APIResponseError.self,
             userToken: token
@@ -55,9 +53,8 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userEvents() async throws -> APIResponse<CheckSumEventsData> {
-        let endpoint = Endpoint.events
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: endpoint,
+            endpoint: Endpoint.events,
             method: .PATCH,
             errorObject: APIResponseError.self,
             userToken: token
@@ -65,9 +62,8 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userMessages() async throws -> APIResponse<CheckSumMessagesData> {
-        let endpoint = Endpoint.messages
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: endpoint,
+            endpoint: Endpoint.messages,
             method: .PATCH,
             errorObject: APIResponseError.self,
             userToken: token
@@ -75,9 +71,8 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func genericPoints() async throws -> APIResponse<CheckSumPointsData> {
-        let endpoint = Endpoint.points
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: endpoint,
+            endpoint: Endpoint.points,
             method: .PATCH,
             errorObject: APIResponseError.self,
             userToken: token
