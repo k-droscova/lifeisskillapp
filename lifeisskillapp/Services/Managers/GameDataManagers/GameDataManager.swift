@@ -19,14 +19,12 @@ protocol HasGameDataManager {
 }
 
 enum DataType: CaseIterable {
+    // MARK: - be careful if adding new endpoint, ensure that hasCheckSumEndpoint returns correct value
     case userPoints, categories, ranks, messages, events, genericPoints
+    
     var hasCheckSumEndpoint: Bool {
-        switch self {
-        case .categories:
-            false
-        default:
-            true
-        }
+        guard case .categories = self else { return true }
+        return false
     }
 }
 
