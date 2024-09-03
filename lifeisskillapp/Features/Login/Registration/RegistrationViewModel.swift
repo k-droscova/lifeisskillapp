@@ -157,12 +157,16 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     }
     
     private func isEmailAvailable(_ email: String) async -> Bool {
+#if DEBUG
+        return true
+#else
         do {
             return try await userManager.checkEmailAvailability(email)
         } catch {
             logger.log(message: "Unable to check email \(email)")
             return false // will result in error upon final registration, but enables smoother registration process
         }
+#endif
     }
     
     private func isValidEmailFormat(_ email: String) -> Bool {

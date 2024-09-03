@@ -2999,19 +2999,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "První část registrace byla úspěšná. Pro dokončení celé registrace přejděte na webové stránky LiS. Bez plné registrace můžete stále skenovat body, ale funkce jsou omezené. Plnou registraci musíte dokončit do 30 dnů."
+            "value" : "První část registrace byla úspěšná. Budeš se moct přihlásit, jakmile si aktivuješ svůj účet prostřednictvím odkazu ve svém e-mailu. Pro dokončení plné registrace choď na web LiS. Stále můžeš skenovat body bez plné registrace, ale funkce jsou omezené. Plnou registraci musíš dokončit do 30 dnů."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der erste Teil der Registrierung war erfolgreich. Um die vollständige Registrierung abzuschließen, gehen Sie auf die LiS-Website. Sie können weiterhin Punkte scannen, ohne die vollständige Registrierung abzuschließen, aber die Funktionen sind eingeschränkt. Sie müssen die vollständige Registrierung innerhalb von 30 Tagen abschließen."
+            "value" : "Der erste Teil der Registrierung war erfolgreich. Sie können sich einloggen, sobald Sie Ihr Konto über den Link in Ihrer E-Mail aktiviert haben. Um die vollständige Registrierung abzuschließen, besuchen Sie die LiS-Website. Sie können weiterhin Punkte scannen, ohne die vollständige Registrierung abgeschlossen zu haben, aber die Funktionen sind eingeschränkt. Sie müssen die vollständige Registrierung innerhalb von 30 Tagen abschließen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "First part of registration was succcessful. To complete full registration, go the LiS website. You can still scan points without full registration, but the functionalities are limited. You must complete full registration within 30 days."
+            "value" : "First part of registration was succcessful. You will be able to login once you activate your account through link in your email. To complete full registration, go the LiS website. You can still scan points without full registration, but the functionalities are limited. You must complete full registration within 30 days."
           }
         }
       }
