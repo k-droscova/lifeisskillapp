@@ -12,127 +12,81 @@ protocol HasUserDataAPIService {
 }
 
 protocol UserDataAPIServicing: APITasking {
-    func getUserCategory(baseURL: URL, userToken: String) async throws -> APIResponse<UserCategoryData>
-    
-    func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<UserPointData>
-    
-    func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<UserRankData>
-    /*
-     func getEvents(baseURL: URL) async throws -> APIResponse<CheckSumEventsData>
-     
-     func getMessages(baseURL: URL) async throws -> APIResponse<CheckSumMessagesData>
-     */
-    func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<GenericPointData>
-    
-    func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData>
-    
-    func getSponsorImage(baseURL: URL, userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data
+    func userCategories(userToken: String) async throws -> APIResponse<UserCategoryData>
+    func userPoints(userToken: String) async throws -> APIResponse<UserPointData>
+    func userRanks(userToken: String) async throws -> APIResponse<UserRankData>
+    func genericPoints(userToken: String) async throws -> APIResponse<GenericPointData>
+    func updateUserPoints(userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData>
+    func sponsorImage(userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data
 }
 
 public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
-    private let loggerService: LoggerServicing
     private let network: Networking
+    private let logger: LoggerServicing
+    
     var task = ApiTask.userPoints
     
     init(dependencies: Dependencies) {
-        self.loggerService = dependencies.logger
         self.network = dependencies.network
+        self.logger = dependencies.logger
     }
     
-    func getUserPoints(baseURL: URL, userToken: String) async throws -> APIResponse<UserPointData> {
+    func userPoints(userToken: String) async throws -> APIResponse<UserPointData> {
         let endpoint = Endpoint.userpoints
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .GET,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            errorObject: APIResponseError.self)
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
+            errorObject: APIResponseError.self,
+            userToken: userToken
+        )
     }
     
-    func getUserCategory(baseURL: URL, userToken: String) async throws -> APIResponse<UserCategoryData> {
+    func userCategories(userToken: String) async throws -> APIResponse<UserCategoryData> {
         let endpoint = Endpoint.usercategory
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .GET,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            errorObject: APIResponseError.self)
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
+            errorObject: APIResponseError.self,
+            userToken: userToken
+        )
     }
     
-    func getRank(baseURL: URL, userToken: String) async throws -> APIResponse<UserRankData> {
+    func userRanks(userToken: String) async throws -> APIResponse<UserRankData> {
         let endpoint = Endpoint.rank
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .GET,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            errorObject: APIResponseError.self)
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
+            errorObject: APIResponseError.self,
+            userToken: userToken
+        )
     }
-    /*
-     func getEvents(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumEventsData> {
-     let endpoint = Endpoint.events
-     let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)
-     return try await network.performRequestWithDataDecoding(
-     url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-     method: .GET,
-     headers: headers,
-     sensitiveRequestBodyData: false,
-     sensitiveResponseData: false,
-     errorObject: APIResponseError.self)
-     }
-     
-     func getMessages(baseURL: URL, userToken: String) async throws -> APIResponse<CheckSumMessagesData> {
-     let endpoint = Endpoint.messages
-     let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userManager.token)
-     return try await network.performRequestWithDataDecoding(
-     url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-     method: .GET,
-     headers: headers,
-     sensitiveRequestBodyData: false,
-     sensitiveResponseData: false,
-     errorObject: APIResponseError.self)
-     }
-     */
-    func getPoints(baseURL: URL, userToken: String) async throws -> APIResponse<GenericPointData> {
+    
+    func genericPoints(userToken: String) async throws -> APIResponse<GenericPointData> {
         let endpoint = Endpoint.points
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
-            method: .GET,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            errorObject: APIResponseError.self)
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
+            errorObject: APIResponseError.self,
+            userToken: userToken
+        )
     }
     
-    func postUserPoints(baseURL: URL, userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData> {
+    func updateUserPoints(userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData> {
         let endpoint = Endpoint.userpoints
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        task = ApiTask.userPoints
         let data = try encodeParams(point: point)
-        return try await network.performRequestWithDataDecoding(
-            url: try endpoint.urlWithPath(base: baseURL, logger: loggerService),
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: endpoint,
             method: .POST,
-            headers: headers,
             body: data,
-            sensitiveRequestBodyData: true,
-            errorObject: APIResponseError.self)
+            errorObject: APIResponseError.self,
+            userToken: userToken
+        )
     }
     
-    func getSponsorImage(baseURL: URL, userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data {
+    func sponsorImage(userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data {
         let endpoint = Endpoint.sponsorImage(sponsorId: sponsorId, width: width, height: height)
-        let headers = endpoint.headers(authToken: APIHeader.Authorization, userToken: userToken)
-        let url = try endpoint.urlWithPath(base: baseURL, logger: loggerService)
-        return try await network.performRequestWithoutDataDecoding(
-            url: url,
-            method: .GET,
-            headers: headers,
-            sensitiveRequestBodyData: false,
-            errorObject: APIResponseError.self
+        return try await network.performAuthorizedRequestWithoutDataDecoding(
+            endpoint: endpoint,
+            errorObject: APIResponseError.self,
+            userToken: userToken
         )
     }
     
@@ -146,7 +100,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
                 context: .system,
                 message: "Point is missing location",
                 code: .general(.missingConfigItem),
-                logger: loggerService
+                logger: logger
             )
         }
         let date = location.timestamp
@@ -166,70 +120,9 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
                 context: .system,
                 message: "Could not encode scan point params",
                 code: .general(.jsonEncoding),
-                logger: loggerService
+                logger: logger
             )
         }
         return jsonData
-    }
-}
-
-extension UserDataAPIService {
-    enum Endpoint {
-        case usercategory, userpoints, rank, events, messages, points, sponsorImage(sponsorId: String, width: Int, height: Int)
-        
-        var path: String {
-            switch self {
-            case .usercategory:
-                return "/usercategory"
-            case .userpoints:
-                return "/userpoints"
-            case .rank:
-                return "/rank"
-            case .events:
-                return "/events"
-            case .messages:
-                return "/messages"
-            case .points:
-                return "/points"
-            case .sponsorImage(let sponsorId, let width, let height):
-                return "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
-            }
-        }
-        
-        var typeHeaders: [String: String] {
-            switch self {
-            case .sponsorImage(_, _, _):
-                ["accept": "image/png"]
-            default:
-                ["accept": "application/json"]
-            }
-        }
-        
-        func headers(authToken: String? = nil, userToken: String? = nil) -> [String: String] {
-            var finalHeaders = typeHeaders
-            let apiHeader = Network.apiKeyHeader(apiKey: APIHeader.ApiKey)
-            finalHeaders[apiHeader.key] = apiHeader.val
-            if let authToken {
-                let authHeader = Network.authorizationHeader(token: authToken)
-                finalHeaders[authHeader.key] = authHeader.val
-            }
-            if let userToken {
-                let userToken = Network.apiTokenHeader(token: userToken)
-                finalHeaders[userToken.key] = userToken.val
-            }
-            return finalHeaders
-        }
-        
-        func urlWithPath(base: URL, logger: LoggerServicing) throws -> URL {
-            let finalURLString = base.absoluteString + path
-            guard let url = URL(string: finalURLString) else {
-                throw BaseError(
-                    context: .network,
-                    message: "Invalid URL",
-                    logger: logger
-                )
-            }
-            return url
-        }
     }
 }

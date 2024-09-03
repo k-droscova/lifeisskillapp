@@ -6,6 +6,7 @@
 //
 
 import Foundation
+// TODO: discuss status codes with Martin, 465 and 466 are not standardized responses
 
 /// This is a list of Hypertext Transfer Protocol (HTTP) response status codes.
 /// It includes codes from IETF internet standards, other IETF RFCs, other specifications, and some additional commonly used codes.
@@ -204,6 +205,10 @@ public enum HTTPStatusCode: Int, Error {
 
     /// - unavailableForLegalReasons: A server operator has received a legal demand to deny access to a resource or to a set of resources that includes the requested resource.
     case unavailableForLegalReasons = 451
+    
+    case unknownUser = 465
+    
+    case invalidPin = 466
 
     /// - SSLCertificateError: An expansion of the 400 Bad Request response code, used when the client has provided an invalid client certificate.
     case SSLCertificateError = 495

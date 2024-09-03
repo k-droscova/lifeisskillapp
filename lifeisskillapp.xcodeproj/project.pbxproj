@@ -17,6 +17,12 @@
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
 		2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144C2C720B4A00A0ECF2 /* Map.swift */; };
 		2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */; };
+		271303402C7C8D3B0005FC46 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2713033F2C7C8D3B0005FC46 /* Constants.swift */; };
+		271303432C7C8D680005FC46 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */; };
+		271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303452C7C8DA40005FC46 /* EnterPasswordView.swift */; };
+		271303482C7C8DE90005FC46 /* EnterPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303472C7C8DE90005FC46 /* EnterPinView.swift */; };
+		2713034A2C7C8E160005FC46 /* EnterEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303492C7C8E160005FC46 /* EnterEmailView.swift */; };
+		2713034C2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2713034B2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift */; };
 		2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717AEB62C429C2A00A23F06 /* LocationManager.swift */; };
 		2717AEFE2C42ACCD00A23F06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2717AEFD2C42ACCD00A23F06 /* Images.xcassets */; };
 		2717AF0F2C42ADB800A23F06 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */; };
@@ -94,6 +100,7 @@
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
+		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
 		276ADDBD2C6E7E2000DA2301 /* ScannedPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */; };
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
@@ -110,6 +117,7 @@
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
 		27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4E2C3AFE4F00864028 /* APITask.swift */; };
+		27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */; };
 		27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6194D2C36E6000067498F /* HttpStatusCode.swift */; };
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
 		27C619552C36EAEF0067498F /* ModuleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619542C36EAEF0067498F /* ModuleError.swift */; };
@@ -213,6 +221,12 @@
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
 		2712144C2C720B4A00A0ECF2 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotations.swift; sourceTree = "<group>"; };
+		2713033F2C7C8D3B0005FC46 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		271303452C7C8DA40005FC46 /* EnterPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordView.swift; sourceTree = "<group>"; };
+		271303472C7C8DE90005FC46 /* EnterPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPinView.swift; sourceTree = "<group>"; };
+		271303492C7C8E160005FC46 /* EnterEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailView.swift; sourceTree = "<group>"; };
+		2713034B2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordFlowCoordinator.swift; sourceTree = "<group>"; };
 		2717AEB62C429C2A00A23F06 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2717AEFD2C42ACCD00A23F06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2717AF062C42ADB700A23F06 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.otf"; sourceTree = "<group>"; };
@@ -292,6 +306,7 @@
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
 		276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepository.swift; sourceTree = "<group>"; };
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
@@ -308,6 +323,7 @@
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
 		27B25C4E2C3AFE4F00864028 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
+		27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIService.swift; sourceTree = "<group>"; };
 		27C6194D2C36E6000067498F /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
 		27C619542C36EAEF0067498F /* ModuleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleError.swift; sourceTree = "<group>"; };
@@ -406,6 +422,25 @@
 				27CBD7822C4E789900612375 /* ScannedPoint.swift */,
 			);
 			path = Points;
+			sourceTree = "<group>";
+		};
+		271303412C7C8D550005FC46 /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				271303442C7C8D970005FC46 /* Views */,
+				271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */,
+			);
+			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
+		271303442C7C8D970005FC46 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				271303492C7C8E160005FC46 /* EnterEmailView.swift */,
+				271303472C7C8DE90005FC46 /* EnterPinView.swift */,
+				271303452C7C8DA40005FC46 /* EnterPasswordView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2717AED12C42A72600A23F06 /* Fonts */ = {
@@ -645,6 +680,7 @@
 				276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */,
 				27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */,
 				2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */,
+				2713034B2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -652,6 +688,7 @@
 		27274FB62C3322A1003453E2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				271303412C7C8D550005FC46 /* ForgotPassword */,
 				275457132C332DAB00F3B55A /* LoginView.swift */,
 				275457152C332DB400F3B55A /* LoginViewModel.swift */,
 			);
@@ -661,11 +698,10 @@
 		27274FB82C3322B7003453E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				275EA0912C81E8E200F07BB8 /* GeneralNetworking */,
 				2754571B2C33303B00F3B55A /* NetworkStructs */,
 				27C619842C3A9D760067498F /* APIServices */,
 				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
-				2754570A2C33259200F3B55A /* Network.swift */,
-				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -876,6 +912,16 @@
 			path = CategorySelector;
 			sourceTree = "<group>";
 		};
+		275EA0912C81E8E200F07BB8 /* GeneralNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
+				2754570A2C33259200F3B55A /* Network.swift */,
+				275EA0922C81E90600F07BB8 /* Endpoint.swift */,
+			);
+			path = GeneralNetworking;
+			sourceTree = "<group>";
+		};
 		276CA9CC2C5E5FAF001D6394 /* Rank */ = {
 			isa = PBXGroup;
 			children = (
@@ -974,6 +1020,7 @@
 				27B25C4E2C3AFE4F00864028 /* APITask.swift */,
 				27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */,
 				2734DCAA2C46A62F008030F3 /* UserDataAPIService.swift */,
+				27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */,
 			);
 			path = APIServices;
 			sourceTree = "<group>";
@@ -1001,6 +1048,7 @@
 				27C619882C3AA3A00067498F /* API.swift */,
 				27D569292C6B7170003EF5D9 /* StorageConstants.swift */,
 				2712144C2C720B4A00A0ECF2 /* Map.swift */,
+				2713033F2C7C8D3B0005FC46 /* Constants.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -1283,6 +1331,7 @@
 				27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
+				275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */,
 				278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */,
 				275457142C332DAB00F3B55A /* LoginView.swift in Sources */,
 				27066A952C4570180092B499 /* GenericPoint.swift in Sources */,
@@ -1301,6 +1350,7 @@
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
 				27E9D6192C63F8EC0098CB96 /* CategoryRepository.swift in Sources */,
+				2713034C2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift in Sources */,
 				2734DCAE2C46AA49008030F3 /* InMemoryUserDataStorage.swift in Sources */,
 				27E9D6082C63E3810098CB96 /* RealmRanking.swift in Sources */,
 				273022372C626DCA00F9D572 /* SettingsBarView.swift in Sources */,
@@ -1308,6 +1358,7 @@
 				27066A8C2C455FFB0092B499 /* UserGender.swift in Sources */,
 				27F27A432C4CFEFC00928388 /* UserRankManager.swift in Sources */,
 				27187B672C57D866003D22C6 /* Buttons.swift in Sources */,
+				271303402C7C8D3B0005FC46 /* Constants.swift in Sources */,
 				27E9D61D2C63F9410098CB96 /* UserPointRepository.swift in Sources */,
 				273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */,
 				2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */,
@@ -1329,6 +1380,7 @@
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
+				271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */,
 				27066A972C4573110092B499 /* DateTime.swift in Sources */,
 				27C6198B2C3AA6EE0067498F /* RegisterAppService.swift in Sources */,
 				273022332C624DBE00F9D572 /* LocationStatusBarViewModel.swift in Sources */,
@@ -1354,14 +1406,17 @@
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
 				27C619602C3704F60067498F /* BaseError.swift in Sources */,
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
+				2713034A2C7C8E160005FC46 /* EnterEmailView.swift in Sources */,
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
 				27E9D6112C63EC010098CB96 /* Repository.swift in Sources */,
 				27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */,
 				274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */,
 				275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */,
 				27C619692C381F340067498F /* RequestResponse.swift in Sources */,
+				271303482C7C8DE90005FC46 /* EnterPinView.swift in Sources */,
 				274001692C7A41E500AD5D7D /* BaseFlowCoordinator.swift in Sources */,
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
+				271303432C7C8D680005FC46 /* ForgotPasswordViewModel.swift in Sources */,
 				275457232C3332BF00F3B55A /* DebugView.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
@@ -1374,6 +1429,7 @@
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
 				2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */,
+				27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */,
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				27D5692A2C6B7170003EF5D9 /* StorageConstants.swift in Sources */,
 				2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */,

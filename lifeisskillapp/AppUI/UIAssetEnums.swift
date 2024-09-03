@@ -22,16 +22,14 @@ enum SFSSymbols: String {
     case nfc = "tag.square"
     case virtual = "paperplane.circle"
     
-    var Image: Image {
+    var image: Image {
         SwiftUI.Image(systemName: self.rawValue)
     }
 }
 
 enum CustomImages {
-    
     enum Miscellaneous: String {
         private static let basePath = "Miscellaneous/"
-        
         case scanningFrame = "frame"
         
         var fullPath: String {
@@ -41,7 +39,6 @@ enum CustomImages {
     
     enum Screens: String {
         private static let basePath = "Ilustrations/"
-        
         case home = "home"
         case login = "login"
         case helpDesk = "helpDesk"
@@ -58,7 +55,6 @@ enum CustomImages {
     
     enum Notifications: String {
         private static let basePath = "Icons/Notifications/"
-        
         case emailOn = "Email/On"
         case emailOff = "Email/Off"
         case phoneOn = "Phone/On"
@@ -71,7 +67,6 @@ enum CustomImages {
     
     enum Rankings: String {
         private static let basePath = "Icons/Rankings/"
-        
         case first = "firstPlace"
         case second = "secondPlace"
         case third = "thirdPlace"
@@ -86,7 +81,6 @@ enum CustomImages {
         
         enum Home: String {
             private static let basePath = TabBar.basePath + "Home/"
-            
             case pink = "Pink"
             case black = "Black"
             
@@ -97,7 +91,6 @@ enum CustomImages {
         
         enum Map: String {
             private static let basePath = TabBar.basePath + "Map/"
-            
             case pink = "Pink"
             case black = "Black"
             
@@ -108,7 +101,6 @@ enum CustomImages {
         
         enum News: String {
             private static let basePath = TabBar.basePath + "News/"
-            
             case pink = "Pink"
             case black = "Black"
             
@@ -119,7 +111,6 @@ enum CustomImages {
         
         enum Profile: String {
             private static let basePath = TabBar.basePath + "Profile/"
-            
             case pink = "Pink"
             case black = "Black"
             
@@ -130,7 +121,6 @@ enum CustomImages {
         
         enum Rank: String {
             private static let basePath = TabBar.basePath + "Rank/"
-            
             case pink = "Pink"
             case black = "Black"
             
@@ -142,7 +132,6 @@ enum CustomImages {
     
     enum Avatar: String {
         private static let basePath = "Avatars/"
-        
         case male = "pointListBoy"
         case female = "pointListGirl"
         
@@ -153,7 +142,6 @@ enum CustomImages {
     
     enum Map: String {
         private static let basePath = "Icons/Map/"
-        
         case sport = "sport"
         case environment = "nature"
         case culture = "culture"
@@ -166,11 +154,24 @@ enum CustomImages {
             Map.basePath + self.rawValue
         }
     }
+    
+    enum ForgotPassword: String {
+        private static let basePath = "Ilustrations/"
+        case defaultImage = "helpDesk"
+        
+        var fullPath: String {
+            ForgotPassword.basePath + self.rawValue
+        }
+    }
 }
 
 enum CustomColors {
     enum TabBar {
-        case background, unselectedItem, selectedItem, selectedBackground
+        case background
+        case unselectedItem
+        case selectedItem
+        case selectedBackground
+        
         var color: UIColor {
             switch self {
             case .background:
@@ -186,7 +187,9 @@ enum CustomColors {
     }
     
     enum ProgressView {
-        case foreground, background
+        case foreground
+        case background
+        
         var color: Color {
             switch self {
             case .foreground:
@@ -198,7 +201,9 @@ enum CustomColors {
     }
     
     enum ListCard {
-        case foreground, shadow
+        case foreground
+        case shadow
+        
         var color: Color {
             switch self {
             case .foreground:
@@ -210,7 +215,10 @@ enum CustomColors {
     }
     
     enum LocationStatusBar {
-        case statusOn, statusOff, foreground
+        case statusOn
+        case statusOff
+        case foreground
+        
         var color: Color {
             switch self {
             case .statusOn:
@@ -224,7 +232,10 @@ enum CustomColors {
     }
     
     enum ListPointCard {
-        case foreground, invalidPoint, shadow
+        case foreground
+        case invalidPoint
+        case shadow
+        
         var color: Color {
             switch self {
             case .foreground:
@@ -240,7 +251,12 @@ enum CustomColors {
 
 enum CustomSizes {
     enum ListCard {
-        case verticalPadding, cornerRadius, shadowRadius, shadowX, shadowY
+        case verticalPadding
+        case cornerRadius
+        case shadowRadius
+        case shadowX
+        case shadowY
+        
         var size: CGFloat {
             switch self {
             case .verticalPadding:
@@ -258,7 +274,11 @@ enum CustomSizes {
     }
     
     enum PointListCard {
-        case cornerRadius, shadowRadius, paddingVertical, paddingHorizontal
+        case cornerRadius
+        case shadowRadius
+        case paddingVertical
+        case paddingHorizontal
+        
         var size: CGFloat {
             switch self {
             case .cornerRadius:
@@ -274,19 +294,24 @@ enum CustomSizes {
     }
     
     enum UserPointsTopLeftButtonsView {
-        case horizontalPadding, referenceUserNameTextHeight
+        case horizontalPadding
+        case referenceUserNameTextHeight
+        
         var size: CGFloat {
             switch self {
             case .horizontalPadding:
                 24
             case .referenceUserNameTextHeight:
-                24 // MARK: should always equal to the lineHeight of the selcted font for userName Text used in top left corner of home and rank screens
+                24 // Should match lineHeight of the selected font for userName Text
             }
         }
     }
     
     enum OnboardingPageView {
-        case verticalSpacing, horizontalPadding, frameHeight
+        case verticalSpacing
+        case horizontalPadding
+        case frameHeight
+        
         var size: CGFloat {
             switch self {
             case .verticalSpacing:
@@ -297,5 +322,38 @@ enum CustomSizes {
                 300
             }
         }
+    }
+    
+    enum ForgotPasswordPageView {
+        case verticalSpacing
+        case horizontalPadding
+        case frameHeight
+        
+        var size: CGFloat {
+            switch self {
+            case .verticalSpacing:
+                32
+            case .horizontalPadding:
+                32
+            case .frameHeight:
+                300
+            }
+        }
+    }
+}
+
+enum ForgotPasswordPagesConstants {
+    static let topPadding: CGFloat = 32
+    static let bottomPadding: CGFloat = 32
+    static let cornerRadius: CGFloat = 10
+
+    enum Colors {
+        static let textFieldBackground = Color.lighterGrey
+        static let button = Color.colorLisBlue
+        static let buttonText = Color.white
+        static let enabledButton = Color.colorLisGreen
+        static let disabledButton = Color.colorLisGrey
+        static let enabledText = Color.white
+        static let disabledText = Color.colorLisDarkGrey
     }
 }

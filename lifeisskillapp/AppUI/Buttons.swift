@@ -13,7 +13,7 @@ struct ExitButton: View {
     
     var body: some View {
         Button(action: action) {
-            SFSSymbols.close.Image
+            SFSSymbols.close.image
         }
         .buttonStyle(CameraButtonStyle())
     }
@@ -26,9 +26,9 @@ struct FlashButton: View {
     var body: some View {
         Button(action: action) {
             flashOn ?
-            SFSSymbols.flashOn.Image
+            SFSSymbols.flashOn.image
             :
-            SFSSymbols.flashOff.Image
+            SFSSymbols.flashOff.image
         }
         .buttonStyle(CameraButtonStyle())
     }
@@ -49,7 +49,7 @@ struct HomeButton<Content: View>: View {
     }
 }
 
-struct LoginButton: View {
+struct EnablingButton: View {
     let action: () -> Void
     let text: Text
     let enabledColorBackground: Color
@@ -70,5 +70,37 @@ struct LoginButton: View {
         .subheadline
         .scaleEffect(isEnabled ? 1.0 : 0.95)
         .disabled(!isEnabled)
+    }
+}
+
+struct ForgotPasswordPageView<Content: View>: View {
+    let image: Image = Image(CustomImages.ForgotPassword.defaultImage.fullPath)
+    let text: Text
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        VStack(spacing: CustomSizes.ForgotPasswordPageView.verticalSpacing.size) {
+            imageView
+            textView
+            contentView
+        }
+        .padding(.horizontal, CustomSizes.ForgotPasswordPageView.horizontalPadding.size)
+    }
+
+    private var imageView: some View {
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: CustomSizes.ForgotPasswordPageView.frameHeight.size)
+    }
+
+    private var textView: some View {
+        text
+            .body1Regular
+            .multilineTextAlignment(.center)
+    }
+
+    private var contentView: some View {
+        content
     }
 }

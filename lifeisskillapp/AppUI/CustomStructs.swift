@@ -35,7 +35,7 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
                 else {
                     placeholder
                 }
-                SFSSymbols.categorySelectorDropDown.Image
+                SFSSymbols.categorySelectorDropDown.image
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
@@ -194,7 +194,7 @@ struct UserPointsTopLeftButtonsView: View {
             Button(action: {
                 mapButtonAction()
             }) {
-                SFSSymbols.map.Image
+                SFSSymbols.map.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)
@@ -203,7 +203,7 @@ struct UserPointsTopLeftButtonsView: View {
             Button(action: {
                 listButtonAction()
             }) {
-                SFSSymbols.list.Image
+                SFSSymbols.list.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .squareFrame(size: imageSize)

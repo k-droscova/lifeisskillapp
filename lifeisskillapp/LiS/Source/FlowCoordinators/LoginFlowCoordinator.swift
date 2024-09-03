@@ -50,8 +50,16 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
             settingsDelegate: self.settingsDelegate
         )
         let loginVC = LoginView(viewModel: viewModel).hosting()
-        self.rootViewController = loginVC
-        return loginVC
+        let navigationController = UINavigationController(rootViewController: loginVC)
+        navigationController.setNavigationBarHidden(true, animated: false)
+        self.navigationController = navigationController
+        rootViewController = loginVC
+        
+        return navigationController
+    }
+    
+    override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        reload()
     }
 }
 
@@ -60,7 +68,13 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         print("Register Tapped")
     }
     func forgotPasswordTapped() {
-        print("Forgot Password Tapped")
+        let forgetPasswordVM = ForgotPasswordViewModel(dependencies: appDependencies)
+        let forgetPasswordFC = ForgotPasswordFlowCoordinator(delegate: self, viewModel: forgetPasswordVM)
+        addChild(forgetPasswordFC)
+        let vc = forgetPasswordFC.start()
+        vc.modalPresentationStyle = .formSheet
+        vc.presentationController?.delegate = self // ensures that returnToLogin() is called on presentation dismissal
+        present(vc, animated: true)
     }
     func loginSuccessful() {
         delegate?.loginDidSucceed()
@@ -80,5 +94,21 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     
     private func showOnlineLoginFailureAlert() {
         showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
+    }
+    
+    private func reload() {
+        childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
+    }
+}
+
+extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
+    func forgotPasswordDidSucceed() {
+        returnToLogin()
+        showAlert(titleKey: "forgot_password.alert.success.title", messageKey: "forgot_password.alert.success.message")
+    }
+
+    func returnToLogin() {
+        dismiss()
+        reload()
     }
 }

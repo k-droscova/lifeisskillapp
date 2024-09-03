@@ -56,7 +56,7 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     
     func fetch(withToken token: String) async throws {
         logger.log(message: "Fetching user ranks")
-        let response = try await userDataAPIService.getRank(baseURL: APIUrl.baseURL, userToken: token)
+        let response = try await userDataAPIService.userRanks(userToken: token)
         try await storage.saveUserRankData(response.data)
         _data = response.data
     }

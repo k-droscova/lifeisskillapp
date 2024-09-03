@@ -187,3 +187,44 @@ struct UserRankData: DataProtocol {
         self.data = data
     }
 }
+
+struct ForgotPasswordData: DataProtocol {
+    let pin: String
+    let message: String
+    let userEmail: String
+    
+    enum CodingKeys: String, CodingKey {
+        case pin = "pin"
+        case message = "msg"
+        case userEmail = "email"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // Decode the base64-encoded pin
+        let base64Pin = try container.decode(String.self, forKey: .pin)
+        if let pinData = Data(base64Encoded: base64Pin),
+           let decodedPin = String(data: pinData, encoding: .utf8) {
+            pin = decodedPin
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .pin, in: container, debugDescription: "Pin is not valid Base64 encoded string.")
+        }
+        
+        message = try container.decode(String.self, forKey: .message)
+        userEmail = try container.decode(String.self, forKey: .userEmail)
+    }
+}
+
+struct ForgotPasswordConfirmation: DataProtocol {
+    let message: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case message = "Was Changed"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        message = try container.decode(Bool.self, forKey: .message)
+    }
+}
