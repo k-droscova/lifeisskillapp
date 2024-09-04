@@ -27,7 +27,7 @@ struct NewRegistrationCredentials: Credentials {
     let username: String
     let email: String
     let password: String
-    let referenceUserId: String? = nil
+    let referenceUserId: String?
     
     var params: [String: String] {
         var params: [String: String] = [

@@ -47,6 +47,9 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private var cancellables = Set<AnyCancellable>()
+    private var isReferenceValid: Bool {
+        (addReference && referenceUsername != nil) || !addReference
+    }
     
     // MARK: - Public Properties
     
@@ -93,6 +96,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         passwordValidationState.isValid &&
         confirmPasswordValidationState.isValid &&
         isGdprConfirmed && isRulesConfirmed
+        && isReferenceValid
     }
     
     // MARK: - Initialization
@@ -115,7 +119,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
                 self.delegate?.registrationDidFail()
                 return
             }
-            let credentials = NewRegistrationCredentials(username: username, email: email, password: password)
+            let credentials = credentials()
             do {
                 try await self.userManager.registerUser(credentials: credentials)
                 self.delegate?.registrationDidSucceed()
@@ -147,6 +151,13 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     
     private func openLink(link: String) {
         delegate?.openLink(link: link)
+    }
+    
+    private func credentials() -> NewRegistrationCredentials {
+        guard isReferenceValid else {
+            return NewRegistrationCredentials(username: username, email: email, password: password, referenceUserId: nil)
+        }
+        return NewRegistrationCredentials(username: username, email: email, password: password, referenceUserId: referenceInfo?.userId)
     }
     
     private func validateUsername() {

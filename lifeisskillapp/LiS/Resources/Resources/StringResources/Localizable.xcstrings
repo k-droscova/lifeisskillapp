@@ -3295,29 +3295,6 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skenování proběhlo úspěšně"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Referenz erfolgreich gescannt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reference scanned successfully"
-          }
-        }
-      }
-    },
-    "registration.reference.qr.success.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
             "value" : "Ujisti se, že uživatelské jméno ve formuláři odpovídá uživatelskému jménu tvého kamaráda."
           }
         },
@@ -3331,6 +3308,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ensure that the username in the form matches your friend's username."
+          }
+        }
+      }
+    },
+    "registration.reference.qr.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skenování proběhlo úspěšně"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenz erfolgreich gescannt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference scanned successfully"
           }
         }
       }

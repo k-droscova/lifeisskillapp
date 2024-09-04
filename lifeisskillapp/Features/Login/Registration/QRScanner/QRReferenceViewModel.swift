@@ -64,7 +64,7 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
             previewLayer?.videoGravity = .resizeAspectFill
         }
     }
-        
+    
     func setUpScanner() {
         captureSession = AVCaptureSession()
         
@@ -96,7 +96,7 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
     }
     
     func handleProcessedCode(_ code: String) {
-        if let referenceInfo = parseReferenceCode(code) {
+        if let referenceInfo = code.parseReference() {
             delegate?.scanningQRDidSucceed(referenceInfo)
         } else {
             scanningFailed()
@@ -104,19 +104,6 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
     }
     
     // MARK: - Helper Methods
-    private func parseReferenceCode(_ code: String) -> ReferenceInfo? {
-        // TODO: implement specific parsing of user info
-        /*
-        let components = code.split(separator: ":")
-        guard components.count == 2,
-              let username = components.first,
-              let userId = components.last else {
-            return nil
-        }
-        return ReferenceInfo(username: String(username), userId: String(userId))
-         */
-        return ReferenceInfo(username: "testUser", userId: "123456789")
-    }
     
     private func nulifyReferences() {
         captureSession = nil
@@ -133,12 +120,7 @@ extension QRReferenceViewModel: AVCaptureMetadataOutputObjectsDelegate {
             guard let stringValue = readableObject.stringValue else { return }
             let string = stringValue.removingPercentEncoding ?? ""
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            
-            if string.contains("lifeisskill.cz") {
-                handleProcessedCode(string)
-            } else {
-                scanningFailed()
-            }
+            handleProcessedCode(string)
         }
     }
 }

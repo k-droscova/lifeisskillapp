@@ -23,3 +23,12 @@ enum Username {
 enum Email {
     static let emailPattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$" // regex
 }
+
+enum ReferenceQRKeys {
+    static let task = "task"
+    static let username = "key"           // Username
+    static let userId = "key1"            // Base64-encoded userId
+    static let signature = "key2"         // Signature or userToken
+    static let onlineStatus = "key3"      // true (offline) or false (online)
+    static let game = "game"              // Game name
+}
