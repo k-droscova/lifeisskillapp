@@ -19,7 +19,7 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
                         referenceSection
                         consentToggles
                     }
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, RegistrationViewConstants.toggleSectionPadding)
                     submitButton
                 }
                 .frame(width: geometry.size.width)
@@ -78,22 +78,22 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
     // MARK: - Reference Section
     
     private var referenceSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: RegistrationViewConstants.referenceSectionVerticalSpacing) {
             referenceToggle
             if (viewModel.addReference) {
                 HStack {
                     referenceInfo
-                    Spacer(minLength: 32)
+                    Spacer(minLength: RegistrationViewConstants.referenceSectionHorizontalSpacing)
                     qrButton
                 }
                 .transition(.opacity)
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: viewModel.addReference)
+        .animation(.easeInOut(duration: RegistrationViewConstants.animationDuration), value: viewModel.addReference)
     }
     
     private var referenceInfo: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: RegistrationViewConstants.referenceUserInfoVerticalSpacing) {
             Text("registration.reference.user")
                 .subheadline
             referenceUsername
@@ -112,18 +112,18 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
     private var qrButton: some View {
         HomeButton(
             action: viewModel.scanQR,
-            background: HomeViewConstants.Colors.qr,
-            foregroundColor: HomeViewConstants.Colors.white
+            background: RegistrationViewConstants.Colors.qrBackground,
+            foregroundColor: RegistrationViewConstants.Colors.qrForeground
         ) {
             SFSSymbols.qr.image
-                .squareFrame(size: 12)
+                .squareFrame(size: RegistrationViewConstants.qrButtonIconSize)
         }
     }
     
     private var referenceToggle: some View {
         Toggle(isOn: $viewModel.addReference) {
             // Content of the label
-            HStack(spacing: 16) {
+            HStack(spacing: RegistrationViewConstants.referenceToggleSpacing) {
                 Text("registration.reference.title")
                 Button(action: {
                     viewModel.showReferenceInstructions()
@@ -133,6 +133,7 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
                 }
             }
         }
+        .toggleStyle(SwitchToggleStyle(tint: RegistrationViewConstants.Colors.toggles)) // Apply custom color
         .headline3
     }
     
@@ -141,18 +142,21 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
     private var consentToggles: some View {
         VStack(alignment: .leading, spacing: RegistrationViewConstants.formSpacing) {
             Text("register.consent")
+                .headline3
             
-            HStack(spacing: RegistrationViewConstants.consentToggleSpacing) {
+            HStack(spacing: RegistrationViewConstants.consentToggleHorizontalSpacing) {
                 Toggle(isOn: $viewModel.isGdprConfirmed) {
                     Link(LocalizedStringKey("register.consent.gdpr"), destination: URL(string: APIUrl.gdprUrl)!)
                 }
+                .toggleStyle(SwitchToggleStyle(tint: RegistrationViewConstants.Colors.toggles))
                 Toggle(isOn: $viewModel.isRulesConfirmed) {
                     Link(LocalizedStringKey("register.consent.rules"), destination: URL(string: APIUrl.rulesUrl)!)
                 }
+                .toggleStyle(SwitchToggleStyle(tint: RegistrationViewConstants.Colors.toggles))
             }
+            .body1Regular
         }
-        .body1Regular
-        .padding(.top, RegistrationViewConstants.formSpacing)
+        .padding(.top, RegistrationViewConstants.consentTopPadding)
     }
     
     // MARK: - Submit Button
@@ -164,17 +168,31 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
             isEnabled: viewModel.isFormValid
         )
         .disabled(!viewModel.isFormValid)
-        .padding(.vertical, RegistrationViewConstants.submitButtonBottomPadding)
+        .padding(.vertical, RegistrationViewConstants.submitButtonVerticalPadding)
     }
 }
 
 struct RegistrationViewConstants {
     static let horizontalPadding: CGFloat = 16
-    static let verticalPadding: CGFloat = 16
+    static let toggleSectionPadding: CGFloat = 12
     static let formSpacing: CGFloat = 16
-    static let consentToggleSpacing: CGFloat = 32
-    static let consentTogglesPadding: CGFloat = 24
-    static let submitButtonBottomPadding: CGFloat = 32
+    static let consentToggleHorizontalSpacing: CGFloat = 32
+    static let consentTopPadding: CGFloat = 32
+    static let submitButtonVerticalPadding: CGFloat = 32
+    
+    static let referenceSectionVerticalSpacing: CGFloat = 12
+    static let referenceSectionHorizontalSpacing: CGFloat = 32
+    static let referenceUserInfoVerticalSpacing: CGFloat = 4
+    static let referenceToggleSpacing: CGFloat = 16
+    
+    static let qrButtonIconSize: CGFloat = 8
+    static let animationDuration: Double = 0.3
+    
+    enum Colors {
+        static let qrForeground = Color.white
+        static let qrBackground = Color.colorLisBlue
+        static let toggles = Color.colorLisGreen
+    }
 }
 
 class MockRegistrationViewModel: BaseClass, RegistrationViewModeling {
