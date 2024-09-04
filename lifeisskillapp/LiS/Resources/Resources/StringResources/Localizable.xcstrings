@@ -3221,6 +3221,52 @@
         }
       }
     },
+    "registration.reference.qr.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujisti se, že skenuješ správný QR kód. Pokud problém přetrvává, kontaktuj nás na info@lifeisskill.cz."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle sicher, dass du den richtigen QR-Code scannst. Falls das Problem weiterhin besteht, kontaktiere uns unter info@lifeisskill.cz."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensure you are scanning the correct QR code. If issue persists contact us at info@lifeisskill.cz."
+          }
+        }
+      }
+    },
+    "registration.reference.qr.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skenování referenta selhalo"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenz-Scan fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference scanning failed"
+          }
+        }
+      }
+    },
     "registration.reference.qr.scanning.instructions" : {
       "localizations" : {
         "cs" : {
@@ -3239,6 +3285,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Instruct your friend to open their profile in the app through menu in upper right corner. In profile, click on \"Generate QR\" and then scan it."
+          }
+        }
+      }
+    },
+    "registration.reference.qr.success.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skenování proběhlo úspěšně"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenz erfolgreich gescannt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference scanned successfully"
+          }
+        }
+      }
+    },
+    "registration.reference.qr.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujisti se, že uživatelské jméno ve formuláři odpovídá uživatelskému jménu tvého kamaráda."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle sicher, dass der Benutzername im Formular mit dem Benutzernamen deines Freundes übereinstimmt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensure that the username in the form matches your friend's username."
           }
         }
       }
