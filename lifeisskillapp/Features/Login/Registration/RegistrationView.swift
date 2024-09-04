@@ -227,7 +227,6 @@ struct RegistrationViewConstants {
 }
 
 class MockRegistrationViewModel: BaseClass, RegistrationViewModeling {
-    
     // Required properties
     var isLoading: Bool = false
     var username: String = ""
@@ -238,6 +237,7 @@ class MockRegistrationViewModel: BaseClass, RegistrationViewModeling {
     var isRulesConfirmed: Bool = false
     var addReference: Bool = true
     var referenceUsername: String?
+    var referenceInfo: ReferenceInfo?
     
     var usernameValidationState: ValidationState = UsernameValidationState.initial
     var emailValidationState: ValidationState = EmailValidationState.initial

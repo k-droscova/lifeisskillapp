@@ -8,6 +8,11 @@
 import Foundation
 import Combine
 
+struct ReferenceInfo {
+    let username: String
+    let userId: String
+}
+
 protocol RegistrationViewModeling: BaseClass, ObservableObject {
     var isLoading: Bool { get }
     var username: String { get set }
@@ -18,6 +23,7 @@ protocol RegistrationViewModeling: BaseClass, ObservableObject {
     var isRulesConfirmed: Bool { get set }
     var addReference: Bool { get set }
     var referenceUsername: String? { get }
+    var referenceInfo: ReferenceInfo? { get set }
     
     var usernameValidationState: ValidationState { get }
     var emailValidationState: ValidationState { get }
@@ -70,6 +76,11 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     @Published var isRulesConfirmed: Bool = false
     @Published var addReference: Bool = false
     @Published private(set) var referenceUsername: String?
+    var referenceInfo: ReferenceInfo? {
+        didSet {
+            referenceUsername = referenceInfo?.username
+        }
+    }
     
     @Published private(set) var usernameValidationState: ValidationState = UsernameValidationState.initial
     @Published private(set) var emailValidationState: ValidationState = EmailValidationState.initial
@@ -120,8 +131,8 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     }
     
     func scanQR() {
-        print("qr pressed")
-        delegate?.loadQR()
+        let vm = QRReferenceViewModel(logger: self.logger, delegate: self.delegate)
+        delegate?.loadQR(viewModel: vm)
     }
     
     func gdprButtonClicked() {

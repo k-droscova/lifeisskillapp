@@ -16,10 +16,10 @@ protocol RegistrationFlowCoordinatorDelegate: NSObject {
 }
 
 protocol RegistrationFlowDelegate: NSObject {
-    func loadQR()
+    func loadQR(viewModel: QRViewModeling)
     func dismissQR()
     func showReferenceInstructions()
-    func scanningQRDidSucceed()
+    func scanningQRDidSucceed(_ reference: ReferenceInfo)
     func scanningQRDidFail()
     func registrationDidSucceed()
     func registrationDidFail()
@@ -28,6 +28,7 @@ protocol RegistrationFlowDelegate: NSObject {
 
 final class RegistrationFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     private weak var delegate: RegistrationFlowCoordinatorDelegate?
+    private var viewModel: (any RegistrationViewModeling)?
     
     init(delegate: RegistrationFlowCoordinatorDelegate? = nil) {
         self.delegate = delegate
@@ -38,6 +39,7 @@ final class RegistrationFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlo
         super.start()
         
         let vm = RegistrationViewModel(dependencies: appDependencies, delegate: self)
+        self.viewModel = vm
         let vc = RegistrationView(viewModel: vm).hosting()
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -48,8 +50,10 @@ final class RegistrationFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlo
 }
 
 extension RegistrationFlowCoordinator: RegistrationFlowDelegate {
-    func loadQR() {
-        print("load qr")
+    func loadQR(viewModel: QRViewModeling) {
+        let vc = QRReferenceView(viewModel: viewModel).hosting()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func dismissQR() {
@@ -61,12 +65,15 @@ extension RegistrationFlowCoordinator: RegistrationFlowDelegate {
         present(vc, animated: true)
     }
     
-    func scanningQRDidSucceed() {
-        
+    func scanningQRDidSucceed(_ reference: ReferenceInfo) {
+        dismissQR()
+        showAlert(titleKey: "registration.reference.qr.success.title", messageKey: "registration.reference.qr.success.message")
+        self.viewModel?.referenceInfo = reference
     }
     
     func scanningQRDidFail() {
-        
+        dismissQR()
+        showAlert(titleKey: "registration.reference.qr.error.title", messageKey: "registration.reference.qr.error.message")
     }
     
     func registrationDidSucceed() {

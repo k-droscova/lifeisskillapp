@@ -115,6 +115,8 @@
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
 		278DB5202C88785300FB5B1C /* RegistrationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */; };
 		278DB5222C88989B00FB5B1C /* ReferenceDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */; };
+		278DB5252C88A52900FB5B1C /* QRReferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5242C88A52900FB5B1C /* QRReferenceViewModel.swift */; };
+		278DB5272C88A6B000FB5B1C /* QRReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
@@ -329,6 +331,8 @@
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFlowCoordinator.swift; sourceTree = "<group>"; };
 		278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceDescriptionView.swift; sourceTree = "<group>"; };
+		278DB5242C88A52900FB5B1C /* QRReferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReferenceViewModel.swift; sourceTree = "<group>"; };
+		278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReferenceView.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -970,9 +974,19 @@
 			path = MapComponent;
 			sourceTree = "<group>";
 		};
+		278DB5232C889E8D00FB5B1C /* QRScanner */ = {
+			isa = PBXGroup;
+			children = (
+				278DB5242C88A52900FB5B1C /* QRReferenceViewModel.swift */,
+				278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */,
+			);
+			path = QRScanner;
+			sourceTree = "<group>";
+		};
 		27B5DEFA2C870FEF003B9AEE /* Registration */ = {
 			isa = PBXGroup;
 			children = (
+				278DB5232C889E8D00FB5B1C /* QRScanner */,
 				27B5DEFF2C871090003B9AEE /* RegistrationView.swift */,
 				27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */,
 				27B5DEFD2C871032003B9AEE /* ValidationStates.swift */,
@@ -1356,6 +1370,7 @@
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
 				276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */,
 				27B5DEFE2C871032003B9AEE /* ValidationStates.swift in Sources */,
+				278DB5252C88A52900FB5B1C /* QRReferenceViewModel.swift in Sources */,
 				2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
 				271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */,
@@ -1477,6 +1492,7 @@
 				27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */,
 				276CA9D22C5E6D3D001D6394 /* RankView.swift in Sources */,
 				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
+				278DB5272C88A6B000FB5B1C /* QRReferenceView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,
 				27B5DF022C871C85003B9AEE /* Alert.swift in Sources */,

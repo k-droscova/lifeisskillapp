@@ -3200,7 +3200,48 @@
       }
     },
     "registration.reference.instructions.body" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokud máš kamaráda, který je již zaregistrovaný, může tě pozvat do hry a oba získáte výhody!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du einen Freund hast, der bereits registriert ist, kann er dich zum Spiel einladen, und ihr beide werdet Vorteile erhalten!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you have a friend that is already registered, they can invite you to the game and both of you will get benefits!"
+          }
+        }
+      }
+    },
+    "registration.reference.qr.scanning.instructions" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Řekni svému kamarádovi, aby otevřel svůj profil v aplikaci přes menu v pravém horním rohu. V profilu ať klikne na „Vygenerovat QR“, který poté naskenuj."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weise deinen Freund an, sein Profil in der App über das Menü in der oberen rechten Ecke zu öffnen. Im Profil klicke auf „QR-Code generieren“ und scanne ihn dann."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instruct your friend to open their profile in the app through menu in upper right corner. In profile, click on \"Generate QR\" and then scan it."
+          }
+        }
+      }
     },
     "registration.reference.title" : {
       "localizations" : {
