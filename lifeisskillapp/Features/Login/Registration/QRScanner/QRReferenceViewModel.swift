@@ -106,7 +106,7 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
     // MARK: - Helper Methods
     private func parseReferenceCode(_ code: String) -> ReferenceInfo? {
         // TODO: implement specific parsing of user info
-        // example of how the parsing could go...
+        /*
         let components = code.split(separator: ":")
         guard components.count == 2,
               let username = components.first,
@@ -114,6 +114,8 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
             return nil
         }
         return ReferenceInfo(username: String(username), userId: String(userId))
+         */
+        return ReferenceInfo(username: "testUser", userId: "123456789")
     }
     
     private func nulifyReferences() {
