@@ -23,6 +23,7 @@ protocol RegistrationFlowDelegate: NSObject {
     func scanningQRDidFail()
     func registrationDidSucceed()
     func registrationDidFail()
+    func openLink(link: String)
 }
 
 final class RegistrationFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
@@ -56,7 +57,8 @@ extension RegistrationFlowCoordinator: RegistrationFlowDelegate {
     }
     
     func showReferenceInstructions() {
-        
+        let vc = ReferenceDescriptionView().hosting()
+        present(vc, animated: true)
     }
     
     func scanningQRDidSucceed() {
@@ -73,5 +75,11 @@ extension RegistrationFlowCoordinator: RegistrationFlowDelegate {
     
     func registrationDidFail() {
         delegate?.registrationDidFail()
+    }
+    
+    func openLink(link: String) {
+        if let url = URL(string: link) {
+            UIApplication.shared.open(url)
+        }
     }
 }

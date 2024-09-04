@@ -18,7 +18,7 @@ protocol RegistrationViewModeling: BaseClass, ObservableObject {
     var isRulesConfirmed: Bool { get set }
     var addReference: Bool { get set }
     var referenceUsername: String? { get }
-
+    
     var usernameValidationState: ValidationState { get }
     var emailValidationState: ValidationState { get }
     var passwordValidationState: ValidationState { get }
@@ -28,6 +28,8 @@ protocol RegistrationViewModeling: BaseClass, ObservableObject {
     func submitRegistration()
     func showReferenceInstructions()
     func scanQR()
+    func rulesButtonClicked()
+    func gdprButtonClicked()
 }
 
 class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeling {
@@ -90,7 +92,51 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         self.delegate = delegate
     }
     
+    // MARK: - Public Interface
+    
+    func submitRegistration() {
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            guard self.isFormValid else {
+                self.logger.log(message: "Form is not valid")
+                self.delegate?.registrationDidFail()
+                return
+            }
+            let credentials = NewRegistrationCredentials(username: username, email: email, password: password)
+            do {
+                try await self.userManager.registerUser(credentials: credentials)
+                self.delegate?.registrationDidSucceed()
+            } catch {
+                self.delegate?.registrationDidFail()
+            }
+        }
+    }
+    
+    func showReferenceInstructions() {
+        print("instructions pressed")
+        delegate?.showReferenceInstructions()
+    }
+    
+    func scanQR() {
+        print("qr pressed")
+        delegate?.loadQR()
+    }
+    
+    func gdprButtonClicked() {
+        openLink(link: APIUrl.gdprUrl)
+    }
+    
+    func rulesButtonClicked() {
+        openLink(link: APIUrl.rulesUrl)
+    }
+    
     // MARK: - Private Helpers
+    
+    private func openLink(link: String) {
+        delegate?.openLink(link: link)
+    }
     
     private func validateUsername() {
         Task { @MainActor [weak self] in
@@ -165,37 +211,5 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     private func isValidEmailFormat(_ email: String) -> Bool {
         let emailPred = NSPredicate(format: "SELF MATCHES %@", Email.emailPattern)
         return emailPred.evaluate(with: email)
-    }
-    
-    // MARK: - Public Methods
-    
-    func submitRegistration() {
-        Task { @MainActor [weak self] in
-            guard let self = self else { return }
-            self.isLoading = true
-            defer { self.isLoading = false }
-            guard self.isFormValid else {
-                self.logger.log(message: "Form is not valid")
-                self.delegate?.registrationDidFail()
-                return
-            }
-            let credentials = NewRegistrationCredentials(username: username, email: email, password: password)
-            do {
-                try await self.userManager.registerUser(credentials: credentials)
-                self.delegate?.registrationDidSucceed()
-            } catch {
-                self.delegate?.registrationDidFail()
-            }
-        }
-    }
-    
-    func showReferenceInstructions() {
-        print("instructions pressed")
-        delegate?.showReferenceInstructions()
-    }
-    
-    func scanQR() {
-        print("qr pressed")
-        delegate?.loadQR()
     }
 }

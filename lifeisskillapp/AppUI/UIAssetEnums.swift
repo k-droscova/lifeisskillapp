@@ -22,6 +22,7 @@ enum SFSSymbols: String {
     case nfc = "tag.square"
     case virtual = "paperplane.circle"
     case instructionsPopover = "questionmark.circle"
+    case linkArrow = "arrow.up.forward.app"
     
     var image: Image {
         SwiftUI.Image(systemName: self.rawValue)

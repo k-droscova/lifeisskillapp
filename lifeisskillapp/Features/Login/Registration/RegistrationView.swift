@@ -146,11 +146,28 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
             
             HStack(spacing: RegistrationViewConstants.consentToggleHorizontalSpacing) {
                 Toggle(isOn: $viewModel.isGdprConfirmed) {
-                    Link(LocalizedStringKey("register.consent.gdpr"), destination: URL(string: APIUrl.gdprUrl)!)
+                    HStack {
+                        Text("register.consent.gdpr")
+                        Button(action: {
+                            viewModel.gdprButtonClicked()
+                        }) {
+                            SFSSymbols.linkArrow.image
+                                .foregroundColor(.colorLisBlue)
+                        }
+                    }
                 }
                 .toggleStyle(SwitchToggleStyle(tint: RegistrationViewConstants.Colors.toggles))
+                
                 Toggle(isOn: $viewModel.isRulesConfirmed) {
-                    Link(LocalizedStringKey("register.consent.rules"), destination: URL(string: APIUrl.rulesUrl)!)
+                    HStack {
+                        Text("register.consent.rules")
+                        Button(action: {
+                            viewModel.rulesButtonClicked()
+                        }) {
+                            SFSSymbols.linkArrow.image
+                                .foregroundColor(.colorLisBlue)
+                        }
+                    }
                 }
                 .toggleStyle(SwitchToggleStyle(tint: RegistrationViewConstants.Colors.toggles))
             }
@@ -169,6 +186,20 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
         )
         .disabled(!viewModel.isFormValid)
         .padding(.vertical, RegistrationViewConstants.submitButtonVerticalPadding)
+    }
+    
+    // MARK: - link func helpers
+    
+    private func openGdprLink() {
+        if let url = URL(string: APIUrl.gdprUrl) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func openRulesLink() {
+        if let url = URL(string: APIUrl.rulesUrl) {
+            UIApplication.shared.open(url)
+        }
     }
 }
 
@@ -196,6 +227,7 @@ struct RegistrationViewConstants {
 }
 
 class MockRegistrationViewModel: BaseClass, RegistrationViewModeling {
+    
     // Required properties
     var isLoading: Bool = false
     var username: String = ""
@@ -213,7 +245,7 @@ class MockRegistrationViewModel: BaseClass, RegistrationViewModeling {
     var confirmPasswordValidationState: ValidationState = ConfirmPasswordValidationState.initial
     
     var isFormValid: Bool = false
-
+    
     // Required methods
     func submitRegistration() {
         print("Mock submit registration")
@@ -225,6 +257,14 @@ class MockRegistrationViewModel: BaseClass, RegistrationViewModeling {
     
     func scanQR() {
         print("Mock scan QR code")
+    }
+    
+    func rulesButtonClicked() {
+        print("rules button clicked")
+    }
+    
+    func gdprButtonClicked() {
+        print("gdpr button clicked")
     }
 }
 

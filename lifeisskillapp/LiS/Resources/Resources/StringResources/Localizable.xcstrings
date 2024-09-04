@@ -3199,6 +3199,9 @@
         }
       }
     },
+    "registration.reference.instructions.body" : {
+
+    },
     "registration.reference.title" : {
       "localizations" : {
         "cs" : {
