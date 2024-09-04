@@ -113,6 +113,7 @@
 		2784F9382C7769330041E72E /* MapPointDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */; };
 		2784F93C2C776B2A0041E72E /* MapPointDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */; };
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
+		278DB5202C88785300FB5B1C /* RegistrationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
@@ -325,6 +326,7 @@
 		2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailViewModel.swift; sourceTree = "<group>"; };
 		2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailView.swift; sourceTree = "<group>"; };
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
+		278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFlowCoordinator.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 				27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */,
 				2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */,
 				2713034B2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift */,
+				278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -1404,6 +1407,7 @@
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
 				276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
+				278DB5202C88785300FB5B1C /* RegistrationFlowCoordinator.swift in Sources */,
 				27E9D60F2C63EB8E0098CB96 /* LoginRepository.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,

@@ -65,8 +65,9 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
 
 extension LoginFlowCoordinator: LoginFlowDelegate {
     func registerTapped() {
-        let vm = RegistrationViewModel(dependencies: appDependencies, delegate: self)
-        let vc = RegistrationView(viewModel: vm).hosting()
+        let registrationFC = RegistrationFlowCoordinator(delegate: self)
+        addChild(registrationFC)
+        let vc = registrationFC.start()
         vc.modalPresentationStyle = .formSheet
         vc.presentationController?.delegate = self
         present(vc, animated: true)
@@ -118,7 +119,7 @@ extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
     }
 }
 
-extension LoginFlowCoordinator: RegistrationViewModelDelegate {
+extension LoginFlowCoordinator: RegistrationFlowCoordinatorDelegate {
     func registrationDidSucceed() {
         dismiss()
         showAlert(titleKey: "register.success.title", messageKey: "register.success.message")

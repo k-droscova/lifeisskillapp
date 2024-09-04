@@ -8,22 +8,17 @@
 import Foundation
 import Combine
 
-protocol RegistrationViewModelDelegate: AnyObject {
-    func registrationDidSucceed()
-    func registrationDidFail()
-}
-
 protocol RegistrationViewModeling: BaseClass, ObservableObject {
-    var delegate: RegistrationViewModelDelegate? { get set }
-    
     var isLoading: Bool { get }
     var username: String { get set }
     var email: String { get set }
     var password: String { get set }
     var passwordConfirm: String { get set }
     var isGdprConfirmed: Bool { get set }
-    var isConsentGiven: Bool { get set }
-    
+    var isRulesConfirmed: Bool { get set }
+    var addReference: Bool { get set }
+    var referenceUsername: String? { get }
+
     var usernameValidationState: ValidationState { get }
     var emailValidationState: ValidationState { get }
     var passwordValidationState: ValidationState { get }
@@ -31,6 +26,8 @@ protocol RegistrationViewModeling: BaseClass, ObservableObject {
     var isFormValid: Bool { get }
     
     func submitRegistration()
+    func showReferenceInstructions()
+    func scanQR()
 }
 
 class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeling {
@@ -38,13 +35,13 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     
     // MARK: - Private Properties
     
+    private weak var delegate: RegistrationFlowDelegate?
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Public Properties
     
-    weak var delegate: RegistrationViewModelDelegate?
     @Published private(set) var isLoading: Bool = false
     @Published var username: String = "" {
         didSet {
@@ -68,7 +65,9 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     }
     
     @Published var isGdprConfirmed: Bool = false
-    @Published var isConsentGiven: Bool = false
+    @Published var isRulesConfirmed: Bool = false
+    @Published var addReference: Bool = false
+    @Published private(set) var referenceUsername: String?
     
     @Published private(set) var usernameValidationState: ValidationState = UsernameValidationState.initial
     @Published private(set) var emailValidationState: ValidationState = EmailValidationState.initial
@@ -80,12 +79,12 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         emailValidationState.isValid &&
         passwordValidationState.isValid &&
         confirmPasswordValidationState.isValid &&
-        isGdprConfirmed && isConsentGiven
+        isGdprConfirmed && isRulesConfirmed
     }
     
     // MARK: - Initialization
     
-    init(dependencies: Dependencies, delegate: RegistrationViewModelDelegate? = nil) {
+    init(dependencies: Dependencies, delegate: RegistrationFlowDelegate? = nil) {
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.delegate = delegate
@@ -188,5 +187,15 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
                 self.delegate?.registrationDidFail()
             }
         }
+    }
+    
+    func showReferenceInstructions() {
+        print("instructions pressed")
+        delegate?.showReferenceInstructions()
+    }
+    
+    func scanQR() {
+        print("qr pressed")
+        delegate?.loadQR()
     }
 }

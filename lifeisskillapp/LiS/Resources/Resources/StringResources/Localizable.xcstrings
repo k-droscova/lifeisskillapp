@@ -2977,29 +2977,6 @@
         }
       }
     },
-    "register.success.button.web" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Přejít na webové stránky LiS"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zur LiS-Website gehen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go to LiS website"
-          }
-        }
-      }
-    },
     "register.success.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3218,6 +3195,72 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Username already taken."
+          }
+        }
+      }
+    },
+    "registration.reference.title" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat referenci"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einladung hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add reference"
+          }
+        }
+      }
+    },
+    "registration.reference.user" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uživatelské jméno referenta:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzername des Einladers:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference's username:"
+          }
+        }
+      }
+    },
+    "registration.reference.user.placeholder" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stiskni tlačítko vpravo pro načtení referenta"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klicken Sie auf den Button rechts, um den Benutzer zu scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click button on the right to scan user"
           }
         }
       }
