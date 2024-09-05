@@ -43,6 +43,14 @@ public extension View {
         )
     }
     
+    var subheadlineBold: some View {
+        self.font(
+            AssetsFontFamily.Roboto.semiBold(size: 17),
+            lineHeight: 22,
+            textStyle: .subheadline
+        )
+    }
+    
     var body1Regular: some View {
         self.font(
             AssetsFontFamily.Roboto.regular(size: 16),
@@ -94,7 +102,7 @@ public extension View {
     // MARK: - Foregrounds
     
     var foregroundsPrimary: some View {
-        foregroundColor(.primary) 
+        foregroundColor(.primary)
     }
     
     var foregroundsSecondary: some View {

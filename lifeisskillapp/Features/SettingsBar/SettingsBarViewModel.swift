@@ -10,6 +10,7 @@ import Foundation
 protocol SettingsBarFlowDelegate: NSObject {
     func logoutPressedWhileOffline()
     func onboardingPressed()
+    func profilePressed()
 }
 
 protocol SettingsBarViewModeling: BaseClass, ObservableObject {
@@ -17,6 +18,7 @@ protocol SettingsBarViewModeling: BaseClass, ObservableObject {
     var locationVM: locationStatusBarVM { get }
     var isLoggedIn: Bool { get }
     func logoutPressed()
+    func profilePressed()
     func onboardingPressed()
     init(dependencies: HasLoggers & HasLocationManager & HasUserManager & HasNetworkMonitor, delegate: SettingsBarFlowDelegate?)
 }
@@ -61,5 +63,9 @@ final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: Bas
     
     func onboardingPressed() {
         delegate?.onboardingPressed()
+    }
+    
+    func profilePressed() {
+        delegate?.profilePressed()
     }
 }

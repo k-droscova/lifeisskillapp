@@ -47,6 +47,12 @@
 		2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */; };
 		2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2B2C514A0A007B4E77 /* HomeView.swift */; };
 		2720DF2E2C515906007B4E77 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2D2C515906007B4E77 /* String.swift */; };
+		27234C1F2C8A39780077CBD8 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C1E2C8A39780077CBD8 /* ProfileViewModel.swift */; };
+		27234C212C8A39840077CBD8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C202C8A39840077CBD8 /* ProfileView.swift */; };
+		27234C232C8A39930077CBD8 /* InviteFriendQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C222C8A39930077CBD8 /* InviteFriendQRView.swift */; };
+		27234C262C8A39A90077CBD8 /* FullRegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C252C8A39A90077CBD8 /* FullRegistrationViewModel.swift */; };
+		27234C282C8A39B40077CBD8 /* FullRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C272C8A39B40077CBD8 /* FullRegistrationView.swift */; };
+		27234C2A2C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C292C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
 		27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F942C3320F3003453E2 /* lifeisskillappTests.swift */; };
@@ -262,6 +268,12 @@
 		2720DF2B2C514A0A007B4E77 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2720DF2D2C515906007B4E77 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2720DF2F2C516619007B4E77 /* lifeisskillapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lifeisskillapp.entitlements; sourceTree = "<group>"; };
+		27234C1E2C8A39780077CBD8 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		27234C202C8A39840077CBD8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		27234C222C8A39930077CBD8 /* InviteFriendQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteFriendQRView.swift; sourceTree = "<group>"; };
+		27234C252C8A39A90077CBD8 /* FullRegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRegistrationViewModel.swift; sourceTree = "<group>"; };
+		27234C272C8A39B40077CBD8 /* FullRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRegistrationView.swift; sourceTree = "<group>"; };
+		27234C292C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowCoordinator.swift; sourceTree = "<group>"; };
 		27274F7A2C3320F2003453E2 /* lifeisskillapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeisskillapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -541,6 +553,26 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		27234C1D2C8A396B0077CBD8 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				27234C242C8A39980077CBD8 /* FullRegistration */,
+				27234C1E2C8A39780077CBD8 /* ProfileViewModel.swift */,
+				27234C202C8A39840077CBD8 /* ProfileView.swift */,
+				27234C222C8A39930077CBD8 /* InviteFriendQRView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		27234C242C8A39980077CBD8 /* FullRegistration */ = {
+			isa = PBXGroup;
+			children = (
+				27234C252C8A39A90077CBD8 /* FullRegistrationViewModel.swift */,
+				27234C272C8A39B40077CBD8 /* FullRegistrationView.swift */,
+			);
+			path = FullRegistration;
+			sourceTree = "<group>";
+		};
 		27274F712C3320F2003453E2 = {
 			isa = PBXGroup;
 			children = (
@@ -612,6 +644,7 @@
 		27274FAE2C3321BC003453E2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				27234C1D2C8A396B0077CBD8 /* Profile */,
 				27540E4B2C70CE88005A0B49 /* Map */,
 				2750BBF82C6A4A2400F82A04 /* Onboarding */,
 				2730222E2C624B1B00F9D572 /* SettingsBar */,
@@ -703,6 +736,7 @@
 				2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */,
 				2713034B2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift */,
 				278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */,
+				27234C292C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -1379,6 +1413,7 @@
 				27CBD78D2C4EC72F00612375 /* CLLocation.swift in Sources */,
 				27C6195E2C36F2970067498F /* LoggingService.swift in Sources */,
 				27C619752C3835ED0067498F /* Aliases.swift in Sources */,
+				27234C212C8A39840077CBD8 /* ProfileView.swift in Sources */,
 				275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */,
 				278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */,
 				275457142C332DAB00F3B55A /* LoginView.swift in Sources */,
@@ -1422,6 +1457,7 @@
 				27B5DF002C871090003B9AEE /* RegistrationView.swift in Sources */,
 				27540E4F2C70D943005A0B49 /* MapViewComponent.swift in Sources */,
 				27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */,
+				27234C262C8A39A90077CBD8 /* FullRegistrationViewModel.swift in Sources */,
 				27F27A412C4CFA8600928388 /* UserRank.swift in Sources */,
 				276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */,
 				27C6198E2C3AAA7B0067498F /* APIReponse.swift in Sources */,
@@ -1448,6 +1484,7 @@
 				27187B652C57D2F5003D22C6 /* QRScanningViewController.swift in Sources */,
 				2784F93C2C776B2A0041E72E /* MapPointDetailView.swift in Sources */,
 				278174842C4BF96B00138376 /* View.swift in Sources */,
+				27234C1F2C8A39780077CBD8 /* ProfileViewModel.swift in Sources */,
 				27E9D61F2C63F9770098CB96 /* PointRepository.swift in Sources */,
 				274001652C7A271200AD5D7D /* RealmSponsorData.swift in Sources */,
 				2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */,
@@ -1478,11 +1515,14 @@
 				27E9D61B2C63F9150098CB96 /* RankingRepository.swift in Sources */,
 				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
 				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,
+				27234C282C8A39B40077CBD8 /* FullRegistrationView.swift in Sources */,
 				2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */,
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
 				2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */,
+				27234C2A2C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift in Sources */,
+				27234C232C8A39930077CBD8 /* InviteFriendQRView.swift in Sources */,
 				27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */,
 				27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */,
 				27D5692A2C6B7170003EF5D9 /* StorageConstants.swift in Sources */,

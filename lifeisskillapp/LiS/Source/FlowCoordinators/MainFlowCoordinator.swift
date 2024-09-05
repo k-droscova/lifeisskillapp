@@ -204,6 +204,14 @@ extension MainFlowCoordinator: SettingsBarFlowDelegate {
         print("Need to navigate to settings")
     }
     
+    func profilePressed() {
+        guard let navVC = self.navigationController else { return }
+        let profileFC = ProfileFlowCoordinator<SettingsBarViewModel<LocationStatusBarViewModel>>(delegate: self, settingsDelegate: self)
+        addChild(profileFC)
+        activeChild = profileFC
+        profileFC.start(with: navVC)
+    }
+    
     func onboardingPressed() {
         let onboardingVC = OnboardingView().hosting()
         onboardingVC.modalPresentationStyle = .formSheet
@@ -218,5 +226,25 @@ extension MainFlowCoordinator: GameDataManagerFlowDelegate {
     
     func storedScannedPointsFailedToSend() {
         showAlert(titleKey: "alert.scanning.processing.stored.title", messageKey: "alert.scanning.processing.stored.message")
+    }
+}
+
+extension MainFlowCoordinator: ProfileFlowCoordinatorDelegate {
+    func returnToHomeScreen() {
+        if let child = activeChild {
+            removeChild(child) // prevents mem leaks, deletes the profile FC when returned to tabbar
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func generateQRDidFail() {
+        showAlert(titleKey: "alert.qr_generating.error.title", messageKey: "alert.qr_generating.error.message")
+    }
+    
+    func loadUserDataDidFail() {
+        returnToHomeScreen()
+        showAlert(titleKey: "alert.loading_user_profile.data.error.title", messageKey: "alert.loading_user_profile.data.error.message")
     }
 }

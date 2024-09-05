@@ -96,7 +96,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             dependencies: dependencies,
             delegate: settingsDelegate
         )
-        self.userGender = userManager.userGender ?? .male
+        self.userGender = userManager.loggedInUser?.sex ?? .male
         self.delegate = delegate
         self.mapDelegate = mapDelegate
         super.init()
@@ -115,7 +115,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             self.isLoading = true
-            self.username = self.userManager.userName ?? ""
+            self.username = self.userManager.loggedInUser?.nick ?? ""
             await self.fetchData()
             if self.isMapButtonPressed {
                 await self.setupMapPoints(self.mapPoints)

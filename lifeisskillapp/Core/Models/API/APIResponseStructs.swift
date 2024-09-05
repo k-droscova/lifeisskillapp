@@ -267,3 +267,16 @@ struct RegistrationResponse: DataProtocol {
         message = try container.decode(String.self, forKey: .message)
     }
 }
+
+struct SignatureAPIResponse: DataProtocol {
+    let signature: String
+    
+    enum CodingKeys: String, CodingKey {
+        case signature = "token"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        signature = try container.decode(String.self, forKey: .signature)
+    }
+}
