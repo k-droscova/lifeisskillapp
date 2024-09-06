@@ -3193,19 +3193,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje pohlaví"
+            "value" : "Pohlaví:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ihr Geschlecht"
+            "value" : "Geschlecht:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your gender"
+            "value" : "Gender:"
           }
         }
       }
@@ -3565,6 +3565,7 @@
       }
     },
     "register.validation.date.inFuture" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

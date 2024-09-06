@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum UserGender: String, Codable {
+enum UserGender: String, Codable, Hashable {
     case male
     case female
     case unspecified // unfinished registration

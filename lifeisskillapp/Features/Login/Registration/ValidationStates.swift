@@ -120,22 +120,6 @@ enum PhoneNumberValidationState: BaseValidationState {
     }
 }
 
-enum DateValidationState: BaseValidationState {
-    case initial
-    case valid
-    case empty
-    case inFuture
-    
-    var validationMessage: LocalizedStringKey? {
-        switch self {
-        case .inFuture:
-            "register.validation.date.inFuture"
-        default:
-            nil
-        }
-    }
-}
-
 // For fields that do not have more requirements other than they shouldn't be empty
 enum BasicValidationState: BaseValidationState {
     case initial

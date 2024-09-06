@@ -48,6 +48,10 @@ final class ProfileFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.F
         rootViewController = vc
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        stopChildCoordinators()
+    }
 }
 
 extension ProfileFlowCoordinator: ProfileFlowDelegate {
@@ -67,12 +71,27 @@ extension ProfileFlowCoordinator: ProfileFlowDelegate {
     
     func startRegistration() {
         print("start registration pressed")
-        //let vc = FullRegistrationView().hosting()
-        //vc.modalPresentationStyle = .formSheet
-        //present(vc, animated: true)
+        let fullRegistrationFC = FullRegistrationFlowCoordinator(delegate: self)
+        addChild(fullRegistrationFC)
+        let vc = fullRegistrationFC.start()
+        vc.modalPresentationStyle = .formSheet
+        vc.presentationController?.delegate = self
+        present(vc, animated: true)
     }
     
     func loadUserDataDidFail() {
         delegate?.loadUserDataDidFail()
+    }
+}
+
+extension ProfileFlowCoordinator: FullRegistrationFlowCoordinatorDelegate {
+    func registrationDidSucceed() {
+        dismiss()
+        stopChildCoordinators()
+        showAlert(titleKey: "full_registration.success.title", messageKey: "full_registration.success.message")
+    }
+    
+    func registrationDidFail() {
+        showAlert(titleKey: "full_registration.error.title", messageKey: "full_registration.error.message")
     }
 }

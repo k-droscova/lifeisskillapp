@@ -148,7 +148,8 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         email = user.email
         userGender = user.sex
         mainCategory = user.mainCategory
-        isFullyRegistered = user.fullActivation
+        // TODO: ask for logic behind full activation
+        //isFullyRegistered = user.fullActivation
     }
     
     private func getSignature() async throws -> String {

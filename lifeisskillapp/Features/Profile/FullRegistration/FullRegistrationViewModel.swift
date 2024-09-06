@@ -46,7 +46,6 @@ protocol FullRegistrationViewModeling: BaseClass, ObservableObject {
     // Validation States
     var firstNameValidationState: ValidationState { get }
     var lastNameValidationState: ValidationState { get }
-    var dateValidationState: ValidationState { get }
     var phoneNumberValidationState: ValidationState { get }
     var postalCodeValidationState: ValidationState { get }
     var guardianFirstNameValidationState: ValidationState { get }
@@ -95,7 +94,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     }
     @Published var dateOfBirth: Date = Date() {
         didSet {
-            validateDateOfBirth()
+            updateUserAge()
         }
     }
     var isMinor: Bool { age < User.ageWhenConsideredNotMinor }
@@ -105,7 +104,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
             validatePostalCode()
         }
     }
-    @Published var gender: UserGender = .unspecified
+    @Published var gender: UserGender = .male
     @Published var guardianFirstName: String = "" {
         didSet {
             validateGuardianFirstName()
@@ -135,7 +134,6 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     @Published private(set) var firstNameValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var lastNameValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var phoneNumberValidationState: ValidationState = PhoneNumberValidationState.initial
-    @Published private(set) var dateValidationState: ValidationState = DateValidationState.initial
     @Published private(set) var postalCodeValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var guardianFirstNameValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var guardianLastNameValidationState: ValidationState = BasicValidationState.initial
@@ -147,7 +145,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         firstNameValidationState.isValid &&
         lastNameValidationState.isValid &&
         phoneNumberValidationState.isValid &&
-        dateValidationState.isValid &&
+        postalCodeValidationState.isValid &&
         isGuardianFormValid
     }
     
@@ -220,14 +218,8 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         }
     }
     
-    private func validateDateOfBirth() {
-        let age = Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 0
-        if age < 0 {
-            dateValidationState = DateValidationState.inFuture
-        } else {
-            dateValidationState = DateValidationState.valid
-            self.age = age
-        }
+    private func updateUserAge() {
+        self.age = Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 0
     }
     
     private func validatePostalCode() {

@@ -59,7 +59,7 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
     }
     
     override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        reload()
+        stopChildCoordinators()
     }
 }
 
@@ -101,10 +101,6 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     private func showOnlineLoginFailureAlert() {
         showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
     }
-    
-    private func reload() {
-        childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
-    }
 }
 
 extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
@@ -115,7 +111,7 @@ extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
     
     func returnToLogin() {
         dismiss()
-        reload()
+        stopChildCoordinators()
     }
 }
 

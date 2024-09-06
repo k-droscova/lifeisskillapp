@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct FullRegistrationView<ViewModel: FullRegistrationViewModeling>: View {
     @StateObject var viewModel: ViewModel
     
@@ -74,9 +72,11 @@ private extension FullRegistrationView {
             firstName
             secondName
             phoneNumberAndPostalCode
-            genderPicker
-            birthDayPicker
-                .padding(.vertical, FullRegistrationViewConstants.birthDayPickerVerticalPadding)
+            Group {
+                genderPicker
+                    .padding(.horizontal, FullRegistrationViewConstants.genderPickerHorizontalPadding)
+                birthDayPicker
+            }
         }
     }
     
@@ -106,6 +106,7 @@ private extension FullRegistrationView {
                 showsValidationMessage: true,
                 validationMessage: viewModel.phoneNumberValidationState.validationMessage
             )
+            .frame(maxWidth: FullRegistrationViewConstants.maxPhoneWidth)
             CustomTextField(
                 placeholder: "register.postal_code",
                 text: $viewModel.postalCode,
@@ -116,29 +117,33 @@ private extension FullRegistrationView {
     }
     
     private var genderPicker: some View {
-        Picker("register.gender", selection: $viewModel.gender) {
-            Text("register.gender.male").tag(UserGender.male)
-            Text("register.gender.female").tag(UserGender.female)
-            Text("register.gender.unspecified").tag(UserGender.unspecified)
+        HStack {
+            Text("register.gender")
+                .subheadlineBold
+            Spacer()
+            Picker("register.gender", selection: $viewModel.gender) {
+                Text("register.gender.male").tag(UserGender.male)
+                Text("register.gender.female").tag(UserGender.female)
+            }
+            .pickerStyle(.automatic)
+            .tint(.colorLisBlue)
         }
-        .pickerStyle(.segmented)
     }
     
     private var birthDayPicker: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: FullRegistrationViewConstants.verticalSpacingBetweenBirthdayInstructionsAndAge) {
-                Text("register.date_of_birth.instructions")
-                    .subheadlineBold
-                Text(
-                    LocalizedStringKey(
-                        String(format: NSLocalizedString("register.date_of_birth.age:", comment: ""), String(viewModel.age))))
-                .caption
-            }
-            Spacer()
+        VStack(alignment: .leading, spacing: FullRegistrationViewConstants.verticalSpacingBetweenBirthdayInstructionsAndAge) {
+            Text("register.date_of_birth.instructions")
+                .subheadlineBold
+            Text(
+                LocalizedStringKey(
+                    String(format: NSLocalizedString("register.date_of_birth.age:", comment: ""), String(viewModel.age))))
+            .caption
             DatePicker("register.date_of_birth",
                        selection: $viewModel.dateOfBirth,
+                       in: ...Date(),
                        displayedComponents: .date)
             .labelsHidden()
+            .datePickerStyle(.wheel)
         }
     }
 }
@@ -172,6 +177,7 @@ private extension FullRegistrationView {
                 showsValidationMessage: true,
                 validationMessage: viewModel.guardianPhoneNumberValidationState.validationMessage
             )
+            .frame(maxWidth: FullRegistrationViewConstants.maxPhoneWidth)
             
             CustomTextField(
                 placeholder: "register.email",
@@ -198,7 +204,7 @@ struct FullRegistrationViewConstants {
     static let horizontalPadding: CGFloat = 24
     static let topPadding: CGFloat = 32
     static let submitButtonVerticalPadding: CGFloat = 16
-    
+    static let maxPhoneWidth: CGFloat = 128
     // Spacing constants
     static let verticalSpacingBetweenSections: CGFloat = 16
     static let verticalSpacingBetweenUserFields: CGFloat = 24
@@ -206,8 +212,8 @@ struct FullRegistrationViewConstants {
     static let horizontalSpacingBetweenPhoneAndPostalCode: CGFloat = 16
     static let horizontalSpacingBetweenPhoneAndEmail: CGFloat = 16
     static let verticalSpacingBetweenBirthdayInstructionsAndAge: CGFloat = 4
-    static let verticalSpacingBetweenGuardianFields: CGFloat = 24
-    static let birthDayPickerVerticalPadding: CGFloat = 16
+    static let verticalSpacingBetweenGuardianFields: CGFloat = 16
+    static let genderPickerHorizontalPadding: CGFloat = 12
 }
 
 class MockFullRegistrationViewModel: BaseClass, FullRegistrationViewModeling {
@@ -238,7 +244,6 @@ class MockFullRegistrationViewModel: BaseClass, FullRegistrationViewModeling {
     var firstNameValidationState: ValidationState = BasicValidationState.initial
     var lastNameValidationState: ValidationState = BasicValidationState.initial
     var phoneNumberValidationState: ValidationState = PhoneNumberValidationState.initial
-    var dateValidationState: ValidationState = DateValidationState.initial
     var postalCodeValidationState: ValidationState = BasicValidationState.initial
     var guardianFirstNameValidationState: ValidationState = BasicValidationState.initial
     var guardianLastNameValidationState: ValidationState = BasicValidationState.initial
