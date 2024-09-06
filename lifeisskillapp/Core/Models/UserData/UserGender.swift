@@ -8,9 +8,9 @@
 import Foundation
 
 enum UserGender: String, Codable, Hashable {
-    case male
-    case female
-    case unspecified // unfinished registration
+    case male = "M"
+    case female = "F"
+    case unspecified = ""
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()

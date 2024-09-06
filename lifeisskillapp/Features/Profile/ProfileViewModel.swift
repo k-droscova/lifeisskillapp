@@ -26,7 +26,7 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
 }
 
 final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, ProfileViewModeling {
-    typealias Dependencies = HasLoggers & HasNetworkMonitor & HasRealm & SettingsBarViewModel.Dependencies
+    typealias Dependencies = HasLoggers & HasNetworkMonitor & HasRealm & SettingsBarViewModel.Dependencies & HasUserCategoryManager
     
     // MARK: - Private properties
     
@@ -35,6 +35,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     private let networkMonitor: NetworkMonitoring
     private var isOnline: Bool { networkMonitor.onlineStatus }
     private let userManager: UserManaging
+    private let userCategoryManager: any UserCategoryManaging
     private var loggedInUser: LoggedInUser? { userManager.loggedInUser }
     
     // MARK: - Public properties
@@ -57,6 +58,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         self.networkMonitor = dependencies.networkMonitor
         self.delegate = delegate
         self.userManager = dependencies.userManager
+        self.userCategoryManager = dependencies.userCategoryManager
         self.settingsViewModel = settingBarVM.init(
             dependencies: dependencies,
             delegate: settingsDelegate
@@ -140,16 +142,20 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     }
     
     private func loadData() {
-        guard let user = loggedInUser else {
+        guard let user = loggedInUser,
+              let mainCat = userCategoryManager.getMainCategory()
+        else {
             delegate?.loadUserDataDidFail()
             return
         }
         username = user.nick
         email = user.email
         userGender = user.sex
-        mainCategory = user.mainCategory
-        // TODO: ask for logic behind full activation
-        //isFullyRegistered = user.fullActivation
+        guard userManager.isFullyRegistered else {
+            return
+        }
+        mainCategory = mainCat.description
+        self.isFullyRegistered = isFullyRegistered
     }
     
     private func getSignature() async throws -> String {

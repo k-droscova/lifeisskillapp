@@ -25,6 +25,7 @@ protocol UserManaging {
     
     // MARK: LOGGED IN USER PROPERTIES FOR VIEWMODELS
     var loggedInUser: LoggedInUser? { get }
+    var isFullyRegistered: Bool { get }
     
     func initializeAppId() async throws
     // login/logout
@@ -70,6 +71,9 @@ final class UserManager: BaseClass, UserManaging {
     var isLoggedIn: Bool { data != nil }
     var hasAppId: Bool { userDefaultsStorage.appId != nil }
     var loggedInUser: LoggedInUser? { self.data?.user }
+    var isFullyRegistered: Bool {
+        !(loggedInUser?.mainCategory == User.incompleteRegistrationMainCategory)
+    }
     
     // MARK: - Initialization
     

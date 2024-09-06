@@ -162,11 +162,29 @@ private extension FullRegistrationView {
     
     private var guardianFields: some View {
         VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenGuardianFields) {
-            firstName
-            secondName
+            guardianFirstName
+            guardianSecondName
             phoneAndEmail
             relationship
         }
+    }
+    
+    private var guardianFirstName: some View {
+        CustomTextField(
+            placeholder: "register.first_name",
+            text: $viewModel.guardianFirstName,
+            showsValidationMessage: true,
+            validationMessage: viewModel.guardianFirstNameValidationState.validationMessage
+        )
+    }
+    
+    private var guardianSecondName: some View {
+        CustomTextField(
+            placeholder: "register.last_name",
+            text: $viewModel.guardianLastName,
+            showsValidationMessage: true,
+            validationMessage: viewModel.guardianLastNameValidationState.validationMessage
+        )
     }
     
     private var phoneAndEmail: some View {

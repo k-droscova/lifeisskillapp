@@ -11,6 +11,7 @@ import ACKategories
 
 protocol LoginFlowCoordinatorDelegate: NSObject {
     func loginDidSucceed()
+    func promptToCompleteRegistration()
 }
 
 protocol LoginFlowDelegate: NSObject {
@@ -19,6 +20,7 @@ protocol LoginFlowDelegate: NSObject {
     func loginSuccessful()
     func loginFailed()
     func offlineLoginFailed()
+    func promptToCompleteRegistration()
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
@@ -82,14 +84,21 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         vc.presentationController?.delegate = self // ensures that returnToLogin() is called on presentation dismissal
         present(vc, animated: true)
     }
+    
     func loginSuccessful() {
         delegate?.loginDidSucceed()
     }
+    
     func loginFailed() {
         showOnlineLoginFailureAlert()
     }
+    
     func offlineLoginFailed() {
         showOfflineLoginFailureAlert()
+    }
+    
+    func promptToCompleteRegistration() {
+        delegate?.promptToCompleteRegistration()
     }
     
     // MARK: - Private Helpers

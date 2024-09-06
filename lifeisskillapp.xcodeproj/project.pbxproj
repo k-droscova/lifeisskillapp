@@ -784,6 +784,7 @@
 				27C6198C2C3AAA540067498F /* API */,
 				27C619922C3AAD260067498F /* User.swift */,
 				27774B7A2C87A1CB00B968FA /* Credentials.swift */,
+				27B5DEFD2C871032003B9AEE /* ValidationStates.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1026,7 +1027,6 @@
 				278DB5232C889E8D00FB5B1C /* QRScanner */,
 				27B5DEFF2C871090003B9AEE /* RegistrationView.swift */,
 				27B5DEFB2C870FFF003B9AEE /* RegistrationViewModel.swift */,
-				27B5DEFD2C871032003B9AEE /* ValidationStates.swift */,
 				278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */,
 			);
 			path = Registration;

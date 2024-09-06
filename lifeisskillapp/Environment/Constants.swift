@@ -35,6 +35,7 @@ enum ReferenceQRKeys {
 
 enum User {
     static let ageWhenConsideredNotMinor = 15 // in years
+    static let incompleteRegistrationMainCategory = "HIDE"
 }
 
 enum Phone {

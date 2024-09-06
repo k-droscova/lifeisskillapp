@@ -135,3 +135,26 @@ enum BasicValidationState: BaseValidationState {
         }
     }
 }
+
+enum GuardianEmailValidationState: ValidationState, Equatable {
+    case base(EmailValidationState)
+    case matchesUserEmail
+
+    var validationMessage: LocalizedStringKey? {
+        switch self {
+        case .base(let baseState):
+            return baseState.validationMessage
+        case .matchesUserEmail:
+            return "register.validation.email.guardian_matches_user"
+        }
+    }
+
+    var isValid: Bool {
+        switch self {
+        case .base(let baseState):
+            baseState.isValid
+        case .matchesUserEmail:
+            false
+        }
+    }
+}

@@ -172,6 +172,74 @@
         }
       }
     },
+    "alert.complete_registration_prompt.action" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jdi na profil"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Profil gehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to profile"
+          }
+        }
+      }
+    },
+    "alert.complete_registration_prompt.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ještě jsi nedokončili registraci, můžeš tak učinit ve svém profilu"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie haben die Registrierung noch nicht abgeschlossen, Sie können dies in Ihrem Profil tun."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You haven't completed registration yet, you can do so in your profile."
+          }
+        }
+      }
+    },
+    "alert.complete_registration_prompt.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neúplná registrace"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unvollständige Registrierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incomplete registration"
+          }
+        }
+      }
+    },
     "alert.forced_logout.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1088,6 +1156,98 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Username / Email"
+          }
+        }
+      }
+    },
+    "full_registration.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nepodařilo se nám dokončit tvoji registraci. Zkus to prosím znovu, a pokud problém přetrvává, kontaktuj nás na info@lifeisskill.cz."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir konnten Ihre Registrierung nicht abschließen. Bitte versuchen Sie es erneut, und wenn das Problem weiterhin besteht, kontaktieren Sie uns unter info@lifeisskill.cz."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We were unable to process your completion of registration. Please try again, and if issue persists contact us at info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "full_registration.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "full_registration.success.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrace byla úspěšně dokončena! Nyní si můžeš hru užívat bez jakýchkoli omezení."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Registrierung wurde erfolgreich abgeschlossen! Jetzt können Sie das Spiel ohne Einschränkungen genießen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registration was completed successfully! Now you can enjoy the game without any limitations."
+          }
+        }
+      }
+    },
+    "full_registration.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úspěch!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolg!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success!"
           }
         }
       }
@@ -3254,28 +3414,6 @@
         }
       }
     },
-    "register.gender.unspecified" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nespecifikováno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nicht angegeben"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unspecified"
-          }
-        }
-      }
-    },
     "register.guardian_info" : {
       "localizations" : {
         "cs" : {
@@ -3564,29 +3702,6 @@
         }
       }
     },
-    "register.validation.date.inFuture" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vyber si datum z minulosti"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zukünftiges Datum kann nicht ausgewählt werden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cannot pick future date"
-          }
-        }
-      }
-    },
     "register.validation.email.format" : {
       "localizations" : {
         "cs" : {
@@ -3605,6 +3720,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please enter valid email."
+          }
+        }
+      }
+    },
+    "register.validation.email.guardian_matches_user" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nemůžeš použít stejný e-mail jako pro registraci."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können nicht die gleiche E-Mail-Adresse wie bei der Registrierung verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You cannot use the same email as for registration"
           }
         }
       }

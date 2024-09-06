@@ -7,22 +7,6 @@
 
 import Foundation
 
-struct GuardianInfo {
-    let firstName: String
-    let lastName: String
-    let phoneNumber: String
-    let email: String
-    let relationship: String
-}
-
-struct FullRegistrationCredentials {
-    let firstName: String
-    let lastName: String
-    let phoneNumber: String
-    let dateOfBirth: Date
-    let guardianInfo: GuardianInfo? // Optional, only needed if the user is a minor
-}
-
 protocol FullRegistrationViewModeling: BaseClass, ObservableObject {
     
     var isLoading: Bool { get }
@@ -138,7 +122,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     @Published private(set) var guardianFirstNameValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var guardianLastNameValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var guardianPhoneNumberValidationState: ValidationState = PhoneNumberValidationState.initial
-    @Published private(set) var guardianEmailValidationState: ValidationState = EmailValidationState.initial
+    @Published private(set) var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.initial)
     @Published private(set) var guardianRelationshipValidationState: ValidationState = BasicValidationState.initial
     
     var isFormValid: Bool {
@@ -179,22 +163,23 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     }
     
     // MARK: - Private Helpers
+    
     private func collectFullRegistrationInfo() -> FullRegistrationCredentials {
-        guard isMinor else {
-            return FullRegistrationCredentials(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, dateOfBirth: dateOfBirth, guardianInfo: nil)
-        }
-        let guardian = GuardianInfo(
+        let guardian: GuardianInfo? = isMinor ? GuardianInfo(
             firstName: guardianFirstName,
             lastName: guardianLastName,
             phoneNumber: guardianPhoneNumber,
             email: guardianEmail,
             relationship: guardianRelationship
-        )
+        ) : nil
+        
         return FullRegistrationCredentials(
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
             dateOfBirth: dateOfBirth,
+            gender: gender,
+            postalCode: postalCode,
             guardianInfo: guardian
         )
     }
@@ -246,11 +231,13 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     
     private func validateGuardianEmail() {
         if guardianEmail.isEmpty {
-            guardianEmailValidationState = EmailValidationState.empty
+            guardianEmailValidationState = GuardianEmailValidationState.base(.empty)
         } else if !isValidEmailFormat(guardianEmail) {
-            guardianEmailValidationState = EmailValidationState.invalidFormat
+            guardianEmailValidationState = GuardianEmailValidationState.base(.invalidFormat)
+        } else if matchesUserEmail() {
+            guardianEmailValidationState = GuardianEmailValidationState.matchesUserEmail
         } else {
-            guardianEmailValidationState = EmailValidationState.valid
+            guardianEmailValidationState = GuardianEmailValidationState.base(.valid)
         }
     }
     
@@ -266,5 +253,9 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     private func isValidEmailFormat(_ email: String) -> Bool {
         let emailPred = NSPredicate(format: "SELF MATCHES %@", Email.emailPattern)
         return emailPred.evaluate(with: email)
+    }
+    
+    private func matchesUserEmail() -> Bool {
+        userManager.loggedInUser?.email == guardianEmail
     }
 }

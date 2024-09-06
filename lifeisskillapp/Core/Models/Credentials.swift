@@ -57,3 +57,51 @@ struct ForgotPasswordCredentials: Codable, Credentials {
         ]
     }
 }
+
+
+// TODO: ensure that the params are correct
+struct GuardianInfo: Codable, Credentials {
+    let firstName: String
+    let lastName: String
+    let phoneNumber: String
+    let email: String
+    let relationship: String
+    
+    var params: [String : String] {
+        [
+            "nameParent": firstName,
+            "surnameParent": lastName,
+            "phoneParent": phoneNumber,
+            "emailParent": email,
+            "relation": relationship
+        ]
+    }
+}
+
+struct FullRegistrationCredentials: Codable, Credentials {
+    let firstName: String
+    let lastName: String
+    let phoneNumber: String
+    let dateOfBirth: Date
+    let gender: UserGender
+    let postalCode: String
+    let guardianInfo: GuardianInfo? // Optional, only needed if the user is a minor
+    
+    var params: [String: String] {
+        var params = [
+            "name": firstName,
+            "surname": lastName,
+            "phone": phoneNumber,
+            "birthday": dateOfBirth.toPointListString(), // TODO: ask about format
+            "sex": gender.rawValue,
+            "zip": postalCode
+        ]
+        
+        // If guardianInfo is not nil, merge its params with the existing params
+        if let guardianParams = guardianInfo?.params {
+            params.merge(guardianParams) { (current, _) in current }
+        }
+        
+        return params
+    }
+}

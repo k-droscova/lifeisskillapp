@@ -70,6 +70,10 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
             do {
                 try await self.userManager.login(credentials: .init(username: username, password: password))
                 self.delegate?.loginSuccessful()
+                guard self.userManager.isFullyRegistered else {
+                    self.delegate?.promptToCompleteRegistration()
+                    return
+                }
             } catch let error as BaseError {
                 if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
                     delegate?.offlineLoginFailed()
