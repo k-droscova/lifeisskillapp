@@ -39,7 +39,7 @@ enum Endpoint: Endpointing {
                 "/nick/\(username)/check"
             case .checkEmailAvailability(let email):
                 "/email/\(email)/check"
-            case .registerUser:
+            case .registerUser, .completeRegistration:
                 "/users"
             }
             
@@ -77,10 +77,23 @@ enum Endpoint: Endpointing {
     
     var isUserTokenRequired: Bool {
         switch self {
-        case .resetPassword, .registration, .appId, .login:
-            false
-        case .usercategory, .userpoints, .rank, .events, .messages, .points, .sponsorImage, .signature:
-            true
+        case .appId,
+                .login,
+                .resetPassword,
+                .registration(.checkUsernameAvailability),
+                .registration(.checkEmailAvailability),
+                .registration(.registerUser):
+            return false
+        case .usercategory, 
+                .userpoints,
+                .rank,
+                .events,
+                .messages,
+                .points,
+                .sponsorImage,
+                .signature,
+                .registration(.completeRegistration):
+            return true
         }
     }
     
@@ -119,5 +132,6 @@ extension Endpoint {
         case checkUsernameAvailability(username: String)
         case checkEmailAvailability(email: String)
         case registerUser
+        case completeRegistration
     }
 }

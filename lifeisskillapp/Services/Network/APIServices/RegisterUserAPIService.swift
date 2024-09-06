@@ -19,14 +19,16 @@ protocol RegisterUserAPIServicing {
 }
 
 public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
-    typealias Dependencies = HasNetwork & HasLoggerServicing
+    typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
     
     private var network: Networking
     private var logger: LoggerServicing
-    
+    private let storage: PersistentUserDataStoraging
+
     init(dependencies: Dependencies) {
         self.network = dependencies.network
         self.logger = dependencies.logger
+        self.storage = dependencies.storage
     }
     
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse> {
@@ -69,11 +71,12 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
         let data = try task.encodeParams()
         
         return try await network.performAuthorizedRequestWithDataDecoding(
-            endpoint: Endpoint.registration(.registerUser),
+            endpoint: Endpoint.registration(.completeRegistration),
             method: .PUT,
             body: data,
-            sensitiveRequestBodyData: true,
-            errorObject: APIResponseError.self
+            sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self,
+            userToken: storage.token
         )
     }
 }
