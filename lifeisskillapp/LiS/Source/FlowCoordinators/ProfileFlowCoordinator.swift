@@ -85,10 +85,16 @@ extension ProfileFlowCoordinator: ProfileFlowDelegate {
 }
 
 extension ProfileFlowCoordinator: FullRegistrationFlowCoordinatorDelegate {
-    func registrationDidSucceed() {
+    func registrationDidSucceedAdult() {
         dismiss()
         stopChildCoordinators()
         showAlert(titleKey: "full_registration.success.title", messageKey: "full_registration.success.message")
+    }
+    
+    func registrationDidSucceedMinor() {
+        dismiss()
+        stopChildCoordinators()
+        showAlert(titleKey: "full_registration.success.title", messageKey: "full_registration.success_minor.message")
     }
     
     func registrationDidFail() {

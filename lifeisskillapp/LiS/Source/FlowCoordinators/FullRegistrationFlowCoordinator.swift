@@ -10,12 +10,14 @@ import ACKategories
 import UIKit
 
 protocol FullRegistrationFlowCoordinatorDelegate: NSObject {
-    func registrationDidSucceed()
+    func registrationDidSucceedAdult()
+    func registrationDidSucceedMinor()
     func registrationDidFail()
 }
 
 protocol FullRegistrationFlowDelegate: NSObject {
-    func registrationDidSucceed()
+    func registrationDidSucceedAdult()
+    func registrationDidSucceedMinor()
     func registrationDidFail()
 }
 
@@ -43,8 +45,12 @@ final class FullRegistrationFlowCoordinator: Base.FlowCoordinatorNoDeepLink, Bas
 }
 
 extension FullRegistrationFlowCoordinator: FullRegistrationFlowDelegate {
-    func registrationDidSucceed() {
-        delegate?.registrationDidSucceed()
+    func registrationDidSucceedAdult() {
+        delegate?.registrationDidSucceedAdult()
+    }
+    
+    func registrationDidSucceedMinor() {
+        delegate?.registrationDidSucceedMinor()
     }
     
     func registrationDidFail() {

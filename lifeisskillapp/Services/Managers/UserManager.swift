@@ -40,7 +40,7 @@ protocol UserManaging {
     func checkUsernameAvailability(_ username: String) async throws -> Bool
     func checkEmailAvailability(_ email: String) async throws -> Bool
     func registerUser(credentials: NewRegistrationCredentials) async throws
-    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws
+    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool
     func signature() async -> String?
 }
 
@@ -141,11 +141,18 @@ final class UserManager: BaseClass, UserManaging {
         }
     }
     
-    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws {
+    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool {
         logger.log(message: "Completing registration for User: " + credentials.firstName)
         do {
-            //let _ = try await registerUserAPI.completeRegistration(credentials: credentials, location: locationManager.location)
-            return
+            let response = try await registerUserAPI.completeRegistration(credentials: credentials)
+            guard response.data.completionStatus else {
+                throw BaseError(
+                    context: .system,
+                    message: "Unable to register",
+                    logger: logger
+                )
+            }
+            return response.data.needParentActivation
         } catch {
             throw BaseError(
                 context: .system,

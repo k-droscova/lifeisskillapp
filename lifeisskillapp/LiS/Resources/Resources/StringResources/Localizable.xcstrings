@@ -1206,6 +1206,29 @@
         }
       }
     },
+    "full_registration.success_minor.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrace bude dokončena, jakmile tvůj opatrovník potvrdí svůj e-mail kliknutím na aktivační odkaz, který jsme mu právě poslali."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Registrierung wird abgeschlossen, sobald Ihr Erziehungsberechtigter seine E-Mail bestätigt, indem er auf den Aktivierungslink klickt, den wir ihm gerade gesendet haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registration will be complete once your guardian validates their email by clicking activation link we just sent them."
+          }
+        }
+      }
+    },
     "full_registration.success.message" : {
       "extractionState" : "manual",
       "localizations" : {

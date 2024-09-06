@@ -153,8 +153,12 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
             
             let fullCredentials = self.collectFullRegistrationInfo()
             do {
-                try await self.userManager.completeUserRegistration(credentials: fullCredentials)
-                self.delegate?.registrationDidSucceed()
+                let needsParentConsent = try await self.userManager.completeUserRegistration(credentials: fullCredentials)
+                guard needsParentConsent else {
+                    self.delegate?.registrationDidSucceedAdult()
+                    return
+                }
+                self.delegate?.registrationDidSucceedMinor()
             } catch {
                 self.logger.log(message: "Failed to complete full registration")
                 self.delegate?.registrationDidFail()

@@ -280,3 +280,19 @@ struct SignatureAPIResponse: DataProtocol {
         signature = try container.decode(String.self, forKey: .signature)
     }
 }
+
+struct CompleteRegistrationAPIResponse: DataProtocol {
+    let completionStatus: Bool
+    let needParentActivation: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case completionStatus = "userProfileUpdated"
+        case needParentActivation = "needParentActivation"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        completionStatus = try container.decode(Bool.self, forKey: .completionStatus)
+        needParentActivation = try container.decode(Bool.self, forKey: .needParentActivation)
+    }
+}

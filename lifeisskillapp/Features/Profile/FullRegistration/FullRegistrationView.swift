@@ -106,7 +106,6 @@ private extension FullRegistrationView {
                 showsValidationMessage: true,
                 validationMessage: viewModel.phoneNumberValidationState.validationMessage
             )
-            .frame(maxWidth: FullRegistrationViewConstants.maxPhoneWidth)
             CustomTextField(
                 placeholder: "register.postal_code",
                 text: $viewModel.postalCode,
@@ -164,8 +163,8 @@ private extension FullRegistrationView {
         VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenGuardianFields) {
             guardianFirstName
             guardianSecondName
-            phoneAndEmail
-            relationship
+            email
+            phoneAndRelationship
         }
     }
     
@@ -187,7 +186,7 @@ private extension FullRegistrationView {
         )
     }
     
-    private var phoneAndEmail: some View {
+    private var phoneAndRelationship: some View {
         HStack(spacing: FullRegistrationViewConstants.horizontalSpacingBetweenPhoneAndEmail) {
             CustomTextField(
                 placeholder: "register.phone_number",
@@ -195,23 +194,22 @@ private extension FullRegistrationView {
                 showsValidationMessage: true,
                 validationMessage: viewModel.guardianPhoneNumberValidationState.validationMessage
             )
-            .frame(maxWidth: FullRegistrationViewConstants.maxPhoneWidth)
             
             CustomTextField(
-                placeholder: "register.email",
-                text: $viewModel.guardianEmail,
+                placeholder: "register.guardian_relationship",
+                text: $viewModel.guardianRelationship,
                 showsValidationMessage: true,
-                validationMessage: viewModel.guardianEmailValidationState.validationMessage
+                validationMessage: viewModel.guardianRelationshipValidationState.validationMessage
             )
         }
     }
     
-    private var relationship: some View {
+    private var email: some View {
         CustomTextField(
-            placeholder: "register.guardian_relationship",
-            text: $viewModel.guardianRelationship,
+            placeholder: "register.email",
+            text: $viewModel.guardianEmail,
             showsValidationMessage: true,
-            validationMessage: viewModel.guardianRelationshipValidationState.validationMessage
+            validationMessage: viewModel.guardianEmailValidationState.validationMessage
         )
     }
 }
@@ -222,7 +220,6 @@ struct FullRegistrationViewConstants {
     static let horizontalPadding: CGFloat = 24
     static let topPadding: CGFloat = 32
     static let submitButtonVerticalPadding: CGFloat = 16
-    static let maxPhoneWidth: CGFloat = 128
     // Spacing constants
     static let verticalSpacingBetweenSections: CGFloat = 16
     static let verticalSpacingBetweenUserFields: CGFloat = 24
