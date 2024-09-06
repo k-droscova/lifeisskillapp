@@ -43,6 +43,7 @@
 		271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */; };
 		271F1F122C5406F600DF9DFD /* ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F112C5406F600DF9DFD /* ScanningManager.swift */; };
 		271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F1F132C54124D00DF9DFD /* NFCViewModel.swift */; };
+		271FEC4B2C8B183200311F97 /* FullRegistrationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FEC4A2C8B183200311F97 /* FullRegistrationFlowCoordinator.swift */; };
 		2720DF262C513D40007B4E77 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF252C513D40007B4E77 /* HomeViewModel.swift */; };
 		2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */; };
 		2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720DF2B2C514A0A007B4E77 /* HomeView.swift */; };
@@ -263,6 +264,7 @@
 		271F1F0A2C53FF4E00DF9DFD /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		271F1F112C5406F600DF9DFD /* ScanningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManager.swift; sourceTree = "<group>"; };
 		271F1F132C54124D00DF9DFD /* NFCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCViewModel.swift; sourceTree = "<group>"; };
+		271FEC4A2C8B183200311F97 /* FullRegistrationFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRegistrationFlowCoordinator.swift; sourceTree = "<group>"; };
 		2720DF252C513D40007B4E77 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		2720DF292C51459B007B4E77 /* HomeFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowCoordinator.swift; sourceTree = "<group>"; };
 		2720DF2B2C514A0A007B4E77 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 				2713034B2C7C8E810005FC46 /* ForgotPasswordFlowCoordinator.swift */,
 				278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */,
 				27234C292C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift */,
+				271FEC4A2C8B183200311F97 /* FullRegistrationFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -1512,6 +1515,7 @@
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
 				27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */,
+				271FEC4B2C8B183200311F97 /* FullRegistrationFlowCoordinator.swift in Sources */,
 				27E9D61B2C63F9150098CB96 /* RankingRepository.swift in Sources */,
 				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
 				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,

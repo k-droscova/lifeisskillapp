@@ -25,9 +25,9 @@ extension BaseValidationState {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case Self.empty:
-            return "register.validation.empty"
+            "register.validation.empty"
         default:
-            return nil
+            nil
         }
     }
 }
@@ -44,11 +44,11 @@ enum UsernameValidationState: BaseValidationState {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case .alreadyTaken:
-            return "register.validation.username.taken"
+            "register.validation.username.taken"
         case .short:
-            return LocalizedStringKey(String(format: NSLocalizedString("register.validation.username.short", comment: ""), String(Username.minLength)))
+            LocalizedStringKey(String(format: NSLocalizedString("register.validation.username.short", comment: ""), String(Username.minLength)))
         default:
-            return nil
+            nil
         }
     }
 }
@@ -63,11 +63,11 @@ enum EmailValidationState: BaseValidationState {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case .invalidFormat:
-            return "register.validation.email.format"
+            "register.validation.email.format"
         case .alreadyTaken:
-            return "register.validation.email.taken"
+            "register.validation.email.taken"
         default:
-            return nil
+            nil
         }
     }
 }
@@ -81,9 +81,9 @@ enum PasswordValidationState: BaseValidationState {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case .invalidFormat:
-            return LocalizedStringKey(String(format: NSLocalizedString("register.validation.password.format", comment: ""), String(Password.minLenght)))
+            LocalizedStringKey(String(format: NSLocalizedString("register.validation.password.format", comment: ""), String(Password.minLenght)))
         default:
-            return nil
+            nil
         }
     }
 }
@@ -97,9 +97,57 @@ enum ConfirmPasswordValidationState: BaseValidationState {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case .mismatching:
-            return "register.validation.password.mismatch"
+            "register.validation.password.mismatch"
         default:
-            return nil
+            nil
+        }
+    }
+}
+
+enum PhoneNumberValidationState: BaseValidationState {
+    case initial
+    case valid
+    case empty
+    case invalidFormat
+    
+    var validationMessage: LocalizedStringKey? {
+        switch self {
+        case .invalidFormat:
+            "register.validation.phone.invalidFormat"
+        default:
+            nil
+        }
+    }
+}
+
+enum DateValidationState: BaseValidationState {
+    case initial
+    case valid
+    case empty
+    case inFuture
+    
+    var validationMessage: LocalizedStringKey? {
+        switch self {
+        case .inFuture:
+            "register.validation.date.inFuture"
+        default:
+            nil
+        }
+    }
+}
+
+// For fields that do not have more requirements other than they shouldn't be empty
+enum BasicValidationState: BaseValidationState {
+    case initial
+    case valid
+    case empty
+    
+    var validationMessage: LocalizedStringKey? {
+        switch self {
+        case .empty:
+            "register.validation.empty"
+        default:
+            nil
         }
     }
 }

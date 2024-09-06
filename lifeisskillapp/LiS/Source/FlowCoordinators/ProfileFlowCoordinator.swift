@@ -67,9 +67,9 @@ extension ProfileFlowCoordinator: ProfileFlowDelegate {
     
     func startRegistration() {
         print("start registration pressed")
-        let vc = FullRegistrationView().hosting()
-        vc.modalPresentationStyle = .formSheet
-        present(vc, animated: true)
+        //let vc = FullRegistrationView().hosting()
+        //vc.modalPresentationStyle = .formSheet
+        //present(vc, animated: true)
     }
     
     func loadUserDataDidFail() {
