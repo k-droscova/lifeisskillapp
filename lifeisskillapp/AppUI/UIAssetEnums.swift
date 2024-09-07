@@ -17,6 +17,7 @@ enum SFSSymbols: String {
     case map = "map"
     case categorySelectorDropDown = "chevron.down"
     case settingsMenu = "ellipsis.circle"
+    case navigationBack = "chevron.backward"
     case qr = "qrcode.viewfinder"
     case camera = "camera.viewfinder"
     case nfc = "tag.square"

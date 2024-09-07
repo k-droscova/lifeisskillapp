@@ -15,17 +15,20 @@ protocol RegisterUserAPIServicing {
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse>
     func checkEmailAvailability(_ email: String) async throws -> APIResponse<EmailAvailabilityResponse>
     func registerUser(credentials: NewRegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse>
+    func completeRegistration(credentials: FullRegistrationCredentials) async throws -> APIResponse<CompleteRegistrationAPIResponse>
 }
 
 public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
-    typealias Dependencies = HasNetwork & HasLoggerServicing
+    typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
     
     private var network: Networking
     private var logger: LoggerServicing
-    
+    private let storage: PersistentUserDataStoraging
+
     init(dependencies: Dependencies) {
         self.network = dependencies.network
         self.logger = dependencies.logger
+        self.storage = dependencies.storage
     }
     
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse> {
@@ -60,6 +63,20 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
             body: data,
             sensitiveRequestBodyData: true,
             errorObject: APIResponseError.self
+        )
+    }
+    
+    func completeRegistration(credentials: FullRegistrationCredentials) async throws -> APIResponse<CompleteRegistrationAPIResponse> {
+        let task = ApiTask.completeRegistration(credentials: credentials)
+        let data = try task.encodeParams()
+        
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: Endpoint.registration(.completeRegistration),
+            method: .PUT,
+            body: data,
+            sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self,
+            userToken: storage.token
         )
     }
 }

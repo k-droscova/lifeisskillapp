@@ -15,6 +15,7 @@ public protocol BaseFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)?)
     func showAlert(titleKey: String, messageKey: String, actions: [UIAlertAction])
     func onError(_ error: any Error)
+    func stopChildCoordinators()
 }
 
 extension BaseFlowCoordinator {
@@ -83,5 +84,9 @@ extension BaseFlowCoordinator {
             titleKey: "alert.general_error.title",
             messageKey: "alert.general_error.message"
         )
+    }
+    
+    func stopChildCoordinators() {
+        childCoordinators.forEach { $0.stop(animated: false) }
     }
 }

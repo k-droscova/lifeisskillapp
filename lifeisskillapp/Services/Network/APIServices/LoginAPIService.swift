@@ -13,6 +13,7 @@ protocol HasLoginAPIService {
 
 protocol LoginAPIServicing {
     func login(credentials: LoginCredentials, location: UserLocation?) async throws -> APIResponse<LoginAPIResponse>
+    func signature(userToken: String) async throws -> APIResponse<SignatureAPIResponse>
 }
 
 public final class LoginAPIService: BaseClass, LoginAPIServicing {
@@ -43,6 +44,15 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
             body: data,
             sensitiveRequestBodyData: true,
             errorObject: APIResponseError.self
+        )
+    }
+    
+    func signature(userToken: String) async throws -> APIResponse<SignatureAPIResponse> {
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: Endpoint.signature,
+            sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self,
+            userToken: userToken
         )
     }
 }

@@ -24,8 +24,7 @@ protocol UserManaging {
     var hasAppId: Bool { get }
     
     // MARK: LOGGED IN USER PROPERTIES FOR VIEWMODELS
-    var userName: String? { get }
-    var userGender: UserGender? { get }
+    var loggedInUser: LoggedInUser? { get }
     
     func initializeAppId() async throws
     // login/logout
@@ -40,6 +39,8 @@ protocol UserManaging {
     func checkUsernameAvailability(_ username: String) async throws -> Bool
     func checkEmailAvailability(_ email: String) async throws -> Bool
     func registerUser(credentials: NewRegistrationCredentials) async throws
+    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool
+    func signature() async -> String?
 }
 
 final class UserManager: BaseClass, UserManaging {
@@ -68,9 +69,7 @@ final class UserManager: BaseClass, UserManaging {
     weak var delegate: UserManagerFlowDelegate?
     var isLoggedIn: Bool { data != nil }
     var hasAppId: Bool { userDefaultsStorage.appId != nil }
-
-    var userName: String? { self.data?.user.nick }
-    var userGender: UserGender? { self.data?.user.sex }
+    var loggedInUser: LoggedInUser? { self.data?.user }
     
     // MARK: - Initialization
     
@@ -129,6 +128,27 @@ final class UserManager: BaseClass, UserManaging {
         do {
             let _ = try await registerUserAPI.registerUser(credentials: credentials, location: locationManager.location)
             return
+        } catch {
+            throw BaseError(
+                context: .system,
+                message: "Unable to register",
+                logger: logger
+            )
+        }
+    }
+    
+    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool {
+        logger.log(message: "Completing registration for User: " + credentials.firstName)
+        do {
+            let response = try await registerUserAPI.completeRegistration(credentials: credentials)
+            guard response.data.completionStatus else {
+                throw BaseError(
+                    context: .system,
+                    message: "Unable to register",
+                    logger: logger
+                )
+            }
+            return response.data.needParentActivation
         } catch {
             throw BaseError(
                 context: .system,
@@ -211,6 +231,20 @@ final class UserManager: BaseClass, UserManaging {
             } catch {
                 self?.logger.log(message: "Error: force logout failed")
             }
+        }
+    }
+    
+    func signature() async -> String? {
+        guard let token = storage.token else {
+            logger.log(message: "Unable to fetch signature: Token is nil")
+            return nil
+        }
+        do {
+            let response = try await loginAPI.signature(userToken: token)
+            return response.data.signature
+        } catch {
+            logger.log(message: "Unable to fetch signature: \(error.localizedDescription)")
+            return nil
         }
     }
     

@@ -18,7 +18,7 @@ protocol UserProtocol: UserData {
 // Extend the protocol for Codable to make it easy to decode
 extension UserProtocol where Self: Codable {}
 
-/// Model for user data from the login endpoint. Saved using UserLoginDataManager, this data is retrieved throughout App UI 
+/// Model for user data from the login endpoint. Saved using UserLoginDataManager, this data is retrieved throughout App UI
 struct LoggedInUser: UserProtocol, Codable {
     /// Unique identifier for the user
     let userId: String
@@ -55,6 +55,29 @@ struct LoggedInUser: UserProtocol, Codable {
     
     /// Whether the user's account is fully activated
     let fullActivation: Bool
+    
+    /// Optional Fields for user personal details
+    let name: String?
+    let surname: String?
+    let mobil: String?
+    let postalCode: String?
+    let birthday: Date?
+    
+    /// Computed property to calculate the user's age based on the birthday
+    var age: Int {
+        guard let birthday = birthday else { return 0 }
+        let calendar = Calendar.current
+        let now = Date()
+        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now)
+        return ageComponents.year ?? 0
+    }
+    
+    /// Optional Fields for parent's information
+    let nameParent: String?
+    let surnameParent: String?
+    let emailParent: String?
+    let mobilParent: String?
+    let relation: String?
 }
 
 // Extend the UserProtocol to provide a default implementation for the id property

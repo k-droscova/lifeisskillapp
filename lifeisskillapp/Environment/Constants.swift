@@ -32,3 +32,13 @@ enum ReferenceQRKeys {
     static let onlineStatus = "key3"      // true (offline) or false (online)
     static let game = "game"              // Game name
 }
+
+enum User {
+    static let ageWhenConsideredNotMinor = 15 // in years
+    static let incompleteRegistrationMainCategory = "HIDE"
+}
+
+enum Phone {
+    static let phonePattern = "^[0-9+()\\s-]{7,15}$" // regex
+    static let defaultCountryCode = "+420" // czech republic, for phone pickers
+}

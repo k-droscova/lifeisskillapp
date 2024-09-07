@@ -16,6 +16,7 @@ enum ApiTask: ApiTasking {
     case postScannedPoint(point: ScannedPoint)
     case renewPassword(credentials: ForgotPasswordCredentials)
     case registerUser(credentials: NewRegistrationCredentials, location: UserLocation)
+    case completeRegistration(credentials: FullRegistrationCredentials)
     
     // MARK: - Public Interface
     
@@ -77,6 +78,8 @@ enum ApiTask: ApiTasking {
                 "lat": String(location.latitude),
                 "lng": String(location.longitude)
             ]) { (_, new) in new }
+        case .completeRegistration(let credentials):
+            params.merge(credentials.params) { (_, new) in new }
         }
         
         return params
@@ -92,6 +95,8 @@ enum ApiTask: ApiTasking {
             "renewPswd"
         case .registerUser:
             "registerNewUser"
+        case .completeRegistration:
+            "completeRegistration"
         }
     }
     

@@ -57,3 +57,49 @@ struct ForgotPasswordCredentials: Codable, Credentials {
         ]
     }
 }
+
+
+struct GuardianInfo: Codable, Credentials {
+    let firstName: String
+    let lastName: String
+    let phoneNumber: String
+    let email: String
+    let relationship: String
+    
+    var params: [String : String] {
+        [
+            "nameParent": firstName,
+            "surnameParent": lastName,
+            "phoneParent": phoneNumber,
+            "emailParent": email,
+            "relation": relationship
+        ]
+    }
+}
+
+struct FullRegistrationCredentials: Codable, Credentials {
+    let firstName: String
+    let lastName: String
+    let phoneNumber: String
+    let dateOfBirth: Date
+    let gender: UserGender
+    let postalCode: String
+    let guardianInfo: GuardianInfo?
+    
+    var params: [String: String] {
+        var params = [
+            "name": firstName,
+            "surname": lastName,
+            "phone": phoneNumber,
+            "birthday": dateOfBirth.getDateString(),
+            "sex": gender.rawValue,
+            "zip": postalCode
+        ]
+        
+        if let guardianParams = guardianInfo?.params {
+            params.merge(guardianParams) { (current, _) in current }
+        }
+        
+        return params
+    }
+}

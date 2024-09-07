@@ -21,7 +21,8 @@ enum Endpoint: Endpointing {
     case login
     case usercategory, userpoints, rank, events, messages, points
     case sponsorImage(sponsorId: String, width: Int, height: Int)
-
+    case signature
+    
     var path: String {
         switch self {
         case .resetPassword(let action):
@@ -31,17 +32,17 @@ enum Endpoint: Endpointing {
             case .confirm:
                 "/pswd"
             }
-
+            
         case .registration(let action):
             switch action {
             case .checkUsernameAvailability(let username):
                 "/nick/\(username)/check"
             case .checkEmailAvailability(let email):
                 "/email/\(email)/check"
-            case .registerUser:
+            case .registerUser, .completeRegistration:
                 "/users"
             }
-
+            
         case .appId:
             "/appid"
         case .login:
@@ -60,9 +61,11 @@ enum Endpoint: Endpointing {
             "/points"
         case .sponsorImage(let sponsorId, let width, let height):
             "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
+        case .signature:
+            "/signature"
         }
     }
-
+    
     var typeHeaders: [String: String] {
         switch self {
         case .sponsorImage:
@@ -71,28 +74,41 @@ enum Endpoint: Endpointing {
             ["accept": "application/json"]
         }
     }
-
+    
     var isUserTokenRequired: Bool {
         switch self {
-        case .resetPassword, .registration, .appId, .login:
-            false
-        case .usercategory, .userpoints, .rank, .events, .messages, .points, .sponsorImage:
-            true
+        case .appId,
+                .login,
+                .resetPassword,
+                .registration(.checkUsernameAvailability),
+                .registration(.checkEmailAvailability),
+                .registration(.registerUser):
+            return false
+        case .usercategory, 
+                .userpoints,
+                .rank,
+                .events,
+                .messages,
+                .points,
+                .sponsorImage,
+                .signature,
+                .registration(.completeRegistration):
+            return true
         }
     }
-
+    
     func headers(userToken: String? = nil) -> [String: String] {
         var finalHeaders = typeHeaders
-
+        
         // Conditionally add the User-Token header if required
         if isUserTokenRequired, let userToken = userToken {
             let userHeader = APIHeader.apiTokenHeader(token: userToken)
             finalHeaders[userHeader.key] = userHeader.val
         }
-
+        
         return finalHeaders
     }
-
+    
     func urlWithPath() throws -> URL {
         let finalURLString = APIUrl.base + path
         guard let url = URL(string: finalURLString) else {
@@ -116,5 +132,6 @@ extension Endpoint {
         case checkUsernameAvailability(username: String)
         case checkEmailAvailability(email: String)
         case registerUser
+        case completeRegistration
     }
 }

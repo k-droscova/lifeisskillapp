@@ -24,6 +24,18 @@ class RealmLoginDetails: Object {
     @objc dynamic var fullActivation: Bool = false
     @objc dynamic var isLoggedIn: Bool = false
     
+    // New fields from the updated LoggedInUser structure
+    @objc dynamic var name: String = ""
+    @objc dynamic var surname: String = ""
+    @objc dynamic var mobil: String = ""
+    @objc dynamic var postalCode: String = ""
+    @objc dynamic var birthday: Date? = nil
+    @objc dynamic var nameParent: String = ""
+    @objc dynamic var surnameParent: String = ""
+    @objc dynamic var emailParent: String = ""
+    @objc dynamic var mobilParent: String = ""
+    @objc dynamic var relation: String = ""
+    
     override static func primaryKey() -> String? {
         "loginID"
     }
@@ -32,6 +44,7 @@ class RealmLoginDetails: Object {
         super.init()
     }
     
+    /// Convenience initializer to populate from a `LoggedInUser`
     convenience init(from loggedInUser: LoggedInUser) {
         self.init()
         userID = loggedInUser.userId
@@ -46,6 +59,18 @@ class RealmLoginDetails: Object {
         distance = loggedInUser.distance
         mainCategory = loggedInUser.mainCategory
         fullActivation = loggedInUser.fullActivation
+        
+        // Assign the new optional fields, replacing nil with empty strings where needed
+        name = loggedInUser.name ?? ""
+        surname = loggedInUser.surname ?? ""
+        mobil = loggedInUser.mobil ?? ""
+        postalCode = loggedInUser.postalCode ?? ""
+        birthday = loggedInUser.birthday // Date? type is supported in Realm
+        nameParent = loggedInUser.nameParent ?? ""
+        surnameParent = loggedInUser.surnameParent ?? ""
+        emailParent = loggedInUser.emailParent ?? ""
+        mobilParent = loggedInUser.mobilParent ?? ""
+        relation = loggedInUser.relation ?? ""
     }
     
     func loginUserData() -> LoginUserData? {
@@ -55,7 +80,7 @@ class RealmLoginDetails: Object {
         return LoginUserData(from: user)
     }
     
-    private func loggedInUser() -> LoggedInUser? {
+    func loggedInUser() -> LoggedInUser? {
         guard let sex = UserGender(rawValue: self.sexRaw) else {
             return nil
         }
@@ -71,7 +96,17 @@ class RealmLoginDetails: Object {
             userPoints: self.userPoints,
             distance: self.distance,
             mainCategory: self.mainCategory,
-            fullActivation: self.fullActivation
+            fullActivation: self.fullActivation,
+            name: self.name.isEmpty ? nil : self.name,
+            surname: self.surname.isEmpty ? nil : self.surname,
+            mobil: self.mobil.isEmpty ? nil : self.mobil,
+            postalCode: self.postalCode.isEmpty ? nil : self.postalCode,
+            birthday: self.birthday,
+            nameParent: self.nameParent.isEmpty ? nil : self.nameParent,
+            surnameParent: self.surnameParent.isEmpty ? nil : self.surnameParent,
+            emailParent: self.emailParent.isEmpty ? nil : self.emailParent,
+            mobilParent: self.mobilParent.isEmpty ? nil : self.mobilParent,
+            relation: self.relation.isEmpty ? nil : self.relation
         )
     }
 }

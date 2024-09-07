@@ -138,4 +138,10 @@ enum Formatters {
         
         return dateFormatter
     }()
+    
+    static let birthdayFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
 }
