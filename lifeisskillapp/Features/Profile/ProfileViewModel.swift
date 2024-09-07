@@ -156,7 +156,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
             return
         }
         mainCategory = mainCat.description
-        self.isFullyRegistered = isFullyRegistered
+        self.isFullyRegistered = userManager.isFullyRegistered
     }
     
     private func getSignature() async throws -> String {
