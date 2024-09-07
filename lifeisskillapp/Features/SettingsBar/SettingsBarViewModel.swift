@@ -17,9 +17,11 @@ protocol SettingsBarViewModeling: BaseClass, ObservableObject {
     associatedtype locationStatusBarVM: LocationStatusBarViewModeling
     var locationVM: locationStatusBarVM { get }
     var isLoggedIn: Bool { get }
+    var showProfileMenuOption: Bool { get }
     func logoutPressed()
     func profilePressed()
     func onboardingPressed()
+    func hideProfileNavigationOption()
     init(dependencies: HasLoggers & HasLocationManager & HasUserManager & HasNetworkMonitor, delegate: SettingsBarFlowDelegate?)
 }
 
@@ -40,6 +42,7 @@ final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: Bas
     var isLoggedIn: Bool {
         userManager.isLoggedIn
     }
+    private(set) var showProfileMenuOption: Bool = true
     
     // MARK: - Initialization
     
@@ -67,5 +70,9 @@ final class SettingsBarViewModel<locationVM: LocationStatusBarViewModeling>: Bas
     
     func profilePressed() {
         delegate?.profilePressed()
+    }
+    
+    func hideProfileNavigationOption() {
+        showProfileMenuOption = false
     }
 }

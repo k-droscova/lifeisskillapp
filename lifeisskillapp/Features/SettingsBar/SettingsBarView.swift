@@ -53,10 +53,12 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
             }) {
                 Text("settings.logout")
             }
-            Button(action: {
-                viewModel.profilePressed()
-            }) {
-                Text("settings.profile")
+            if viewModel.showProfileMenuOption {
+                Button(action: {
+                    viewModel.profilePressed()
+                }) {
+                    Text("settings.profile")
+                }
             }
             Button(action: {
                 viewModel.onboardingPressed()

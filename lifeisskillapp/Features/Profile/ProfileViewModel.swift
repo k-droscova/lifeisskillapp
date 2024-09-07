@@ -63,6 +63,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
             dependencies: dependencies,
             delegate: settingsDelegate
         )
+        self.settingsViewModel.hideProfileNavigationOption()
         
         super.init()
         self.loadData()
