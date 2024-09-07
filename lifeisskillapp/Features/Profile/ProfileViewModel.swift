@@ -19,6 +19,16 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
     var userGender: UserGender { get }
     var email: String { get }
     var mainCategory: String { get }
+    var name: String { get }
+    var phoneNumber: String { get }
+    var postalCode: String { get }
+    var birthday: String { get }
+    var age: Int { get }
+    var isMinor: Bool { get }
+    var parentName: String { get }
+    var parentEmail: String { get }
+    var parentPhone: String { get }
+    var parentRelation: String { get }
     
     func inviteFriend()
     func startRegistration()
@@ -47,6 +57,17 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     @Published private(set) var userGender: UserGender = .male
     @Published private(set) var email: String = ""
     @Published private(set) var mainCategory: String = ""
+    @Published private(set) var name: String = ""
+    @Published private(set) var phoneNumber: String = ""
+    @Published private(set) var postalCode: String = ""
+    @Published private(set) var birthday: String = ""
+    @Published private(set) var age: Int = 0
+    @Published private(set) var isMinor: Bool = false
+    @Published private(set) var parentName: String = ""
+    @Published private(set) var parentEmail: String = ""
+    @Published private(set) var parentPhone: String = ""
+    @Published private(set) var parentRelation: String = ""
+    
     
     // MARK: - Initialization
     
@@ -152,12 +173,41 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         username = user.nick
         email = user.email
         userGender = user.sex
-        guard userManager.isFullyRegistered else {
+        mainCategory = mainCat.description
+        isFullyRegistered = user.fullActivation
+        guard isFullyRegistered else {
             return
         }
-        mainCategory = mainCat.description
-        self.isFullyRegistered = userManager.isFullyRegistered
+        loadUserData()
+        guard isMinor else {
+            return
+        }
+        loadParentData()
     }
+    
+    private func loadUserData() {
+        guard let user = loggedInUser else {
+            return
+        }
+        
+        name = "\(user.name ?? "") \(user.surname ?? "")".trimmingCharacters(in: .whitespaces)
+        phoneNumber = user.mobil ?? ""
+        postalCode = user.postalCode ?? ""
+        age = user.age
+        isMinor = age < User.ageWhenConsideredNotMinor
+        birthday = user.birthday.map { Formatters.date.string(from: $0) } ?? ""
+    }
+    
+    private func loadParentData() {
+        guard let user = loggedInUser else {
+            return
+        }
+        parentName = "\(user.nameParent ?? "") \(user.surnameParent ?? "")".trimmingCharacters(in: .whitespaces)
+        parentEmail = user.emailParent ?? ""
+        parentPhone = user.mobilParent ?? ""
+        parentRelation = user.relation ?? ""
+    }
+    
     
     private func getSignature() async throws -> String {
         guard let signature = await userManager.signature() else {

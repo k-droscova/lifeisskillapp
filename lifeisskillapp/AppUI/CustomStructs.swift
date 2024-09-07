@@ -301,3 +301,18 @@ struct CustomTextField: View {
         .frame(height: 16)  // Reserve space for validation message, should equal lineHeight of .caption
     }
 }
+
+struct ProfileDetailRow: View {
+    let title: LocalizedStringKey
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .subheadlineBold
+            Spacer()
+            Text(value)
+                .body1Regular
+        }
+    }
+}

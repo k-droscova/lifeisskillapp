@@ -37,11 +37,9 @@ private extension ProfileView {
             backButton
             ScrollView {
                 userInfoView
-                Spacer(minLength: ProfileViewConstants.minSpaceAboveRegisterButton)
                 if !viewModel.isFullyRegistered {
                     registerButton
                 }
-                Spacer(minLength: ProfileViewConstants.minSpaceAboveInviteButton)
                 inviteFriendButton
             }
         }
@@ -68,27 +66,52 @@ private extension ProfileView {
                 .resizable()
                 .squareFrame(size: ProfileViewConstants.iconSize)
                 .clipShape(Circle())
+            
             Text("\(viewModel.username)")
                 .headline3
-            VStack(alignment: .leading, spacing: ProfileViewConstants.userDetailsVerticalSpacing) {
-                HStack {
-                    Text("profile.email")
-                        .subheadlineBold
-                    Spacer()
-                    Text("\(viewModel.email)")
-                        .body1Regular
-                }
-                
-                HStack {
-                    Text("profile.main_category")
-                        .subheadlineBold
-                    Spacer()
-                    Text("\(viewModel.mainCategory)")
-                        .body1Regular
-                }
-            }
+            
+            userDetailInfo
         }
         .padding(.horizontal, ProfileViewConstants.userInfoHorizontalPadding)
+    }
+    
+    private var userDetailInfo: some View {
+        VStack(alignment: .leading, spacing: ProfileViewConstants.userDetailsVerticalSpacing) {
+            ProfileDetailRow(title: "profile.email", value: viewModel.email)
+            if viewModel.isFullyRegistered {
+                additionalUserInfo
+            }
+        }
+    }
+    
+    private var additionalUserInfo: some View {
+        VStack(alignment: .leading, spacing: ProfileViewConstants.userDetailsVerticalSpacing) {
+            ProfileDetailRow(title: "profile.main_category", value: viewModel.mainCategory)
+            ProfileDetailRow(title: "profile.name", value: viewModel.name)
+            ProfileDetailRow(title: "profile.phone", value: viewModel.phoneNumber)
+            ProfileDetailRow(title: "profile.postal_code", value: viewModel.postalCode)
+            ProfileDetailRow(title: "profile.birthday", value: viewModel.birthday)
+            ProfileDetailRow(title: "profile.age", value: "\(viewModel.age)")
+            
+            // Show parent information if the user is a minor
+            if viewModel.isMinor {
+                parentInfo
+            }
+        }
+    }
+    
+    private var parentInfo: some View {
+        VStack() {
+            Text("register.guardian_info")
+                .headline3
+                .padding(.vertical, 2 * ProfileViewConstants.userDetailsVerticalSpacing)
+            VStack(alignment: .leading, spacing: ProfileViewConstants.userDetailsVerticalSpacing) {
+                ProfileDetailRow(title: "profile.name", value: viewModel.parentName)
+                ProfileDetailRow(title: "profile.email", value: viewModel.parentEmail)
+                ProfileDetailRow(title: "profile.phone", value: viewModel.parentPhone)
+                ProfileDetailRow(title: "profile.relation", value: viewModel.parentRelation)
+            }
+        }
     }
     
     private var registerButton: some View {
@@ -99,6 +122,7 @@ private extension ProfileView {
         ) {
             Text("profile.register.button")
         }
+        .padding(.top, ProfileViewConstants.minSpaceAboveRegisterButton)
     }
     
     private var inviteFriendButton: some View {
@@ -107,6 +131,7 @@ private extension ProfileView {
         }
         .foregroundStyle(ProfileViewConstants.Colors.inviteButton)
         .subheadline
+        .padding(.vertical, ProfileViewConstants.minSpaceAboveInviteButton)
     }
 }
 

@@ -19,10 +19,12 @@ public struct LoginAPIResponse: DataProtocol {
     
     enum CodingKeys: String, CodingKey {
         case userId, email, nick, rights, rightsCoded, token, userRank, userPoints, sex, distance, mainCategory, fullActivation
+        case name, surname, mobil, zip, birthday, nameParent, surnameParent, emailParent, mobilParent, relation
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
         let userId = try container.decode(String.self, forKey: .userId)
         let email = try container.decode(String.self, forKey: .email)
         let nick = try container.decode(String.self, forKey: .nick)
@@ -36,6 +38,24 @@ public struct LoginAPIResponse: DataProtocol {
         let mainCategory = try container.decode(String.self, forKey: .mainCategory)
         let fullActivation = try container.decode(Bool.self, forKey: .fullActivation)
         
+        // Decode optional strings, only set them if they are non-empty
+        let name = try container.decodeIfPresent(String.self, forKey: .name).flatMap { $0.isEmpty ? nil : $0 }
+        let surname = try container.decodeIfPresent(String.self, forKey: .surname).flatMap { $0.isEmpty ? nil : $0 }
+        let mobil = try container.decodeIfPresent(String.self, forKey: .mobil).flatMap { $0.isEmpty ? nil : $0 }
+        let postalCode = try container.decodeIfPresent(String.self, forKey: .zip).flatMap { $0.isEmpty ? nil : $0 }
+        
+        // Decode the birthday string and convert it to a Date using your date formatter
+        let birthdayString = try container.decodeIfPresent(String.self, forKey: .birthday)
+        let birthday: Date? = birthdayString.flatMap { $0.isEmpty ? nil : Formatters.birthdayFormatter.date(from: $0) }
+        
+        // Decode optional parent information fields, only set them if they are non-empty
+        let nameParent = try container.decodeIfPresent(String.self, forKey: .nameParent).flatMap { $0.isEmpty ? nil : $0 }
+        let surnameParent = try container.decodeIfPresent(String.self, forKey: .surnameParent).flatMap { $0.isEmpty ? nil : $0 }
+        let emailParent = try container.decodeIfPresent(String.self, forKey: .emailParent).flatMap { $0.isEmpty ? nil : $0 }
+        let mobilParent = try container.decodeIfPresent(String.self, forKey: .mobilParent).flatMap { $0.isEmpty ? nil : $0 }
+        let relation = try container.decodeIfPresent(String.self, forKey: .relation).flatMap { $0.isEmpty ? nil : $0 }
+        
+        // Initialize LoggedInUser
         self.user = LoggedInUser(
             userId: userId,
             email: email,
@@ -48,13 +68,24 @@ public struct LoginAPIResponse: DataProtocol {
             userPoints: userPoints,
             distance: distance,
             mainCategory: mainCategory,
-            fullActivation: fullActivation
+            fullActivation: fullActivation,
+            name: name,
+            surname: surname,
+            mobil: mobil,
+            postalCode: postalCode,
+            birthday: birthday,
+            nameParent: nameParent,
+            surnameParent: surnameParent,
+            emailParent: emailParent,
+            mobilParent: mobilParent,
+            relation: relation
         )
     }
     
-    // Custom encoder to encode the LoggedInUser into the API response
+    // MARK: - Encoder
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
         try container.encode(user.userId, forKey: .userId)
         try container.encode(user.email, forKey: .email)
         try container.encode(user.nick, forKey: .nick)
@@ -67,10 +98,53 @@ public struct LoginAPIResponse: DataProtocol {
         try container.encode(user.distance, forKey: .distance)
         try container.encode(user.mainCategory, forKey: .mainCategory)
         try container.encode(user.fullActivation, forKey: .fullActivation)
+        
+        // Only encode optional fields if they are not nil
+        if let name = user.name {
+            try container.encode(name, forKey: .name)
+        }
+        
+        if let surname = user.surname {
+            try container.encode(surname, forKey: .surname)
+        }
+        
+        if let mobil = user.mobil {
+            try container.encode(mobil, forKey: .mobil)
+        }
+        
+        if let postalCode = user.postalCode {
+            try container.encode(postalCode, forKey: .zip)
+        }
+        
+        if let birthday = user.birthday {
+            // Format birthday as string before encoding
+            let birthdayString = Formatters.birthdayFormatter.string(from: birthday)
+            try container.encode(birthdayString, forKey: .birthday)
+        }
+        
+        if let nameParent = user.nameParent {
+            try container.encode(nameParent, forKey: .nameParent)
+        }
+        
+        if let surnameParent = user.surnameParent {
+            try container.encode(surnameParent, forKey: .surnameParent)
+        }
+        
+        if let emailParent = user.emailParent {
+            try container.encode(emailParent, forKey: .emailParent)
+        }
+        
+        if let mobilParent = user.mobilParent {
+            try container.encode(mobilParent, forKey: .mobilParent)
+        }
+        
+        if let relation = user.relation {
+            try container.encode(relation, forKey: .relation)
+        }
     }
     
-    internal init(from user: LoggedInUser) {
-        self.user = user
+    internal init(from: LoggedInUser) {
+        self.user = from
     }
 }
 

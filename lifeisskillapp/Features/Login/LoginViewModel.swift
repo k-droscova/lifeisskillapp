@@ -70,7 +70,7 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
             do {
                 try await self.userManager.login(credentials: .init(username: username, password: password))
                 self.delegate?.loginSuccessful()
-                guard self.userManager.isFullyRegistered else {
+                guard (self.userManager.loggedInUser?.fullActivation ?? false) else {
                     self.delegate?.promptToCompleteRegistration()
                     return
                 }
