@@ -10,7 +10,6 @@ import Foundation
 protocol UserManagerFlowDelegate: NSObject {
     func onLogout()
     func onForceLogout()
-    func userNotActivated()
 }
 
 protocol HasUserManager {
@@ -271,36 +270,25 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     private func performOnlineLogin(credentials: LoginCredentials) async throws {
-        do {
-            let response = try await loginAPI.login(credentials: credentials, location: locationManager.location)
-            let loggedInUser = response.data.user
-            
-            // check if there is existing user in realm
-            guard let existingUser = try await storage.savedLoginDetails() else {
-                try keychainStorage.save(credentials: credentials) // save new credentials to keychain
-                try await storage.login(loggedInUser) // save new data to realm
-                data = response.data // give signal of successfull login
-                return
-            }
-            // if there is data in realm and if the newly logged in user is different then we clear all data in realm
-            if loggedInUser.userId != existingUser.user.userId {
-                logger.log(message: "Different user detected. Clearing all related data.")
-                try await storage.clearUserRelatedData() // clear all data
-            }
-            try await storage.login(loggedInUser) // save the new login data
-            try keychainStorage.delete() // delete previous credentials
-            try keychainStorage.save(credentials: credentials) // save new credentials in keychain
-            data = response.data // indicate to appFC to present Home Screen in TabBar
-        } catch let error as BaseError where error.code == ErrorCodes.specificStatusCode(.userNotActivated).code {
-            delegate?.userNotActivated()
-        } catch {
-            // Catch all other errors and throw a generic BaseError
-            throw BaseError(
-                context: .system,
-                message: "Unable to login",
-                logger: logger
-            )
+        let response = try await loginAPI.login(credentials: credentials, location: locationManager.location)
+        let loggedInUser = response.data.user
+        
+        // check if there is existing user in realm
+        guard let existingUser = try await storage.savedLoginDetails() else {
+            try keychainStorage.save(credentials: credentials) // save new credentials to keychain
+            try await storage.login(loggedInUser) // save new data to realm
+            data = response.data // give signal of successfull login
+            return
         }
+        // if there is data in realm and if the newly logged in user is different then we clear all data in realm
+        if loggedInUser.userId != existingUser.user.userId {
+            logger.log(message: "Different user detected. Clearing all related data.")
+            try await storage.clearUserRelatedData() // clear all data
+        }
+        try await storage.login(loggedInUser) // save the new login data
+        try keychainStorage.delete() // delete previous credentials
+        try keychainStorage.save(credentials: credentials) // save new credentials in keychain
+        data = response.data // indicate to appFC to present Home Screen in TabBar
     }
     
     private func performOfflineLogin(credentials: LoginCredentials) async throws {

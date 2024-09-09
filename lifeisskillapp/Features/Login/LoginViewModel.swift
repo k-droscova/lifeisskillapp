@@ -75,6 +75,10 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
                     return
                 }
             } catch let error as BaseError {
+                if error.code == ErrorCodes.specificStatusCode(.userNotActivated).code {
+                    delegate?.userNotActivated()
+                    return
+                }
                 if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
                     delegate?.offlineLoginFailed()
                     return

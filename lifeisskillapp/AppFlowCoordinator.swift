@@ -99,10 +99,6 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
         reload()
         showAlert(titleKey: "alert.forced_logout.title", messageKey: "alert.forced_logout.message")
     }
-    
-    func userNotActivated() {
-        showAlert(titleKey: "alert.login_unactivated_user.title", messageKey: "alert.login_unactivated_user.message")
-    }
 }
 
 extension AppFlowCoordinator: MainFlowCoordinatorDelegate {}

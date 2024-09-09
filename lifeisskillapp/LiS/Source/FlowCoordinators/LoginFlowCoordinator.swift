@@ -21,6 +21,7 @@ protocol LoginFlowDelegate: NSObject {
     func loginFailed()
     func offlineLoginFailed()
     func promptToCompleteRegistration()
+    func userNotActivated()
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
@@ -99,6 +100,10 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     
     func promptToCompleteRegistration() {
         delegate?.promptToCompleteRegistration()
+    }
+    
+    func userNotActivated() {
+        showAlert(titleKey: "alert.login_unactivated_user.title", messageKey: "alert.login_unactivated_user.message")
     }
     
     // MARK: - Private Helpers
