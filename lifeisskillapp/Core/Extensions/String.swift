@@ -16,8 +16,8 @@ extension String {
         return String(withoutBack.first ?? "")
     }
     
-    // For parsing reference information from LiS QR codes
-    func parseReference() -> ReferenceInfo? {
+    // Computed property for parsing reference information from LiS QR codes
+    var reference: ReferenceInfo? {
         // Extract the query part from the URL (everything after "?")
         guard let queryPart = self.split(separator: "?").last else {
             print("No query part found in the QR string")

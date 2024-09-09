@@ -96,7 +96,7 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
     }
     
     func handleProcessedCode(_ code: String) {
-        if let referenceInfo = code.parseReference() {
+        if let referenceInfo = code.reference {
             delegate?.scanningQRDidSucceed(referenceInfo)
         } else {
             scanningFailed()
