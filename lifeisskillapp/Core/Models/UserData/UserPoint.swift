@@ -59,7 +59,7 @@ extension UserPoint {
         recordKey = try container.decode(String.self, forKey: .recordKey)
         id = try container.decode(String.self, forKey: .id)
         let pointTimeString = try container.decode(String.self, forKey: .pointTime)
-        pointTime = Date().fromPointList(dateString: pointTimeString)
+        pointTime = Date().fromUserPointString(dateString: pointTimeString)
         pointName = try container.decode(String.self, forKey: .pointName)
         pointValue = try container.decode(Int.self, forKey: .pointValue)
         
@@ -90,7 +90,7 @@ extension UserPoint {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(recordKey, forKey: .recordKey)
         try container.encode(id, forKey: .id) // Correctly map id to pointId for encoding
-        try container.encode(pointTime.toPointListString(), forKey: .pointTime)
+        try container.encode(pointTime.getUserPointString(), forKey: .pointTime)
         try container.encode(pointName, forKey: .pointName)
         try container.encode(pointValue, forKey: .pointValue)
         try container.encode(pointType.rawValue | (doesPointCount ? 0 : (1 << 11)), forKey: .pointType)

@@ -46,7 +46,7 @@ public struct LoginAPIResponse: DataProtocol {
         
         // Decode the birthday string and convert it to a Date using your date formatter
         let birthdayString = try container.decodeIfPresent(String.self, forKey: .birthday)
-        let birthday: Date? = birthdayString.flatMap { $0.isEmpty ? nil : Formatters.birthdayFormatter.date(from: $0) }
+        let birthday: Date? = Date().fromBirthday(dateString: birthdayString ?? "")
         
         // Decode optional parent information fields, only set them if they are non-empty
         let nameParent = try container.decodeIfPresent(String.self, forKey: .nameParent).flatMap { $0.isEmpty ? nil : $0 }
@@ -118,7 +118,7 @@ public struct LoginAPIResponse: DataProtocol {
         
         if let birthday = user.birthday {
             // Format birthday as string before encoding
-            let birthdayString = Formatters.birthdayFormatter.string(from: birthday)
+            let birthdayString = birthday.getBirthdayString()
             try container.encode(birthdayString, forKey: .birthday)
         }
         

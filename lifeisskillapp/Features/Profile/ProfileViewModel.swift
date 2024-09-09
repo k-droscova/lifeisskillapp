@@ -195,7 +195,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         postalCode = user.postalCode ?? ""
         age = user.age
         isMinor = age < User.ageWhenConsideredNotMinor
-        birthday = user.birthday.map { Formatters.date.string(from: $0) } ?? ""
+        birthday = user.birthday?.getDateString() ?? ""
     }
     
     private func loadParentData() {

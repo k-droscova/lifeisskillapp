@@ -8,12 +8,39 @@
 import Foundation
 
 extension Date {
+    
+    // MARK: - Backend
+    
+    /// Transform date string with `yyyy-MM-dd` format to Date
+    func fromBirthday(dateString: String) -> Date? {
+        Formatters.birthdayFormatter.date(from: dateString)
+    }
+    
+    /// Transform Date to`yyyy-MM-dd` format
+    func getBirthdayString() -> String {
+        Formatters.birthdayFormatter.string(from: self)
+    }
+    
+    /// Transform date string with `yyyy-MM-dd HH:mm:ss` format
+    func fromUserPointString(dateString: String) -> Date {
+        Formatters.userPointDate.date(from: dateString) ?? Date()
+    }
+    
+    /// Transform Date to `yyyy-MM-dd HH:mm:ss` format
+    func getUserPointString() -> String {
+        Formatters.userPointDate.string(from: self)
+    }
+    
+    // MARK: - UI
+    
+    /// Returns date string `dd. MM. yyyy`
+    func getDateString() -> String {
+        Formatters.date.string(from: self)
+    }
+    
     /// Returns date string with day and month `%d. %d.`
     func getDayString() -> String {
-        let components = Calendar.current.dateComponents([.day, .month], from: self)
-        let day = String(components.day ?? 1) + ". " + String(components.month ?? 1) + "."
-        
-        return day
+        Formatters.day.string(from: self)
     }
     
     /// Returns date string with year `%d`
@@ -25,58 +52,12 @@ extension Date {
     func getTimeString() -> String {
         Formatters.time.string(from: self)
     }
-    
-    /// Returns time string with hour, minutes and seconds `%d:%d:%d`
-    func getLongTimeString() -> String {
-        Formatters.timeLong.string(from: self)
-    }
-    
-    /// Returns date string `dd. MM. yyyy`
-    func getDateString() -> String {
-        Formatters.date.string(from: self)
-    }
-    
-    /// Checks user top age limit
-    func isUserYoungerThanEighteen() -> Bool {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        
-        let ageComponents = calendar.dateComponents([.year], from: self, to: currentDate)
-        
-        return ageComponents.year! < 18
-    }
-    
-    /// Checks user bottom age limit
-    func isUserOlderThanSix() -> Bool {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        
-        let ageComponents = calendar.dateComponents([.year], from: self, to: currentDate)
-        
-        return ageComponents.year! >= 6
-    }
-    
-    /// Transform date string with `yyyy-MM-dd HH:mm:ss` format
-    func fromPointList(dateString: String) -> Date {
-        Formatters.pointListDate.date(from: dateString) ?? Date()
-    }
-    
-    func toPointListString() -> String {
-        Formatters.pointListDate.string(from: self)
-    }
-    
-    /// Transform date string with `dd.MM.yyyy HH:mm` format
-    func fromEventsList(dateString: String) -> Date {
-        Formatters.eventsListDate.date(from: dateString) ?? Date()
-    }
-    
-    /// `dd. MM. yyyy`
-    func getEventsDate() -> String {
-        Formatters.date.string(from: self)
-    }
 }
 
 extension TimeInterval {
+    
+    // MARK: - For Backend
+    
     /// Parse duration string with `HH:mm:ss` format to TimeInterval
     static func parseDuration(_ durationString: String) -> TimeInterval? {
         let components = durationString.split(separator: ":").compactMap { Double($0) }
@@ -96,6 +77,52 @@ extension TimeInterval {
 }
 
 enum Formatters {
+    
+    // MARK: - For backendend
+    // uses en_US_POSIX as locale to maintain consistency for API communication
+    
+    static let timeLong: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        return dateFormatter
+    }()
+    
+    static let userPointDate: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        return dateFormatter
+    }()
+    
+    static let birthdayFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        return dateFormatter
+    }()
+    
+    // MARK: - For UI
+    // uses CS locale
+    
+    static let date: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d. M. yyyy"
+        dateFormatter.locale = Locale(identifier: "cs")
+        
+        return dateFormatter
+    }()
+    
+    static let day: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d. M."
+        dateFormatter.locale = Locale(identifier: "cs")
+        return dateFormatter
+    }()
+    
     static let year: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY"
@@ -107,41 +134,8 @@ enum Formatters {
     static let time: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.locale = Locale(identifier: "cs")
         
-        return dateFormatter
-    }()
-    
-    static let timeLong: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
-        
-        return dateFormatter
-    }()
-    
-    static let date: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        
-        return dateFormatter
-    }()
-    
-    static let pointListDate: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        return dateFormatter
-    }()
-    
-    static let eventsListDate: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
-        
-        return dateFormatter
-    }()
-    
-    static let birthdayFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 }

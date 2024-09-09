@@ -66,7 +66,7 @@ enum ApiTask: ApiTasking {
                 "lng": String(location.longitude),
                 "acc": String(location.accuracy),
                 "alt": String(location.altitude),
-                "time": date.toPointListString()
+                "time": date.getUserPointString()
             ]) { (_, new) in new }
             
         case .renewPassword(let credentials):
