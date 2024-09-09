@@ -205,10 +205,6 @@ public enum HTTPStatusCode: Int, Error {
 
     /// - unavailableForLegalReasons: A server operator has received a legal demand to deny access to a resource or to a set of resources that includes the requested resource.
     case unavailableForLegalReasons = 451
-    
-    case unknownUser = 465
-    
-    case invalidPin = 466
 
     /// - SSLCertificateError: An expansion of the 400 Bad Request response code, used when the client has provided an invalid client certificate.
     case SSLCertificateError = 495
@@ -221,6 +217,17 @@ public enum HTTPStatusCode: Int, Error {
 
     /// - clientClosedRequest: Used when the client has closed the request before the server could send a response.
     case clientClosedRequest = 499
+    
+    // MARK: LIFE IS SKILL SPECIFIC
+    
+    case lisUnknownUser = 465
+    
+    case lisInvalidPin = 466
+    
+    //case invalidToken = 401
+    case lisInvalidUserPoint = 470
+    
+    case lisUserNotActivated = 471
 
     //
     // Server Error - 5xx

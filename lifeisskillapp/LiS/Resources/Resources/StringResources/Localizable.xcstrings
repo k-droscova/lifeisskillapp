@@ -378,6 +378,52 @@
         }
       }
     },
+    "alert.login_unactivated_user.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento účet ještě nebyl aktivován. Ujisti se, že jsi jej aktivoval pomocí aktivačního odkazu ve tvém e-mailu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Konto wurde noch nicht aktiviert. Stellen Sie sicher, dass Sie es über den Aktivierungslink in Ihrer E-Mail aktiviert haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your account hasn't been activated yet. Make sure to activated it through activation link in your email."
+          }
+        }
+      }
+    },
+    "alert.login_unactivated_user.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neaktivní účet"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inaktives Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactive account"
+          }
+        }
+      }
+    },
     "alert.logout_offline.message" : {
       "extractionState" : "manual",
       "localizations" : {

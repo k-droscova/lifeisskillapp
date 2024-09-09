@@ -35,6 +35,8 @@ public enum ErrorCodes {
         case invalidToken = 401
         case invalidUserPoint = 470
         case invalidUser = 465
+        case invalidPin = 466
+        case userNotActivated = 471
     }
     
     /// Enum representing general error codes with a prefix of `5xxx`.

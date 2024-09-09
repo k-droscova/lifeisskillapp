@@ -10,6 +10,7 @@ import Foundation
 protocol UserManagerFlowDelegate: NSObject {
     func onLogout()
     func onForceLogout()
+    func userNotActivated()
 }
 
 protocol HasUserManager {
@@ -290,7 +291,10 @@ final class UserManager: BaseClass, UserManaging {
             try keychainStorage.delete() // delete previous credentials
             try keychainStorage.save(credentials: credentials) // save new credentials in keychain
             data = response.data // indicate to appFC to present Home Screen in TabBar
+        } catch let error as BaseError where error.code == ErrorCodes.specificStatusCode(.userNotActivated).code {
+            delegate?.userNotActivated()
         } catch {
+            // Catch all other errors and throw a generic BaseError
             throw BaseError(
                 context: .system,
                 message: "Unable to login",
