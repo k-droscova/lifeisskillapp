@@ -71,6 +71,7 @@
 		273910022C7384AF005C7B52 /* MapFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273910012C7384AF005C7B52 /* MapFlowDelegate.swift */; };
 		2739787D2C67A5890078BDEF /* RealmUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */; };
 		2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */; };
+		273B00432C8EF0BA00E3755B /* KeyedCodingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273B00422C8EF0BA00E3755B /* KeyedCodingContainer.swift */; };
 		273D46B02C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */; };
 		274001652C7A271200AD5D7D /* RealmSponsorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001642C7A271200AD5D7D /* RealmSponsorData.swift */; };
 		274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */; };
@@ -297,6 +298,7 @@
 		273910012C7384AF005C7B52 /* MapFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowDelegate.swift; sourceTree = "<group>"; };
 		2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDataStorage.swift; sourceTree = "<group>"; };
 		2739E27F2C5B5A8E002D82E3 /* CustomStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStructs.swift; sourceTree = "<group>"; };
+		273B00422C8EF0BA00E3755B /* KeyedCodingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyedCodingContainer.swift; sourceTree = "<group>"; };
 		273D46AF2C5EB58000073EF1 /* UIViewControllerRepresentableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentableWrapper.swift; sourceTree = "<group>"; };
 		274001642C7A271200AD5D7D /* RealmSponsorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorData.swift; sourceTree = "<group>"; };
 		274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorRepository.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 				2720DF2D2C515906007B4E77 /* String.swift */,
 				27F528FF2C5A8A380042F537 /* ViewExtension.swift */,
 				27C0DA452C8C4284005A7750 /* Optional.swift */,
+				273B00422C8EF0BA00E3755B /* KeyedCodingContainer.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1520,6 +1523,7 @@
 				27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */,
 				271FEC4B2C8B183200311F97 /* FullRegistrationFlowCoordinator.swift in Sources */,
 				27E9D61B2C63F9150098CB96 /* RankingRepository.swift in Sources */,
+				273B00432C8EF0BA00E3755B /* KeyedCodingContainer.swift in Sources */,
 				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
 				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,
 				27234C282C8A39B40077CBD8 /* FullRegistrationView.swift in Sources */,
