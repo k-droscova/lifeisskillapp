@@ -337,3 +337,87 @@ struct ProfileDetailRow: View {
         }
     }
 }
+
+struct CameraOverlayView<CenterView: View>: View {
+    let topInset: CGFloat
+    let exitButtonAction: () -> Void
+    let flashAction: () -> Void
+    let isFlashOn: Binding<Bool>
+    let instructions: LocalizedStringKey
+    let centerView: CenterView?
+    
+    init(
+        topInset: CGFloat,
+        exitButtonAction: @escaping () -> Void,
+        flashAction: @escaping () -> Void,
+        isFlashOn: Binding<Bool>,
+        instructions: LocalizedStringKey,
+        @ViewBuilder centerView: () -> CenterView? = { nil }
+    ) {
+        self.topInset = topInset
+        self.exitButtonAction = exitButtonAction
+        self.flashAction = flashAction
+        self.isFlashOn = isFlashOn
+        self.instructions = instructions
+        self.centerView = centerView()
+    }
+    
+    var body: some View {
+        VStack {
+            topButtons
+                .padding(.top, topInset)
+            if let centerView = centerView {
+                Spacer(minLength: CustomSizes.QROverlayView.spacingBetweenSections.size)
+                centerView
+                Spacer(minLength: CustomSizes.QROverlayView.spacingBetweenSections.size)
+            } else {
+                Spacer()
+            }
+            instructionsView
+        }
+        .padding(.horizontal, CustomSizes.QROverlayView.buttonPaddingHorizontal.size)
+    }
+    
+    private var topButtons: some View {
+        HStack {
+            ExitButton(action: exitButtonAction)
+            Spacer()
+            FlashButton(
+                action: flashAction,
+                flashOn: isFlashOn
+            )
+        }
+    }
+    
+    private var instructionsView: some View {
+        Text(instructions)
+            .foregroundColor(CustomColors.QROverlayView.instructionsText.color)
+            .multilineTextAlignment(.center)
+            .padding()
+            .background(CustomColors.QROverlayView.instructionsBackground.color)
+            .cornerRadius(CustomSizes.QROverlayView.instructionsCornerRadius.size)
+            .padding(.bottom, CustomSizes.QROverlayView.instructionsBottomPadding.size)
+    }
+}
+
+struct QROverlayView: View {
+    let topInset: CGFloat
+    let exitButtonAction: () -> Void
+    let flashAction: () -> Void
+    let isFlashOn: Binding<Bool>
+    let instructions: LocalizedStringKey
+    
+    var body: some View {
+        CameraOverlayView(
+            topInset: topInset,
+            exitButtonAction: exitButtonAction,
+            flashAction: flashAction,
+            isFlashOn: isFlashOn,
+            instructions: instructions
+        ) {
+            Image(CustomImages.Miscellaneous.scanningFrame.fullPath)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+}

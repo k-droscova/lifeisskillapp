@@ -263,6 +263,20 @@ enum CustomColors {
             }
         }
     }
+    
+    enum QROverlayView {
+        case instructionsText
+        case instructionsBackground
+        
+        var color: Color {
+            switch self {
+            case .instructionsText:
+                Color.white
+            case .instructionsBackground:
+                Color.black.opacity(0.5)
+            }
+        }
+    }
 }
 
 enum CustomSizes {
@@ -366,6 +380,26 @@ enum CustomSizes {
                 10
             case .kernig:
                 1.2
+            }
+        }
+    }
+    
+    enum QROverlayView {
+        case buttonPaddingHorizontal
+        case spacingBetweenSections
+        case instructionsBottomPadding
+        case instructionsCornerRadius
+        
+        var size: CGFloat {
+            switch self {
+            case .buttonPaddingHorizontal:
+                return 16
+            case .spacingBetweenSections:
+                return 32
+            case .instructionsBottomPadding:
+                return 96
+            case .instructionsCornerRadius:
+                return 10
             }
         }
     }

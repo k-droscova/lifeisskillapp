@@ -4124,6 +4124,7 @@
       }
     },
     "registration.reference.qr.scanning.instructions" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
