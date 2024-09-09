@@ -65,6 +65,19 @@ final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
         }
     }
     
+    func attachPreviewLayer(to view: UIView) {
+        guard captureSession != nil else {
+            scanningFailed()
+            return
+        }
+        if let previewLayer = previewLayer {
+            previewLayer.frame = view.bounds
+            view.layer.addSublayer(previewLayer)
+        } else {
+            scanningFailed()
+        }
+    }
+    
     func setUpScanner() {
         captureSession = AVCaptureSession()
         
