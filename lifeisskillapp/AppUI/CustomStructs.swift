@@ -252,13 +252,34 @@ struct CustomTextField: View {
     @Binding var text: String
     
     // MARK: optional arguments, can be customized in init, defaults to generic LiS textfield style
-    var isSecure: Bool = false
-    var backgroundColor: Color = CustomColors.TextFieldView.background.color
-    var foregroundColor: Color = CustomColors.TextFieldView.foreground.color
-    var cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size
-    var kernig: CGFloat = CustomSizes.TextFieldView.kernig.size
-    var showsValidationMessage: Bool = false
-    var validationMessage: LocalizedStringKey? = nil
+    let isSecure: Bool
+    let backgroundColor: Color
+    let foregroundColor: Color
+    let cornerRadius: CGFloat
+    let kernig: CGFloat
+    let showsValidationMessage: Bool
+    var validationMessage: LocalizedStringKey? = nil // adjustable based on VM inputs
+    
+    init(placeholder: LocalizedStringKey,
+         text: Binding<String>,
+         isSecure: Bool = false,
+         backgroundColor: Color = CustomColors.TextFieldView.background.color,
+         foregroundColor: Color = CustomColors.TextFieldView.foreground.color,
+         cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size,
+         kernig: CGFloat = CustomSizes.TextFieldView.kernig.size,
+         showsValidationMessage: Bool = false,
+         validationMessage: LocalizedStringKey? = nil) {
+        
+        self.placeholder = placeholder
+        self._text = text
+        self.isSecure = isSecure
+        self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
+        self.cornerRadius = cornerRadius
+        self.kernig = kernig
+        self.showsValidationMessage = showsValidationMessage
+        self.validationMessage = validationMessage
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
