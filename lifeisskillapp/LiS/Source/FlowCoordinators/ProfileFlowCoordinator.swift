@@ -30,6 +30,7 @@ final class ProfileFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.F
     
     private weak var delegate: ProfileFlowCoordinatorDelegate?
     private weak var settingsDelegate: SettingsBarFlowDelegate?
+    private weak var viewModel: (any ProfileViewModeling)?
     
     
     init(delegate: ProfileFlowCoordinatorDelegate? = nil,
@@ -46,6 +47,7 @@ final class ProfileFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.F
             delegate: self,
             settingsDelegate: self.settingsDelegate
         )
+        self.viewModel = vm
         let vc = ProfileView(viewModel: vm).hosting()
         self.navigationController = navigationController
         rootViewController = vc
@@ -85,7 +87,6 @@ extension ProfileFlowCoordinator: ProfileFlowDelegate {
     }
     
     func startRegistration() {
-        print("start registration pressed")
         let fullRegistrationFC = FullRegistrationFlowCoordinator(delegate: self)
         addChild(fullRegistrationFC)
         let vc = fullRegistrationFC.start()
@@ -104,12 +105,14 @@ extension ProfileFlowCoordinator: FullRegistrationFlowCoordinatorDelegate {
         dismiss()
         stopChildCoordinators()
         showAlert(titleKey: "full_registration.success.title", messageKey: "full_registration.success.message")
+        viewModel?.reloadDataAfterRegistration()
     }
     
     func registrationDidSucceedMinor() {
         dismiss()
         stopChildCoordinators()
         showAlert(titleKey: "full_registration.success.title", messageKey: "full_registration.success_minor.message")
+        viewModel?.reloadDataAfterRegistration()
     }
     
     func registrationDidFail() {

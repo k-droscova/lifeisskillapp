@@ -179,13 +179,14 @@ private extension ProfileView {
     }
     
     private var registerButton: some View {
-        HomeButton(
+        EnablingButton(
             action: viewModel.startRegistration,
-            background: ProfileViewConstants.Colors.registerButtonBackground,
-            foregroundColor: ProfileViewConstants.Colors.registerButtonForeground
-        ) {
-            Text("profile.register.button")
-        }
+            text: "profile.register.button",
+            enabledColorBackground: ProfileViewConstants.Colors.registerButtonBackground,
+            enabledColorText: ProfileViewConstants.Colors.registerButtonForeground,
+            isEnabled: true
+        )
+        .headline3
         .padding(.top, ProfileViewConstants.minSpaceAboveRegisterButton)
     }
     
@@ -214,7 +215,7 @@ enum ProfileViewConstants {
     
     enum Colors {
         static let backButtonForeground = Color.colorLisBlue
-        static let registerButtonBackground = Color.colorLisBlue
+        static let registerButtonBackground = Color.colorLisRose
         static let registerButtonForeground = Color.white
         static let inviteButton = Color.colorLisBlue
     }

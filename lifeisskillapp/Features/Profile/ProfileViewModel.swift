@@ -39,6 +39,7 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
     func startRegistration()
     func navigateBack()
     func sendParentActivationEmail()
+    func reloadDataAfterRegistration()
 }
 
 final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, ProfileViewModeling {
@@ -69,20 +70,20 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     var isSendActivationButtonEnabled: Bool {
         guardianEmailValidationState.isValid
     }
-    private(set) var username: String = ""
-    private(set) var userGender: UserGender = .male
-    private(set) var email: String = ""
-    private(set) var mainCategory: String = ""
-    private(set) var name: String = ""
-    private(set) var phoneNumber: String = ""
-    private(set) var postalCode: String = ""
-    private(set) var birthday: String = ""
-    private(set) var age: Int = 0
-    private(set) var isMinor: Bool = false
-    private(set) var parentName: String = ""
-    private(set) var parentEmail: String = ""
-    private(set) var parentPhone: String = ""
-    private(set) var parentRelation: String = ""
+    @Published private(set) var username: String = ""
+    @Published private(set) var userGender: UserGender = .male
+    @Published private(set) var email: String = ""
+    @Published private(set) var mainCategory: String = ""
+    @Published private(set) var name: String = ""
+    @Published private(set) var phoneNumber: String = ""
+    @Published private(set) var postalCode: String = ""
+    @Published private(set) var birthday: String = ""
+    @Published private(set) var age: Int = 0
+    @Published private(set) var isMinor: Bool = false
+    @Published private(set) var parentName: String = ""
+    @Published private(set) var parentEmail: String = ""
+    @Published private(set) var parentPhone: String = ""
+    @Published private(set) var parentRelation: String = ""
     
     // MARK: - Initialization
     
@@ -129,8 +130,6 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     }
     
     func sendParentActivationEmail() {
-        // TODO: implement activation endpoint communication
-        print("PROFILE: sending email to \(parentActivationEmail)")
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             self.isLoading = true
@@ -145,6 +144,12 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
             } catch {
                 delegate?.emailRequestDidFail()
             }
+        }
+    }
+    
+    func reloadDataAfterRegistration() {
+        Task { @MainActor [weak self] in
+            self?.loadData()
         }
     }
     
@@ -222,16 +227,19 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     
     private func loadActivationStatus(_ status: UserActivationStatus) {
         guard status != .fullyActivated else {
-            // both Booleans remain false
+            requiresParentEmailActivation = false
+            requiresToCompleteRegistration = false
             return
         }
         guard status != .parentActivationRequired else {
             // registration was completed, but user is a minor and parent email activation is required
             requiresParentEmailActivation = true
+            requiresToCompleteRegistration = false
             return
         }
-        // registration was not completedq
+        // registration was not completed
         requiresToCompleteRegistration = true
+        requiresParentEmailActivation = false
     }
     
     private func loadUserData() {

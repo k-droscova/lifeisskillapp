@@ -61,6 +61,71 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     
     // MARK: - Public Properties
     @Published private(set) var isLoading: Bool = false
+#if DEBUG
+    @Published var firstName: String = "TestFirstName" {
+        didSet {
+            validateFirstName()
+        }
+    }
+    @Published var lastName: String = "TestLastName" {
+        didSet {
+            validateLastName()
+        }
+    }
+    @Published var phoneNumber: String = "123456789" {
+        didSet {
+            validatePhoneNumber()
+        }
+    }
+    @Published var dateOfBirth: Date = Date().fromBirthday(dateString: "2017-01-01") ?? Date() {
+        didSet {
+            updateUserAge()
+        }
+    }
+    var isMinor: Bool { age < User.ageWhenConsideredNotMinor }
+    @Published var age: Int = 0
+    @Published var postalCode: String = "12345" {
+        didSet {
+            validatePostalCode()
+        }
+    }
+    @Published var gender: UserGender = .male
+    @Published var guardianFirstName: String = "TestParentFirstName" {
+        didSet {
+            validateGuardianFirstName()
+        }
+    }
+    @Published var guardianLastName: String = "TestParentLastName" {
+        didSet {
+            validateGuardianLastName()
+        }
+    }
+    @Published var guardianPhoneNumber: String = "123456789" {
+        didSet {
+            validateGuardianPhoneNumber()
+        }
+    }
+    @Published var guardianEmail: String = "drosckar@cvut.cz" {
+        didSet {
+            validateGuardianEmail()
+        }
+    }
+    @Published var guardianRelationship: String = "test" {
+        didSet {
+            validateGuardianRelationship()
+        }
+    }
+    // Validation States
+    @Published private(set) var firstNameValidationState: ValidationState = BasicValidationState.valid
+    @Published private(set) var lastNameValidationState: ValidationState = BasicValidationState.valid
+    @Published private(set) var phoneNumberValidationState: ValidationState = PhoneNumberValidationState.valid
+    @Published private(set) var postalCodeValidationState: ValidationState = BasicValidationState.valid
+    @Published private(set) var guardianFirstNameValidationState: ValidationState = BasicValidationState.valid
+    @Published private(set) var guardianLastNameValidationState: ValidationState = BasicValidationState.valid
+    @Published private(set) var guardianPhoneNumberValidationState: ValidationState = PhoneNumberValidationState.valid
+    @Published private(set) var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.valid)
+    @Published private(set) var guardianRelationshipValidationState: ValidationState = BasicValidationState.valid
+#else
     @Published var firstName: String = "" {
         didSet {
             validateFirstName()
@@ -124,6 +189,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     @Published private(set) var guardianPhoneNumberValidationState: ValidationState = PhoneNumberValidationState.initial
     @Published private(set) var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.initial)
     @Published private(set) var guardianRelationshipValidationState: ValidationState = BasicValidationState.initial
+#endif
     
     var isFormValid: Bool {
         firstNameValidationState.isValid &&
@@ -153,8 +219,8 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
             
             let fullCredentials = self.collectFullRegistrationInfo()
             do {
-                let needsParentConsent = try await self.userManager.completeUserRegistration(credentials: fullCredentials)
-                guard needsParentConsent else {
+                let response = try await self.userManager.completeUserRegistration(credentials: fullCredentials)
+                guard response.needParentActivation else {
                     self.delegate?.registrationDidSucceedAdult()
                     return
                 }

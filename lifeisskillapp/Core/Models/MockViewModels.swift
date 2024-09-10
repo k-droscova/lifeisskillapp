@@ -47,13 +47,15 @@ final class MockSettingsBarViewModel: BaseClass, SettingsBarViewModeling {
 }
 
 final class MockProfileViewModel: BaseClass, ProfileViewModeling {
+    
     typealias settingBarVM = MockSettingsBarViewModel
 
     var settingsViewModel: settingBarVM = MockSettingsBarViewModel(dependencies: appDependencies, delegate: nil)
     var isLoading: Bool = false
     
-    var requiresToCompleteRegistration: Bool = false
-    var requiresParentEmailActivation: Bool = true
+    var requiresToCompleteRegistration: Bool = true
+    var isRegistrationButtonEnabled: Bool = false
+    var requiresParentEmailActivation: Bool = false
     var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.initial)
     var isSendActivationButtonEnabled: Bool = true
     
@@ -74,15 +76,19 @@ final class MockProfileViewModel: BaseClass, ProfileViewModeling {
     var parentActivationEmail: String = "kcsnkcjsn"
 
     func inviteFriend() {
-        // Mock implementation
+        // Mock 
     }
     
     func startRegistration() {
-        // Mock implementation
+        // Mock
     }
     
     func navigateBack() {
-        // Mock implementation
+        // Mock
+    }
+    
+    func reloadDataAfterRegistration() {
+        // Mock
     }
     
     func sendParentActivationEmail() {

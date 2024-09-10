@@ -52,6 +52,14 @@ extension Date {
     func getTimeString() -> String {
         Formatters.time.string(from: self)
     }
+    
+    /// Returns true if user with this date of birth is considered minor in the game
+    func isMinor() -> Bool {
+        let calendar = Calendar.current
+        let now = Date()
+        let ageComponents = calendar.dateComponents([.year], from: self, to: now)
+        return (ageComponents.year ?? 0) < User.ageWhenConsideredNotMinor // if optional is nil then defaults to true
+    }
 }
 
 extension TimeInterval {

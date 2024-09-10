@@ -54,6 +54,33 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     // MARK: - Public Properties
     
     @Published private(set) var isLoading: Bool = false
+#if DEBUG
+    @Published var username: String = "TestFlow" {
+        didSet {
+            validateUsername()
+        }
+    }
+    @Published var email: String = "droscovakarolina@gmail.com" {
+        didSet {
+            validateEmail()
+        }
+    }
+    @Published var password: String = "Heslo1" {
+        didSet {
+            validatePassword()
+        }
+    }
+    @Published var passwordConfirm: String = "Heslo1" {
+        didSet {
+            validateConfirmPassword()
+        }
+    }
+    @Published var isGdprConfirmed: Bool = true
+    @Published var isRulesConfirmed: Bool = true
+    @Published private(set) var emailValidationState: ValidationState = EmailValidationState.valid
+    @Published private(set) var passwordValidationState: ValidationState = PasswordValidationState.valid
+    @Published private(set) var confirmPasswordValidationState: ValidationState = ConfirmPasswordValidationState.valid
+#else
     @Published var username: String = "" {
         didSet {
             validateUsername()
@@ -74,9 +101,13 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
             validateConfirmPassword()
         }
     }
-    
     @Published var isGdprConfirmed: Bool = false
     @Published var isRulesConfirmed: Bool = false
+    @Published private(set) var emailValidationState: ValidationState = EmailValidationState.initial
+    @Published private(set) var passwordValidationState: ValidationState = PasswordValidationState.initial
+    @Published private(set) var confirmPasswordValidationState: ValidationState = ConfirmPasswordValidationState.initial
+#endif
+    @Published private(set) var usernameValidationState: ValidationState = UsernameValidationState.initial
     @Published var addReference: Bool = false
     @Published private(set) var referenceUsername: String?
     var referenceInfo: ReferenceInfo? {
@@ -84,11 +115,6 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
             referenceUsername = referenceInfo?.username
         }
     }
-    
-    @Published private(set) var usernameValidationState: ValidationState = UsernameValidationState.initial
-    @Published private(set) var emailValidationState: ValidationState = EmailValidationState.initial
-    @Published private(set) var passwordValidationState: ValidationState = PasswordValidationState.initial
-    @Published private(set) var confirmPasswordValidationState: ValidationState = ConfirmPasswordValidationState.initial
     
     var isFormValid: Bool {
         usernameValidationState.isValid &&
@@ -130,7 +156,6 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     }
     
     func showReferenceInstructions() {
-        print("instructions pressed")
         delegate?.showReferenceInstructions()
     }
     

@@ -39,7 +39,7 @@ protocol UserManaging {
     func checkUsernameAvailability(_ username: String) async throws -> Bool
     func checkEmailAvailability(_ email: String) async throws -> Bool
     func registerUser(credentials: NewRegistrationCredentials) async throws
-    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool
+    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> CompleteRegistrationAPIResponse
     func requestParentEmailActivationLink(email: String) async throws -> Bool
     func signature() async -> String?
 }
@@ -129,7 +129,7 @@ final class UserManager: BaseClass, UserManaging {
         _ = try await registerUserAPI.registerUser(credentials: credentials, location: locationManager.location)
     }
     
-    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool {
+    func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> CompleteRegistrationAPIResponse {
         logger.log(message: "Completing registration for User: " + credentials.firstName)
         let response = try await registerUserAPI.completeRegistration(credentials: credentials)
         guard response.data.completionStatus else {
@@ -139,7 +139,18 @@ final class UserManager: BaseClass, UserManaging {
                 logger: logger
             )
         }
-        return response.data.needParentActivation
+        guard let username = keychainStorage.username,
+              let password = keychainStorage.password else {
+            throw BaseError(
+                context: .system,
+                message: "Unable to reload data",
+                logger: logger
+            )
+        }
+        // will fetch updated data, since complete registration requires network, this will essentially perform online login
+        try await login(credentials: .init(username: username, password: password))
+        try await gameDataManager.reloadAfterRegistration()
+        return response.data
     }
     
     func requestParentEmailActivationLink(email: String) async throws -> Bool {
