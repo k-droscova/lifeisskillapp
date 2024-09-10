@@ -60,20 +60,6 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     @Published private(set) var isLoading: Bool = false
     @Published private(set) var requiresToCompleteRegistration: Bool = false
     @Published private(set) var requiresParentEmailActivation: Bool = false
-    @Published private(set) var username: String = ""
-    @Published private(set) var userGender: UserGender = .male
-    @Published private(set) var email: String = ""
-    @Published private(set) var mainCategory: String = ""
-    @Published private(set) var name: String = ""
-    @Published private(set) var phoneNumber: String = ""
-    @Published private(set) var postalCode: String = ""
-    @Published private(set) var birthday: String = ""
-    @Published private(set) var age: Int = 0
-    @Published private(set) var isMinor: Bool = false
-    @Published private(set) var parentName: String = ""
-    @Published private(set) var parentEmail: String = ""
-    @Published private(set) var parentPhone: String = ""
-    @Published private(set) var parentRelation: String = ""
     @Published var parentActivationEmail: String = "" {
         didSet {
             validateEmail(parentActivationEmail)
@@ -83,7 +69,20 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     var isSendActivationButtonEnabled: Bool {
         guardianEmailValidationState.isValid
     }
-    
+    private(set) var username: String = ""
+    private(set) var userGender: UserGender = .male
+    private(set) var email: String = ""
+    private(set) var mainCategory: String = ""
+    private(set) var name: String = ""
+    private(set) var phoneNumber: String = ""
+    private(set) var postalCode: String = ""
+    private(set) var birthday: String = ""
+    private(set) var age: Int = 0
+    private(set) var isMinor: Bool = false
+    private(set) var parentName: String = ""
+    private(set) var parentEmail: String = ""
+    private(set) var parentPhone: String = ""
+    private(set) var parentRelation: String = ""
     
     // MARK: - Initialization
     
