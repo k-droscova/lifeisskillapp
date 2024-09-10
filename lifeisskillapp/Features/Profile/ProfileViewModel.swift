@@ -27,9 +27,11 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
     var age: Int { get }
     var isMinor: Bool { get }
     var parentName: String { get }
-    var parentEmail: String { get set }
+    var parentEmail: String { get }
     var parentPhone: String { get }
     var parentRelation: String { get }
+    
+    var parentActivationEmail: String { get set }
     var guardianEmailValidationState: ValidationState { get }
     var isSendActivationButtonEnabled: Bool { get }
     
@@ -69,15 +71,15 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     @Published private(set) var age: Int = 0
     @Published private(set) var isMinor: Bool = false
     @Published private(set) var parentName: String = ""
-    @Published var parentEmail: String = "" {
-        didSet {
-            validateEmail()
-        }
-    }
+    @Published private(set) var parentEmail: String = ""
     @Published private(set) var parentPhone: String = ""
     @Published private(set) var parentRelation: String = ""
+    @Published var parentActivationEmail: String = "" {
+        didSet {
+            validateEmail(parentActivationEmail)
+        }
+    }
     @Published private(set) var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.initial)
-    
     var isSendActivationButtonEnabled: Bool {
         guardianEmailValidationState.isValid
     }
@@ -128,7 +130,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     }
     
     func sendParentActivationEmail() {
-        print("PROFILE: sending email to \(parentEmail)")
+        print("PROFILE: sending email to \(parentActivationEmail)")
     }
     
     // MARK: - Private Helpers
@@ -193,7 +195,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         userGender = user.sex
         mainCategory = mainCat.description
         loadActivationStatus(user.activationStatus)
-        guard requiresToCompleteRegistration else {
+        guard !requiresToCompleteRegistration else {
             return
         }
         loadUserData()
@@ -236,6 +238,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         }
         parentName = "\(user.nameParent ?? "") \(user.surnameParent ?? "")".trimmingCharacters(in: .whitespaces)
         parentEmail = user.emailParent ?? ""
+        parentActivationEmail = parentEmail
         parentPhone = user.mobilParent ?? ""
         parentRelation = user.relation ?? ""
     }
@@ -263,10 +266,10 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         }
     }
     
-    private func validateEmail() {
-        if parentEmail.isEmpty {
+    private func validateEmail(_ email: String) {
+        if email.isEmpty {
             guardianEmailValidationState = GuardianEmailValidationState.base(.empty)
-        } else if !isValidEmailFormat(parentEmail) {
+        } else if !isValidEmailFormat(email) {
             guardianEmailValidationState = GuardianEmailValidationState.base(.invalidFormat)
         } else if matchesUserEmail() {
             guardianEmailValidationState = GuardianEmailValidationState.matchesUserEmail

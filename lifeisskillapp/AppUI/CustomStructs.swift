@@ -247,7 +247,7 @@ struct OnboardingPageView: View {
     }
 }
 
-struct CustomTextField: View {
+struct CustomTextField<Content: View>: View {
     let placeholder: LocalizedStringKey
     @Binding var text: String
     
@@ -258,7 +258,9 @@ struct CustomTextField: View {
     let cornerRadius: CGFloat
     let kernig: CGFloat
     let showsValidationMessage: Bool
-    var validationMessage: LocalizedStringKey? = nil // adjustable based on VM inputs
+    let validationTextColor: Color
+    var validationMessage: LocalizedStringKey? = nil
+    @ViewBuilder var sendButton: () -> Content  // Optional sendButton content
     
     init(placeholder: LocalizedStringKey,
          text: Binding<String>,
@@ -268,7 +270,9 @@ struct CustomTextField: View {
          cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size,
          kernig: CGFloat = CustomSizes.TextFieldView.kernig.size,
          showsValidationMessage: Bool = false,
-         validationMessage: LocalizedStringKey? = nil) {
+         validationTextColor: Color = .colorLisRed,
+         validationMessage: LocalizedStringKey? = nil,
+         @ViewBuilder sendButton: @escaping () -> Content = { EmptyView() }) {
         
         self.placeholder = placeholder
         self._text = text
@@ -278,23 +282,28 @@ struct CustomTextField: View {
         self.cornerRadius = cornerRadius
         self.kernig = kernig
         self.showsValidationMessage = showsValidationMessage
+        self.validationTextColor = validationTextColor
         self.validationMessage = validationMessage
+        self.sendButton = sendButton
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            textField
-                .padding()
-                .background(backgroundColor)
-                .cornerRadius(cornerRadius)
-                .foregroundStyle(foregroundColor)
-                .kerning(kernig)
-                .body1Regular
+            HStack(alignment: .center) {
+                textField
+                    .foregroundStyle(foregroundColor)
+                sendButton()
+            }
+            .padding()
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
+            .kerning(kernig)
+            .body1Regular
             
             if showsValidationMessage {
                 validatioMessageField
                     .caption
-                    .foregroundStyle(.colorLisRed)
+                    .foregroundStyle(validationTextColor)
             }
         }
     }

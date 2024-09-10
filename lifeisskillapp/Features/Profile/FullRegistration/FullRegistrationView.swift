@@ -43,9 +43,10 @@ struct FullRegistrationView<ViewModel: FullRegistrationViewModeling>: View {
     private var submitButton: some View {
         EnablingButton(
             action: viewModel.submitFullRegistration,
-            text: "register.submit_button",
             isEnabled: viewModel.isFormValid
-        )
+        ) {
+            Text("register.submit_button")
+        }
         .disabled(!viewModel.isFormValid)
         .padding(.vertical, FullRegistrationViewConstants.submitButtonVerticalPadding)
     }

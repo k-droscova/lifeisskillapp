@@ -21,6 +21,9 @@ struct ProfileView<ViewModel: ProfileViewModeling>: View {
         ) {
             contentView
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
         .overlay(
             Group {
                 if viewModel.isLoading {
@@ -42,64 +45,64 @@ private extension ProfileView {
                 }
                 inviteFriendButton
             }
-            .padding(.horizontal, ProfileViewConstants.userInfoHorizontalPadding)
         }
     }
     
     private var parentEmailActivationView: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.colorLisRose) // Pink background
-                .frame(height: 200) // Adjust the height as needed
+                .fill(.colorLisRose)
+                .frame(height: 220)
             
             VStack(alignment: .leading, spacing: 16) {
                 parentEmailPromptView
-                    .padding(.horizontal, 4)
                 parentEmailFormView
             }
+            .frame(maxHeight: 200)
             .foregroundStyle(.colorLisWhite)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 12)
         }
     }
     
     private var parentEmailPromptView: some View {
         VStack {
-            HStack {
+            HStack(alignment: .center) {
                 SFSSymbols.warning.image
                     .resizable()
                     .squareFrame(size: 24)
                 Spacer()
                 Text("profile.parent_email.prompt")
-                    .headline3
+                    .multilineTextAlignment(.center)
                 Spacer()
                 SFSSymbols.warning.image
                     .resizable()
                     .squareFrame(size: 24)
             }
+            .headline2
             Text("profile.parent_email.button_prompt")
                 .subheadlineBold
+                .padding(.horizontal, 4)
         }
     }
     
     private var parentEmailFormView: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .top) {
             CustomTextField(
                 placeholder: "profile.parent_email.textfield",
-                text: $viewModel.parentEmail,
+                text: $viewModel.parentActivationEmail,
                 isSecure: false,
                 showsValidationMessage: true,
+                validationTextColor: .colorLisWhite,
                 validationMessage: viewModel.guardianEmailValidationState.validationMessage
-            )
-            
-            Spacer(minLength: 16)
-            
-            Button(action: viewModel.sendParentActivationEmail) {
-                SFSSymbols.virtual.image
-                    .resizable()
-                    .squareFrame(size: 32)
-                    .foregroundStyle(.colorLisWhite)
+            ) {
+                Button(action: viewModel.sendParentActivationEmail) {
+                    SFSSymbols.virtual.image
+                        .resizable()
+                        .squareFrame(size: 32)
+                        .foregroundStyle(viewModel.isSendActivationButtonEnabled ? .colorLisBlue : .colorLisDarkGrey)
+                }
+                .disabled(!viewModel.isSendActivationButtonEnabled)
             }
-            .disabled(!viewModel.isSendActivationButtonEnabled)
         }
     }
     
@@ -129,8 +132,10 @@ private extension ProfileView {
                 .headline3
             if viewModel.requiresParentEmailActivation {
                 parentEmailActivationView
+                    .padding(.horizontal, ProfileViewConstants.emailActivationHorizontalPadding)
             }
             userDetailInfo
+                .padding(.horizontal, ProfileViewConstants.userInfoHorizontalPadding)
         }
     }
     
@@ -204,6 +209,7 @@ enum ProfileViewConstants {
     static let userInfoVStackSpacing: CGFloat = 32
     static let userDetailsVerticalSpacing: CGFloat = 12
     static let userInfoHorizontalPadding: CGFloat = 32
+    static let emailActivationHorizontalPadding: CGFloat = 12
     static let iconSize: CGFloat = 200
     
     enum Colors {

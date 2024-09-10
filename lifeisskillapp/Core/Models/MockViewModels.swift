@@ -54,7 +54,6 @@ final class MockProfileViewModel: BaseClass, ProfileViewModeling {
     
     var requiresToCompleteRegistration: Bool = false
     var requiresParentEmailActivation: Bool = true
-    @Published var showParentEmailActivationField: Bool = true
     var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.initial)
     var isSendActivationButtonEnabled: Bool = true
     
@@ -72,6 +71,7 @@ final class MockProfileViewModel: BaseClass, ProfileViewModeling {
     var parentEmail: String = "jane.doe@example.com"
     var parentPhone: String = "+0987654321"
     var parentRelation: String = "Mother"
+    var parentActivationEmail: String = "kcsnkcjsn"
 
     func inviteFriend() {
         // Mock implementation
@@ -87,9 +87,5 @@ final class MockProfileViewModel: BaseClass, ProfileViewModeling {
     
     func sendParentActivationEmail() {
         print("Mock sending parent activation email to \(parentEmail)")
-    }
-    
-    func toggleParentEmailView() {
-        showParentEmailActivationField.toggle()
     }
 }

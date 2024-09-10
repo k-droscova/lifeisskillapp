@@ -66,8 +66,10 @@ enum EmailValidationState: BaseValidationState {
             "register.validation.email.format"
         case .alreadyTaken:
             "register.validation.email.taken"
-        default:
+        case .initial, .valid:
             nil
+        case .empty:
+            "register.validation.empty"
         }
     }
 }
@@ -143,9 +145,9 @@ enum GuardianEmailValidationState: ValidationState, Equatable {
     var validationMessage: LocalizedStringKey? {
         switch self {
         case .base(let baseState):
-            return baseState.validationMessage
+            baseState.validationMessage
         case .matchesUserEmail:
-            return "register.validation.email.guardian_matches_user"
+            "register.validation.email.guardian_matches_user"
         }
     }
 
