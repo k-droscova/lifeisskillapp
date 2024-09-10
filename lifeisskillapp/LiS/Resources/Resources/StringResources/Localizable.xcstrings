@@ -3287,6 +3287,15 @@
         }
       }
     },
+    "profile.parent_email.button_prompt" : {
+
+    },
+    "profile.parent_email.prompt" : {
+
+    },
+    "profile.parent_email.textfield" : {
+
+    },
     "profile.phone" : {
       "localizations" : {
         "cs" : {

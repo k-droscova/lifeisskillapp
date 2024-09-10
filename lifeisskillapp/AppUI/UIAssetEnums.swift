@@ -15,7 +15,7 @@ enum SFSSymbols: String {
     case flashOff = "bolt.slash.fill"
     case list = "list.bullet"
     case map = "map"
-    case categorySelectorDropDown = "chevron.down"
+    case expandDown = "chevron.down"
     case settingsMenu = "ellipsis.circle"
     case navigationBack = "chevron.backward"
     case qr = "qrcode.viewfinder"
@@ -24,6 +24,8 @@ enum SFSSymbols: String {
     case virtual = "paperplane.circle"
     case instructionsPopover = "questionmark.circle"
     case linkArrow = "arrow.up.forward.app"
+    case hideUp = "chevron.up"
+    case warning = "exclamationmark.circle.fill"
     
     var image: Image {
         SwiftUI.Image(systemName: self.rawValue)

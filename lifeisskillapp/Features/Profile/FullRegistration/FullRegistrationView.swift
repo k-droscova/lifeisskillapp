@@ -120,7 +120,6 @@ private extension FullRegistrationView {
             Text("register.gender")
                 .subheadlineBold
             Spacer()
-            // TODO: ask Martin for gender possibilities for selection
             Picker("register.gender", selection: $viewModel.gender) {
                 Text("register.gender.male").tag(UserGender.male)
                 Text("register.gender.female").tag(UserGender.female)

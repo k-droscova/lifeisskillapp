@@ -37,11 +37,69 @@ private extension ProfileView {
             backButton
             ScrollView {
                 userInfoView
-                if !viewModel.requiresToCompleteRegistration {
+                if viewModel.requiresToCompleteRegistration {
                     registerButton
                 }
                 inviteFriendButton
             }
+            .padding(.horizontal, ProfileViewConstants.userInfoHorizontalPadding)
+        }
+    }
+    
+    private var parentEmailActivationView: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(.colorLisRose) // Pink background
+                .frame(height: 200) // Adjust the height as needed
+            
+            VStack(alignment: .leading, spacing: 16) {
+                parentEmailPromptView
+                    .padding(.horizontal, 4)
+                parentEmailFormView
+            }
+            .foregroundStyle(.colorLisWhite)
+            .padding(.horizontal, 16)
+        }
+    }
+    
+    private var parentEmailPromptView: some View {
+        VStack {
+            HStack {
+                SFSSymbols.warning.image
+                    .resizable()
+                    .squareFrame(size: 24)
+                Spacer()
+                Text("profile.parent_email.prompt")
+                    .headline3
+                Spacer()
+                SFSSymbols.warning.image
+                    .resizable()
+                    .squareFrame(size: 24)
+            }
+            Text("profile.parent_email.button_prompt")
+                .subheadlineBold
+        }
+    }
+    
+    private var parentEmailFormView: some View {
+        HStack(alignment: .center) {
+            CustomTextField(
+                placeholder: "profile.parent_email.textfield",
+                text: $viewModel.parentEmail,
+                isSecure: false,
+                showsValidationMessage: true,
+                validationMessage: viewModel.guardianEmailValidationState.validationMessage
+            )
+            
+            Spacer(minLength: 16)
+            
+            Button(action: viewModel.sendParentActivationEmail) {
+                SFSSymbols.virtual.image
+                    .resizable()
+                    .squareFrame(size: 32)
+                    .foregroundStyle(.colorLisWhite)
+            }
+            .disabled(!viewModel.isSendActivationButtonEnabled)
         }
     }
     
@@ -69,16 +127,17 @@ private extension ProfileView {
             
             Text("\(viewModel.username)")
                 .headline3
-            
+            if viewModel.requiresParentEmailActivation {
+                parentEmailActivationView
+            }
             userDetailInfo
         }
-        .padding(.horizontal, ProfileViewConstants.userInfoHorizontalPadding)
     }
     
     private var userDetailInfo: some View {
         VStack(alignment: .leading, spacing: ProfileViewConstants.userDetailsVerticalSpacing) {
             ProfileDetailRow(title: "profile.email", value: viewModel.email)
-            if viewModel.requiresToCompleteRegistration {
+            if !viewModel.requiresToCompleteRegistration {
                 additionalUserInfo
             }
         }
@@ -152,5 +211,12 @@ enum ProfileViewConstants {
         static let registerButtonBackground = Color.colorLisBlue
         static let registerButtonForeground = Color.white
         static let inviteButton = Color.colorLisBlue
+    }
+}
+
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView(viewModel: MockProfileViewModel())
+            .previewLayout(.sizeThatFits)
     }
 }

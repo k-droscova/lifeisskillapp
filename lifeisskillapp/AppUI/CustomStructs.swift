@@ -35,7 +35,7 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
                 else {
                     placeholder
                 }
-                SFSSymbols.categorySelectorDropDown.image
+                SFSSymbols.expandDown.image
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
