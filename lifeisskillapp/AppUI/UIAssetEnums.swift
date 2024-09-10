@@ -26,6 +26,7 @@ enum SFSSymbols: String {
     case linkArrow = "arrow.up.forward.app"
     case hideUp = "chevron.up"
     case warning = "exclamationmark.circle.fill"
+    case send = "paperplane.fill"
     
     var image: Image {
         SwiftUI.Image(systemName: self.rawValue)

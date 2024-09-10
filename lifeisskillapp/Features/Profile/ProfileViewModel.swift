@@ -130,6 +130,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     }
     
     func sendParentActivationEmail() {
+        // TODO: implement activation endpoint communication
         print("PROFILE: sending email to \(parentActivationEmail)")
     }
     

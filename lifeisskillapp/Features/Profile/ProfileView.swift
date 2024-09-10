@@ -96,9 +96,9 @@ private extension ProfileView {
                 validationMessage: viewModel.guardianEmailValidationState.validationMessage
             ) {
                 Button(action: viewModel.sendParentActivationEmail) {
-                    SFSSymbols.virtual.image
+                    SFSSymbols.send.image
                         .resizable()
-                        .squareFrame(size: 32)
+                        .squareFrame(size: 20)
                         .foregroundStyle(viewModel.isSendActivationButtonEnabled ? .colorLisBlue : .colorLisDarkGrey)
                 }
                 .disabled(!viewModel.isSendActivationButtonEnabled)
