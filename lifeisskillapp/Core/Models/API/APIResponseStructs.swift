@@ -341,3 +341,16 @@ struct CompleteRegistrationAPIResponse: DataProtocol {
         needParentActivation = try container.decode(Bool.self, forKey: .needParentActivation)
     }
 }
+
+struct ParentEmailActivationReponse: DataProtocol {
+    let status: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case status = "parentLinkSent"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        status = try container.decode(Bool.self, forKey: .status)
+    }
+}

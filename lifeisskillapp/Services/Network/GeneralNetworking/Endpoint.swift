@@ -22,6 +22,7 @@ enum Endpoint: Endpointing {
     case usercategory, userpoints, rank, events, messages, points
     case sponsorImage(sponsorId: String, width: Int, height: Int)
     case signature
+    case parentEmailActivation(email: String)
     
     var path: String {
         switch self {
@@ -63,6 +64,8 @@ enum Endpoint: Endpointing {
             "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
         case .signature:
             "/signature"
+        case .parentEmailActivation(let email):
+            "/parentLink/\(email.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? email)/users"
         }
     }
     
@@ -92,6 +95,7 @@ enum Endpoint: Endpointing {
                 .points,
                 .sponsorImage,
                 .signature,
+                .parentEmailActivation,
                 .registration(.completeRegistration):
             return true
         }

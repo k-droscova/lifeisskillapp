@@ -3221,6 +3221,121 @@
         }
       }
     },
+    "profile.email_request.error_not_sent.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedokázali jsme odeslat aktivační e-mail. Kontaktuj naši podporu na info@lifeisskill.cz"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir konnten keine Aktivierungs-E-Mail senden. Kontaktieren Sie unseren Support unter info@lifeisskill.cz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We couldn't send an activation email. Contact our support at info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "profile.email_request.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Něco se pokazilo. Zkus to znovu později, nebo kontaktuj naši podporu na info@lifeisskill.cz"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etwas ist schiefgelaufen. Versuchen Sie es später erneut oder kontaktieren Sie unseren Support unter info@lifeisskill.cz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Try again later or contact our support at info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "profile.email_request.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "profile.email_request.success.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poslali jsme další aktivační odkaz na zadaný e-mail. Pokud ho nemůžeš najít, zkontroluj složku se spamem."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir haben einen weiteren Aktivierungslink an die angegebene E-Mail-Adresse gesendet. Wenn Sie ihn nicht finden, überprüfen Sie den Spam-Ordner."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We sent another activation link to the provided email. If you cannot find it, check the spam folder."
+          }
+        }
+      }
+    },
+    "profile.email_request.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úspěch"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolg"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
+      }
+    },
     "profile.invite.button" : {
       "localizations" : {
         "cs" : {

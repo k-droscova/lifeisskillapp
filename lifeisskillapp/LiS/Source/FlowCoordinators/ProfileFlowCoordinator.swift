@@ -21,6 +21,9 @@ protocol ProfileFlowDelegate: NSObject {
     func returnToHomeScreen()
     func startRegistration()
     func loadUserDataDidFail()
+    func emailRequestNotSent()
+    func emailRequestDidSucceed()
+    func emailRequestDidFail()
 }
 
 final class ProfileFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
@@ -55,6 +58,18 @@ final class ProfileFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.F
 }
 
 extension ProfileFlowCoordinator: ProfileFlowDelegate {
+    func emailRequestNotSent() {
+        showAlert(titleKey: "profile.email_request.error.title", messageKey: "profile.email_request.error_not_sent.message")
+    }
+    
+    func emailRequestDidSucceed() {
+        showAlert(titleKey: "profile.email_request.success.title", messageKey: "profile.email_request.success.message")
+    }
+    
+    func emailRequestDidFail() {
+        showAlert(titleKey: "profile.email_request.error.title", messageKey: "profile.email_request.error.message")
+    }
+    
     func generateQR(content: UIImage) {
         let vc = InviteFriendView(qrImage: content).hosting()
         vc.modalPresentationStyle = .formSheet

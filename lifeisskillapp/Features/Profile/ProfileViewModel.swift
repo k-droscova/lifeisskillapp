@@ -131,6 +131,21 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     func sendParentActivationEmail() {
         // TODO: implement activation endpoint communication
         print("PROFILE: sending email to \(parentActivationEmail)")
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            do {
+                let wasEmailSent = try await self.userManager.requestParentEmailActivationLink(email: self.parentActivationEmail)
+                guard wasEmailSent else {
+                    delegate?.emailRequestNotSent()
+                    return
+                }
+                delegate?.emailRequestDidSucceed()
+            } catch {
+                delegate?.emailRequestDidFail()
+            }
+        }
     }
     
     // MARK: - Private Helpers

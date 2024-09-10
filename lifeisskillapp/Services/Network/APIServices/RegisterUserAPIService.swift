@@ -16,6 +16,7 @@ protocol RegisterUserAPIServicing {
     func checkEmailAvailability(_ email: String) async throws -> APIResponse<EmailAvailabilityResponse>
     func registerUser(credentials: NewRegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse>
     func completeRegistration(credentials: FullRegistrationCredentials) async throws -> APIResponse<CompleteRegistrationAPIResponse>
+    func requestParentEmailActivationLink(email: String) async throws -> APIResponse<ParentEmailActivationReponse>
 }
 
 public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
@@ -75,6 +76,16 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
             method: .PUT,
             body: data,
             sensitiveRequestBodyData: false,
+            errorObject: APIResponseError.self,
+            userToken: storage.token
+        )
+    }
+    
+    func requestParentEmailActivationLink(email: String) async throws -> APIResponse<ParentEmailActivationReponse> {
+        return try await network.performAuthorizedRequestWithDataDecoding(
+            endpoint: Endpoint.parentEmailActivation(email: email),
+            method: .PUT,
+            sensitiveRequestBodyData: true,
             errorObject: APIResponseError.self,
             userToken: storage.token
         )

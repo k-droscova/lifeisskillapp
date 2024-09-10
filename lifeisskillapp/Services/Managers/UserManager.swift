@@ -40,6 +40,7 @@ protocol UserManaging {
     func checkEmailAvailability(_ email: String) async throws -> Bool
     func registerUser(credentials: NewRegistrationCredentials) async throws
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool
+    func requestParentEmailActivationLink(email: String) async throws -> Bool
     func signature() async -> String?
 }
 
@@ -125,16 +126,7 @@ final class UserManager: BaseClass, UserManaging {
     
     func registerUser(credentials: NewRegistrationCredentials) async throws {
         logger.log(message: "Registering User: " + credentials.username)
-        do {
-            let _ = try await registerUserAPI.registerUser(credentials: credentials, location: locationManager.location)
-            return
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to register",
-                logger: logger
-            )
-        }
+        _ = try await registerUserAPI.registerUser(credentials: credentials, location: locationManager.location)
     }
     
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool {
@@ -148,6 +140,12 @@ final class UserManager: BaseClass, UserManaging {
             )
         }
         return response.data.needParentActivation
+    }
+    
+    func requestParentEmailActivationLink(email: String) async throws -> Bool {
+        logger.log(message: "Requesting email activation link for " + email)
+        let response = try await registerUserAPI.requestParentEmailActivationLink(email: email)
+        return response.data.status
     }
     
     func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData {
