@@ -470,6 +470,52 @@
         }
       }
     },
+    "alert.parent_activation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je vyžadována aktivace e-mailu rodiče. Pokud chceš, můžeš si znovu odeslat aktivační odkaz na e-mail rodiče ve svém profilu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Aktivierung der E-Mail-Adresse der Eltern ist erforderlich. Wenn Sie möchten, können Sie den Aktivierungslink erneut an die E-Mail-Adresse Ihrer Eltern in Ihrem Profil senden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parent email activation is required. If you wish, you can resend activation link to your parent's email in your profile."
+          }
+        }
+      }
+    },
+    "alert.parent_activation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neúplná registrace\n"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unvollständige Registrierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incomplete registration"
+          }
+        }
+      }
+    },
     "basic.attention" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4170,7 +4216,6 @@
       }
     },
     "registration.reference.qr.scanning.instructions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

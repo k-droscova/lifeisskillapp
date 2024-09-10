@@ -12,6 +12,7 @@ import ACKategories
 protocol LoginFlowCoordinatorDelegate: NSObject {
     func loginDidSucceed()
     func promptToCompleteRegistration()
+    func promptParentToActivateAccount()
 }
 
 protocol LoginFlowDelegate: NSObject {
@@ -21,6 +22,7 @@ protocol LoginFlowDelegate: NSObject {
     func loginFailed()
     func offlineLoginFailed()
     func promptToCompleteRegistration()
+    func promptParentToActivateAccount()
     func userNotActivated()
 }
 
@@ -100,6 +102,10 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     
     func promptToCompleteRegistration() {
         delegate?.promptToCompleteRegistration()
+    }
+    
+    func promptParentToActivateAccount() {
+        delegate?.promptParentToActivateAccount()
     }
     
     func userNotActivated() {

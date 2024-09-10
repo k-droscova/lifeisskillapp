@@ -70,9 +70,14 @@ final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewMode
             do {
                 try await self.userManager.login(credentials: .init(username: username, password: password))
                 self.delegate?.loginSuccessful()
-                guard (self.userManager.loggedInUser?.fullActivation ?? false) else {
-                    self.delegate?.promptToCompleteRegistration()
+                guard let activationStatus = self.userManager.loggedInUser?.activationStatus else {
+                    self.delegate?.loginFailed()
                     return
+                }
+                if activationStatus == .incomplete {
+                    self.delegate?.promptToCompleteRegistration()
+                } else if activationStatus == .parentActivationRequired {
+                    self.delegate?.promptParentToActivateAccount()
                 }
             } catch let error as BaseError {
                 if error.code == ErrorCodes.specificStatusCode(.userNotActivated).code {

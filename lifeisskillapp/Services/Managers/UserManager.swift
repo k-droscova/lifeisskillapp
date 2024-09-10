@@ -139,51 +139,27 @@ final class UserManager: BaseClass, UserManaging {
     
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> Bool {
         logger.log(message: "Completing registration for User: " + credentials.firstName)
-        do {
-            let response = try await registerUserAPI.completeRegistration(credentials: credentials)
-            guard response.data.completionStatus else {
-                throw BaseError(
-                    context: .system,
-                    message: "Unable to register",
-                    logger: logger
-                )
-            }
-            return response.data.needParentActivation
-        } catch {
+        let response = try await registerUserAPI.completeRegistration(credentials: credentials)
+        guard response.data.completionStatus else {
             throw BaseError(
                 context: .system,
                 message: "Unable to register",
                 logger: logger
             )
         }
+        return response.data.needParentActivation
     }
     
     func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData {
-        do {
-            logger.log(message: "Requesting Pin for \(username)")
-            let response = try await forgotPasswordAPI.fetchPin(username: username)
-            return response.data
-        } catch {
-            throw BaseError(
-                context: .api,
-                message: "Unable to obtain Pin",
-                logger: logger
-            )
-        }
+        logger.log(message: "Requesting Pin for \(username)")
+        let response = try await forgotPasswordAPI.fetchPin(username: username)
+        return response.data
     }
     
     func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool {
-        do {
-            logger.log(message: "New password for User: " + credentials.email)
-            let response = try await forgotPasswordAPI.setNewPassword(credentials: credentials)
-            return response.data.message
-        } catch {
-            throw BaseError(
-                context: .system,
-                message: "Unable to renew password for user: \(credentials.email)",
-                logger: logger
-            )
-        }
+        logger.log(message: "New password for User: " + credentials.email)
+        let response = try await forgotPasswordAPI.setNewPassword(credentials: credentials)
+        return response.data.message
     }
     
     func login(credentials: LoginCredentials) async throws {

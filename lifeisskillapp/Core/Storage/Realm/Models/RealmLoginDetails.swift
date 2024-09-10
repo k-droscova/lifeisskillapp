@@ -22,6 +22,7 @@ class RealmLoginDetails: Object {
     @objc dynamic var distance: Int = 0
     @objc dynamic var mainCategory: String = ""
     @objc dynamic var fullActivation: Bool = false
+    @objc dynamic var activationStatus: Int = 0
     @objc dynamic var isLoggedIn: Bool = false
     
     // New fields from the updated LoggedInUser structure
@@ -59,6 +60,7 @@ class RealmLoginDetails: Object {
         distance = loggedInUser.distance
         mainCategory = loggedInUser.mainCategory
         fullActivation = loggedInUser.fullActivation
+        activationStatus = loggedInUser.activationStatus.rawValue
         
         // Assign the new optional fields, replacing nil with empty strings where needed
         name = loggedInUser.name ?? ""
@@ -81,7 +83,8 @@ class RealmLoginDetails: Object {
     }
     
     func loggedInUser() -> LoggedInUser? {
-        guard let sex = UserGender(rawValue: self.sexRaw) else {
+        guard let sex = UserGender(rawValue: self.sexRaw),
+              let status = UserActivationStatus(rawValue: self.activationStatus) else {
             return nil
         }
         return LoggedInUser(
@@ -97,6 +100,7 @@ class RealmLoginDetails: Object {
             distance: self.distance,
             mainCategory: self.mainCategory,
             fullActivation: self.fullActivation,
+            activationStatus: status,
             name: self.name.isEmpty ? nil : self.name,
             surname: self.surname.isEmpty ? nil : self.surname,
             mobil: self.mobil.isEmpty ? nil : self.mobil,

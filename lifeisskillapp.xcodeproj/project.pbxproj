@@ -87,6 +87,7 @@
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
 		27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27497AF72C78ACDB00E7051D /* UserDataStorage.swift */; };
+		2750A5BA2C9034410086815D /* UserActivationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5B92C9034410086815D /* UserActivationStatus.swift */; };
 		2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750BBF92C6A550E00F82A04 /* OnboardingView.swift */; };
 		27540E4D2C70CE96005A0B49 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540E4C2C70CE96005A0B49 /* MapViewModel.swift */; };
 		27540E4F2C70D943005A0B49 /* MapViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540E4E2C70D943005A0B49 /* MapViewComponent.swift */; };
@@ -313,6 +314,7 @@
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		27497AF72C78ACDB00E7051D /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
+		2750A5B92C9034410086815D /* UserActivationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivationStatus.swift; sourceTree = "<group>"; };
 		2750BBF92C6A550E00F82A04 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		27540E4C2C70CE96005A0B49 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		27540E4E2C70D943005A0B49 /* MapViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewComponent.swift; sourceTree = "<group>"; };
@@ -838,6 +840,7 @@
 				27066A8B2C455FFB0092B499 /* UserGender.swift */,
 				27F27A402C4CFA8600928388 /* UserRank.swift */,
 				278D99FA2C4D7C5100B17083 /* UserLocation.swift */,
+				2750A5B92C9034410086815D /* UserActivationStatus.swift */,
 			);
 			path = UserData;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				278DB5252C88A52900FB5B1C /* QRReferenceViewModel.swift in Sources */,
 				2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */,
 				27066A912C4567260092B499 /* CodeSource.swift in Sources */,
+				2750A5BA2C9034410086815D /* UserActivationStatus.swift in Sources */,
 				271F1F0B2C53FF4E00DF9DFD /* OCRViewModel.swift in Sources */,
 				2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */,
 				27187B692C57E310003D22C6 /* CameraViewModeling.swift in Sources */,

@@ -18,7 +18,7 @@ public struct LoginAPIResponse: DataProtocol {
     let user: LoggedInUser
     
     enum CodingKeys: String, CodingKey {
-        case userId, email, nick, rights, rightsCoded, token, userRank, userPoints, sex, distance, mainCategory, fullActivation
+        case userId, email, nick, rights, rightsCoded, token, userRank, userPoints, sex, distance, mainCategory, fullActivation, activationStatus
         case name, surname, mobil, zip, birthday, nameParent, surnameParent, emailParent, mobilParent, relation
     }
     
@@ -37,6 +37,7 @@ public struct LoginAPIResponse: DataProtocol {
         let distance = try container.decode(Int.self, forKey: .distance)
         let mainCategory = try container.decode(String.self, forKey: .mainCategory)
         let fullActivation = try container.decode(Bool.self, forKey: .fullActivation)
+        let activationStatus = try container.decode(UserActivationStatus.self, forKey: .activationStatus)
         
         // Decode optional strings, only set them if they are non-empty
         let name = try container.decodeNonEmptyString(forKey: .name)
@@ -66,6 +67,7 @@ public struct LoginAPIResponse: DataProtocol {
             distance: distance,
             mainCategory: mainCategory,
             fullActivation: fullActivation,
+            activationStatus: activationStatus,
             name: name,
             surname: surname,
             mobil: mobil,
@@ -95,6 +97,7 @@ public struct LoginAPIResponse: DataProtocol {
         try container.encode(user.distance, forKey: .distance)
         try container.encode(user.mainCategory, forKey: .mainCategory)
         try container.encode(user.fullActivation, forKey: .fullActivation)
+        try container.encode(user.activationStatus, forKey: .activationStatus)
         
         // Only encode optional fields if they are not nil
         try container.encodeIfPresent(user.name, forKey: .name)

@@ -14,7 +14,8 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
     var settingsViewModel: settingBarVM { get }
     
     var isLoading: Bool { get }
-    var isFullyRegistered: Bool { get }
+    var requiresToCompleteRegistration: Bool { get }
+    var requiresParentEmailActivation: Bool { get }
     var username: String { get }
     var userGender: UserGender { get }
     var email: String { get }
@@ -52,7 +53,8 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     
     var settingsViewModel: settingBarVM
     @Published private(set) var isLoading: Bool = false
-    @Published private(set) var isFullyRegistered: Bool = false
+    @Published private(set) var requiresToCompleteRegistration: Bool = false
+    @Published private(set) var requiresParentEmailActivation: Bool = false
     @Published private(set) var username: String = ""
     @Published private(set) var userGender: UserGender = .male
     @Published private(set) var email: String = ""
@@ -174,8 +176,8 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         email = user.email
         userGender = user.sex
         mainCategory = mainCat.description
-        isFullyRegistered = user.fullActivation
-        guard isFullyRegistered else {
+        loadActivationStatus(user.activationStatus)
+        guard requiresToCompleteRegistration else {
             return
         }
         loadUserData()
@@ -183,6 +185,20 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
             return
         }
         loadParentData()
+    }
+    
+    private func loadActivationStatus(_ status: UserActivationStatus) {
+        guard status != .fullyActivated else {
+            // both Booleans remain false
+            return
+        }
+        guard status != .parentActivationRequired else {
+            // registration was completed, but user is a minor and parent email activation is required
+            requiresParentEmailActivation = true
+            return
+        }
+        // registration was not completed
+        requiresToCompleteRegistration = true
     }
     
     private func loadUserData() {

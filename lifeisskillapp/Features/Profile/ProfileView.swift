@@ -37,7 +37,7 @@ private extension ProfileView {
             backButton
             ScrollView {
                 userInfoView
-                if !viewModel.isFullyRegistered {
+                if !viewModel.requiresToCompleteRegistration {
                     registerButton
                 }
                 inviteFriendButton
@@ -78,7 +78,7 @@ private extension ProfileView {
     private var userDetailInfo: some View {
         VStack(alignment: .leading, spacing: ProfileViewConstants.userDetailsVerticalSpacing) {
             ProfileDetailRow(title: "profile.email", value: viewModel.email)
-            if viewModel.isFullyRegistered {
+            if viewModel.requiresToCompleteRegistration {
                 additionalUserInfo
             }
         }

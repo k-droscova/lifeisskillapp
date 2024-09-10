@@ -84,6 +84,21 @@ extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
         )
     }
     
+    func promptParentToActivateAccount() {
+        let completeAction = UIAlertAction(
+            title: NSLocalizedString("alert.complete_registration_prompt.action", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            self?.navigateToProfile()
+        }
+        let okAction = Alert.okAction()
+        showAlert(
+            titleKey: "alert.parent_activation.title",
+            messageKey: "alert.parent_activation.message",
+            actions: [completeAction, okAction]
+        )
+    }
+    
     private func navigateToProfile() {
         guard let fc = self.mainFC else { return }
         fc.profilePressed()

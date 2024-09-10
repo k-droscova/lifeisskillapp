@@ -25,7 +25,7 @@ struct QRReferenceView: View {
                     exitButtonAction: viewModel.dismissScanner,
                     flashAction: viewModel.toggleFlash,
                     isFlashOn: $viewModel.isFlashOn,
-                    instructions: "home.qr.scan_alert"
+                    instructions: "registration.reference.qr.scanning.instructions"
                 )
                 .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
             }

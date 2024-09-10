@@ -56,6 +56,9 @@ struct LoggedInUser: UserProtocol, Codable {
     /// Whether the user's account is fully activated
     let fullActivation: Bool
     
+    /// Different levels of activation
+    let activationStatus: UserActivationStatus
+    
     /// Optional Fields for user personal details
     let name: String?
     let surname: String?
