@@ -55,7 +55,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     
     @Published private(set) var isLoading: Bool = false
 #if DEBUG
-    @Published var username: String = "TestFlow" {
+    @Published var username: String = "FlowTest" {
         didSet {
             validateUsername()
         }

@@ -140,6 +140,9 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
                     delegate?.emailRequestNotSent()
                     return
                 }
+                if self.parentEmail != self.parentActivationEmail {
+                    self.loadData() // update data if the activation link was requested to another email
+                }
                 delegate?.emailRequestDidSucceed()
             } catch {
                 delegate?.emailRequestDidFail()
@@ -294,7 +297,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
             guardianEmailValidationState = GuardianEmailValidationState.base(.empty)
         } else if !isValidEmailFormat(email) {
             guardianEmailValidationState = GuardianEmailValidationState.base(.invalidFormat)
-        } else if matchesUserEmail() {
+        } else if matchesUserEmail(email) {
             guardianEmailValidationState = GuardianEmailValidationState.matchesUserEmail
         } else {
             guardianEmailValidationState = GuardianEmailValidationState.base(.valid)
@@ -306,7 +309,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         return emailPred.evaluate(with: email)
     }
     
-    private func matchesUserEmail() -> Bool {
-        email == parentEmail
+    private func matchesUserEmail(_ email: String) -> Bool {
+        self.email == email
     }
 }

@@ -131,19 +131,19 @@ final class UserManager: BaseClass, UserManaging {
     
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> CompleteRegistrationAPIResponse {
         logger.log(message: "Completing registration for User: " + credentials.firstName)
+        guard let username = keychainStorage.username,
+              let password = keychainStorage.password else {
+            throw BaseError(
+                context: .system,
+                message: "Unable to complete registration for user, no logged in user detected",
+                logger: logger
+            )
+        }
         let response = try await registerUserAPI.completeRegistration(credentials: credentials)
         guard response.data.completionStatus else {
             throw BaseError(
                 context: .system,
                 message: "Unable to register",
-                logger: logger
-            )
-        }
-        guard let username = keychainStorage.username,
-              let password = keychainStorage.password else {
-            throw BaseError(
-                context: .system,
-                message: "Unable to reload data",
                 logger: logger
             )
         }
@@ -155,7 +155,19 @@ final class UserManager: BaseClass, UserManaging {
     
     func requestParentEmailActivationLink(email: String) async throws -> Bool {
         logger.log(message: "Requesting email activation link for " + email)
+        guard let username = keychainStorage.username,
+              let password = keychainStorage.password else {
+            throw BaseError(
+                context: .system,
+                message: "Unable to request activation email, no logged in user detected",
+                logger: logger
+            )
+        }
         let response = try await registerUserAPI.requestParentEmailActivationLink(email: email)
+        // update user data if email is different to what we have stored before
+        if (email != loggedInUser?.emailParent) {
+            try await login(credentials: .init(username: username, password: password))
+        }
         return response.data.status
     }
     
