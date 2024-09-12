@@ -52,67 +52,47 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     private var isGuardianFormValid: Bool {
         guard isMinor else { return true }
         return guardianFirstNameValidationState.isValid
-                && guardianLastNameValidationState.isValid
-                && guardianPhoneNumberValidationState.isValid
-                && guardianEmailValidationState.isValid
-                && guardianRelationshipValidationState.isValid
+        && guardianLastNameValidationState.isValid
+        && guardianPhoneNumberValidationState.isValid
+        && guardianEmailValidationState.isValid
+        && guardianRelationshipValidationState.isValid
+    }
+    private var fullRegistrationInfo: FullRegistrationCredentials {
+        let guardian: GuardianInfo? = isMinor ? GuardianInfo(
+            firstName: guardianFirstName,
+            lastName: guardianLastName,
+            phoneNumber: guardianPhoneNumber,
+            email: guardianEmail,
+            relationship: guardianRelationship
+        ) : nil
+        
+        return FullRegistrationCredentials(
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            dateOfBirth: dateOfBirth,
+            gender: gender,
+            postalCode: postalCode,
+            guardianInfo: guardian
+        )
     }
     
     // MARK: - Public Properties
+    
     @Published private(set) var isLoading: Bool = false
-    @Published var firstName: String = "" {
-        didSet {
-            validateFirstName()
-        }
-    }
-    @Published var lastName: String = "" {
-        didSet {
-            validateLastName()
-        }
-    }
-    @Published var phoneNumber: String = "" {
-        didSet {
-            validatePhoneNumber()
-        }
-    }
-    @Published var dateOfBirth: Date = Date() {
-        didSet {
-            updateUserAge()
-        }
-    }
+    @Published var firstName: String = "" { didSet { validateFirstName() } }
+    @Published var lastName: String = "" { didSet { validateLastName() } }
+    @Published var phoneNumber: String = "" { didSet { validatePhoneNumber() } }
+    @Published var dateOfBirth: Date = Date() { didSet { updateUserAge() } }
     var isMinor: Bool { age < User.ageWhenConsideredNotMinor }
     @Published var age: Int = 0
-    @Published var postalCode: String = "" {
-        didSet {
-            validatePostalCode()
-        }
-    }
+    @Published var postalCode: String = "" { didSet { validatePostalCode() } }
     @Published var gender: UserGender = .male
-    @Published var guardianFirstName: String = "" {
-        didSet {
-            validateGuardianFirstName()
-        }
-    }
-    @Published var guardianLastName: String = "" {
-        didSet {
-            validateGuardianLastName()
-        }
-    }
-    @Published var guardianPhoneNumber: String = "" {
-        didSet {
-            validateGuardianPhoneNumber()
-        }
-    }
-    @Published var guardianEmail: String = "" {
-        didSet {
-            validateGuardianEmail()
-        }
-    }
-    @Published var guardianRelationship: String = "" {
-        didSet {
-            validateGuardianRelationship()
-        }
-    }
+    @Published var guardianFirstName: String = "" { didSet { validateGuardianFirstName() } }
+    @Published var guardianLastName: String = "" { didSet { validateGuardianLastName() } }
+    @Published var guardianPhoneNumber: String = "" { didSet { validateGuardianPhoneNumber() } }
+    @Published var guardianEmail: String = "" { didSet { validateGuardianEmail() } }
+    @Published var guardianRelationship: String = "" { didSet { validateGuardianRelationship() } }
     
     // Validation States
     @Published private(set) var firstNameValidationState: ValidationState = BasicValidationState.initial
@@ -126,7 +106,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     @Published private(set) var guardianRelationshipValidationState: ValidationState = BasicValidationState.initial
     
     var isFormValid: Bool {
-        firstNameValidationState.isValid 
+        firstNameValidationState.isValid
         && lastNameValidationState.isValid
         && phoneNumberValidationState.isValid
         && postalCodeValidationState.isValid
@@ -157,24 +137,22 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     func submitFullRegistration() {
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            self.isLoading = true
-            defer { self.isLoading = false }
-            guard self.isFormValid else {
-                self.logger.log(message: "Full registration form is not valid")
+            isLoading = true
+            defer { isLoading = false }
+            guard isFormValid else {
+                logger.log(message: "Full registration form is not valid")
                 return
             }
-            
-            let fullCredentials = self.collectFullRegistrationInfo()
             do {
-                let response = try await self.userManager.completeUserRegistration(credentials: fullCredentials)
+                let response = try await userManager.completeUserRegistration(credentials: fullRegistrationInfo)
                 guard response.needParentActivation else {
-                    self.delegate?.registrationDidSucceedAdult()
+                    delegate?.registrationDidSucceedAdult()
                     return
                 }
-                self.delegate?.registrationDidSucceedMinor()
+                delegate?.registrationDidSucceedMinor()
             } catch {
-                self.logger.log(message: "Failed to complete full registration")
-                self.delegate?.registrationDidFail()
+                logger.log(message: "Failed to complete full registration")
+                delegate?.registrationDidFail()
             }
         }
     }
