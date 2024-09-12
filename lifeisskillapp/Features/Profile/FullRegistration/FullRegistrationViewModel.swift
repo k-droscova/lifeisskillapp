@@ -60,71 +60,6 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     
     // MARK: - Public Properties
     @Published private(set) var isLoading: Bool = false
-#if DEBUG
-    @Published var firstName: String = "TestFirstName" {
-        didSet {
-            validateFirstName()
-        }
-    }
-    @Published var lastName: String = "TestLastName" {
-        didSet {
-            validateLastName()
-        }
-    }
-    @Published var phoneNumber: String = "123456789" {
-        didSet {
-            validatePhoneNumber()
-        }
-    }
-    @Published var dateOfBirth: Date = Date.Backend.fromBirthday(dateString: "2017-01-01") ?? Date() {
-        didSet {
-            updateUserAge()
-        }
-    }
-    var isMinor: Bool { age < User.ageWhenConsideredNotMinor }
-    @Published var age: Int = 0
-    @Published var postalCode: String = "12345" {
-        didSet {
-            validatePostalCode()
-        }
-    }
-    @Published var gender: UserGender = .male
-    @Published var guardianFirstName: String = "TestParentFirstName" {
-        didSet {
-            validateGuardianFirstName()
-        }
-    }
-    @Published var guardianLastName: String = "TestParentLastName" {
-        didSet {
-            validateGuardianLastName()
-        }
-    }
-    @Published var guardianPhoneNumber: String = "123456789" {
-        didSet {
-            validateGuardianPhoneNumber()
-        }
-    }
-    @Published var guardianEmail: String = "drosckar@cvut.cz" {
-        didSet {
-            validateGuardianEmail()
-        }
-    }
-    @Published var guardianRelationship: String = "test" {
-        didSet {
-            validateGuardianRelationship()
-        }
-    }
-    // Validation States
-    @Published private(set) var firstNameValidationState: ValidationState = BasicValidationState.valid
-    @Published private(set) var lastNameValidationState: ValidationState = BasicValidationState.valid
-    @Published private(set) var phoneNumberValidationState: ValidationState = PhoneNumberValidationState.valid
-    @Published private(set) var postalCodeValidationState: ValidationState = BasicValidationState.valid
-    @Published private(set) var guardianFirstNameValidationState: ValidationState = BasicValidationState.valid
-    @Published private(set) var guardianLastNameValidationState: ValidationState = BasicValidationState.valid
-    @Published private(set) var guardianPhoneNumberValidationState: ValidationState = PhoneNumberValidationState.valid
-    @Published private(set) var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.valid)
-    @Published private(set) var guardianRelationshipValidationState: ValidationState = BasicValidationState.valid
-#else
     @Published var firstName: String = "" {
         didSet {
             validateFirstName()
@@ -178,6 +113,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
             validateGuardianRelationship()
         }
     }
+    
     // Validation States
     @Published private(set) var firstNameValidationState: ValidationState = BasicValidationState.initial
     @Published private(set) var lastNameValidationState: ValidationState = BasicValidationState.initial
@@ -188,14 +124,13 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     @Published private(set) var guardianPhoneNumberValidationState: ValidationState = PhoneNumberValidationState.initial
     @Published private(set) var guardianEmailValidationState: ValidationState = GuardianEmailValidationState.base(.initial)
     @Published private(set) var guardianRelationshipValidationState: ValidationState = BasicValidationState.initial
-#endif
     
     var isFormValid: Bool {
-        firstNameValidationState.isValid &&
-        lastNameValidationState.isValid &&
-        phoneNumberValidationState.isValid &&
-        postalCodeValidationState.isValid &&
-        isGuardianFormValid
+        firstNameValidationState.isValid 
+        && lastNameValidationState.isValid
+        && phoneNumberValidationState.isValid
+        && postalCodeValidationState.isValid
+        && isGuardianFormValid
     }
     
     // MARK: - Initialization
@@ -203,6 +138,19 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.delegate = delegate
+        
+#if DEBUG
+        self.firstName = "TestFirstName"
+        self.lastName = "TestLastName"
+        self.phoneNumber = "123456789"
+        self.dateOfBirth = Date.Backend.fromBirthday(dateString: "2017-01-01") ?? Date()
+        self.postalCode = "12345"
+        self.guardianFirstName = "TestParentFirstName"
+        self.guardianLastName = "TestParentLastName"
+        self.guardianPhoneNumber = "123456789"
+        self.guardianEmail = "drosckar@cvut.cz"
+        self.guardianRelationship = "test"
+#endif
     }
     
     // MARK: - Public Methods

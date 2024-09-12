@@ -57,33 +57,6 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     // MARK: - Public Properties
     
     @Published private(set) var isLoading: Bool = false
-#if DEBUG
-    @Published var username: String = "FlowTest" {
-        didSet {
-            validateUsername()
-        }
-    }
-    @Published var email: String = "droscovakarolina@gmail.com" {
-        didSet {
-            validateEmail()
-        }
-    }
-    @Published var password: String = "Heslo1" {
-        didSet {
-            validatePassword()
-        }
-    }
-    @Published var passwordConfirm: String = "Heslo1" {
-        didSet {
-            validateConfirmPassword()
-        }
-    }
-    @Published var isGdprConfirmed: Bool = true
-    @Published var isRulesConfirmed: Bool = true
-    @Published private(set) var emailValidationState: ValidationState = EmailValidationState.valid
-    @Published private(set) var passwordValidationState: ValidationState = PasswordValidationState.valid
-    @Published private(set) var confirmPasswordValidationState: ValidationState = ConfirmPasswordValidationState.valid
-#else
     @Published var username: String = "" {
         didSet {
             validateUsername()
@@ -109,7 +82,6 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     @Published private(set) var emailValidationState: ValidationState = EmailValidationState.initial
     @Published private(set) var passwordValidationState: ValidationState = PasswordValidationState.initial
     @Published private(set) var confirmPasswordValidationState: ValidationState = ConfirmPasswordValidationState.initial
-#endif
     @Published private(set) var usernameValidationState: ValidationState = UsernameValidationState.initial
     @Published var addReference: Bool = false
     @Published private(set) var referenceUsername: String?
@@ -120,11 +92,12 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     }
     
     var isFormValid: Bool {
-        usernameValidationState.isValid &&
-        emailValidationState.isValid &&
-        passwordValidationState.isValid &&
-        confirmPasswordValidationState.isValid &&
-        isGdprConfirmed && isRulesConfirmed
+        usernameValidationState.isValid
+        && emailValidationState.isValid
+        && passwordValidationState.isValid
+        && confirmPasswordValidationState.isValid
+        && isGdprConfirmed
+        && isRulesConfirmed
         && isReferenceValid
     }
     
@@ -134,6 +107,17 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
         self.delegate = delegate
+#if DEBUG
+        self.username = "FlowTest"
+        self.email = "droscovakarolina@gmail.com"
+        self.password = "Heslo1"
+        self.passwordConfirm = "Heslo1"
+        self.isGdprConfirmed = true
+        self.isRulesConfirmed = true
+        self.emailValidationState = EmailValidationState.valid
+        self.passwordValidationState = PasswordValidationState.valid
+        self.confirmPasswordValidationState = ConfirmPasswordValidationState.valid
+#endif
     }
     
     // MARK: - Public Interface
