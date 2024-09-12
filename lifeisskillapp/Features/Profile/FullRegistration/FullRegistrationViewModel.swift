@@ -50,12 +50,12 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     private let logger: LoggerServicing
     private let userManager: UserManaging
     private var isGuardianFormValid: Bool {
-        guard isMinor else { return true}
-        return guardianFirstNameValidationState.isValid &&
-        guardianLastNameValidationState.isValid &&
-        guardianPhoneNumberValidationState.isValid &&
-        guardianEmailValidationState.isValid &&
-        guardianRelationshipValidationState.isValid
+        guard isMinor else { return true }
+        return guardianFirstNameValidationState.isValid
+                && guardianLastNameValidationState.isValid
+                && guardianPhoneNumberValidationState.isValid
+                && guardianEmailValidationState.isValid
+                && guardianRelationshipValidationState.isValid
     }
     
     // MARK: - Public Properties
