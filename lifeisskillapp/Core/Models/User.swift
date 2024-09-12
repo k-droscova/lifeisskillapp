@@ -67,12 +67,8 @@ struct LoggedInUser: UserProtocol, Codable {
     let birthday: Date?
     
     /// Computed property to calculate the user's age based on the birthday
-    var age: Int {
-        guard let birthday = birthday else { return 0 }
-        let calendar = Calendar.current
-        let now = Date()
-        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now)
-        return ageComponents.year ?? 0
+    var age: Int? {
+        birthday?.age
     }
     
     /// Optional Fields for parent's information
@@ -86,6 +82,6 @@ struct LoggedInUser: UserProtocol, Codable {
 // Extend the UserProtocol to provide a default implementation for the id property
 extension UserProtocol {
     var id: String {
-        return userId
+        userId
     }
 }

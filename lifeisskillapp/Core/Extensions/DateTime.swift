@@ -8,7 +8,11 @@
 import Foundation
 
 extension Date {
-
+    
+    var age: Int? {
+        Calendar.current.dateComponents([.year], from: self, to: Date()).year
+    }
+    
     enum Backend {
         
         /// Transform date string with `yyyy-MM-dd` format to Date
@@ -32,7 +36,7 @@ extension Date {
         }
         
     }
-
+    
     enum UI {
         
         /// Returns date string `dd. MM. yyyy`
@@ -66,7 +70,7 @@ extension Date {
 }
 
 extension TimeInterval {
-
+    
     enum Backend {
         
         /// Parse duration string with `HH:mm:ss` format to TimeInterval
@@ -89,12 +93,12 @@ extension TimeInterval {
 }
 
 enum Formatters {
-
+    
     // MARK: - Backend Formatters
     enum Backend {
         /// Locale for Backend
         static let localeIdentifier = "en_US_POSIX"
-
+        
         /// Formatter for `HH:mm:ss` format
         static let timeLong: DateFormatter = {
             let dateFormatter = DateFormatter()
@@ -119,12 +123,12 @@ enum Formatters {
             return dateFormatter
         }()
     }
-
+    
     // MARK: - UI Formatters
     enum UI {
         /// Locale for UI
         static let locale = Locale.current
-
+        
         /// Formatter for `d. M. yyyy` format
         static let date: DateFormatter = {
             let dateFormatter = DateFormatter()

@@ -254,7 +254,7 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         name = "\(user.name ?? "") \(user.surname ?? "")".trimmingCharacters(in: .whitespaces)
         phoneNumber = user.mobil ?? ""
         postalCode = user.postalCode ?? ""
-        age = user.age
+        age = user.age ?? 0
         isMinor = age < User.ageWhenConsideredNotMinor
         birthday = Date.UI.getDateString(from: user.birthday ?? Date())
     }

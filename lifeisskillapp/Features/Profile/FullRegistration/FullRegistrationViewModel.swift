@@ -274,7 +274,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     }
     
     private func updateUserAge() {
-        self.age = Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 0
+        age = dateOfBirth.age ?? 0
     }
     
     private func validatePostalCode() {
