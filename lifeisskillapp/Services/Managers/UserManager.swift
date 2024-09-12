@@ -156,8 +156,10 @@ final class UserManager: BaseClass, UserManaging {
     
     func requestParentEmailActivationLink(email: String) async throws -> Bool {
         logger.log(message: "Requesting email activation link for " + email)
-        guard let username = keychainStorage.username,
-              let password = keychainStorage.password else {
+        guard 
+            let username = keychainStorage.username,
+            let password = keychainStorage.password
+        else {
             throw BaseError(
                 context: .system,
                 message: "Unable to request activation email, no logged in user detected",
