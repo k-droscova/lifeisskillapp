@@ -32,7 +32,7 @@ struct FullRegistrationView<ViewModel: FullRegistrationViewModeling>: View {
         .overlay(
             Group {
                 if viewModel.isLoading {
-                    CustomProgressView() // Placeholder for a loading view
+                    CustomProgressView()
                 }
             }
         )
@@ -121,6 +121,7 @@ private extension FullRegistrationView {
                 .subheadlineBold
             Spacer()
             Picker("register.gender", selection: $viewModel.gender) {
+                // full registration enables just 2 genders, nonspecified is reserved for incomplete registration only
                 Text("register.gender.male").tag(UserGender.male)
                 Text("register.gender.female").tag(UserGender.female)
             }
