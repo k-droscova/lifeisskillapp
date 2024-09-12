@@ -42,7 +42,6 @@ protocol FullRegistrationViewModeling: BaseClass, ObservableObject {
     func submitFullRegistration()
 }
 
-
 public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullRegistrationViewModeling {
     typealias Dependencies = HasLoggers & HasUserManager
     
