@@ -9,10 +9,9 @@ import Foundation
 
 extension String {
     // For parsing LiS QR codes for points
-    func parseMessage() -> String {
+    var parsedMessage: String {
         let withoutFront = self.split(separator: "{")
         let withoutBack = withoutFront[1].split(separator: "}")
-        
         return String(withoutBack.first ?? "")
     }
     
@@ -55,7 +54,7 @@ extension String {
             print("Failed to parse reference QR code")
             return nil
         }
-
+        
         return ReferenceInfo(username: validUsername, userId: userId)
     }
 }

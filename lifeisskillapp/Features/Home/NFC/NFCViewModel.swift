@@ -81,7 +81,7 @@ extension NfcViewModel: NFCNDEFReaderSessionDelegate {
                 guard string.contains("Life is Skill") else {
                     continue
                 }
-                handleProcessedCode(string.parseMessage())
+                handleProcessedCode(string.parsedMessage)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                     session.invalidate()
                 }

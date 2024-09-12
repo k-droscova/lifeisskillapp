@@ -160,7 +160,7 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             
             if string.contains("lifeisskill.cz") {
-                handleProcessedCode(string.parseMessage())
+                handleProcessedCode(string.parsedMessage)
             } else {
                 scanningFailed()
             }
