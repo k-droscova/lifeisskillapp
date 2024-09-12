@@ -52,11 +52,30 @@ struct HomeButton<Content: View>: View {
 struct EnablingButton: View {
     let action: () -> Void
     let text: LocalizedStringKey
-    var enabledColorBackground: Color = Color.colorLisGreen
-    var disabledColorBackground: Color = Color.colorLisGrey
-    var enabledColorText: Color = Color.white
-    var disabledColorText: Color = Color.colorLisDarkGrey
+    let enabledColorBackground: Color
+    let disabledColorBackground: Color
+    let enabledColorText: Color
+    let disabledColorText: Color
     let isEnabled: Bool
+    
+    // Custom initializer with default values
+    init(
+        action: @escaping () -> Void,
+        text: LocalizedStringKey,
+        enabledColorBackground: Color = Color.colorLisGreen,
+        disabledColorBackground: Color = Color.colorLisGrey,
+        enabledColorText: Color = Color.white,
+        disabledColorText: Color = Color.colorLisDarkGrey,
+        isEnabled: Bool
+    ) {
+        self.action = action
+        self.text = text
+        self.enabledColorBackground = enabledColorBackground
+        self.disabledColorBackground = disabledColorBackground
+        self.enabledColorText = enabledColorText
+        self.disabledColorText = disabledColorText
+        self.isEnabled = isEnabled
+    }
     
     var body: some View {
         Button(action: action) {
