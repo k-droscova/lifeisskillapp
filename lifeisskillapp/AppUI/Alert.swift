@@ -12,8 +12,10 @@ class Alert {
         style: UIAlertAction.Style = .cancel,
         completion: (() -> Void)? = nil
     ) -> UIAlertAction {
-        return UIAlertAction(title: "OK", style: style) { _ in
-            completion?()
-        }
+        UIAlertAction(
+            title: NSLocalizedString("alert.button.ok", comment: ""),
+            style: style) { _ in
+                completion?()
+            }
     }
 }
