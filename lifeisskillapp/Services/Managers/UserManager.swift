@@ -164,8 +164,8 @@ final class UserManager: BaseClass, UserManaging {
             )
         }
         let response = try await registerUserAPI.requestParentEmailActivationLink(email: email)
-        // update user data if email is different to what we have stored before
-        if (email != loggedInUser?.emailParent) {
+        // update user data if necessary
+        if userChangedParentEmail(email) {
             try await login(credentials: .init(username: username, password: password))
         }
         return response.data.status
@@ -246,6 +246,10 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     // MARK: - Private Helpers
+    
+    private func userChangedParentEmail(_ newEmail: String) -> Bool {
+        newEmail != loggedInUser?.emailParent
+    }
     
     private func checkIfUserIsLoggedIn() {
         Task { @MainActor [weak self] in
