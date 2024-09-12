@@ -132,7 +132,8 @@ final class UserManager: BaseClass, UserManaging {
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> CompleteRegistrationAPIResponse {
         logger.log(message: "Completing registration for User: " + credentials.firstName)
         guard let username = keychainStorage.username,
-              let password = keychainStorage.password else {
+              let password = keychainStorage.password 
+        else {
             throw BaseError(
                 context: .system,
                 message: "Unable to complete registration for user, no logged in user detected",
