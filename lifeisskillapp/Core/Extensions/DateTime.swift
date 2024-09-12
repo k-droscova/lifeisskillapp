@@ -123,13 +123,13 @@ enum Formatters {
     // MARK: - UI Formatters
     enum UI {
         /// Locale for UI
-        static let localeIdentifier = "cs"
+        static let locale = Locale.current
 
         /// Formatter for `d. M. yyyy` format
         static let date: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "d. M. yyyy"
-            dateFormatter.locale = Locale(identifier: localeIdentifier)
+            dateFormatter.locale = locale
             return dateFormatter
         }()
         
@@ -137,7 +137,7 @@ enum Formatters {
         static let day: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "d. M."
-            dateFormatter.locale = Locale(identifier: localeIdentifier)
+            dateFormatter.locale = locale
             return dateFormatter
         }()
         
@@ -145,7 +145,7 @@ enum Formatters {
         static let year: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY"
-            dateFormatter.locale = Locale(identifier: localeIdentifier)
+            dateFormatter.locale = locale
             return dateFormatter
         }()
         
@@ -153,7 +153,7 @@ enum Formatters {
         static let time: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
-            dateFormatter.locale = Locale(identifier: localeIdentifier)
+            dateFormatter.locale = locale
             return dateFormatter
         }()
     }
