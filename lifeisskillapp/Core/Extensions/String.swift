@@ -48,10 +48,12 @@ extension String {
         }
         
         // Ensure we have both username and Base64-encoded user ID
-        guard let validUsername = username, let validBase64UserId = base64UserId,
-              let userIdData = Data(base64Encoded: validBase64UserId),
-              let userId = String(data: userIdData, encoding: .utf8) else {
-            print("Failed to parse reference QR code")
+        guard 
+            let validUsername = username,
+            let validBase64UserId = base64UserId,
+            let userIdData = Data(base64Encoded: validBase64UserId),
+            let userId = String(data: userIdData, encoding: .utf8)
+        else {
             return nil
         }
         
