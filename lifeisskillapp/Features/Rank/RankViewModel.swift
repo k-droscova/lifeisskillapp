@@ -86,7 +86,7 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
-            self?.username = self?.userManager.loggedInUser?.nick ?? ""
+            self?.username = (self?.userManager.loggedInUser?.nick).emptyIfNil
             await self?.fetchData()
             self?.isLoading = false
         }

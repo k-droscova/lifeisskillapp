@@ -115,7 +115,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             self.isLoading = true
-            self.username = self.userManager.loggedInUser?.nick ?? ""
+            self.username = (self.userManager.loggedInUser?.nick).emptyIfNil
             await self.fetchData()
             if self.isMapButtonPressed {
                 await self.setupMapPoints(self.mapPoints)

@@ -156,7 +156,7 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            let string = stringValue.removingPercentEncoding ?? ""
+            let string = stringValue.removingPercentEncoding.emptyIfNil
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             
             if string.contains("lifeisskill.cz") {

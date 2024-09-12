@@ -80,21 +80,21 @@ class RealmUserPoint: Object {
     
     func userPoint() -> UserPoint {
         UserPoint(
-            id: self.pointID,
-            recordKey: self.recordKey,
-            pointTime: self.pointTime,
-            pointName: self.pointName,
-            pointValue: self.pointValue,
-            pointType: PointType(rawValue: self.pointType) ?? .unknown,
-            pointSpec: self.pointSpec,
-            pointLat: self.pointLat,
-            pointLng: self.pointLng,
-            pointAlt: self.pointAlt,
-            accuracy: self.accuracy,
-            codeSource: CodeSource(rawValue: self.codeSource) ?? .unknown,
-            pointCategory: Array(self.pointCategory),
-            duration: self.duration,
-            doesPointCount: self.doesPointCount
+            id: pointID,
+            recordKey: recordKey,
+            pointTime: pointTime,
+            pointName: pointName,
+            pointValue: pointValue,
+            pointType: PointType(rawValue: pointType) ?? .unknown,
+            pointSpec: pointSpec,
+            pointLat: pointLat,
+            pointLng: pointLng,
+            pointAlt: pointAlt,
+            accuracy: accuracy,
+            codeSource: CodeSource(rawValue: codeSource) ?? .unknown,
+            pointCategory: Array(pointCategory),
+            duration: duration,
+            doesPointCount: doesPointCount
         )
     }
 }

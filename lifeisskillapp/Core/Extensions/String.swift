@@ -48,7 +48,7 @@ extension String {
         }
         
         // Ensure we have both username and Base64-encoded user ID
-        guard 
+        guard
             let validUsername = username,
             let validBase64UserId = base64UserId,
             let userIdData = Data(base64Encoded: validBase64UserId),
@@ -58,5 +58,11 @@ extension String {
         }
         
         return ReferenceInfo(username: validUsername, userId: userId)
+    }
+}
+
+extension String {
+    var nilIfEmpty: String? {
+        isEmpty ? nil : self
     }
 }

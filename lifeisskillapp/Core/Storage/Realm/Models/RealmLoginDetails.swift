@@ -63,16 +63,16 @@ class RealmLoginDetails: Object {
         activationStatus = loggedInUser.activationStatus.rawValue
         
         // Assign the new optional fields, replacing nil with empty strings where needed
-        name = loggedInUser.name ?? ""
-        surname = loggedInUser.surname ?? ""
-        mobil = loggedInUser.mobil ?? ""
-        postalCode = loggedInUser.postalCode ?? ""
+        name = loggedInUser.name.emptyIfNil
+        surname = loggedInUser.surname.emptyIfNil
+        mobil = loggedInUser.mobil.emptyIfNil
+        postalCode = loggedInUser.postalCode.emptyIfNil
+        nameParent = loggedInUser.nameParent.emptyIfNil
+        surnameParent = loggedInUser.surnameParent.emptyIfNil
+        emailParent = loggedInUser.emailParent.emptyIfNil
+        mobilParent = loggedInUser.mobilParent.emptyIfNil
+        relation = loggedInUser.relation.emptyIfNil
         birthday = loggedInUser.birthday // Date? type is supported in Realm
-        nameParent = loggedInUser.nameParent ?? ""
-        surnameParent = loggedInUser.surnameParent ?? ""
-        emailParent = loggedInUser.emailParent ?? ""
-        mobilParent = loggedInUser.mobilParent ?? ""
-        relation = loggedInUser.relation ?? ""
     }
     
     func loginUserData() -> LoginUserData? {
@@ -83,34 +83,36 @@ class RealmLoginDetails: Object {
     }
     
     func loggedInUser() -> LoggedInUser? {
-        guard let sex = UserGender(rawValue: self.sexRaw),
-              let status = UserActivationStatus(rawValue: self.activationStatus) else {
+        guard
+            let sex = UserGender(rawValue: sexRaw),
+            let status = UserActivationStatus(rawValue: activationStatus)
+        else {
             return nil
         }
         return LoggedInUser(
-            userId: self.userID,
-            email: self.email,
-            nick: self.nick,
+            userId: userID,
+            email: email,
+            nick: nick,
             sex: sex,
-            rights: self.rights,
-            rightsCoded: self.rightsCoded,
-            token: self.token,
-            userRank: self.userRank,
-            userPoints: self.userPoints,
-            distance: self.distance,
-            mainCategory: self.mainCategory,
-            fullActivation: self.fullActivation,
+            rights: rights,
+            rightsCoded: rightsCoded,
+            token: token,
+            userRank: userRank,
+            userPoints: userPoints,
+            distance: distance,
+            mainCategory: mainCategory,
+            fullActivation: fullActivation,
             activationStatus: status,
-            name: self.name.isEmpty ? nil : self.name,
-            surname: self.surname.isEmpty ? nil : self.surname,
-            mobil: self.mobil.isEmpty ? nil : self.mobil,
-            postalCode: self.postalCode.isEmpty ? nil : self.postalCode,
-            birthday: self.birthday,
-            nameParent: self.nameParent.isEmpty ? nil : self.nameParent,
-            surnameParent: self.surnameParent.isEmpty ? nil : self.surnameParent,
-            emailParent: self.emailParent.isEmpty ? nil : self.emailParent,
-            mobilParent: self.mobilParent.isEmpty ? nil : self.mobilParent,
-            relation: self.relation.isEmpty ? nil : self.relation
+            name: name.nilIfEmpty,
+            surname: surname.nilIfEmpty,
+            mobil: mobil.nilIfEmpty,
+            postalCode: postalCode.nilIfEmpty,
+            birthday: birthday,
+            nameParent: nameParent.nilIfEmpty,
+            surnameParent: surnameParent.nilIfEmpty,
+            emailParent: emailParent.nilIfEmpty,
+            mobilParent: mobilParent.nilIfEmpty,
+            relation: relation.nilIfEmpty
         )
     }
 }

@@ -112,8 +112,10 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         Task { @MainActor [weak self] in
             self?.isLoading = true
             defer { self?.isLoading = false }
-            guard let qrString = await self?.qrString(),
-                  let image = self?.generateQRCode(from: qrString) else {
+            guard
+                let qrString = await self?.qrString(),
+                let image = self?.generateQRCode(from: qrString)
+            else {
                 self?.delegate?.generateQRDidFail()
                 return
             }
@@ -177,11 +179,11 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
         
         // 3. Percent encode values and manually encode curly braces
         let ref = "ref"  // Replace with the actual reference
-        let encodedUserNick = user.nick.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let encodedBase64UserId = base64UserId ?? ""
-        let encodedKey2Value = key2Value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let encodedKey3Value = key3Value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let encodedKey4Value = key4Value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let encodedUserNick = user.nick.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).emptyIfNil
+        let encodedBase64UserId = base64UserId.emptyIfNil
+        let encodedKey2Value = key2Value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).emptyIfNil
+        let encodedKey3Value = key3Value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).emptyIfNil
+        let encodedKey4Value = key4Value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).emptyIfNil
         
         // 4. Manually add encoded curly braces around the values
         let qrCodeString =
@@ -247,27 +249,22 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     }
     
     private func loadUserData() {
-        guard let user = loggedInUser else {
-            return
-        }
-        
-        name = "\(user.name ?? "") \(user.surname ?? "")".trimmingCharacters(in: .whitespaces)
-        phoneNumber = user.mobil ?? ""
-        postalCode = user.postalCode ?? ""
+        guard let user = loggedInUser else { return }
+        name = "\(user.name.emptyIfNil) \(user.surname.emptyIfNil)".trimmingCharacters(in: .whitespaces)
+        phoneNumber = user.mobil.emptyIfNil
+        postalCode = user.postalCode.emptyIfNil
         age = user.age ?? 0
         isMinor = age < User.ageWhenConsideredNotMinor
         birthday = Date.UI.getDateString(from: user.birthday ?? Date())
     }
     
     private func loadParentData() {
-        guard let user = loggedInUser else {
-            return
-        }
-        parentName = "\(user.nameParent ?? "") \(user.surnameParent ?? "")".trimmingCharacters(in: .whitespaces)
-        parentEmail = user.emailParent ?? ""
+        guard let user = loggedInUser else { return }
+        parentName = "\(user.nameParent.emptyIfNil) \(user.surnameParent.emptyIfNil)".trimmingCharacters(in: .whitespaces)
+        parentEmail = user.emailParent.emptyIfNil
         parentActivationEmail = parentEmail
-        parentPhone = user.mobilParent ?? ""
-        parentRelation = user.relation ?? ""
+        parentPhone = user.mobilParent.emptyIfNil
+        parentRelation = user.relation.emptyIfNil
     }
     
     

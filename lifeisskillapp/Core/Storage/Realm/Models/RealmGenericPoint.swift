@@ -97,8 +97,8 @@ class RealmPointParam: Object {
     
     func pointParam() -> PointParam {
         PointParam(
-            timer: self.timer?.timerParam(),
-            status: self.status?.statusParam()
+            timer: timer?.timerParam(),
+            status: status?.statusParam()
         )
     }
 }
@@ -125,11 +125,11 @@ class RealmTimerParam: Object {
     
     func timerParam() -> TimerParam {
         TimerParam(
-            base: self.base,
-            done: self.done,
-            maxTime: self.maxTime,
-            minTime: self.minTime,
-            distance: self.distance
+            base: base,
+            done: done,
+            maxTime: maxTime,
+            minTime: minTime,
+            distance: distance
         )
     }
 }
@@ -150,8 +150,8 @@ class RealmStatusParam: Object {
     
     func statusParam() -> StatusParam {
         StatusParam(
-            color: self.color,
-            isValid: self.isValid
+            color: color,
+            isValid: isValid
         )
     }
 }
