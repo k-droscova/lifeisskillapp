@@ -263,6 +263,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     }
     
     private func isValidPhoneNumber(_ phoneNumber: String) -> Bool {
+        // TODO: think about foreign numbers...
         let phonePred = NSPredicate(format: "SELF MATCHES %@", Phone.phonePattern)
         return phonePred.evaluate(with: phoneNumber)
     }
