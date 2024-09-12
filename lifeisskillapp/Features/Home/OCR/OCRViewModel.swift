@@ -9,7 +9,7 @@ import Foundation
 import AVFoundation
 
 protocol OcrViewModeling: CameraViewModeling {
-    var captureSession: AVCaptureSession? { get set }
+    var captureSession: AVCaptureSession? { get }
     var previewLayer: AVCaptureVideoPreviewLayer? { get set }
     func dismissCamera()
     func scanningFailed()
@@ -27,7 +27,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     
     // MARK: - Public Properties
     
-    var captureSession: AVCaptureSession?
+    private(set) var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var isFlashOn: Bool = false
     

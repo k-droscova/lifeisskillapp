@@ -9,19 +9,24 @@ import AVFoundation
 import UIKit
 
 final class QRReferenceViewModel: BaseClass, QRViewModeling, ObservableObject {
-    // MARK: - Dependencies
+    typealias Dependencies = HasLoggers
+    
+    // MARK: - Private Properties
+    
     weak var delegate: RegistrationFlowDelegate?
     private let logger: LoggerServicing
+    private var captureSession: AVCaptureSession?
     
     // MARK: - Public Properties
-    var captureSession: AVCaptureSession?
+    
     var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var isFlashOn: Bool = false
     var isScannerSetup: Bool = false
     
     // MARK: - Initialization
-    init(logger: LoggerServicing, delegate: RegistrationFlowDelegate?) {
-        self.logger = logger
+    
+    init(dependencies: Dependencies, delegate: RegistrationFlowDelegate?) {
+        self.logger = dependencies.logger
         self.delegate = delegate
         super.init()
         setUpScanner()

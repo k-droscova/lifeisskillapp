@@ -39,7 +39,10 @@ protocol RegistrationViewModeling: BaseClass, ObservableObject {
 }
 
 class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeling {
-    typealias Dependencies = HasLoggers & HasUserManager
+    struct Dependencies: HasLoggers & HasUserManager {
+        let logger: LoggerServicing
+        let userManager: UserManaging
+    }
     
     // MARK: - Private Properties
     
@@ -160,7 +163,13 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     }
     
     func scanQR() {
-        let vm = QRReferenceViewModel(logger: self.logger, delegate: self.delegate)
+        let vm = QRReferenceViewModel(
+            dependencies: Dependencies(
+                logger: logger,
+                userManager: userManager
+            ),
+            delegate: delegate
+        )
         delegate?.loadQR(viewModel: vm)
     }
     

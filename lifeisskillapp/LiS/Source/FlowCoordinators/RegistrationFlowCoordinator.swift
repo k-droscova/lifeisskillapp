@@ -38,7 +38,13 @@ final class RegistrationFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlo
     override func start() -> UIViewController {
         super.start()
         
-        let vm = RegistrationViewModel(dependencies: appDependencies, delegate: self)
+        let vm = RegistrationViewModel(
+            dependencies: RegistrationViewModel.Dependencies(
+                logger: appDependencies.logger,
+                userManager: appDependencies.userManager
+            ),
+            delegate: self
+        )
         self.viewModel = vm
         let vc = RegistrationView(viewModel: vm).hosting()
         let navigationController = UINavigationController(rootViewController: vc)
