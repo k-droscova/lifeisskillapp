@@ -132,16 +132,17 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     func sendParentActivationEmail() {
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            self.isLoading = true
-            defer { self.isLoading = false }
+            isLoading = true
+            defer { isLoading = false }
             do {
-                let wasEmailSent = try await self.userManager.requestParentEmailActivationLink(email: self.parentActivationEmail)
+                let wasEmailSent = try await userManager.requestParentEmailActivationLink(email: parentActivationEmail)
                 guard wasEmailSent else {
                     delegate?.emailRequestNotSent()
                     return
                 }
-                if self.parentEmail != self.parentActivationEmail {
-                    self.loadData() // update data if the activation link was requested to another email
+                // update data if the activation link was requested to another email
+                if parentEmail != parentActivationEmail {
+                    loadData()
                 }
                 delegate?.emailRequestDidSucceed()
             } catch {
