@@ -91,7 +91,7 @@ struct FullRegistrationCredentials: Codable, Credentials {
             "name": firstName,
             "surname": lastName,
             "phone": phoneNumber,
-            "birthday": dateOfBirth.getBirthdayString(),
+            "birthday": Date.Backend.getBirthdayString(from: dateOfBirth),
             "sex": gender.rawValue,
             "zip": postalCode
         ]

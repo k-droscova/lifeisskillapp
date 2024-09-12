@@ -45,7 +45,7 @@ public struct LoginAPIResponse: DataProtocol {
         let mobil = try container.decodeNonEmptyString(forKey: .mobil)
         let postalCode = try container.decodeNonEmptyString(forKey: .zip)
         let birthdayString = try container.decodeIfPresent(String.self, forKey: .birthday)
-        let birthday: Date? = Date().fromBirthday(dateString: birthdayString ?? "")
+        let birthday: Date? = Date.Backend.fromBirthday(dateString: birthdayString ?? "")
         
         // Decode optional parent information fields, only set them if they are non-empty
         let nameParent = try container.decodeNonEmptyString(forKey: .nameParent)
@@ -105,7 +105,7 @@ public struct LoginAPIResponse: DataProtocol {
         try container.encodeIfPresent(user.mobil, forKey: .mobil)
         try container.encodeIfPresent(user.postalCode, forKey: .zip)
         if let birthday = user.birthday {
-            try container.encodeIfPresent(birthday.getBirthdayString(), forKey: .birthday)
+            try container.encodeIfPresent(Date.Backend.getBirthdayString(from: birthday), forKey: .birthday)
         }
         try container.encodeIfPresent(user.nameParent, forKey: .nameParent)
         try container.encodeIfPresent(user.surnameParent, forKey: .surnameParent)

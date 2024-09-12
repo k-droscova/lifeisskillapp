@@ -77,7 +77,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
             validatePhoneNumber()
         }
     }
-    @Published var dateOfBirth: Date = Date().fromBirthday(dateString: "2017-01-01") ?? Date() {
+    @Published var dateOfBirth: Date = Date.Backend.fromBirthday(dateString: "2017-01-01") ?? Date() {
         didSet {
             updateUserAge()
         }
