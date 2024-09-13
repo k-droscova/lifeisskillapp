@@ -159,27 +159,16 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     
     // MARK: - Private Helpers
     
-    private func collectFullRegistrationInfo() -> FullRegistrationCredentials {
-        let guardian: GuardianInfo? = isMinor ? GuardianInfo(
-            firstName: guardianFirstName,
-            lastName: guardianLastName,
-            phoneNumber: guardianPhoneNumber,
-            email: guardianEmail,
-            relationship: guardianRelationship
-        ) : nil
-        
-        return FullRegistrationCredentials(
-            firstName: firstName,
-            lastName: lastName,
-            phoneNumber: phoneNumber,
-            dateOfBirth: dateOfBirth,
-            gender: gender,
-            postalCode: postalCode,
-            guardianInfo: guardian
-        )
+    private func updateUserAge() {
+        age = dateOfBirth.age ?? 0
     }
     
-    // Validation Logic
+    private func matchesUserEmail() -> Bool {
+        userManager.loggedInUser?.email == guardianEmail
+    }
+    
+    // MARK: - Validation Logic
+    
     private func validateFirstName() {
         firstNameValidationState = firstName.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
     }
@@ -196,10 +185,6 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         } else {
             phoneNumberValidationState = PhoneNumberValidationState.valid
         }
-    }
-    
-    private func updateUserAge() {
-        age = dateOfBirth.age ?? 0
     }
     
     private func validatePostalCode() {
@@ -249,9 +234,5 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     private func isValidEmailFormat(_ email: String) -> Bool {
         let emailPred = NSPredicate(format: "SELF MATCHES %@", Email.emailPattern)
         return emailPred.evaluate(with: email)
-    }
-    
-    private func matchesUserEmail() -> Bool {
-        userManager.loggedInUser?.email == guardianEmail
     }
 }
