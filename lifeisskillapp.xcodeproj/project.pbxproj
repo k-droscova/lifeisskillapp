@@ -117,6 +117,8 @@
 		276CA9D02C5E690D001D6394 /* RankFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */; };
 		276CA9D22C5E6D3D001D6394 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9D12C5E6D3D001D6394 /* RankView.swift */; };
 		27774B7B2C87A1CB00B968FA /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27774B7A2C87A1CB00B968FA /* Credentials.swift */; };
+		27814F942C94312800545F7E /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27814F932C94312800545F7E /* Country.swift */; };
+		27814F992C94394300545F7E /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 27814F982C94394300545F7E /* CountryCodes.json */; };
 		278174842C4BF96B00138376 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174832C4BF96B00138376 /* View.swift */; };
 		278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174872C4BFBB500138376 /* AssetFontFamily.swift */; };
 		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
@@ -344,6 +346,8 @@
 		276CA9CF2C5E690D001D6394 /* RankFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankFlowCoordinator.swift; sourceTree = "<group>"; };
 		276CA9D12C5E6D3D001D6394 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		27774B7A2C87A1CB00B968FA /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		27814F932C94312800545F7E /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		27814F982C94394300545F7E /* CountryCodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		278174832C4BF96B00138376 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		278174872C4BFBB500138376 /* AssetFontFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetFontFamily.swift; sourceTree = "<group>"; };
 		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
@@ -523,6 +527,7 @@
 		2717AF362C42C2B700A23F06 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27814F952C94331D00545F7E /* Data */,
 				27EBADD22C592F0F00F01CFB /* Colors */,
 				2717AF312C42C23300A23F06 /* StringResources */,
 				2717AED12C42A72600A23F06 /* Fonts */,
@@ -794,6 +799,7 @@
 				27774B7A2C87A1CB00B968FA /* Credentials.swift */,
 				27B5DEFD2C871032003B9AEE /* ValidationStates.swift */,
 				2750A5BB2C904BD80086815D /* MockViewModels.swift */,
+				27814F932C94312800545F7E /* Country.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1004,6 +1010,14 @@
 				276CA9D12C5E6D3D001D6394 /* RankView.swift */,
 			);
 			path = Rank;
+			sourceTree = "<group>";
+		};
+		27814F952C94331D00545F7E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				27814F982C94394300545F7E /* CountryCodes.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		2784F9392C776AE70041E72E /* MapPointDetail */ = {
@@ -1376,6 +1390,7 @@
 				275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */,
 				2717AF112C42ADB800A23F06 /* Montserrat-ExtraBold.otf in Resources */,
 				27274F872C3320F3003453E2 /* Assets.xcassets in Resources */,
+				27814F992C94394300545F7E /* CountryCodes.json in Resources */,
 				27F612612C7F534F001D1F1A /* LaunchScreen.storyboard in Resources */,
 				2717AF162C42ADB800A23F06 /* Montserrat-Black.otf in Resources */,
 				275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */,
@@ -1441,6 +1456,7 @@
 				27E9D5FF2C63D9480098CB96 /* RealmCheckSum.swift in Sources */,
 				27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */,
 				27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */,
+				27814F942C94312800545F7E /* Country.swift in Sources */,
 				27C6197F2C398C570067498F /* LogSeverity.swift in Sources */,
 				27D569282C6B7074003EF5D9 /* KeychainStorage.swift in Sources */,
 				27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */,

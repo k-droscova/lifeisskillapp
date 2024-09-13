@@ -11,11 +11,13 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
     @Binding private var selectedOption: T?
     private let options: [T]
     private let placeholder: Text
+    private let labelView: (T) -> Text
     
-    init(options: [T], selectedOption: Binding<T?>, placeholder: Text = Text("home.category_selector")) {
+    init(options: [T], selectedOption: Binding<T?>, placeholder: Text = Text("home.category_selector"), labelView: @escaping (T) -> Text) {
         self.options = options
         self._selectedOption = selectedOption
         self.placeholder = placeholder
+        self.labelView = labelView
     }
     
     var body: some View {
@@ -29,10 +31,9 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
             }
         } label: {
             HStack {
-                if let description = selectedOption?.description {
-                    Text(description)
-                }
-                else {
+                if let selectedOption {
+                    labelView(selectedOption)
+                } else {
                     placeholder
                 }
                 SFSSymbols.expandDown.image
@@ -428,5 +429,99 @@ struct QROverlayView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
+    }
+}
+
+struct PhoneTextField: View {
+    let placeholder: LocalizedStringKey
+    @Binding var text: String
+    @Binding var selectedCountry: Country?
+    
+    // Optional arguments
+    let countries: [Country]
+    let backgroundColor: Color
+    let foregroundColor: Color
+    let cornerRadius: CGFloat
+    let kernig: CGFloat
+    let showsValidationMessage: Bool
+    let validationTextColor: Color
+    var validationMessage: LocalizedStringKey? = nil
+    
+    init(
+        placeholder: LocalizedStringKey = "register.phone_number",
+        text: Binding<String>,
+        selectedCountry: Binding<Country?>,
+        countries: [Country],
+        backgroundColor: Color = CustomColors.TextFieldView.background.color,
+        foregroundColor: Color = CustomColors.TextFieldView.foreground.color,
+        cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size,
+        kernig: CGFloat = CustomSizes.TextFieldView.kernig.size,
+        showsValidationMessage: Bool = true,
+        validationTextColor: Color = .colorLisRed,
+        validationMessage: LocalizedStringKey? = nil
+    ) {
+        self.placeholder = placeholder
+        self._text = text
+        self._selectedCountry = selectedCountry
+        self.countries = countries
+        self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
+        self.cornerRadius = cornerRadius
+        self.kernig = kernig
+        self.showsValidationMessage = showsValidationMessage
+        self.validationTextColor = validationTextColor
+        self.validationMessage = validationMessage
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                countryMenu
+                    .foregroundColor(foregroundColor)
+                
+                textField
+                    .foregroundStyle(foregroundColor)
+            }
+            .padding(12)
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
+            .kerning(kernig)
+            .body1Regular
+            
+            if showsValidationMessage {
+                validatioMessageField
+                    .caption
+                    .foregroundStyle(validationTextColor)
+            }
+        }
+    }
+    
+    private var countryMenu: some View {
+        DropdownMenu(
+            options: countries,
+            selectedOption: $selectedCountry,
+            placeholder: Text("register.phone_menu"),
+            labelView: { country in
+                Text("\(country.flagEmoji) +\(country.phone)")
+            }
+        )
+        .foregroundColor(foregroundColor)
+    }
+    
+    private var textField: some View {
+        TextField(placeholder, text: $text)
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+    }
+    
+    private var validatioMessageField: some View {
+        Group {
+            if let validationMessage = validationMessage {
+                Text(validationMessage)
+            } else {
+                Text(" ")  // Placeholder text to maintain layout stability
+            }
+        }
+        .frame(height: 16)  // Reserve space for validation message, should equal lineHeight of .caption
     }
 }

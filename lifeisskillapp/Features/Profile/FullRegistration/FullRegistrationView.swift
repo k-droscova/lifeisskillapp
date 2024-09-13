@@ -71,7 +71,8 @@ private extension FullRegistrationView {
         VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenFormFields) {
             firstName
             secondName
-            phoneNumberAndPostalCode
+            phoneNumberUser
+            postalCode
             Group {
                 genderPicker
                     .padding(.horizontal, FullRegistrationViewConstants.genderPickerHorizontalPadding)
@@ -98,21 +99,23 @@ private extension FullRegistrationView {
         )
     }
     
-    private var phoneNumberAndPostalCode: some View {
-        HStack(spacing: FullRegistrationViewConstants.horizontalSpacingBetweenPhoneAndPostalCode) {
-            CustomTextField(
-                placeholder: "register.phone_number",
-                text: $viewModel.phoneNumber,
-                showsValidationMessage: true,
-                validationMessage: viewModel.phoneNumberValidationState.validationMessage
-            )
-            CustomTextField(
-                placeholder: "register.postal_code",
-                text: $viewModel.postalCode,
-                showsValidationMessage: true,
-                validationMessage: viewModel.postalCodeValidationState.validationMessage
-            )
-        }
+    private var phoneNumberUser: some View {
+        PhoneTextField(
+            placeholder: "register.phone_number",
+            text: $viewModel.phoneNumber,
+            selectedCountry: $viewModel.selectedCountry,
+            countries: viewModel.countries,
+            validationMessage: viewModel.phoneNumberValidationState.validationMessage
+        )
+    }
+    
+    private var postalCode: some View {
+        CustomTextField(
+            placeholder: "register.postal_code",
+            text: $viewModel.postalCode,
+            showsValidationMessage: true,
+            validationMessage: viewModel.postalCodeValidationState.validationMessage
+        )
     }
     
     private var genderPicker: some View {
@@ -165,7 +168,8 @@ private extension FullRegistrationView {
             guardianFirstName
             guardianSecondName
             email
-            phoneAndRelationship
+            phoneNumberGuardian
+            relationship
         }
     }
     
@@ -187,7 +191,7 @@ private extension FullRegistrationView {
         )
     }
     
-    private var phoneAndRelationship: some View {
+    /*private var phoneAndRelationship: some View {
         HStack(spacing: FullRegistrationViewConstants.horizontalSpacingBetweenPhoneAndEmail) {
             CustomTextField(
                 placeholder: "register.phone_number",
@@ -203,6 +207,25 @@ private extension FullRegistrationView {
                 validationMessage: viewModel.guardianRelationshipValidationState.validationMessage
             )
         }
+    }*/
+    
+    private var phoneNumberGuardian: some View {
+        PhoneTextField(
+            placeholder: "register.phone_number",
+            text: $viewModel.guardianPhoneNumber,
+            selectedCountry: $viewModel.guardianSelectedCountry,
+            countries: viewModel.countries,
+            validationMessage: viewModel.guardianPhoneNumberValidationState.validationMessage
+        )
+    }
+    
+    private var relationship: some View {
+        CustomTextField(
+            placeholder: "register.guardian_relationship",
+            text: $viewModel.guardianRelationship,
+            showsValidationMessage: true,
+            validationMessage: viewModel.guardianRelationshipValidationState.validationMessage
+        )
     }
     
     private var email: some View {
@@ -233,6 +256,12 @@ struct FullRegistrationViewConstants {
 }
 
 class MockFullRegistrationViewModel: BaseClass, FullRegistrationViewModeling {
+    var countries: [Country] = Country.countries
+    
+    var selectedCountry: Country? = Country.defaultCountry
+    
+    var guardianSelectedCountry: Country? = Country.defaultCountry
+    
     var age: Int = 14
     
     // Required properties
@@ -242,7 +271,6 @@ class MockFullRegistrationViewModel: BaseClass, FullRegistrationViewModeling {
     var firstName: String = ""
     var lastName: String = ""
     var phoneNumber: String = ""
-    var countryCode: String = "+1"
     var dateOfBirth: Date = Date()
     var isMinor: Bool = true
     var postalCode: String = ""
@@ -252,7 +280,6 @@ class MockFullRegistrationViewModel: BaseClass, FullRegistrationViewModeling {
     var guardianFirstName: String = ""
     var guardianLastName: String = ""
     var guardianPhoneNumber: String = ""
-    var guardianCountryCode: String = "+1"
     var guardianEmail: String = ""
     var guardianRelationship: String = ""
     

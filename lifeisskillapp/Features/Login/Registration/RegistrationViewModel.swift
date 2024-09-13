@@ -93,7 +93,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         self.userManager = dependencies.userManager
         self.delegate = delegate
 #if DEBUG
-        self.username = "FlowTest"
+        self.username = "PhoneTest"
         self.email = "droscovakarolina@gmail.com"
         self.password = "Heslo1"
         self.passwordConfirm = "Heslo1"

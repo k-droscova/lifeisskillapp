@@ -13,7 +13,10 @@ struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
     var body: some View {
         DropdownMenu(
             options: viewModel.userCategories,
-            selectedOption: $viewModel.selectedCategory
+            selectedOption: $viewModel.selectedCategory,
+            labelView: { category in
+                Text(category.description)
+            }
         )
         .subheadline
         .foregroundsSecondary
