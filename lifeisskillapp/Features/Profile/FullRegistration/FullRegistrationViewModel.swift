@@ -8,7 +8,6 @@
 import Foundation
 
 protocol FullRegistrationViewModeling: BaseClass, ObservableObject {
-    
     var isLoading: Bool { get }
     // User info fields
     var firstName: String { get set }
@@ -170,11 +169,11 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     // MARK: - Validation Logic
     
     private func validateFirstName() {
-        firstNameValidationState = firstName.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
+        firstNameValidationState = firstName.basicValidationState
     }
     
     private func validateLastName() {
-        lastNameValidationState = lastName.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
+        lastNameValidationState = lastName.basicValidationState
     }
     
     private func validatePhoneNumber() {
@@ -188,15 +187,15 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     }
     
     private func validatePostalCode() {
-        postalCodeValidationState = postalCode.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
+        postalCodeValidationState = postalCode.basicValidationState
     }
     
     private func validateGuardianFirstName() {
-        guardianFirstNameValidationState = guardianFirstName.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
+        guardianFirstNameValidationState = guardianFirstName.basicValidationState
     }
     
     private func validateGuardianLastName() {
-        guardianLastNameValidationState = guardianLastName.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
+        guardianLastNameValidationState = guardianLastName.basicValidationState
     }
     
     private func validateGuardianPhoneNumber() {
@@ -222,7 +221,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     }
     
     private func validateGuardianRelationship() {
-        guardianRelationshipValidationState = guardianRelationship.isEmpty ? BasicValidationState.empty : BasicValidationState.valid
+        guardianRelationshipValidationState = guardianRelationship.basicValidationState
     }
     
     private func isValidPhoneNumber(_ phoneNumber: String) -> Bool {

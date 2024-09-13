@@ -51,32 +51,22 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     private let userManager: UserManaging
     private var cancellables = Set<AnyCancellable>()
     private var isReferenceValid: Bool {
-        (addReference && referenceUsername != nil) || !addReference
+        !addReference || (addReference && referenceUsername != nil)  // didnt choose to add reference, or did choose and scanned qr
+    }
+    private var credentials: NewRegistrationCredentials {
+        guard isReferenceValid else {
+            return NewRegistrationCredentials(username: username, email: email, password: password, referenceUserId: nil)
+        }
+        return NewRegistrationCredentials(username: username, email: email, password: password, referenceUserId: referenceInfo?.userId)
     }
     
     // MARK: - Public Properties
     
     @Published private(set) var isLoading: Bool = false
-    @Published var username: String = "" {
-        didSet {
-            validateUsername()
-        }
-    }
-    @Published var email: String = "" {
-        didSet {
-            validateEmail()
-        }
-    }
-    @Published var password: String = "" {
-        didSet {
-            validatePassword()
-        }
-    }
-    @Published var passwordConfirm: String = "" {
-        didSet {
-            validateConfirmPassword()
-        }
-    }
+    @Published var username: String = "" { didSet { validateUsername() } }
+    @Published var email: String = "" { didSet { validateEmail() } }
+    @Published var password: String = "" { didSet { validatePassword() } }
+    @Published var passwordConfirm: String = "" { didSet { validateConfirmPassword() } }
     @Published var isGdprConfirmed: Bool = false
     @Published var isRulesConfirmed: Bool = false
     @Published private(set) var emailValidationState: ValidationState = EmailValidationState.initial
@@ -85,12 +75,7 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     @Published private(set) var usernameValidationState: ValidationState = UsernameValidationState.initial
     @Published var addReference: Bool = false
     @Published private(set) var referenceUsername: String?
-    var referenceInfo: ReferenceInfo? {
-        didSet {
-            referenceUsername = referenceInfo?.username
-        }
-    }
-    
+    var referenceInfo: ReferenceInfo? { didSet { referenceUsername = referenceInfo?.username } }
     var isFormValid: Bool {
         usernameValidationState.isValid
         && emailValidationState.isValid
@@ -132,7 +117,6 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
                 self.delegate?.registrationDidFail()
                 return
             }
-            let credentials = credentials()
             do {
                 try await self.userManager.registerUser(credentials: credentials)
                 self.delegate?.registrationDidSucceed()
@@ -171,24 +155,17 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
         delegate?.openLink(link: link)
     }
     
-    private func credentials() -> NewRegistrationCredentials {
-        guard isReferenceValid else {
-            return NewRegistrationCredentials(username: username, email: email, password: password, referenceUserId: nil)
-        }
-        return NewRegistrationCredentials(username: username, email: email, password: password, referenceUserId: referenceInfo?.userId)
-    }
-    
     private func validateUsername() {
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            if self.username.isEmpty {
-                self.usernameValidationState = UsernameValidationState.empty
-            } else if self.username.count < Username.minLength {
-                self.usernameValidationState = UsernameValidationState.short
-            } else if await !self.isUsernameAvailable(self.username) {
-                self.usernameValidationState = UsernameValidationState.alreadyTaken
+            if username.isEmpty {
+                usernameValidationState = UsernameValidationState.empty
+            } else if username.count < Username.minLength {
+                usernameValidationState = UsernameValidationState.short
+            } else if await !isUsernameAvailable(username) {
+                usernameValidationState = UsernameValidationState.alreadyTaken
             } else {
-                self.usernameValidationState = UsernameValidationState.valid
+                usernameValidationState = UsernameValidationState.valid
             }
         }
     }
@@ -196,14 +173,14 @@ class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeli
     private func validateEmail() {
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            if self.email.isEmpty {
-                self.emailValidationState = EmailValidationState.empty
-            } else if !self.isValidEmailFormat(email) {
-                self.emailValidationState = EmailValidationState.invalidFormat
-            } else if await !self.isEmailAvailable(email) {
-                self.emailValidationState = EmailValidationState.alreadyTaken
+            if email.isEmpty {
+                emailValidationState = EmailValidationState.empty
+            } else if !isValidEmailFormat(email) {
+                emailValidationState = EmailValidationState.invalidFormat
+            } else if await !isEmailAvailable(email) {
+                emailValidationState = EmailValidationState.alreadyTaken
             } else {
-                self.emailValidationState = EmailValidationState.valid
+                emailValidationState = EmailValidationState.valid
             }
         }
     }

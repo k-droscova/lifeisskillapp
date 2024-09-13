@@ -66,3 +66,10 @@ extension String {
         isEmpty ? nil : self
     }
 }
+
+extension String {
+    // for registration forms
+    var basicValidationState: BasicValidationState {
+        self.isEmpty ? .empty : .valid
+    }
+}
