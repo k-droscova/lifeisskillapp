@@ -16,6 +16,7 @@ enum PointType: Int, Codable {
     case tourist = 4
     case energySponsor = 5
     case virtual = 6
+    case gastro = 7
     case unknown = 0 // Add an unknown case to handle unmapped values
     
     static func getPointType(from rawValue: Int) -> PointType? {
@@ -39,6 +40,8 @@ enum PointType: Int, Codable {
             return Color.colorLisRed
         case .virtual:
             return Color.lightBlueA200
+        case .gastro:
+            return Color.colorLisPurple
         case .unknown:
             return Color.lighterGrey
         }
@@ -62,6 +65,8 @@ enum PointType: Int, Codable {
             return CustomImages.Map.energySponsor.fullPath
         case .virtual:
             return CustomImages.Map.virtual.fullPath
+        case .gastro:
+            return CustomImages.Map.gastro.fullPath
         case .unknown:
             return CustomImages.Map.unknown.fullPath
         }

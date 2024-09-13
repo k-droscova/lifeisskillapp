@@ -148,6 +148,7 @@ enum CustomImages {
         case tourist = "tourist"
         case energySponsor = "7en_green"
         case virtual = "virtual"
+        case gastro = "gastro"
         case unknown = "unknown"
         
         var fullPath: String {
