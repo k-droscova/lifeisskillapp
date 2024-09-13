@@ -9,9 +9,11 @@ import Foundation
 
 protocol FullRegistrationViewModeling: BaseClass, ObservableObject {
     var isLoading: Bool { get }
+    var countries: [Country] { get set }
     // User info fields
     var firstName: String { get set }
     var lastName: String { get set }
+    var selectedCountry: Country? { get set }
     var phoneNumber: String { get set }
     var dateOfBirth: Date { get set }
     var isMinor: Bool { get }
@@ -22,6 +24,7 @@ protocol FullRegistrationViewModeling: BaseClass, ObservableObject {
     // Guardian info fields
     var guardianFirstName: String { get set }
     var guardianLastName: String { get set }
+    var guardianSelectedCountry: Country? { get set }
     var guardianPhoneNumber: String { get set }
     var guardianEmail: String { get set }
     var guardianRelationship: String { get set }
@@ -60,7 +63,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         let guardian: GuardianInfo? = isMinor ? GuardianInfo(
             firstName: guardianFirstName,
             lastName: guardianLastName,
-            phoneNumber: guardianPhoneNumber,
+            phoneNumber: formatPhoneNumber(code: guardianSelectedCountry?.phone, phone: guardianPhoneNumber),
             email: guardianEmail,
             relationship: guardianRelationship
         ) : nil
@@ -68,7 +71,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         return FullRegistrationCredentials(
             firstName: firstName,
             lastName: lastName,
-            phoneNumber: phoneNumber,
+            phoneNumber: formatPhoneNumber(code: selectedCountry?.phone, phone: phoneNumber),
             dateOfBirth: dateOfBirth,
             gender: gender,
             postalCode: postalCode,
@@ -79,8 +82,10 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     // MARK: - Public Properties
     
     @Published private(set) var isLoading: Bool = false
+    @Published var countries: [Country] = Country.countries
     @Published var firstName: String = "" { didSet { validateFirstName() } }
     @Published var lastName: String = "" { didSet { validateLastName() } }
+    @Published var selectedCountry: Country? = Country.defaultCountry { didSet { validatePhoneNumber() } }
     @Published var phoneNumber: String = "" { didSet { validatePhoneNumber() } }
     @Published var dateOfBirth: Date = Date() { didSet { updateUserAge() } }
     var isMinor: Bool { age < User.ageWhenConsideredNotMinor }
@@ -89,6 +94,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     @Published var gender: UserGender = .male
     @Published var guardianFirstName: String = "" { didSet { validateGuardianFirstName() } }
     @Published var guardianLastName: String = "" { didSet { validateGuardianLastName() } }
+    @Published var guardianSelectedCountry: Country? = Country.defaultCountry { didSet { validateGuardianPhoneNumber() } }
     @Published var guardianPhoneNumber: String = "" { didSet { validateGuardianPhoneNumber() } }
     @Published var guardianEmail: String = "" { didSet { validateGuardianEmail() } }
     @Published var guardianRelationship: String = "" { didSet { validateGuardianRelationship() } }
@@ -166,6 +172,8 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         userManager.loggedInUser?.email == guardianEmail
     }
     
+    private func formatPhoneNumber(code: String?, phone: String) -> String { "+" + code.emptyIfNil + phone }
+    
     // MARK: - Validation Logic
     
     private func validateFirstName() {
@@ -179,7 +187,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     private func validatePhoneNumber() {
         if phoneNumber.isEmpty {
             phoneNumberValidationState = PhoneNumberValidationState.empty
-        } else if !isValidPhoneNumber(phoneNumber) {
+        } else if !isValidPhoneNumber(phoneNumber, for: selectedCountry) {
             phoneNumberValidationState = PhoneNumberValidationState.invalidFormat
         } else {
             phoneNumberValidationState = PhoneNumberValidationState.valid
@@ -201,7 +209,7 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
     private func validateGuardianPhoneNumber() {
         if guardianPhoneNumber.isEmpty {
             guardianPhoneNumberValidationState = PhoneNumberValidationState.empty
-        } else if !isValidPhoneNumber(guardianPhoneNumber) {
+        } else if !isValidPhoneNumber(guardianPhoneNumber, for: guardianSelectedCountry) {
             guardianPhoneNumberValidationState = PhoneNumberValidationState.invalidFormat
         } else {
             guardianPhoneNumberValidationState = PhoneNumberValidationState.valid
@@ -224,10 +232,23 @@ public final class FullRegistrationViewModel: BaseClass, ObservableObject, FullR
         guardianRelationshipValidationState = guardianRelationship.basicValidationState
     }
     
-    private func isValidPhoneNumber(_ phoneNumber: String) -> Bool {
-        // TODO: think about foreign numbers...
-        let phonePred = NSPredicate(format: "SELF MATCHES %@", Phone.phonePattern)
-        return phonePred.evaluate(with: phoneNumber)
+    private func isValidPhoneNumber(_ phoneNumber: String, for country: Country?) -> Bool {
+        // Check if phoneNumber contains only digits
+        guard phoneNumber.allSatisfy({ $0.isNumber }) else {
+            return false
+        }
+        
+        // Validate phone length based on country phoneLength
+        guard let phoneLength = country?.phoneLength else {
+            return true // No length restriction, so valid
+        }
+        
+        switch phoneLength {
+        case .single(let length):
+            return phoneNumber.count == length
+        case .range(let lengths):
+            return lengths.contains(phoneNumber.count)
+        }
     }
     
     private func isValidEmailFormat(_ email: String) -> Bool {
