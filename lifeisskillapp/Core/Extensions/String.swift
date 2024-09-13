@@ -70,6 +70,6 @@ extension String {
 extension String {
     // for registration forms
     var basicValidationState: BasicValidationState {
-        self.isEmpty ? .empty : .valid
+        isEmpty ? .empty : .valid
     }
 }
