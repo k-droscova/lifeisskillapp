@@ -38,7 +38,12 @@ enum PhoneLength: Codable, Hashable {
         } else if let arrayValue = try? container.decode([Int].self) {
             self = .range(arrayValue)
         } else {
-            throw DecodingError.typeMismatch(PhoneLength.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Invalid type for phoneLength"))
+            throw BaseError(
+                context: .database,
+                message: "Could not decode phone length",
+                code: .general(.jsonDecoding),
+                logger: appDependencies.logger
+            )
         }
     }
 
@@ -58,7 +63,6 @@ extension Country {
 
     static var countries: [Country] {
         guard let url = Bundle.main.url(forResource: "CountryCodes", withExtension: "json") else {
-            print("Failed to locate CountryCodes.json in bundle.")
             return [czechia]
         }
 
@@ -68,7 +72,6 @@ extension Country {
             let countries = try decoder.decode([Country].self, from: data)
             return countries
         } catch {
-            print("Error decoding CountryCodes.json: \(error)")
             return [czechia]
         }
     }
