@@ -377,12 +377,21 @@ enum CustomSizes {
     enum TextFieldView {
         case cornerRadius
         case kernig
+        case verticalSpacing
+        case horizontalPaddingTitleAndValidationMessage
+        case validationMessageFrame
         var size: CGFloat {
             switch self {
             case .cornerRadius:
                 10
             case .kernig:
                 1.2
+            case .verticalSpacing:
+                4
+            case .horizontalPaddingTitleAndValidationMessage:
+                12
+            case .validationMessageFrame:
+                16
             }
         }
     }

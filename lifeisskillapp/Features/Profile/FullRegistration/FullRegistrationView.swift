@@ -68,7 +68,7 @@ private extension FullRegistrationView {
     }
     
     private var formFields: some View {
-        VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenFormFields) {
+        VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenTextFields) {
             firstName
             secondName
             phoneNumberUser
@@ -164,7 +164,7 @@ private extension FullRegistrationView {
     }
     
     private var guardianFields: some View {
-        VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenGuardianFields) {
+        VStack(spacing: FullRegistrationViewConstants.verticalSpacingBetweenTextFields) {
             guardianFirstName
             guardianSecondName
             email
@@ -190,24 +190,6 @@ private extension FullRegistrationView {
             validationMessage: viewModel.guardianLastNameValidationState.validationMessage
         )
     }
-    
-    /*private var phoneAndRelationship: some View {
-        HStack(spacing: FullRegistrationViewConstants.horizontalSpacingBetweenPhoneAndEmail) {
-            CustomTextField(
-                placeholder: "register.phone_number",
-                text: $viewModel.guardianPhoneNumber,
-                showsValidationMessage: true,
-                validationMessage: viewModel.guardianPhoneNumberValidationState.validationMessage
-            )
-            
-            CustomTextField(
-                placeholder: "register.guardian_relationship",
-                text: $viewModel.guardianRelationship,
-                showsValidationMessage: true,
-                validationMessage: viewModel.guardianRelationshipValidationState.validationMessage
-            )
-        }
-    }*/
     
     private var phoneNumberGuardian: some View {
         PhoneTextField(
@@ -247,11 +229,8 @@ struct FullRegistrationViewConstants {
     // Spacing constants
     static let verticalSpacingBetweenSections: CGFloat = 16
     static let verticalSpacingBetweenUserFields: CGFloat = 24
-    static let verticalSpacingBetweenFormFields: CGFloat = 16
-    static let horizontalSpacingBetweenPhoneAndPostalCode: CGFloat = 16
-    static let horizontalSpacingBetweenPhoneAndEmail: CGFloat = 16
+    static let verticalSpacingBetweenTextFields: CGFloat = 8
     static let verticalSpacingBetweenBirthdayInstructionsAndAge: CGFloat = 4
-    static let verticalSpacingBetweenGuardianFields: CGFloat = 16
     static let genderPickerHorizontalPadding: CGFloat = 12
 }
 

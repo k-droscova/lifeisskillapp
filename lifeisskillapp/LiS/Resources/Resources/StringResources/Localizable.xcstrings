@@ -3963,7 +3963,26 @@
       }
     },
     "register.phone_menu" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Předvolba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ländervorwahl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country code"
+          }
+        }
+      }
     },
     "register.phone_number" : {
       "localizations" : {
