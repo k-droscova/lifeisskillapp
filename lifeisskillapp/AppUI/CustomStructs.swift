@@ -289,7 +289,13 @@ struct CustomTextField<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: CustomSizes.TextFieldView.verticalSpacing.size) {
+            Text(text.isEmpty ? " " : placeholder)
+                .body1Regular
+                .foregroundStyle(foregroundColor)
+                .transition(.move(edge: .top))
+                .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
+            
             HStack(alignment: .center) {
                 textField
                     .foregroundStyle(foregroundColor)
@@ -305,6 +311,7 @@ struct CustomTextField<Content: View>: View {
                 validatioMessageField
                     .caption
                     .foregroundStyle(validationTextColor)
+                    .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
             }
         }
     }
@@ -329,7 +336,7 @@ struct CustomTextField<Content: View>: View {
                 Text(" ")  // Placeholder text to maintain layout stability
             }
         }
-        .frame(height: 16)  // Reserve space for validation message, should equal lineHeight of .caption
+        .frame(height: CustomSizes.TextFieldView.validationMessageFrame.size)  // Reserve space for validation message, should equal lineHeight of .caption
     }
 }
 
@@ -474,7 +481,13 @@ struct PhoneTextField: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: CustomSizes.TextFieldView.verticalSpacing.size) {
+            Text(text.isEmpty ? " " : placeholder)
+                .body1Regular
+                .foregroundStyle(foregroundColor)
+                .transition(.move(edge: .top))
+                .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
+            
             HStack(alignment: .center) {
                 countryMenu
                     .foregroundColor(foregroundColor)
@@ -492,6 +505,7 @@ struct PhoneTextField: View {
                 validatioMessageField
                     .caption
                     .foregroundStyle(validationTextColor)
+                    .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
             }
         }
     }
@@ -522,6 +536,6 @@ struct PhoneTextField: View {
                 Text(" ")  // Placeholder text to maintain layout stability
             }
         }
-        .frame(height: 16)  // Reserve space for validation message, should equal lineHeight of .caption
+        .frame(height: CustomSizes.TextFieldView.validationMessageFrame.size)  // Reserve space for validation message, should equal lineHeight of .caption
     }
 }

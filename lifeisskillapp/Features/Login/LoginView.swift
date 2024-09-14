@@ -101,7 +101,7 @@ private extension LoginView {
 
 // NOTE: constants are not in extension because static properties are not allowed in generic types
 enum LoginViewConstants {
-    static let spacing: CGFloat = 16
+    static let spacing: CGFloat = 8
     static let horizontalPadding: CGFloat = 30
     static let topPadding: CGFloat = 20
     static let bottomPadding: CGFloat = 30

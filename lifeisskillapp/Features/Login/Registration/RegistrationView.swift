@@ -42,7 +42,7 @@ struct RegistrationView<ViewModel: RegistrationViewModeling>: View {
     // MARK: - Form Fields
     
     private var formFields: some View {
-        Group {
+        VStack(spacing: RegistrationViewConstants.verticalTextfieldSpacing) {
             CustomTextField(
                 placeholder: "register.username",
                 text: $viewModel.username,
@@ -207,6 +207,7 @@ struct RegistrationViewConstants {
     static let horizontalPadding: CGFloat = 16
     static let toggleSectionPadding: CGFloat = 12
     static let formSpacing: CGFloat = 16
+    static let verticalTextfieldSpacing: CGFloat = 8
     static let consentToggleHorizontalSpacing: CGFloat = 32
     static let consentTopPadding: CGFloat = 32
     static let submitButtonVerticalPadding: CGFloat = 32
