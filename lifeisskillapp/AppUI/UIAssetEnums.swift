@@ -15,12 +15,18 @@ enum SFSSymbols: String {
     case flashOff = "bolt.slash.fill"
     case list = "list.bullet"
     case map = "map"
-    case categorySelectorDropDown = "chevron.down"
+    case expandDown = "chevron.down"
     case settingsMenu = "ellipsis.circle"
+    case navigationBack = "chevron.backward"
     case qr = "qrcode.viewfinder"
     case camera = "camera.viewfinder"
     case nfc = "tag.square"
     case virtual = "paperplane.circle"
+    case instructionsPopover = "questionmark.circle"
+    case linkArrow = "arrow.up.forward.app"
+    case hideUp = "chevron.up"
+    case warning = "exclamationmark.circle.fill"
+    case send = "paperplane.fill"
     
     var image: Image {
         SwiftUI.Image(systemName: self.rawValue)
@@ -248,6 +254,33 @@ enum CustomColors {
             }
         }
     }
+    
+    enum TextFieldView {
+        case foreground
+        case background
+        var color: Color {
+            switch self {
+            case .foreground:
+                Color.colorLisDarkGrey
+            case .background:
+                Color.lighterGrey
+            }
+        }
+    }
+    
+    enum QROverlayView {
+        case instructionsText
+        case instructionsBackground
+        
+        var color: Color {
+            switch self {
+            case .instructionsText:
+                Color.white
+            case .instructionsBackground:
+                Color.black.opacity(0.5)
+            }
+        }
+    }
 }
 
 enum CustomSizes {
@@ -341,13 +374,55 @@ enum CustomSizes {
             }
         }
     }
+    
+    enum TextFieldView {
+        case cornerRadius
+        case kernig
+        case verticalSpacing
+        case horizontalPaddingTitleAndValidationMessage
+        case validationMessageFrame
+        var size: CGFloat {
+            switch self {
+            case .cornerRadius:
+                10
+            case .kernig:
+                1.2
+            case .verticalSpacing:
+                4
+            case .horizontalPaddingTitleAndValidationMessage:
+                12
+            case .validationMessageFrame:
+                16
+            }
+        }
+    }
+    
+    enum QROverlayView {
+        case buttonPaddingHorizontal
+        case spacingBetweenSections
+        case instructionsBottomPadding
+        case instructionsCornerRadius
+        
+        var size: CGFloat {
+            switch self {
+            case .buttonPaddingHorizontal:
+                return 16
+            case .spacingBetweenSections:
+                return 32
+            case .instructionsBottomPadding:
+                return 96
+            case .instructionsCornerRadius:
+                return 10
+            }
+        }
+    }
 }
 
 enum ForgotPasswordPagesConstants {
     static let topPadding: CGFloat = 32
     static let bottomPadding: CGFloat = 32
     static let cornerRadius: CGFloat = 10
-
+    
     enum Colors {
         static let textFieldBackground = Color.lighterGrey
         static let button = Color.colorLisBlue

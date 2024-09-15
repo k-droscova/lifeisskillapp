@@ -8,18 +8,9 @@
 import Foundation
 import Observation
 
-protocol ForgotPasswordViewModelDelegate: NSObject {
-    func didRequestNewPin()
-    func failedRequestNewPin()
-    func didValidatePin()
-    func failedValidatePin()
-    func didRenewPassword()
-    func failedRenewPassword()
-    func timerRanOut()
-}
-
 protocol ForgotPasswordViewModeling: BaseClass, ObservableObject {
-    var delegate: ForgotPasswordViewModelDelegate? { get set }
+    var delegate: ForgotPasswordFlowDelegate? { get set }
+    var isLoading: Bool { get }
     var email: String { get set }
     var pin: String { get set }
     var newPassword: String { get set }
@@ -27,7 +18,6 @@ protocol ForgotPasswordViewModeling: BaseClass, ObservableObject {
     var isSendEmailButtonEnabled: Bool { get set }
     var isConfirmPinButtonEnabled: Bool { get set }
     var isChangePasswordButtonEnabled: Bool { get set }
-    var isLoading: Bool { get set }
 
     func sendEmail()
     func validatePin()
@@ -45,7 +35,8 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
     private var timerExpirationDate: Date?
 
     // MARK: - Public Properties
-    weak var delegate: ForgotPasswordViewModelDelegate?
+    weak var delegate: ForgotPasswordFlowDelegate?
+    @Published private(set) var isLoading: Bool = false
     @Published var email: String = "" {
         didSet {
             isSendEmailButtonEnabled = !email.isEmpty
@@ -69,13 +60,12 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
     @Published var isSendEmailButtonEnabled: Bool = false
     @Published var isConfirmPinButtonEnabled: Bool = false
     @Published var isChangePasswordButtonEnabled: Bool = false
-    @Published var isLoading: Bool = false
 
     // MARK: - Initialization
 
     init(
         dependencies: Dependencies,
-        delegate: ForgotPasswordViewModelDelegate? = nil
+        delegate: ForgotPasswordFlowDelegate? = nil
     ) {
         self.logger = dependencies.logger
         self.userManager = dependencies.userManager
@@ -186,7 +176,7 @@ final class ForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling, Obse
 }
 
 class MockForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling {
-    weak var delegate: ForgotPasswordViewModelDelegate?
+    weak var delegate: ForgotPasswordFlowDelegate?
 
     @Published var email: String = "" {
         didSet {
@@ -213,7 +203,7 @@ class MockForgotPasswordViewModel: BaseClass, ForgotPasswordViewModeling {
     @Published var isChangePasswordButtonEnabled: Bool = false
     @Published var isLoading: Bool = false
 
-    init(delegate: ForgotPasswordViewModelDelegate? = nil) {
+    init(delegate: ForgotPasswordFlowDelegate? = nil) {
         self.delegate = delegate
     }
 

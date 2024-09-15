@@ -6,10 +6,9 @@
 //
 
 import AVFoundation
+import UIKit
 
 protocol QRViewModeling: CameraViewModeling {
-    var captureSession: AVCaptureSession? { get set }
-    var previewLayer: AVCaptureVideoPreviewLayer? { get set }
     var isScannerSetup: Bool { get }
     
     func setUpScanner()
@@ -19,6 +18,7 @@ protocol QRViewModeling: CameraViewModeling {
     func startScanning()
     func stopScanning()
     func setupPreviewLayer()
+    func attachPreviewLayer(to view: UIView)
 }
 
 final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
@@ -30,11 +30,11 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
     private let logger: LoggerServicing
     private let gameDataManager: GameDataManaging
     private let locationManager: LocationManaging
+    private var captureSession: AVCaptureSession?
+    private var previewLayer: AVCaptureVideoPreviewLayer?
     
     // MARK: - Public Properties
     
-    var captureSession: AVCaptureSession?
-    var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var isFlashOn: Bool = false
     private(set) var isScannerSetup: Bool = false
     
@@ -92,7 +92,7 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
             previewLayer?.videoGravity = .resizeAspectFill
         }
     }
-        
+    
     func setUpScanner() {
         captureSession = AVCaptureSession()
         
@@ -123,6 +123,19 @@ final class QRViewModel: BaseClass, QRViewModeling, ObservableObject {
         isScannerSetup = true
     }
     
+    func attachPreviewLayer(to view: UIView) {
+        guard captureSession != nil else {
+            scanningFailed()
+            return
+        }
+        if let previewLayer = previewLayer {
+            previewLayer.frame = view.bounds
+            view.layer.addSublayer(previewLayer)
+        } else {
+            scanningFailed()
+        }
+    }
+    
     private func nulifyReferences() {
         captureSession = nil
         previewLayer = nil
@@ -143,11 +156,11 @@ extension QRViewModel: AVCaptureMetadataOutputObjectsDelegate {
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            let string = stringValue.removingPercentEncoding ?? ""
+            let string = stringValue.removingPercentEncoding.emptyIfNil
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-
+            
             if string.contains("lifeisskill.cz") {
-                handleProcessedCode(string.parseMessage())
+                handleProcessedCode(string.parsedMessage)
             } else {
                 scanningFailed()
             }

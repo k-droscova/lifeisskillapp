@@ -11,6 +11,8 @@ import ACKategories
 
 protocol LoginFlowCoordinatorDelegate: NSObject {
     func loginDidSucceed()
+    func promptToCompleteRegistration()
+    func promptParentToActivateAccount()
 }
 
 protocol LoginFlowDelegate: NSObject {
@@ -19,6 +21,9 @@ protocol LoginFlowDelegate: NSObject {
     func loginSuccessful()
     func loginFailed()
     func offlineLoginFailed()
+    func promptToCompleteRegistration()
+    func promptParentToActivateAccount()
+    func userNotActivated()
 }
 
 /// The LoginFlowCoordinator is responsible for managing the login flow within the app. It handles the navigation and actions from the login view controller.
@@ -59,14 +64,20 @@ final class LoginFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.Flo
     }
     
     override func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        reload()
+        stopChildCoordinators()
     }
 }
 
 extension LoginFlowCoordinator: LoginFlowDelegate {
     func registerTapped() {
-        print("Register Tapped")
+        let registrationFC = RegistrationFlowCoordinator(delegate: self)
+        addChild(registrationFC)
+        let vc = registrationFC.start()
+        vc.modalPresentationStyle = .formSheet
+        vc.presentationController?.delegate = self
+        present(vc, animated: true)
     }
+    
     func forgotPasswordTapped() {
         let forgetPasswordVM = ForgotPasswordViewModel(dependencies: appDependencies)
         let forgetPasswordFC = ForgotPasswordFlowCoordinator(delegate: self, viewModel: forgetPasswordVM)
@@ -76,14 +87,29 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
         vc.presentationController?.delegate = self // ensures that returnToLogin() is called on presentation dismissal
         present(vc, animated: true)
     }
+    
     func loginSuccessful() {
         delegate?.loginDidSucceed()
     }
+    
     func loginFailed() {
         showOnlineLoginFailureAlert()
     }
+    
     func offlineLoginFailed() {
         showOfflineLoginFailureAlert()
+    }
+    
+    func promptToCompleteRegistration() {
+        delegate?.promptToCompleteRegistration()
+    }
+    
+    func promptParentToActivateAccount() {
+        delegate?.promptParentToActivateAccount()
+    }
+    
+    func userNotActivated() {
+        showAlert(titleKey: "alert.login_unactivated_user.title", messageKey: "alert.login_unactivated_user.message")
     }
     
     // MARK: - Private Helpers
@@ -95,10 +121,6 @@ extension LoginFlowCoordinator: LoginFlowDelegate {
     private func showOnlineLoginFailureAlert() {
         showAlert(titleKey: "login.error.title", messageKey: "login.error_online.message")
     }
-    
-    private func reload() {
-        childCoordinators.forEach { $0.stop(animated: false) } // Prevents mem leaks, deallocates current/child FCs when screen switches
-    }
 }
 
 extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
@@ -106,9 +128,20 @@ extension LoginFlowCoordinator: ForgotPasswordFlowCoordinatorDelegate {
         returnToLogin()
         showAlert(titleKey: "forgot_password.alert.success.title", messageKey: "forgot_password.alert.success.message")
     }
-
+    
     func returnToLogin() {
         dismiss()
-        reload()
+        stopChildCoordinators()
+    }
+}
+
+extension LoginFlowCoordinator: RegistrationFlowCoordinatorDelegate {
+    func registrationDidSucceed() {
+        dismiss()
+        showAlert(titleKey: "register.success.title", messageKey: "register.success.message")
+    }
+    
+    func registrationDidFail() {
+        showAlert(titleKey: "register.error.title", messageKey: "register.error.message")
     }
 }

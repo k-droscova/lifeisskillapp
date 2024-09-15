@@ -1,6 +1,54 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " " : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
+    "%@" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
+    "%@ +%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ +%2$@"
+          }
+        }
+      }
+    },
     "%@:" : {
       "localizations" : {
         "cs" : {
@@ -130,6 +178,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        }
+      }
+    },
+    "alert.complete_registration_prompt.action" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jdi na profil"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Profil gehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to profile"
+          }
+        }
+      }
+    },
+    "alert.complete_registration_prompt.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ještě jsi nedokončili registraci, můžeš tak učinit ve svém profilu"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie haben die Registrierung noch nicht abgeschlossen, Sie können dies in Ihrem Profil tun."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You haven't completed registration yet, you can do so in your profile."
+          }
+        }
+      }
+    },
+    "alert.complete_registration_prompt.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neúplná registrace"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unvollständige Registrierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incomplete registration"
           }
         }
       }
@@ -272,6 +388,52 @@
         }
       }
     },
+    "alert.login_unactivated_user.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento účet ještě nebyl aktivován. Ujisti se, že jsi jej aktivoval pomocí aktivačního odkazu ve tvém e-mailu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Konto wurde noch nicht aktiviert. Stellen Sie sicher, dass Sie es über den Aktivierungslink in Ihrer E-Mail aktiviert haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your account hasn't been activated yet. Make sure to activated it through activation link in your email."
+          }
+        }
+      }
+    },
+    "alert.login_unactivated_user.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neaktivní účet"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inaktives Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactive account"
+          }
+        }
+      }
+    },
     "alert.logout_offline.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -314,6 +476,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Do you really want to logout?"
+          }
+        }
+      }
+    },
+    "alert.parent_activation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je vyžadována aktivace e-mailu rodiče. Pokud chceš, můžeš si znovu odeslat aktivační odkaz na e-mail rodiče ve svém profilu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Aktivierung der E-Mail-Adresse der Eltern ist erforderlich. Wenn Sie möchten, können Sie den Aktivierungslink erneut an die E-Mail-Adresse Ihrer Eltern in Ihrem Profil senden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parent email activation is required. If you wish, you can resend activation link to your parent's email in your profile."
+          }
+        }
+      }
+    },
+    "alert.parent_activation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neúplná registrace\n"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unvollständige Registrierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incomplete registration"
           }
         }
       }
@@ -643,6 +851,12 @@
     "forgot_password.alert.pin_error.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nevalidní pin"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -704,47 +918,47 @@
       }
     },
     "forgot_password.alert.request.message" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Na email uživatele jsme zaslali email s pinem pro obnovení hesla. Po jeho validaci můžeš pokračovat v obnově."
+            "value" : "Poslali jsme ti do emailu, který je spojený s tímto účtem, pin na obnovu hesla. Pin je platný 15 min."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wir haben eine E-Mail mit einem PIN an die E-Mail-Adresse des Benutzers gesendet. Dieser ist 15 Minuten lang gültig. Bitte geben Sie den PIN ein, nach der Validierung können Sie mit dem Zurücksetzen Ihres Passworts fortfahren."
+            "value" : "Wir haben einen PIN an die E-Mail-Adresse gesendet, die Sie für dieses Konto verwendet haben. Der PIN ist 15 Minuten lang gültig."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We sent email with pin to user's email. It is valid for 15 mins. Please enter the pin, once validated you can proceed to resetting your password."
+            "value" : "We sent pin to your email you used for this account. The pin is valid for 15 mins."
           }
         }
       }
     },
     "forgot_password.alert.request.title" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Informace"
+            "value" : "Zkontroluj si email"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information"
+            "value" : "Überprüfen Sie Ihre E-Mails"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information"
+            "value" : "Check your email"
           }
         }
       }
@@ -1044,6 +1258,121 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Username / Email"
+          }
+        }
+      }
+    },
+    "full_registration.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nepodařilo se nám dokončit tvoji registraci. Zkus to prosím znovu, a pokud problém přetrvává, kontaktuj nás na info@lifeisskill.cz."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir konnten Ihre Registrierung nicht abschließen. Bitte versuchen Sie es erneut, und wenn das Problem weiterhin besteht, kontaktieren Sie uns unter info@lifeisskill.cz."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We were unable to process your completion of registration. Please try again, and if issue persists contact us at info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "full_registration.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "full_registration.success_minor.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrace bude dokončena, jakmile tvůj opatrovník potvrdí svůj e-mail kliknutím na aktivační odkaz, který jsme mu právě poslali."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Registrierung wird abgeschlossen, sobald Ihr Erziehungsberechtigter seine E-Mail bestätigt, indem er auf den Aktivierungslink klickt, den wir ihm gerade gesendet haben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registration will be complete once your guardian validates their email by clicking activation link we just sent them."
+          }
+        }
+      }
+    },
+    "full_registration.success.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrace byla úspěšně dokončena! Nyní si můžeš hru užívat bez jakýchkoli omezení."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Registrierung wurde erfolgreich abgeschlossen! Jetzt können Sie das Spiel ohne Einschränkungen genießen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registration was completed successfully! Now you can enjoy the game without any limitations."
+          }
+        }
+      }
+    },
+    "full_registration.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úspěch!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolg!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success!"
           }
         }
       }
@@ -1786,6 +2115,28 @@
         }
       }
     },
+    "invite.instructions" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Můžeš nechat svého kamaráda naskenovat tento QR kód v registračním formuláři. Oba za to budete odměněni!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können Ihren Freund diesen QR-Code im Registrierungsformular scannen lassen. Dafür werden Sie beide belohnt!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can let your friend scan this QR code in the registration form. You will both get rewarded for it!"
+          }
+        }
+      }
+    },
     "location.access.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2282,22 +2633,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Messages"
-          }
-        }
-      }
-    },
-    "OK" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
           }
         }
       }
@@ -2808,6 +3143,429 @@
         }
       }
     },
+    "profile.age" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Věk:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alter:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Age:"
+          }
+        }
+      }
+    },
+    "profile.back.button" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
+    },
+    "profile.birthday" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum narození:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtsdatum:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date of birth:"
+          }
+        }
+      }
+    },
+    "profile.email" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-Mail:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email:"
+          }
+        }
+      }
+    },
+    "profile.email_request.error_not_sent.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedokázali jsme odeslat aktivační e-mail. Kontaktuj naši podporu na info@lifeisskill.cz"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir konnten keine Aktivierungs-E-Mail senden. Kontaktieren Sie unseren Support unter info@lifeisskill.cz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We couldn't send an activation email. Contact our support at info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "profile.email_request.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Něco se pokazilo. Zkus to znovu později, nebo kontaktuj naši podporu na info@lifeisskill.cz"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etwas ist schiefgelaufen. Versuchen Sie es später erneut oder kontaktieren Sie unseren Support unter info@lifeisskill.cz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Try again later or contact our support at info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "profile.email_request.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "profile.email_request.success.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poslali jsme další aktivační odkaz na zadaný e-mail. Pokud ho nemůžeš najít, zkontroluj složku se spamem."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir haben einen weiteren Aktivierungslink an die angegebene E-Mail-Adresse gesendet. Wenn Sie ihn nicht finden, überprüfen Sie den Spam-Ordner."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We sent another activation link to the provided email. If you cannot find it, check the spam folder."
+          }
+        }
+      }
+    },
+    "profile.email_request.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úspěch"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolg"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
+      }
+    },
+    "profile.invite.button" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozvat přátele"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freunde einladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite friend"
+          }
+        }
+      }
+    },
+    "profile.main_category" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hlavní kategorie:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptkategorie:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main category:"
+          }
+        }
+      }
+    },
+    "profile.name" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jméno:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name:"
+          }
+        }
+      }
+    },
+    "profile.parent_email.button_prompt" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaslat aktivační odkaz znovu:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivierungslink erneut senden:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resend activation link:"
+          }
+        }
+      }
+    },
+    "profile.parent_email.prompt" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyžadována aktivace opatrovníka"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivierung des Vormunds erforderlich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardian's Activation Required"
+          }
+        }
+      }
+    },
+    "profile.parent_email.textfield" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyplň email opatrovníka"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geben Sie die E-Mail-Adresse des Vormunds ein"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter guardian's email"
+          }
+        }
+      }
+    },
+    "profile.phone" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tel:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone:"
+          }
+        }
+      }
+    },
+    "profile.postal_code" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PSČ:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postleitzahl:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postal code:"
+          }
+        }
+      }
+    },
+    "profile.register.button" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dokončit registraci"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrierung abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete registration"
+          }
+        }
+      }
+    },
+    "profile.relation" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vztah:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwandtschaft:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relation:"
+          }
+        }
+      }
+    },
     "rank.title" : {
       "localizations" : {
         "cs" : {
@@ -2830,519 +3588,232 @@
         }
       }
     },
-    "register.button.cancel" : {
-      "extractionState" : "manual",
+    "register.button" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zrušit"
+            "value" : "Zaregistrovat se"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abbrechen"
+            "value" : "Registrieren"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cancel"
+            "value" : "Sign up"
           }
         }
       }
     },
-    "register.button.done" : {
-      "extractionState" : "manual",
+    "register.consent" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Registrovat"
+            "value" : "Souhlasím s:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fertig"
+            "value" : "Ich stimme zu mit:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Done"
+            "value" : "I am consenting with:"
           }
         }
       }
     },
-    "register.button.next" : {
-      "extractionState" : "manual",
+    "register.consent.gdpr" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Další"
+            "value" : "GDPR"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Weiter"
+            "value" : "GDPR"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Next"
+            "value" : "GDPR"
           }
         }
       }
     },
-    "register.button.previous" : {
-      "extractionState" : "manual",
+    "register.consent.rules" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Předchozí"
+            "value" : "Pravidly"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zurück"
+            "value" : "Regeln"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previous"
+            "value" : "Rules"
           }
         }
       }
     },
-    "register.error.age.old" : {
-      "extractionState" : "manual",
+    "register.date_of_birth" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hra je pro uživatele do 18 let"
+            "value" : "Datum narození:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nur unter 18 Jahren"
+            "value" : "Geburtsdatum:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Only under 18 years"
+            "value" : "Date of birth:"
           }
         }
       }
     },
-    "register.error.age.young" : {
-      "extractionState" : "manual",
+    "register.date_of_birth.age:" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hra je pro uživatele od 6 let"
+            "value" : "Tvůj věk: %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nur ab 6 Jahren"
+            "value" : "Ihr Alter: %@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Only from 6 years"
+            "value" : "Your age: %@"
           }
         }
       }
     },
-    "register.error.empty" : {
-      "extractionState" : "manual",
+    "register.date_of_birth.instructions" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pole nesmí být prázdné"
+            "value" : "Vyber si svůj datum narození"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Feld darf nicht leer sein"
+            "value" : "Wählen Sie Ihr Geburtsdatum"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Field can't be empty"
+            "value" : "Choose your birthday:"
           }
         }
       }
     },
-    "register.error.invalid_mail" : {
-      "extractionState" : "manual",
+    "register.email" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neplatná emailová adresa"
+            "value" : "Email"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ungültige E-Mail (test@test.de)"
+            "value" : "Email"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid email (test@test.cz)"
+            "value" : "Email"
           }
         }
       }
     },
-    "register.error.invalid_phone" : {
-      "extractionState" : "manual",
+    "register.first_name" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neplatné telefonní číslo"
+            "value" : "Jméno"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ungültige Telefonnummer"
+            "value" : "Vorname"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid phone"
+            "value" : "First name"
           }
         }
       }
     },
-    "register.error.invalid_postcode" : {
-      "extractionState" : "manual",
+    "register.gender" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neplatné poštovní směrovací číslo"
+            "value" : "Pohlaví:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ungültige Postleitzahl"
+            "value" : "Geschlecht:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid postcode"
+            "value" : "Gender:"
           }
         }
       }
     },
-    "register.error.invalid_username" : {
-      "extractionState" : "manual",
+    "register.gender.female" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toto uživatelské jméno není k dispozici."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“Der Spitzname wird bereits verwendet.”"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nickname is already used."
-          }
-        }
-      }
-    },
-    "register.error.parrent_email" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email rodiče nesmí být stejný jako email uživatele"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-Mail ist gleich wie die Benutzer-E-Mail"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email is same as user email"
-          }
-        }
-      }
-    },
-    "register.error.password_not_match" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hesla se neshodují"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passwörter stimmen nicht überein"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password don't match"
-          }
-        }
-      }
-    },
-    "register.error.short_name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jméno je příliš krátké"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Der Name ist zu kurz"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name is too short"
-          }
-        }
-      }
-    },
-    "register.error.short_relationship" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vztah je příliš krátký"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Beziehung ist zu kurz"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Relationship is too short"
-          }
-        }
-      }
-    },
-    "register.error.short_surname" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Příjmení je příliš krátké"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Der Nachname ist zu kurz"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Surname is too short"
-          }
-        }
-      }
-    },
-    "register.error.short_username" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimálně 3 znaky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mindestens 3 Zeichen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Min 3 characters"
-          }
-        }
-      }
-    },
-    "register.error.used_mail" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Používaná emailová adresa"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verwendete E-Mail"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Used email"
-          }
-        }
-      }
-    },
-    "register.error.weak_password" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Min 5 znaků, číslice, malé a velké písmeno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 Zeichen, Zahl, Klein- und Großbuchstaben"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 char, number, little and big endian"
-          }
-        }
-      }
-    },
-    "register.field.birth" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Datum narození"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geburtsdatum"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Birth"
-          }
-        }
-      }
-    },
-    "register.field.gdpr" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pro pokračování je nutné vyslovit souhlas s GDPR. Bližší informace se dozvíte zde."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ich habe die Nutzungsbedingungen gelesen und stimme ihnen zu. Ich stimme zu, dass meine Daten gespeichert werden."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I have read and agree to the Terms of Service. I agree to my data being stored."
-          }
-        }
-      }
-    },
-    "register.field.gender" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pohlaví"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geschlecht"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gender"
-          }
-        }
-      }
-    },
-    "register.field.gender.female" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ženské"
+            "value" : "Žena"
           }
         },
         "de" : {
@@ -3359,13 +3830,12 @@
         }
       }
     },
-    "register.field.gender.male" : {
-      "extractionState" : "manual",
+    "register.gender.male" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mužské"
+            "value" : "Muž"
           }
         },
         "de" : {
@@ -3382,54 +3852,73 @@
         }
       }
     },
-    "register.field.mail" : {
-      "extractionState" : "manual",
+    "register.guardian_info" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Email"
+            "value" : "Informace o zákonném zástupci"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-Mail"
+            "value" : "Angaben des Erziehungsberechtigten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mail"
+            "value" : "Guardian's information"
           }
         }
       }
     },
-    "register.field.name" : {
-      "extractionState" : "manual",
+    "register.guardian_relationship" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jméno"
+            "value" : "Vztah k tobě"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Name"
+            "value" : "Beziehung zu Ihnen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Name"
+            "value" : "Relationship to you"
           }
         }
       }
     },
-    "register.field.password" : {
-      "extractionState" : "manual",
+    "register.last_name" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Příjmení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachname"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last name"
+          }
+        }
+      }
+    },
+    "register.password" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -3451,13 +3940,56 @@
         }
       }
     },
-    "register.field.phone" : {
-      "extractionState" : "manual",
+    "register.password_confirm" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mobil"
+            "value" : "Potvrdit heslo"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort bestätigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm password"
+          }
+        }
+      }
+    },
+    "register.phone_menu" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Předvolba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ländervorwahl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country code"
+          }
+        }
+      }
+    },
+    "register.phone_number" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon"
           }
         },
         "de" : {
@@ -3474,8 +4006,7 @@
         }
       }
     },
-    "register.field.post_number" : {
-      "extractionState" : "manual",
+    "register.postal_code" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -3492,122 +4023,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Post number"
+            "value" : "Postal Code"
           }
         }
       }
     },
-    "register.field.relationship" : {
-      "extractionState" : "manual",
+    "register.submit_button" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vztah"
+            "value" : "Dokončit registraci"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beziehung"
+            "value" : "Registrierung abschließen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relationship"
-          }
-        }
-      }
-    },
-    "register.field.second_password" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Heslo znovu"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passwort wiederholen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Repeat password"
-          }
-        }
-      }
-    },
-    "register.field.surname" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Příjmení"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nachname"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Surname"
-          }
-        }
-      }
-    },
-    "register.field.username" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Přezdívka"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Benutzername"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Username"
-          }
-        }
-      }
-    },
-    "register.parent_info" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Údaje rodiče"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elterninformationen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Parent info"
+            "value" : "Complete registration"
           }
         }
       }
@@ -3618,19 +4056,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Právě proběhla registrace nového uživatele. Pro plnou funkčnost je nutno účet aktivovat v OBOU emailech. Pokračujte do emailu rodiče, kde jsou další podrobnosti. Účet musíte ověřit nejdříve na emailu rodiče a poté na emailu uživatele. Účet je možné ověřit do 7 dnů od vytvoření registrace."
+            "value" : "První část registrace byla úspěšná. Budeš se moct přihlásit, jakmile si aktivuješ svůj účet prostřednictvím odkazu ve svém e-mailu. Po přihlášení přejdi přes menu do svého profilu, kde můžeš dokončit proces registrace. Skenovat body lze i bez dokončení registrace, ale funkce jsou omezené. Plnou registraci musíš dokončit do 30 dnů."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Überprüfen Sie zuerst die Eltern-E-Mail und bestätigen Sie die E-Mail. Dann überprüfen Sie die Benutzer-E-Mail und bestätigen Sie die zweite Bestätigungs-E-Mail."
+            "value" : "Der erste Teil der Registrierung war erfolgreich. Sie können sich einloggen, sobald Sie Ihr Konto über den Link in Ihrer E-Mail aktiviert haben. Nach dem Einloggen navigieren Sie über das Menü zu Ihrem Profil, um den Registrierungsprozess abzuschließen. Sie können Punkte scannen, ohne die vollständige Registrierung abgeschlossen zu haben, aber die Funktionen sind eingeschränkt. Sie müssen die vollständige Registrierung innerhalb von 30 Tagen abschließen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "At first, check parent email and confirm email. Than check user's email and check the second confirmation email."
+            "value" : "First part of registration was succcessful. You will be able to login once you activate your account through link in your email. After you login, navigate to your profile through menu to complete registration process. You can still scan points without full registration, but the functionalities are limited. You must complete full registration within 30 days."
           }
         }
       }
@@ -3641,7 +4079,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jste skoro zaregistrován"
+            "value" : "Registrace je skoro hotová"
           }
         },
         "de" : {
@@ -3658,25 +4096,468 @@
         }
       }
     },
-    "register.user_info" : {
-      "extractionState" : "manual",
+    "register.user_info.instructions" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Údaje uživatele"
+            "value" : "Prosím, dokonči registraci vyplněním tohoto formuláře. Pokud je ti méně než 15 let, budeš požádán o poskytnutí informací o zákonném zástupci. V tomto případě bude registrace dokončena, jakmile zákonný zástupce potvrdí svůj e-mail."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontoinformationen"
+            "value" : "Bitte vervollständigen Sie die Registrierung, indem Sie dieses Formular ausfüllen. Wenn Sie unter 15 Jahre alt sind, werden Sie gebeten, die Informationen eines Erziehungsberechtigten anzugeben. In diesem Fall wird die Registrierung abgeschlossen, sobald der Erziehungsberechtigte seine E-Mail bestätigt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Account info"
+            "value" : "Please complete the registration by filling out this form. If you are under 15 years old, you will be asked to provide a guardian's information as well. In that case, the registration will be complete once they validate their email."
+          }
+        }
+      }
+    },
+    "register.user_info.title" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informace o tobě"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Angaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your information"
+          }
+        }
+      }
+    },
+    "register.username" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uživatelské jméno"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzername"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username"
+          }
+        }
+      }
+    },
+    "register.validation.email.format" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadej validní emailovou adresu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter valid email."
+          }
+        }
+      }
+    },
+    "register.validation.email.guardian_matches_user" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nemůžeš použít stejný e-mail jako pro registraci."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können nicht die gleiche E-Mail-Adresse wie bei der Registrierung verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You cannot use the same email as for registration"
+          }
+        }
+      }
+    },
+    "register.validation.email.taken" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento email je již používán."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email ist bereits vergeben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email is already taken."
+          }
+        }
+      }
+    },
+    "register.validation.empty" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pole nesmí být prázdné."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Feld darf nicht leer sein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field can't be empty."
+          }
+        }
+      }
+    },
+    "register.validation.password.format" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heslo musí mít alespoň %@ znaků."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Passwort muss mindestens %@ Zeichen enthalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password must have at least %@ characters."
+          }
+        }
+      }
+    },
+    "register.validation.password.mismatch" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesla se neshodují."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwörter stimmen nicht überein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwords don't match."
+          }
+        }
+      }
+    },
+    "register.validation.phone.invalidFormat" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napiš validní telefonní číslo"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stellen Sie sicher, dass Sie eine gültige Telefonnummer eingegeben haben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensure you wrote valid phone number"
+          }
+        }
+      }
+    },
+    "register.validation.username.short" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uživatelské jméno musí mít alespoň %@ znaků."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Benutzername muss mindestens %@ Zeichen enthalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username must have at least %@ characters."
+          }
+        }
+      }
+    },
+    "register.validation.username.taken" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toto uživatelské jméno je již používáno."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Benutzername wird bereits verwendet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username already taken."
+          }
+        }
+      }
+    },
+    "registration.reference.instructions.body" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokud máš kamaráda, který je již zaregistrovaný, může tě pozvat do hry a oba získáte výhody!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du einen Freund hast, der bereits registriert ist, kann er dich zum Spiel einladen, und ihr beide werdet Vorteile erhalten!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you have a friend that is already registered, they can invite you to the game and both of you will get benefits!"
+          }
+        }
+      }
+    },
+    "registration.reference.qr.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujisti se, že skenuješ správný QR kód. Pokud problém přetrvává, kontaktuj nás na info@lifeisskill.cz."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle sicher, dass du den richtigen QR-Code scannst. Falls das Problem weiterhin besteht, kontaktiere uns unter info@lifeisskill.cz."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensure you are scanning the correct QR code. If issue persists contact us at info@lifeisskill.cz."
+          }
+        }
+      }
+    },
+    "registration.reference.qr.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skenování referenta selhalo"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenz-Scan fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference scanning failed"
+          }
+        }
+      }
+    },
+    "registration.reference.qr.scanning.instructions" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Řekni svému kamarádovi, aby otevřel svůj profil v aplikaci přes menu v pravém horním rohu. V profilu ať klikne na „Vygenerovat QR“, který poté naskenuj."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weise deinen Freund an, sein Profil in der App über das Menü in der oberen rechten Ecke zu öffnen. Im Profil klicke auf „QR-Code generieren“ und scanne ihn dann."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instruct your friend to open their profile in the app through menu in upper right corner. In profile, click on \"Generate QR\" and then scan it."
+          }
+        }
+      }
+    },
+    "registration.reference.qr.success.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujisti se, že uživatelské jméno ve formuláři odpovídá uživatelskému jménu tvého kamaráda."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle sicher, dass der Benutzername im Formular mit dem Benutzernamen deines Freundes übereinstimmt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensure that the username in the form matches your friend's username."
+          }
+        }
+      }
+    },
+    "registration.reference.qr.success.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skenování proběhlo úspěšně"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenz erfolgreich gescannt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference scanned successfully"
+          }
+        }
+      }
+    },
+    "registration.reference.title" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat referenci"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einladung hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add reference"
+          }
+        }
+      }
+    },
+    "registration.reference.user" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uživatelské jméno referenta:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzername des Einladers:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference's username:"
+          }
+        }
+      }
+    },
+    "registration.reference.user.placeholder" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stiskni tlačítko vpravo pro načtení referenta"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klicken Sie auf den Button rechts, um den Benutzer zu scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click button on the right to scan user"
           }
         }
       }
@@ -4067,6 +4948,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How to?"
+          }
+        }
+      }
+    },
+    "settings.profile" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil uživatele"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerprofil"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User's profile"
           }
         }
       }

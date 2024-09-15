@@ -14,6 +14,16 @@ protocol ForgotPasswordFlowCoordinatorDelegate: NSObject {
     func returnToLogin()
 }
 
+protocol ForgotPasswordFlowDelegate: NSObject {
+    func didRequestNewPin()
+    func failedRequestNewPin()
+    func didValidatePin()
+    func failedValidatePin()
+    func didRenewPassword()
+    func failedRenewPassword()
+    func timerRanOut()
+}
+
 final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     private weak var delegate: ForgotPasswordFlowCoordinatorDelegate?
     private var viewModel: passwordVM
@@ -119,7 +129,7 @@ final class ForgotPasswordFlowCoordinator<passwordVM: ForgotPasswordViewModeling
     }
 }
 
-extension ForgotPasswordFlowCoordinator: ForgotPasswordViewModelDelegate {
+extension ForgotPasswordFlowCoordinator: ForgotPasswordFlowDelegate {
     func didRenewPassword() {
         proceedToNextStep()
     }

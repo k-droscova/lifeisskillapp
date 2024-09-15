@@ -7,9 +7,11 @@
 
 import Foundation
 
-enum UserGender: String, Codable {
-    case male, female
-    // Custom encoding method
+enum UserGender: String, Codable, Hashable {
+    case male = "M"
+    case female = "F"
+    case unspecified = ""
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
@@ -17,10 +19,11 @@ enum UserGender: String, Codable {
             try container.encode("M")
         case .female:
             try container.encode("F")
+        case .unspecified:
+            try container.encode("")
         }
     }
     
-    // Custom decoding method
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let gender = try container.decode(String.self)
@@ -30,13 +33,13 @@ enum UserGender: String, Codable {
         case "F":
             self = .female
         default:
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid gender value")
+            self = .unspecified
         }
     }
     
     var icon: String {
         switch self {
-        case .male:
+        case .male, .unspecified:
             CustomImages.Avatar.male.fullPath
         case .female:
             CustomImages.Avatar.female.fullPath

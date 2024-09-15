@@ -17,6 +17,9 @@ struct EnterPinView<ViewModel: ForgotPasswordViewModeling>: View {
             contentView
         }
         .padding(.top, ForgotPasswordPagesConstants.topPadding)
+        .onTapGesture {
+            hideKeyboard()
+        }
         .overlay(
             Group {
                 if viewModel.isLoading {
@@ -67,11 +70,7 @@ private extension EnterPinView {
                 action: {
                     viewModel.validatePin()
                 },
-                text: Text("forgot_password.button.confirm"),
-                enabledColorBackground: ForgotPasswordPagesConstants.Colors.enabledButton,
-                disabledColorBackground: ForgotPasswordPagesConstants.Colors.disabledButton,
-                enabledColorText: ForgotPasswordPagesConstants.Colors.enabledText,
-                disabledColorText: ForgotPasswordPagesConstants.Colors.disabledText,
+                text: "forgot_password.button.confirm",
                 isEnabled: viewModel.isConfirmPinButtonEnabled
             )
         }

@@ -10,7 +10,7 @@ import Foundation
 let appDependencies = AppDependency()
 
 typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper & HasNetworkMonitor
-typealias HasAPIDependencies = HasRegisterAppAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService & HasForgotPasswordAPIService
+typealias HasAPIDependencies = HasRegisterAppAPIService & HasRegisterUserAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService & HasForgotPasswordAPIService
 typealias HasKeychain = HasKeychainHelper & HasKeychainStorage
 typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage & HasKeychainHelper & HasKeychain
 typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager
@@ -29,6 +29,7 @@ final class AppDependency {
     lazy var urlSession: URLSessionWrapping = URLSessionWrapper()
     lazy var network: Networking = Network(dependencies: self)
     lazy var registerAppAPI: RegisterAppAPIServicing = RegisterAppAPIService(dependencies: self)
+    lazy var registerUserAPI: RegisterUserAPIServicing = RegisterUserAPIService(dependencies: self)
     lazy var loginAPI: LoginAPIServicing = LoginAPIService(dependencies: self)
     lazy var forgotPasswordAPI: ForgotPasswordAPIServicing = ForgotPasswordAPIService(dependencies: self)
     lazy var checkSumAPI: CheckSumAPIServicing = CheckSumAPIService(dependencies: self)

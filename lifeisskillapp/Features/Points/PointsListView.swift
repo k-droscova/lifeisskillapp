@@ -62,9 +62,9 @@ struct PointListItem: View {
     
     private var dateView: some View {
         VStack(alignment: .leading) {
-            Text(point.time.getTimeString())
-            Text(point.time.getDayString())
-            Text(point.time.getYearString())
+            Text(Date.UI.getTimeString(from: point.time))
+            Text(Date.UI.getDayString(from: point.time))
+            Text(Date.UI.getYearString(from: point.time))
         }
         .frame(width: PointListItemConstants.dateWidth, alignment: .leading)
         .foregroundStyle(CustomColors.ListPointCard.foreground.color)

@@ -18,11 +18,13 @@ public struct LoginAPIResponse: DataProtocol {
     let user: LoggedInUser
     
     enum CodingKeys: String, CodingKey {
-        case userId, email, nick, rights, rightsCoded, token, userRank, userPoints, sex, distance, mainCategory, fullActivation
+        case userId, email, nick, rights, rightsCoded, token, userRank, userPoints, sex, distance, mainCategory, fullActivation, activationStatus
+        case name, surname, mobil, zip, birthday, nameParent, surnameParent, emailParent, mobilParent, relation
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
         let userId = try container.decode(String.self, forKey: .userId)
         let email = try container.decode(String.self, forKey: .email)
         let nick = try container.decode(String.self, forKey: .nick)
@@ -35,6 +37,22 @@ public struct LoginAPIResponse: DataProtocol {
         let distance = try container.decode(Int.self, forKey: .distance)
         let mainCategory = try container.decode(String.self, forKey: .mainCategory)
         let fullActivation = try container.decode(Bool.self, forKey: .fullActivation)
+        let activationStatus = try container.decode(UserActivationStatus.self, forKey: .activationStatus)
+        
+        // Decode optional strings, only set them if they are non-empty
+        let name = try container.decodeNonEmptyString(forKey: .name)
+        let surname = try container.decodeNonEmptyString(forKey: .surname)
+        let mobil = try container.decodeNonEmptyString(forKey: .mobil)
+        let postalCode = try container.decodeNonEmptyString(forKey: .zip)
+        let birthdayString = try container.decodeIfPresent(String.self, forKey: .birthday)
+        let birthday: Date? = Date.Backend.fromBirthday(dateString: birthdayString ?? "")
+        
+        // Decode optional parent information fields, only set them if they are non-empty
+        let nameParent = try container.decodeNonEmptyString(forKey: .nameParent)
+        let surnameParent = try container.decodeNonEmptyString(forKey: .surnameParent)
+        let emailParent = try container.decodeNonEmptyString(forKey: .emailParent)
+        let mobilParent = try container.decodeNonEmptyString(forKey: .mobilParent)
+        let relation = try container.decodeNonEmptyString(forKey: .relation)
         
         self.user = LoggedInUser(
             userId: userId,
@@ -48,13 +66,25 @@ public struct LoginAPIResponse: DataProtocol {
             userPoints: userPoints,
             distance: distance,
             mainCategory: mainCategory,
-            fullActivation: fullActivation
+            fullActivation: fullActivation,
+            activationStatus: activationStatus,
+            name: name,
+            surname: surname,
+            mobil: mobil,
+            postalCode: postalCode,
+            birthday: birthday,
+            nameParent: nameParent,
+            surnameParent: surnameParent,
+            emailParent: emailParent,
+            mobilParent: mobilParent,
+            relation: relation
         )
     }
     
-    // Custom encoder to encode the LoggedInUser into the API response
+    // MARK: - Encoder
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
         try container.encode(user.userId, forKey: .userId)
         try container.encode(user.email, forKey: .email)
         try container.encode(user.nick, forKey: .nick)
@@ -67,10 +97,25 @@ public struct LoginAPIResponse: DataProtocol {
         try container.encode(user.distance, forKey: .distance)
         try container.encode(user.mainCategory, forKey: .mainCategory)
         try container.encode(user.fullActivation, forKey: .fullActivation)
+        try container.encode(user.activationStatus, forKey: .activationStatus)
+        
+        // Only encode optional fields if they are not nil
+        try container.encodeIfPresent(user.name, forKey: .name)
+        try container.encodeIfPresent(user.surname, forKey: .surname)
+        try container.encodeIfPresent(user.mobil, forKey: .mobil)
+        try container.encodeIfPresent(user.postalCode, forKey: .zip)
+        if let birthday = user.birthday {
+            try container.encodeIfPresent(Date.Backend.getBirthdayString(from: birthday), forKey: .birthday)
+        }
+        try container.encodeIfPresent(user.nameParent, forKey: .nameParent)
+        try container.encodeIfPresent(user.surnameParent, forKey: .surnameParent)
+        try container.encodeIfPresent(user.emailParent, forKey: .emailParent)
+        try container.encodeIfPresent(user.mobilParent, forKey: .mobilParent)
+        try container.encodeIfPresent(user.relation, forKey: .relation)
     }
     
-    internal init(from user: LoggedInUser) {
-        self.user = user
+    internal init(from: LoggedInUser) {
+        self.user = from
     }
 }
 
@@ -226,5 +271,86 @@ struct ForgotPasswordConfirmation: DataProtocol {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         message = try container.decode(Bool.self, forKey: .message)
+    }
+}
+
+struct UsernameAvailabilityResponse: DataProtocol {
+    let isAvailable: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isAvailable = "isNickAvailable"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
+    }
+}
+
+struct EmailAvailabilityResponse: DataProtocol {
+    let isAvailable: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isAvailable = "isEmailAvailable"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
+    }
+}
+
+struct RegistrationResponse: DataProtocol {
+    let message: String
+    
+    enum CodingKeys: String, CodingKey {
+        case message = "newUser"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        message = try container.decode(String.self, forKey: .message)
+    }
+}
+
+struct SignatureAPIResponse: DataProtocol {
+    let signature: String
+    
+    enum CodingKeys: String, CodingKey {
+        case signature = "token"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        signature = try container.decode(String.self, forKey: .signature)
+    }
+}
+
+struct CompleteRegistrationAPIResponse: DataProtocol {
+    let completionStatus: Bool
+    let needParentActivation: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case completionStatus = "userProfileUpdated"
+        case needParentActivation = "needParentActivation"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        completionStatus = try container.decode(Bool.self, forKey: .completionStatus)
+        needParentActivation = try container.decode(Bool.self, forKey: .needParentActivation)
+    }
+}
+
+struct ParentEmailActivationReponse: DataProtocol {
+    let status: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case status = "parentLinkSent"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        status = try container.decode(Bool.self, forKey: .status)
     }
 }

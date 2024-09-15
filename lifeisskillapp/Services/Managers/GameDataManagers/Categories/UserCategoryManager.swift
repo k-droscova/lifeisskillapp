@@ -74,9 +74,7 @@ public final class UserCategoryManager: BaseClass, UserCategoryManaging {
         let response = try await userDataAPIService.userCategories(userToken: token)
         try await storage.saveUserCategoryData(response.data)
         _data = response.data
-        if selectedCategory == nil {
-            selectedCategory = _data?.main
-        }
+        selectedCategory = _data?.main
     }
     
     func getById(id: String) -> UserCategory? {

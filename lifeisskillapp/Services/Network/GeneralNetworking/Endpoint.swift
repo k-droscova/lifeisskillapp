@@ -15,15 +15,35 @@ protocol Endpointing {
 }
 
 enum Endpoint: Endpointing {
+    case resetPassword(ResetPassword)
+    case registration(Registration)
     case appId
     case login
     case usercategory, userpoints, rank, events, messages, points
     case sponsorImage(sponsorId: String, width: Int, height: Int)
-    case resetPasswordRequest(username: String)
-    case resetPasswordConfirm
+    case signature
+    case parentEmailActivation(email: String)
     
     var path: String {
         switch self {
+        case .resetPassword(let action):
+            switch action {
+            case .request(let username):
+                "/pswd/?user=\(username)"
+            case .confirm:
+                "/pswd"
+            }
+            
+        case .registration(let action):
+            switch action {
+            case .checkUsernameAvailability(let username):
+                "/nick/\(username)/check"
+            case .checkEmailAvailability(let email):
+                "/email/\(email)/check"
+            case .registerUser, .completeRegistration:
+                "/users"
+            }
+            
         case .appId:
             "/appid"
         case .login:
@@ -42,10 +62,10 @@ enum Endpoint: Endpointing {
             "/points"
         case .sponsorImage(let sponsorId, let width, let height):
             "/files?type=partners&partnerId=\(sponsorId)&width=\(width)&height=\(height)"
-        case .resetPasswordRequest(let username):
-            "/pswd/?user=\(username)"
-        case .resetPasswordConfirm:
-            "/pswd"
+        case .signature:
+            "/signature"
+        case .parentEmailActivation(let email):
+            "/parentLink/\(email.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? email)/users"
         }
     }
     
@@ -60,10 +80,24 @@ enum Endpoint: Endpointing {
     
     var isUserTokenRequired: Bool {
         switch self {
-        case .appId, .login, .resetPasswordRequest, .resetPasswordConfirm:
-            false
-        case .usercategory, .userpoints, .rank, .events, .messages, .points, .sponsorImage:
-            true
+        case .appId,
+                .login,
+                .resetPassword,
+                .registration(.checkUsernameAvailability),
+                .registration(.checkEmailAvailability),
+                .registration(.registerUser):
+            return false
+        case .usercategory, 
+                .userpoints,
+                .rank,
+                .events,
+                .messages,
+                .points,
+                .sponsorImage,
+                .signature,
+                .parentEmailActivation,
+                .registration(.completeRegistration):
+            return true
         }
     }
     
@@ -89,5 +123,19 @@ enum Endpoint: Endpointing {
             )
         }
         return url
+    }
+}
+
+extension Endpoint {
+    // MARK: nested enums for separate flows
+    enum ResetPassword {
+        case request(username: String)
+        case confirm
+    }
+    enum Registration {
+        case checkUsernameAvailability(username: String)
+        case checkEmailAvailability(email: String)
+        case registerUser
+        case completeRegistration
     }
 }

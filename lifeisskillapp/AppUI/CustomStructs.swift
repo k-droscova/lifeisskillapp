@@ -11,11 +11,13 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
     @Binding private var selectedOption: T?
     private let options: [T]
     private let placeholder: Text
+    private let labelView: (T) -> Text
     
-    init(options: [T], selectedOption: Binding<T?>, placeholder: Text = Text("home.category_selector")) {
+    init(options: [T], selectedOption: Binding<T?>, placeholder: Text = Text("home.category_selector"), labelView: @escaping (T) -> Text) {
         self.options = options
         self._selectedOption = selectedOption
         self.placeholder = placeholder
+        self.labelView = labelView
     }
     
     var body: some View {
@@ -29,13 +31,12 @@ struct DropdownMenu<T: Identifiable & CustomStringConvertible>: View {
             }
         } label: {
             HStack {
-                if let description = selectedOption?.description {
-                    Text(description)
-                }
-                else {
+                if let selectedOption {
+                    labelView(selectedOption)
+                } else {
                     placeholder
                 }
-                SFSSymbols.categorySelectorDropDown.image
+                SFSSymbols.expandDown.image
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
@@ -244,5 +245,297 @@ struct OnboardingPageView: View {
         text
             .body1Regular
             .multilineTextAlignment(.center)
+    }
+}
+
+struct CustomTextField<Content: View>: View {
+    let placeholder: LocalizedStringKey
+    @Binding var text: String
+    
+    // MARK: optional arguments, can be customized in init, defaults to generic LiS textfield style
+    let isSecure: Bool
+    let backgroundColor: Color
+    let foregroundColor: Color
+    let cornerRadius: CGFloat
+    let kernig: CGFloat
+    let showsValidationMessage: Bool
+    let validationTextColor: Color
+    var validationMessage: LocalizedStringKey? = nil
+    @ViewBuilder var sendButton: () -> Content  // Optional sendButton content
+    
+    init(placeholder: LocalizedStringKey,
+         text: Binding<String>,
+         isSecure: Bool = false,
+         backgroundColor: Color = CustomColors.TextFieldView.background.color,
+         foregroundColor: Color = CustomColors.TextFieldView.foreground.color,
+         cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size,
+         kernig: CGFloat = CustomSizes.TextFieldView.kernig.size,
+         showsValidationMessage: Bool = false,
+         validationTextColor: Color = .colorLisRed,
+         validationMessage: LocalizedStringKey? = nil,
+         @ViewBuilder sendButton: @escaping () -> Content = { EmptyView() }) {
+        
+        self.placeholder = placeholder
+        self._text = text
+        self.isSecure = isSecure
+        self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
+        self.cornerRadius = cornerRadius
+        self.kernig = kernig
+        self.showsValidationMessage = showsValidationMessage
+        self.validationTextColor = validationTextColor
+        self.validationMessage = validationMessage
+        self.sendButton = sendButton
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: CustomSizes.TextFieldView.verticalSpacing.size) {
+            Text(text.isEmpty ? " " : placeholder)
+                .body1Regular
+                .foregroundStyle(foregroundColor)
+                .transition(.move(edge: .top))
+                .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
+            
+            HStack(alignment: .center) {
+                textField
+                    .foregroundStyle(foregroundColor)
+                sendButton()
+            }
+            .padding()
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
+            .kerning(kernig)
+            .body1Regular
+            
+            if showsValidationMessage {
+                validatioMessageField
+                    .caption
+                    .foregroundStyle(validationTextColor)
+                    .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
+            }
+        }
+    }
+    
+    private var textField: some View {
+        Group {
+            if isSecure {
+                SecureField(placeholder, text: $text)
+            } else {
+                TextField(placeholder, text: $text)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+            }
+        }
+    }
+    
+    private var validatioMessageField: some View {
+        Group {
+            if let validationMessage = validationMessage {
+                Text(validationMessage)
+            } else {
+                Text(" ")  // Placeholder text to maintain layout stability
+            }
+        }
+        .frame(height: CustomSizes.TextFieldView.validationMessageFrame.size)  // Reserve space for validation message, should equal lineHeight of .caption
+    }
+}
+
+struct ProfileDetailRow: View {
+    let title: LocalizedStringKey
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .subheadlineBold
+            Spacer()
+            Text(value)
+                .body1Regular
+        }
+    }
+}
+
+struct CameraOverlayView<CenterView: View>: View {
+    let topInset: CGFloat
+    let exitButtonAction: () -> Void
+    let flashAction: () -> Void
+    let isFlashOn: Binding<Bool>
+    let instructions: LocalizedStringKey
+    let centerView: CenterView?
+    
+    init(
+        topInset: CGFloat,
+        exitButtonAction: @escaping () -> Void,
+        flashAction: @escaping () -> Void,
+        isFlashOn: Binding<Bool>,
+        instructions: LocalizedStringKey,
+        @ViewBuilder centerView: () -> CenterView? = { nil }
+    ) {
+        self.topInset = topInset
+        self.exitButtonAction = exitButtonAction
+        self.flashAction = flashAction
+        self.isFlashOn = isFlashOn
+        self.instructions = instructions
+        self.centerView = centerView()
+    }
+    
+    var body: some View {
+        VStack {
+            topButtons
+                .padding(.top, topInset)
+            if let centerView = centerView {
+                Spacer(minLength: CustomSizes.QROverlayView.spacingBetweenSections.size)
+                centerView
+                Spacer(minLength: CustomSizes.QROverlayView.spacingBetweenSections.size)
+            } else {
+                Spacer()
+            }
+            instructionsView
+        }
+        .padding(.horizontal, CustomSizes.QROverlayView.buttonPaddingHorizontal.size)
+    }
+    
+    private var topButtons: some View {
+        HStack {
+            ExitButton(action: exitButtonAction)
+            Spacer()
+            FlashButton(
+                action: flashAction,
+                flashOn: isFlashOn
+            )
+        }
+    }
+    
+    private var instructionsView: some View {
+        Text(instructions)
+            .foregroundColor(CustomColors.QROverlayView.instructionsText.color)
+            .multilineTextAlignment(.center)
+            .padding()
+            .background(CustomColors.QROverlayView.instructionsBackground.color)
+            .cornerRadius(CustomSizes.QROverlayView.instructionsCornerRadius.size)
+            .padding(.bottom, CustomSizes.QROverlayView.instructionsBottomPadding.size)
+    }
+}
+
+struct QROverlayView: View {
+    let topInset: CGFloat
+    let exitButtonAction: () -> Void
+    let flashAction: () -> Void
+    let isFlashOn: Binding<Bool>
+    let instructions: LocalizedStringKey
+    
+    var body: some View {
+        CameraOverlayView(
+            topInset: topInset,
+            exitButtonAction: exitButtonAction,
+            flashAction: flashAction,
+            isFlashOn: isFlashOn,
+            instructions: instructions
+        ) {
+            Image(CustomImages.Miscellaneous.scanningFrame.fullPath)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+}
+
+struct PhoneTextField: View {
+    let placeholder: LocalizedStringKey
+    @Binding var text: String
+    @Binding var selectedCountry: Country?
+    
+    // Optional arguments
+    let countries: [Country]
+    let backgroundColor: Color
+    let foregroundColor: Color
+    let cornerRadius: CGFloat
+    let kernig: CGFloat
+    let showsValidationMessage: Bool
+    let validationTextColor: Color
+    var validationMessage: LocalizedStringKey? = nil
+    
+    init(
+        placeholder: LocalizedStringKey = "register.phone_number",
+        text: Binding<String>,
+        selectedCountry: Binding<Country?>,
+        countries: [Country],
+        backgroundColor: Color = CustomColors.TextFieldView.background.color,
+        foregroundColor: Color = CustomColors.TextFieldView.foreground.color,
+        cornerRadius: CGFloat = CustomSizes.TextFieldView.cornerRadius.size,
+        kernig: CGFloat = CustomSizes.TextFieldView.kernig.size,
+        showsValidationMessage: Bool = true,
+        validationTextColor: Color = .colorLisRed,
+        validationMessage: LocalizedStringKey? = nil
+    ) {
+        self.placeholder = placeholder
+        self._text = text
+        self._selectedCountry = selectedCountry
+        self.countries = countries
+        self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
+        self.cornerRadius = cornerRadius
+        self.kernig = kernig
+        self.showsValidationMessage = showsValidationMessage
+        self.validationTextColor = validationTextColor
+        self.validationMessage = validationMessage
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: CustomSizes.TextFieldView.verticalSpacing.size) {
+            Text(text.isEmpty ? " " : placeholder)
+                .body1Regular
+                .foregroundStyle(foregroundColor)
+                .transition(.move(edge: .top))
+                .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
+            
+            HStack(alignment: .center) {
+                countryMenu
+                    .foregroundColor(foregroundColor)
+                
+                textField
+                    .foregroundStyle(foregroundColor)
+            }
+            .padding(12)
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
+            .kerning(kernig)
+            .body1Regular
+            
+            if showsValidationMessage {
+                validatioMessageField
+                    .caption
+                    .foregroundStyle(validationTextColor)
+                    .padding(.horizontal, CustomSizes.TextFieldView.horizontalPaddingTitleAndValidationMessage.size)
+            }
+        }
+    }
+    
+    private var countryMenu: some View {
+        DropdownMenu(
+            options: countries,
+            selectedOption: $selectedCountry,
+            placeholder: Text("register.phone_menu"),
+            labelView: { country in
+                Text("\(country.flagEmoji) +\(country.phone)")
+            }
+        )
+        .foregroundColor(foregroundColor)
+    }
+    
+    private var textField: some View {
+        TextField(placeholder, text: $text)
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+    }
+    
+    private var validatioMessageField: some View {
+        Group {
+            if let validationMessage = validationMessage {
+                Text(validationMessage)
+            } else {
+                Text(" ")  // Placeholder text to maintain layout stability
+            }
+        }
+        .frame(height: CustomSizes.TextFieldView.validationMessageFrame.size)  // Reserve space for validation message, should equal lineHeight of .caption
     }
 }

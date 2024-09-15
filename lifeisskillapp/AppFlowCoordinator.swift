@@ -11,6 +11,7 @@ import ACKategories
 
 final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
     private weak var window: UIWindow?
+    private weak var mainFC: MainFlowCoordinator?
     
     override func start(in window: UIWindow) {
         self.window = window
@@ -36,6 +37,7 @@ final class AppFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordina
         let mainFC = MainFlowCoordinator()
         mainFC.delegate = self
         self.addChild(mainFC)
+        self.mainFC = mainFC
         let mainVC = mainFC.start()
         
         window?.rootViewController = mainVC
@@ -66,6 +68,41 @@ extension AppFlowCoordinator: LoginFlowCoordinatorDelegate {
     func loginDidSucceed() {
         reload()
     }
+    
+    func promptToCompleteRegistration() {
+        let completeAction = UIAlertAction(
+            title: NSLocalizedString("alert.complete_registration_prompt.action", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            self?.navigateToProfile()
+        }
+        let okAction = Alert.okAction()
+        showAlert(
+            titleKey: "alert.complete_registration_prompt.title",
+            messageKey: "alert.complete_registration_prompt.message",
+            actions: [completeAction, okAction]
+        )
+    }
+    
+    func promptParentToActivateAccount() {
+        let completeAction = UIAlertAction(
+            title: NSLocalizedString("alert.complete_registration_prompt.action", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            self?.navigateToProfile()
+        }
+        let okAction = Alert.okAction()
+        showAlert(
+            titleKey: "alert.parent_activation.title",
+            messageKey: "alert.parent_activation.message",
+            actions: [completeAction, okAction]
+        )
+    }
+    
+    private func navigateToProfile() {
+        guard let fc = self.mainFC else { return }
+        fc.profilePressed()
+    }
 }
 
 extension AppFlowCoordinator: UserManagerFlowDelegate {
@@ -91,7 +128,7 @@ extension AppFlowCoordinator: LocationManagerFlowDelegate {
     func onLocationUnsuccess() {
         showLocationAccessAlert()
     }
-
+    
     private func showLocationAccessAlert() {
         let settingsAction = UIAlertAction(
             title: NSLocalizedString("settings.settings", comment: ""),

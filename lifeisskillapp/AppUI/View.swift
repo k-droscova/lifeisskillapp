@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+import SwiftUI
+
 public extension View {
     
     // MARK: - Fonts
     
     var headline1: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.black(size: 28),
             lineHeight: 36,
             textStyle: .title1
@@ -20,7 +22,7 @@ public extension View {
     }
     
     var headline2: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.black(size: 22),
             lineHeight: 26,
             textStyle: .title2
@@ -28,7 +30,7 @@ public extension View {
     }
     
     var headline3: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.medium(size: 20),
             lineHeight: 24,
             textStyle: .title3
@@ -36,15 +38,23 @@ public extension View {
     }
     
     var subheadline: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.regular(size: 17),
             lineHeight: 22,
             textStyle: .subheadline
         )
     }
     
+    var subheadlineBold: some View {
+        font(
+            AssetsFontFamily.Roboto.semiBold(size: 17),
+            lineHeight: 22,
+            textStyle: .subheadline
+        )
+    }
+    
     var body1Regular: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.regular(size: 16),
             lineHeight: 22,
             textStyle: .body
@@ -52,7 +62,7 @@ public extension View {
     }
     
     var body2Regular: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.regular(size: 14),
             lineHeight: 20,
             textStyle: .body
@@ -60,7 +70,7 @@ public extension View {
     }
     
     var caption: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.regular(size: 12),
             lineHeight: 16,
             textStyle: .caption1
@@ -68,7 +78,7 @@ public extension View {
     }
     
     var locationCaption: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.regular(size: 8),
             lineHeight: 12,
             textStyle: .caption1
@@ -76,7 +86,7 @@ public extension View {
     }
     
     var footnote: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.regular(size: 13),
             lineHeight: 18,
             textStyle: .footnote
@@ -84,7 +94,7 @@ public extension View {
     }
     
     var largeTitle: some View {
-        self.font(
+        font(
             AssetsFontFamily.Roboto.black(size: 34),
             lineHeight: 41,
             textStyle: .largeTitle
@@ -94,7 +104,7 @@ public extension View {
     // MARK: - Foregrounds
     
     var foregroundsPrimary: some View {
-        foregroundColor(.primary) 
+        foregroundColor(.primary)
     }
     
     var foregroundsSecondary: some View {
@@ -116,13 +126,12 @@ struct CustomFontModifier: ViewModifier {
 
 extension View {
     func font(_ font: UIFont, lineHeight: CGFloat, textStyle: UIFont.TextStyle) -> some View {
-        self.modifier(CustomFontModifier(font: font, lineHeight: lineHeight, textStyle: textStyle))
+        modifier(CustomFontModifier(font: font, lineHeight: lineHeight, textStyle: textStyle))
     }
 }
 
 extension View {
     func squareFrame(size: CGFloat) -> some View {
-        self
-            .frame(width: size, height: size, alignment: .center)
+        frame(width: size, height: size, alignment: .center)
     }
 }

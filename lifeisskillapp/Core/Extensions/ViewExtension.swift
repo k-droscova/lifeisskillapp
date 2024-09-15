@@ -12,4 +12,8 @@ extension View {
     func hosting() -> UIHostingController<some View> {
         UIHostingController(rootView: self)
     }
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }

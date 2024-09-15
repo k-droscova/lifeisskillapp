@@ -13,10 +13,16 @@ struct CategorySelectorView<ViewModel: CategorySelectorViewModeling>: View {
     var body: some View {
         DropdownMenu(
             options: viewModel.userCategories,
-            selectedOption: $viewModel.selectedCategory
+            selectedOption: $viewModel.selectedCategory,
+            labelView: { category in
+                Text(category.description)
+            }
         )
         .subheadline
         .foregroundsSecondary
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 
@@ -27,7 +33,7 @@ final class MockCategorySelectorViewModel: BaseClass, ObservableObject, Category
     @Published var selectedCategory: UserCategory?
     var username: String = "TestUser"
     var userCategories: [UserCategory] = []
-    func onLogin() {
+    func onAppear() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             print("mock fetching complete")
             self.userCategories = [

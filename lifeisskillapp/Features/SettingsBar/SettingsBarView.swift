@@ -43,7 +43,7 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
     
     private var buttons: some View {
         menuButton
-        .padding(.trailing, 4)
+            .padding(.trailing, 4)
     }
     
     private var menuButton: some View {
@@ -52,6 +52,13 @@ struct SettingsBarView<ViewModel: SettingsBarViewModeling>: View {
                 viewModel.logoutPressed()
             }) {
                 Text("settings.logout")
+            }
+            if viewModel.showProfileMenuOption {
+                Button(action: {
+                    viewModel.profilePressed()
+                }) {
+                    Text("settings.profile")
+                }
             }
             Button(action: {
                 viewModel.onboardingPressed()

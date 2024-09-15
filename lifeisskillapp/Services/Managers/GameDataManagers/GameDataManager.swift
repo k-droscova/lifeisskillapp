@@ -31,6 +31,7 @@ enum DataType: CaseIterable {
 protocol GameDataManaging {
     var delegate: GameDataManagerFlowDelegate? { get set }
     var isVirtualAvailablePublisher: AnyPublisher<Bool, Never> { get }
+    func reloadAfterRegistration() async throws
     func loadData(for dataType: DataType?) async
     func onPointScanned(_ point: ScannedPoint) async
     func processVirtual(location: UserLocation?) async
@@ -86,6 +87,10 @@ public final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     // MARK: - Public Interface
+    
+    func reloadAfterRegistration() async throws {
+        try await fetchNewUserCategories()
+    }
     
     func loadData(for dataType: DataType? = nil) async {
         guard !isOnline else {
