@@ -59,17 +59,45 @@ struct CustomProgressView: View {
 
 struct ListCard<Content: View>: View {
     let content: () -> Content
+    let backgroundColor: Color
+    let foregroundColor: Color
+    let cornerRadius: CGFloat
+    let shadowColor: Color
+    let shadowRadius: CGFloat
+    let shadowX: CGFloat
+    let shadowY: CGFloat
+    
+    // Initializer with default values
+    init(
+        backgroundColor: Color,
+        foregroundColor: Color,
+        cornerRadius: CGFloat = CustomSizes.ListCard.cornerRadius.size,
+        shadowColor: Color = CustomColors.ListCard.shadow.color,
+        shadowRadius: CGFloat = CustomSizes.ListCard.shadowRadius.size,
+        shadowX: CGFloat = CustomSizes.ListCard.shadowX.size,
+        shadowY: CGFloat = CustomSizes.ListCard.shadowY.size,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
+        self.cornerRadius = cornerRadius
+        self.shadowColor = shadowColor
+        self.shadowRadius = shadowRadius
+        self.shadowX = shadowX
+        self.shadowY = shadowY
+        self.content = content
+    }
     
     var body: some View {
         content()
-            .padding(.vertical, CustomSizes.ListCard.verticalPadding.size)
-            .background(CustomColors.ListCard.foreground.color)
-            .cornerRadius(CustomSizes.ListCard.cornerRadius.size)
+            .background(backgroundColor)
+            .foregroundStyle(foregroundColor)
+            .cornerRadius(cornerRadius)
             .shadow(
-                color: CustomColors.ListCard.shadow.color,
-                radius: CustomSizes.ListCard.shadowRadius.size,
-                x: CustomSizes.ListCard.shadowX.size,
-                y: CustomSizes.ListCard.shadowY.size
+                color: shadowColor,
+                radius: shadowRadius,
+                x: shadowX,
+                y: shadowY
             )
     }
 }

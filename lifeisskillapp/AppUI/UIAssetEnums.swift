@@ -27,6 +27,7 @@ enum SFSSymbols: String {
     case hideUp = "chevron.up"
     case warning = "exclamationmark.circle.fill"
     case send = "paperplane.fill"
+    case more = "ellipsis"
     
     var image: Image {
         SwiftUI.Image(systemName: self.rawValue)
@@ -209,14 +210,23 @@ enum CustomColors {
     
     enum ListCard {
         case foreground
+        case foregroundUser
+        case background
+        case backgroundUser
         case shadow
         
         var color: Color {
             switch self {
             case .foreground:
+                Color.black
+            case .background:
                 Color.white
             case .shadow:
                 Color.blackOverlay
+            case .foregroundUser:
+                Color.white
+            case .backgroundUser:
+                Color.colorLisRose
             }
         }
     }
