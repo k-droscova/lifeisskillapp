@@ -28,6 +28,7 @@ struct RankView<ViewModel: RankViewModeling>: View {
                     rankImageView
                     rankingsList
                         .padding(.horizontal, RankViewConstants.horizontalPadding)
+                        .padding(.bottom, RankViewConstants.scrollViewBottomPadding)
                 }
             }
         }
@@ -53,6 +54,20 @@ private extension RankView {
             .headline3
     }
     
+    private var toggleListModeButton: some View {
+        HStack {
+            Spacer()
+            Text("ranking.listMode.toggleButton")
+                .subheadlineBold
+            Spacer()
+            Toggle("ranking.listMode.toggleButton", isOn: $viewModel.isListComplete)
+                .labelsHidden() // Hide the default label for the toggle
+                .toggleStyle(SwitchToggleStyle(tint: .colorLisBlue))
+            Spacer()
+        }
+        .padding(.horizontal, 32)
+    }
+    
     private var rankImageView: some View {
         Image(CustomImages.Screens.rank.fullPath)
             .resizable()
@@ -62,57 +77,151 @@ private extension RankView {
     }
     
     private var rankingsList: some View {
-        LazyVStack(spacing: RankViewConstants.spacing) {
-            ForEach(viewModel.categoryRankings) { ranking in
+        Group {
+            if viewModel.isSeparationModeEnabled {
+                VStack(alignment: .center, spacing: RankViewConstants.separatedListToggleListVerticalSpacing) {
+                    toggleListModeButton
+                    if viewModel.isListComplete {
+                        wholeList
+                    }
+                    else {
+                        separatedList
+                    }
+                }
+            }
+            else {
+                wholeList
+            }
+        }
+    }
+    
+    private var separatedList: some View {
+        LazyVStack {
+            // Top Rankings (first 20)
+            ForEach(viewModel.topRankings) { ranking in
                 RankListItem(
                     ranking: ranking,
-                    largestRank: viewModel.categoryRankings.count
+                    largestRank: viewModel.totalRankings,
+                    isUserRank: ranking.rank == viewModel.userRank
+                )
+            }
+            
+            // Middle Rankings (if available)
+            if let middleRankings = viewModel.middleRankings {
+                LazyVStack {
+                    threeDots
+                    
+                    ForEach(middleRankings) { ranking in
+                        RankListItem(
+                            ranking: ranking,
+                            largestRank: viewModel.totalRankings,
+                            isUserRank: ranking.rank == viewModel.userRank
+                        )
+                    }
+                }
+            }
+            
+            threeDots
+            
+            // Bottom Rankings (last 10)
+            ForEach(viewModel.bottomRankings) { ranking in
+                RankListItem(
+                    ranking: ranking,
+                    largestRank: viewModel.totalRankings,
+                    isUserRank: ranking.rank == viewModel.userRank
                 )
             }
         }
+    }
+    
+    private var wholeList: some View {
+        LazyVStack {
+            ForEach(viewModel.categoryRankings) { ranking in
+                RankListItem(
+                    ranking: ranking,
+                    largestRank: viewModel.totalRankings,
+                    isUserRank: ranking.rank == viewModel.userRank
+                )
+            }
+        }
+    }
+    
+    private var threeDots: some View {
+        SFSSymbols.more.image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .squareFrame(size: 60)
+            .scaleEffect(0.5)
     }
 }
 
 struct RankListItem: View {
     let ranking: Ranking
-    let largestRank: Int // Precomputed largest rank
+    let largestRank: Int // To calculate the min width for rank number frame
+    let isUserRank: Bool // Flag to determine if this is the user's rank
+    
+    private var foregroundColor: Color {
+        isUserRank ? CustomColors.ListCard.foregroundUser.color : CustomColors.ListCard.foreground.color
+    }
+    
+    private var backgroundColor: Color {
+        isUserRank ?  CustomColors.ListCard.backgroundUser.color : CustomColors.ListCard.background.color
+    }
+    
+    init(
+        ranking: Ranking,
+        largestRank: Int,
+        isUserRank: Bool = false
+    ) {
+        self.ranking = ranking
+        self.largestRank = largestRank
+        self.isUserRank = isUserRank
+    }
     
     var body: some View {
-        ListCard {
-            HStack(alignment: .center, spacing: RankListItemConstants.spacing) {
-                // Rank number
-                Text("\(ranking.rank).")
-                    .headline2
-                    .foregroundColor(.black)
-                    .frame(width: getWidthForLargestRank(), alignment: .center)
-                    .padding(.leading, RankListItemConstants.leadingPadding)
-                
-                // User gender icon
-                Image(ranking.gender.icon)
+        ListCard(
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor
+        ) {
+            content
+                .padding(.vertical, RankListItemConstants.innerPadding)
+        }
+    }
+    
+    private var content: some View {
+        HStack(alignment: .center, spacing: RankListItemConstants.spacing) {
+            // Rank number
+            Text("\(ranking.rank).")
+                .headline2
+                .frame(width: getWidthForLargestRank(), alignment: .center)
+                .padding(.leading, RankListItemConstants.leadingPadding)
+            
+            // User gender icon
+            Image(ranking.gender.icon)
+                .resizable()
+                .squareFrame(size: RankListItemConstants.iconSize)
+                .padding(.horizontal, RankListItemConstants.iconHorizontalPadding)
+            
+            // VStack with username and points
+            VStack(alignment: .leading, spacing: RankListItemConstants.usernamePointVerticalSpacing) {
+                Text(ranking.username)
+                    .headline3
+                Text("\(ranking.points) pts")
+                    .body1Regular
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            // Trophy image
+            if let trophyImage = ranking.trophyImage {
+                Image(trophyImage)
                     .resizable()
-                    .squareFrame(size: RankListItemConstants.iconSize)
-                    //.padding(.horizontal)
-                
-                // VStack with username and points
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(ranking.username)
-                        .headline3
-                    Text("\(ranking.points) pts")
-                        .body1Regular
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                // Trophy image
-                if let trophyImage = ranking.trophyImage {
-                    Image(trophyImage)
-                        .resizable()
-                        .squareFrame(size: RankListItemConstants.trophyImageSize)
-                        .padding(.trailing, RankListItemConstants.trailingPadding)
-                }
+                    .squareFrame(size: RankListItemConstants.trophyImageSize)
+                    .padding(.trailing, RankListItemConstants.trailingPadding)
             }
         }
     }
     
+    // Helper to calculate the widest ranking number to provide sufficient frame
     private func getWidthForLargestRank() -> CGFloat {
         let largestRankText = "\(largestRank)."
         let font = AssetsFontFamily.Roboto.medium(size: 20) // Matching the headline3 font size
@@ -122,8 +231,11 @@ struct RankListItem: View {
     }
     
     private enum RankListItemConstants {
+        static let innerPadding: CGFloat = 12
         static let spacing: CGFloat = 0
+        static let usernamePointVerticalSpacing: CGFloat = 4
         static let iconSize: CGFloat = 48
+        static let iconHorizontalPadding: CGFloat = 8
         static let trophyImageSize: CGFloat = 48
         static let leadingPadding: CGFloat = 16
         static let trailingPadding: CGFloat = 16
@@ -135,34 +247,10 @@ struct RankListItem: View {
 enum RankViewConstants {
     static let spacing: CGFloat = 16
     static let horizontalPadding: CGFloat = 10
+    static let separatedListToggleListVerticalSpacing: CGFloat = 16
     static let topPadding: CGFloat = 20
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
     static let imageBottomPadding: CGFloat = 20
-}
-
-struct RankListView: View {
-    let maxRank = 10000
-    let rankings = MockData.generateRankings(count: 10000)
-    
-    var body: some View {
-        ScrollView {
-            LazyVStack(spacing: RankViewConstants.spacing) {
-                ForEach(rankings) { ranking in
-                    RankListItem(
-                        ranking: ranking,
-                        largestRank: maxRank)
-                }
-            }
-        }
-    }
-}
-
-// Preview provider for RankListView
-struct RankListView_Previews: PreviewProvider {
-    static var previews: some View {
-        RankListView()
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
+    static let scrollViewBottomPadding: CGFloat = 16
 }

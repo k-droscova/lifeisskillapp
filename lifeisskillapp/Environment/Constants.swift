@@ -36,3 +36,11 @@ enum ReferenceQRKeys {
 enum User {
     static let ageWhenConsideredNotMinor = 15 // in years
 }
+
+enum RankConstants {
+    static let minForSeparation = 20
+    static let topSection = 5
+    static let aboveUser = 2
+    static let belowUser = 2
+    static let bottomSection = 5
+}
