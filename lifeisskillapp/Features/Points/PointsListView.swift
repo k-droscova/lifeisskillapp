@@ -12,13 +12,11 @@ struct PointsListView: View {
     let mapButtonAction: (Point) -> Void
     
     var body: some View {
-        ScrollView {
-            LazyVStack() {
-                ForEach(points) { point in
-                    PointListItem(point: point, mapButtonAction: {
-                        mapButtonAction(point)
-                    })
-                }
+        LazyVStack() {
+            ForEach(points) { point in
+                PointListItem(point: point, mapButtonAction: {
+                    mapButtonAction(point)
+                })
             }
         }
     }

@@ -51,7 +51,7 @@ struct PointsView<ViewModel: PointsViewModeling>: View {
 private extension PointsView {
     
     private var listView: some View {
-        Group {
+        ScrollView {
             userInfoView
             
             PointsListView(
