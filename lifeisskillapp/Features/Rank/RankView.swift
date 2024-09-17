@@ -24,10 +24,11 @@ struct RankView<ViewModel: RankViewModeling>: View {
                 topLeftView: userNameText,
                 spacing: RankViewConstants.imageBottomPadding
             ) {
-                rankImageView
-                
-                rankingsList
-                    .padding(.horizontal, RankViewConstants.horizontalPadding)
+                ScrollView {
+                    rankImageView
+                    rankingsList
+                        .padding(.horizontal, RankViewConstants.horizontalPadding)
+                }
             }
         }
         .onAppear {
@@ -61,11 +62,9 @@ private extension RankView {
     }
     
     private var rankingsList: some View {
-        ScrollView {
-            LazyVStack(spacing: RankViewConstants.spacing) {
-                ForEach(viewModel.categoryRankings) { ranking in
-                    RankListItem(ranking: ranking)
-                }
+        LazyVStack(spacing: RankViewConstants.spacing) {
+            ForEach(viewModel.categoryRankings) { ranking in
+                RankListItem(ranking: ranking)
             }
         }
     }
