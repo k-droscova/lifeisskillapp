@@ -55,17 +55,16 @@ private extension RankView {
     }
     
     private var toggleListModeButton: some View {
-        HStack {
+        HStack(spacing: RankViewConstants.toggleButtonHorizontalSpacing) {
             Spacer()
             Text("ranking.listMode.toggleButton")
-                .subheadlineBold
-            Spacer()
+                .body1Regular
             Toggle("ranking.listMode.toggleButton", isOn: $viewModel.isListComplete)
                 .labelsHidden() // Hide the default label for the toggle
                 .toggleStyle(SwitchToggleStyle(tint: .colorLisBlue))
             Spacer()
         }
-        .padding(.horizontal, 32)
+        .padding(.horizontal, RankViewConstants.toggleButtonHorizontalPadding)
     }
     
     private var rankImageView: some View {
@@ -79,7 +78,7 @@ private extension RankView {
     private var rankingsList: some View {
         Group {
             if viewModel.isSeparationModeEnabled {
-                VStack(alignment: .center, spacing: RankViewConstants.separatedListToggleListVerticalSpacing) {
+                VStack(spacing: RankViewConstants.separatedListToggleListVerticalSpacing) {
                     toggleListModeButton
                     if viewModel.isListComplete {
                         wholeList
@@ -253,4 +252,6 @@ enum RankViewConstants {
     static let imageHeight: CGFloat = 200
     static let imageBottomPadding: CGFloat = 20
     static let scrollViewBottomPadding: CGFloat = 16
+    static let toggleButtonHorizontalPadding: CGFloat = 32
+    static let toggleButtonHorizontalSpacing: CGFloat = 16
 }

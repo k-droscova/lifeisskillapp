@@ -86,7 +86,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lldbodů"
+            "value" : "%lld bodů"
           }
         },
         "de" : {
@@ -2955,75 +2955,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Point"
-          }
-        }
-      }
-    },
-    "point_list.points_sum.more" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d bodů"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d Punkte"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d points"
-          }
-        }
-      }
-    },
-    "point_list.points_sum.one" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d bod"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d Punkt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d point"
-          }
-        }
-      }
-    },
-    "point_list.points_sum.two_four" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d body"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d Punkte"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d points"
           }
         }
       }

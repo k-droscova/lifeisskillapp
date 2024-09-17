@@ -22,20 +22,18 @@ protocol RankViewModeling: BaseClass, ObservableObject {
     var username: String { get }
     
     // Rankings
-    var categoryRankings: [Ranking] { get } // The full list of rankings
-    
-    // Separated rankings
-    var topRankings: [Ranking] { get }     // The top 20 rankings
-    var middleRankings: [Ranking]? { get } // The middle rankings (5 above user, 5 below user)
-    var bottomRankings: [Ranking] { get }  // The bottom 10 rankings
+    var categoryRankings: [Ranking] { get }
+    var topRankings: [Ranking] { get }
+    var middleRankings: [Ranking]? { get }
+    var bottomRankings: [Ranking] { get }
     
     // Separation Mode State
-    var isListComplete: Bool { get set }       // Whether the list is currently in separated mode
-    var isSeparationModeEnabled: Bool { get } // Whether separation mode is enabled (rankings > 50)
+    var isListComplete: Bool { get set }
+    var isSeparationModeEnabled: Bool { get }
     
     // User index and total rankings
-    var userRank: Int? { get }             // Rank of the logged in user in the rankings
-    var totalRankings: Int { get }          // Total number of rankings
+    var userRank: Int? { get }
+    var totalRankings: Int { get }
     
     // Actions
     func onAppear()
@@ -64,17 +62,14 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     var settingsViewModel: settingBarVM
     @Published private(set) var isLoading: Bool = false
     @Published var username: String = ""
-    @Published private(set) var categoryRankings: [Ranking] = [] // Full list of rankings for the selected category
-    @Published private(set) var topRankings: [Ranking] = []      // Top 20 rankings
-    @Published private(set) var middleRankings: [Ranking]? = nil // Middle rankings
-    @Published private(set) var bottomRankings: [Ranking] = []   // Bottom 10 rankings
-    
-    @Published var isListComplete: Bool = false     // Whether the list is currently separated
-    @Published private(set) var isSeparationModeEnabled: Bool = false // Whether the list can be separated (rankings > 50)
-    
-    @Published private(set) var userRank: Int? = nil            // Index of the user in the rankings
-    @Published private(set) var totalRankings: Int = 0           // Total number of rankings
-    
+    @Published private(set) var categoryRankings: [Ranking] = []
+    @Published private(set) var topRankings: [Ranking] = []
+    @Published private(set) var middleRankings: [Ranking]? = nil
+    @Published private(set) var bottomRankings: [Ranking] = []
+    @Published var isListComplete: Bool = false
+    @Published private(set) var isSeparationModeEnabled: Bool = false
+    @Published private(set) var userRank: Int? = nil
+    @Published private(set) var totalRankings: Int = 0
     
     // MARK: - Initialization
     
@@ -192,12 +187,12 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         topRankings = Array(rankings.prefix(RankConstants.topSection)) // Top 20
         bottomRankings = Array(rankings.suffix(RankConstants.bottomSection)) // Bottom 10
         
-        // If the user is in the top 20 or bottom 10, then middle section is nil
+        // If the user is in the top or bottom, then middle section is nil
         guard userInd >= RankConstants.topSection && userInd < rankings.count - RankConstants.bottomSection else {
             middleRankings = nil
             return
         }
-        // Calculate the middle section (5 above and 5 below the user)
+        // Calculate the middle section
         let lowerBound = max(RankConstants.topSection, userInd - RankConstants.aboveUser)
         let upperBound = min(rankings.count - (RankConstants.aboveUser + 1 + RankConstants.belowUser), userInd + RankConstants.belowUser)
         middleRankings = Array(rankings[lowerBound...upperBound])
