@@ -64,7 +64,10 @@ private extension RankView {
     private var rankingsList: some View {
         LazyVStack(spacing: RankViewConstants.spacing) {
             ForEach(viewModel.categoryRankings) { ranking in
-                RankListItem(ranking: ranking)
+                RankListItem(
+                    ranking: ranking,
+                    largestRank: viewModel.categoryRankings.count
+                )
             }
         }
     }
@@ -72,21 +75,23 @@ private extension RankView {
 
 struct RankListItem: View {
     let ranking: Ranking
+    let largestRank: Int // Precomputed largest rank
     
     var body: some View {
         ListCard {
-            HStack(spacing: RankListItemConstants.spacing) {
+            HStack(alignment: .center, spacing: RankListItemConstants.spacing) {
                 // Rank number
                 Text("\(ranking.rank).")
                     .headline2
-                    .foregroundColor(.primary)
-                    .frame(width: RankListItemConstants.rankWidth, alignment: .leading)
+                    .foregroundColor(.black)
+                    .frame(width: getWidthForLargestRank(), alignment: .center)
                     .padding(.leading, RankListItemConstants.leadingPadding)
                 
                 // User gender icon
                 Image(ranking.gender.icon)
                     .resizable()
                     .squareFrame(size: RankListItemConstants.iconSize)
+                    //.padding(.horizontal)
                 
                 // VStack with username and points
                 VStack(alignment: .leading, spacing: 4) {
@@ -108,8 +113,16 @@ struct RankListItem: View {
         }
     }
     
+    private func getWidthForLargestRank() -> CGFloat {
+        let largestRankText = "\(largestRank)."
+        let font = AssetsFontFamily.Roboto.medium(size: 20) // Matching the headline3 font size
+        let attributes = [NSAttributedString.Key.font: font]
+        let size = (largestRankText as NSString).size(withAttributes: attributes)
+        return size.width + RankListItemConstants.rankWidth
+    }
+    
     private enum RankListItemConstants {
-        static let spacing: CGFloat = 4
+        static let spacing: CGFloat = 0
         static let iconSize: CGFloat = 48
         static let trophyImageSize: CGFloat = 48
         static let leadingPadding: CGFloat = 16
@@ -119,7 +132,6 @@ struct RankListItem: View {
 }
 
 // NOTE: constants are not in extension because static properties are not allowed in generic types
-
 enum RankViewConstants {
     static let spacing: CGFloat = 16
     static let horizontalPadding: CGFloat = 10
@@ -127,4 +139,30 @@ enum RankViewConstants {
     static let bottomPadding: CGFloat = 30
     static let imageHeight: CGFloat = 200
     static let imageBottomPadding: CGFloat = 20
+}
+
+struct RankListView: View {
+    let maxRank = 10000
+    let rankings = MockData.generateRankings(count: 10000)
+    
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: RankViewConstants.spacing) {
+                ForEach(rankings) { ranking in
+                    RankListItem(
+                        ranking: ranking,
+                        largestRank: maxRank)
+                }
+            }
+        }
+    }
+}
+
+// Preview provider for RankListView
+struct RankListView_Previews: PreviewProvider {
+    static var previews: some View {
+        RankListView()
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
 }

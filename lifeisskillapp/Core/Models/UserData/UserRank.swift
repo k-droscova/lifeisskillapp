@@ -102,3 +102,27 @@ struct Ranking: Identifiable {
         }
     }
 }
+
+struct MockData {
+    static func generateRankings(count: Int) -> [Ranking] {
+        var rankings: [Ranking] = []
+        
+        // Define a base points range
+        let maxPoints = 1500
+        let minPoints = 500
+        
+        // Calculate step decrement for points based on the count
+        let pointsDecrement = (maxPoints - minPoints) / max(count - 1, 1)
+        
+        for i in 1...count {
+            let username = "User\(i)"
+            
+            // Calculate points in decreasing order
+            let points = maxPoints - (i - 1) * pointsDecrement
+            
+            let gender: UserGender = (i % 2 == 0) ? .male : .female
+            rankings.append(Ranking(id: UUID().uuidString, rank: i, username: username, points: points, gender: gender))
+        }
+        return rankings
+    }
+}
