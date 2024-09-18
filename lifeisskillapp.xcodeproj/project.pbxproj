@@ -1279,7 +1279,6 @@
 				27274F772C3320F2003453E2 /* Frameworks */,
 				27274F782C3320F2003453E2 /* Resources */,
 				27414D8D2C63A15000C19F8C /* Embed Frameworks */,
-				27B840782C9AC3F300E1DF89 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1420,27 +1419,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		27B840782C9AC3F300E1DF89 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Get the current Git commit count\nBUILD_NUMBER=$(git rev-list --count HEAD)\n\n# Log the Info.plist file path and build number\necho \"Updating Info.plist at $INFOPLIST_FILE\"\necho \"Setting build number to $BUILD_NUMBER\"\n\n# Set the build number in the Info.plist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$INFOPLIST_FILE\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		27274F762C3320F2003453E2 /* Sources */ = {
@@ -1772,7 +1750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = lifeisskillapp/lifeisskillappDebug.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Life is Skill, z.ú. (35FLSX88SA)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35FLSX88SA;
@@ -1812,7 +1790,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = lifeisskillapp/lifeisskillappRelease.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Life is Skill, z.ú. (35FLSX88SA)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35FLSX88SA;
@@ -1993,7 +1971,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = lifeisskillapp/lifeisskillappDebug.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Life is Skill, z.ú. (35FLSX88SA)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35FLSX88SA;
