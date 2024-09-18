@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleVersion</key>
-	<string>500</string>
-	<key>NFCReaderUsageDescription</key>
-	<string>We use NFC to read data from NFC tags.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera Must Be Allowed for Scanning</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location Is Required</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.otf</string>
