@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/kdroscova/Library/Caches/org.carthage.CarthageKit/DerivedData/15.4_15F31d/realm-cocoa/1bab047fcb78b2fcb66171dec6511cf9021223c3/Build/Products/Release-iphonesimulator/RealmSwift.framework/RealmSwift'
+binary-path:     '/Users/kdroscova/Library/Caches/org.carthage.CarthageKit/DerivedData/15.4_15F31d/realm-cocoa/5dc1f4ba002f90c81a271d85a276267d4de786af/Build/Products/Release-iphonesimulator/RealmSwift.framework/RealmSwift'
 relocations:
   - { offsetInCU: 0x3F, offset: 0x5CD01, size: 0x8, addend: 0x0, symName: '_$sSo13RLMObjectBaseC10RealmSwiftE8_observe8keyPaths2on_So20RLMNotificationTokenCSaySSGSg_So17OS_dispatch_queueCSgyyctFyABSg_AJSayypGSgAPs5Error_pSgtcfU_', symObjAddr: 0x274, symBinAddr: 0x31B4, symSize: 0x20 }
   - { offsetInCU: 0x236, offset: 0x5CEF8, size: 0x8, addend: 0x0, symName: '_$sIegH_s5Error_pIegHzo_TR', symObjAddr: 0x9B4, symBinAddr: 0x38F4, symSize: 0x60 }

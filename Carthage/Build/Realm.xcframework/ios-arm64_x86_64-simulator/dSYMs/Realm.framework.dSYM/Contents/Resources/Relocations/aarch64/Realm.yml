@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/kdroscova/Library/Caches/org.carthage.CarthageKit/DerivedData/15.4_15F31d/realm-cocoa/1bab047fcb78b2fcb66171dec6511cf9021223c3/Build/Products/Release-iphonesimulator/Realm.framework/Realm'
+binary-path:     '/Users/kdroscova/Library/Caches/org.carthage.CarthageKit/DerivedData/15.4_15F31d/realm-cocoa/5dc1f4ba002f90c81a271d85a276267d4de786af/Build/Products/Release-iphonesimulator/Realm.framework/Realm'
 relocations:
   - { offsetInCU: 0x27, offset: 0x2E951, size: 0x8, addend: 0x0, symName: '-[NSError(RLMSync) rlmSync_errorActionToken]', symObjAddr: 0x0, symBinAddr: 0x401464, symSize: 0xB0 }
   - { offsetInCU: 0x58, offset: 0x2E982, size: 0x8, addend: 0x0, symName: '-[NSError(RLMSync) rlmSync_errorActionToken]', symObjAddr: 0x0, symBinAddr: 0x401464, symSize: 0xB0 }
