@@ -1,0 +1,24 @@
+{
+  "originHash" : "763d18bf995a7e788c9b5fb8b3b327637c2be3d37ba9e482047b42e81e5bb904",
+  "pins" : [
+    {
+      "identity" : "ackategories",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AckeeCZ/ACKategories.git",
+      "state" : {
+        "revision" : "336fe80c2d18554308e48b8e7e64e91cd9827dcb",
+        "version" : "6.15.0"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "b36f2436c2746c32b1f93dcc06ea8b859671a767",
+        "version" : "14.12.1"
+      }
+    }
+  ],
+  "version" : 3
+}
