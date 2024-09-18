@@ -77,8 +77,6 @@
 		274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */; };
 		274001692C7A41E500AD5D7D /* BaseFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
-		27414D862C63A08B00C19F8C /* .realm-cocoa.version in Resources */ = {isa = PBXBuildFile; fileRef = 27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */; };
-		27414D892C63A08B00C19F8C /* realm-cocoa in Resources */ = {isa = PBXBuildFile; fileRef = 27414D812C63A08B00C19F8C /* realm-cocoa */; };
 		27414D8A2C63A08B00C19F8C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 27414D842C63A08B00C19F8C /* Cartfile.resolved */; };
 		27414D8E2C63A15200C19F8C /* Realm.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7E2C63A08B00C19F8C /* Realm.xcframework */; };
 		27414D8F2C63A15200C19F8C /* Realm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27414D7E2C63A08B00C19F8C /* Realm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -402,7 +400,7 @@
 		27D5692C2C6B728A003EF5D9 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		27E32DE72C493BF900E69C58 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		27E32DE92C49504100E69C58 /* GenericPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManager.swift; sourceTree = "<group>"; };
-		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27E32DF02C4955F200E69C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = lifeisskillapp/Info.plist; sourceTree = SOURCE_ROOT; };
 		27E6D6DB2C3EBB2B009FC809 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		27E9D5FE2C63D9480098CB96 /* RealmCheckSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCheckSum.swift; sourceTree = "<group>"; };
 		27E9D6002C63DFEB0098CB96 /* RealmLoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmLoginDetails.swift; sourceTree = "<group>"; };
@@ -1279,6 +1277,7 @@
 				27274F772C3320F2003453E2 /* Frameworks */,
 				27274F782C3320F2003453E2 /* Resources */,
 				27414D8D2C63A15000C19F8C /* Embed Frameworks */,
+				27B840782C9AC3F300E1DF89 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1384,8 +1383,6 @@
 				27414D7A2C639ED800C19F8C /* Cartfile in Resources */,
 				27414D8A2C63A08B00C19F8C /* Cartfile.resolved in Resources */,
 				2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */,
-				27414D892C63A08B00C19F8C /* realm-cocoa in Resources */,
-				27414D862C63A08B00C19F8C /* .realm-cocoa.version in Resources */,
 				2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */,
 				275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */,
 				2717AF112C42ADB800A23F06 /* Montserrat-ExtraBold.otf in Resources */,
@@ -1421,6 +1418,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		27B840782C9AC3F300E1DF89 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Get the current Git commit count\nBUILD_NUMBER=$(git rev-list --count HEAD)\n\n# Log the Info.plist file path and build number\necho \"Updating Info.plist at $INFOPLIST_FILE\"\necho \"Setting build number to $BUILD_NUMBER\"\n\n# Set the build number in the Info.plist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$INFOPLIST_FILE\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		27274F762C3320F2003453E2 /* Sources */ = {
@@ -1754,6 +1772,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 84HX6FUFDK;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1787,6 +1806,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 84HX6FUFDK;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
