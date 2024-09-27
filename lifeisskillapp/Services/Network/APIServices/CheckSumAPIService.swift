@@ -35,7 +35,7 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userPoints() async throws -> APIResponse<CheckSumUserPointsData> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.userpoints,
             method: .PATCH,
             errorObject: APIResponseError.self,
@@ -44,7 +44,7 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userRank() async throws -> APIResponse<CheckSumRankData> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.rank,
             method: .PATCH,
             errorObject: APIResponseError.self,
@@ -53,7 +53,7 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userEvents() async throws -> APIResponse<CheckSumEventsData> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.events,
             method: .PATCH,
             errorObject: APIResponseError.self,
@@ -62,7 +62,7 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func userMessages() async throws -> APIResponse<CheckSumMessagesData> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.messages,
             method: .PATCH,
             errorObject: APIResponseError.self,
@@ -71,7 +71,7 @@ public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     }
     
     func genericPoints() async throws -> APIResponse<CheckSumPointsData> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.points,
             method: .PATCH,
             errorObject: APIResponseError.self,
