@@ -87,7 +87,7 @@ enum Endpoint: Endpointing {
                 .registration(.checkEmailAvailability),
                 .registration(.registerUser):
             return false
-        case .usercategory, 
+        case .usercategory,
                 .userpoints,
                 .rank,
                 .events,
@@ -105,9 +105,8 @@ enum Endpoint: Endpointing {
         var finalHeaders = typeHeaders
         
         // Conditionally add the User-Token header if required
-        if isUserTokenRequired, let userToken = userToken {
-            let userHeader = APIHeader.apiTokenHeader(token: userToken)
-            finalHeaders[userHeader.key] = userHeader.val
+        if isUserTokenRequired, let token = userToken {
+            finalHeaders.merge(APIHeader.apiTokenHeader(token: token)) { (_, new) in new }
         }
         
         return finalHeaders

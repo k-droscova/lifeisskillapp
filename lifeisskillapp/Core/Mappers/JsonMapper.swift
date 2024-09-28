@@ -19,9 +19,6 @@ public class JsonMapper {
                 context: LogContext.system,
                 message: "Cannot encode object \(T.self) to JSON",
                 code: .general(.jsonEncoding),
-                meta: [
-                    "rawObject": "\(object)"
-                ],
                 logger: appDependencies.logger
             )
         }
@@ -31,9 +28,6 @@ public class JsonMapper {
                 context: LogContext.system,
                 message: "Cannot transform encoded \(T.self) to JSON String",
                 code: .general(.jsonEncoding),
-                meta: [
-                    "rawObject": "\(object)"
-                ],
                 logger: appDependencies.logger
             )
         }

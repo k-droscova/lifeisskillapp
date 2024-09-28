@@ -20,7 +20,10 @@ extension HTTPURLResponse {
 }
 
 extension HTTPURLResponse {
-    var status: HTTPStatusCode? {
-        HTTPStatusCode(rawValue: statusCode)
+    var responseType: ResponseType {
+        ResponseType(from: statusCode)
+    }
+    var isErrorResponse: Bool {
+        responseType == .clientError || responseType == .serverError
     }
 }

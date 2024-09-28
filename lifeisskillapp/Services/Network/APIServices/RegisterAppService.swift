@@ -27,7 +27,7 @@ public final class RegisterAppAPIService: BaseClass, RegisterAppAPIServicing {
     }
     
     func registerApp() async throws -> APIResponse<RegisterAppAPIResponse> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.appId,
             errorObject: APIResponseError.self
         )
