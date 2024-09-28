@@ -126,4 +126,56 @@ final class LoginAPIServiceTests: XCTestCase {
             XCTFail("Unexpected error thrown: \(error)")
         }
     }
+    
+    // Test that signature() calls performAuthorizedRequest with the correct parameters
+    func testSignatureCallsPerformRequestWithCorrectParameters() async throws {
+        do {
+            // Arrange
+            let userToken = "mockUserToken"
+            let mockAPIResponse = SignatureAPIResponse.mock()
+            let mockResponse = APIResponse(data: mockAPIResponse)
+            
+            networkMock.responseToReturn = mockResponse
+            
+            // Act
+            let _: APIResponse<SignatureAPIResponse> = try await service.signature(userToken: userToken)
+            
+            // Assert: Verify the network request method and URL
+            XCTAssertEqual(networkMock.capturedMethod, .GET, "HTTP method should be GET")
+            let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/signature")!
+            XCTAssertEqual(networkMock.capturedURL, expectedURL, "The URL should match the signature endpoint")
+            
+            // Assert the headers
+            XCTAssertEqual(networkMock.capturedHeaders?["Authorization"], APIHeader.authorizationHeader["Authorization"])
+            XCTAssertEqual(networkMock.capturedHeaders?["Api-Key"], APIHeader.apiKeyHeader["Api-Key"])
+            XCTAssertEqual(networkMock.capturedHeaders?["User-Token"], userToken, "The User-Token header should match the provided token")
+            
+            // Assert the body is nil
+            XCTAssertNil(networkMock.capturedBody, "The body should be nil for a GET request")
+            
+        } catch {
+            XCTFail("Unexpected error thrown: \(error)")
+        }
+    }
+    
+    // Test that signature() returns the correct response
+    func testSignatureReturnsCorrectResponse() async throws {
+        do {
+            // Arrange
+            let userToken = "mockUserToken"
+            let mockAPIResponse = SignatureAPIResponse.mock(signature: "mockSignature")
+            let mockResponse = APIResponse(data: mockAPIResponse)
+            
+            networkMock.responseToReturn = mockResponse
+            
+            // Act
+            let response: APIResponse<SignatureAPIResponse> = try await service.signature(userToken: userToken)
+            
+            // Assert the response
+            XCTAssertEqual(response.data.signature, "mockSignature", "The signature should match the mock response")
+            
+        } catch {
+            XCTFail("Unexpected error thrown: \(error)")
+        }
+    }
 }

@@ -123,7 +123,6 @@
 		2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C22CA8800D00056594 /* CredentialsMocks.swift */; };
 		2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */; };
 		2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */; };
-		2755A9CA2CA8877300056594 /* CheckSumDataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C92CA8877000056594 /* CheckSumDataMocks.swift */; };
 		2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
 		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
@@ -367,7 +366,6 @@
 		2755A9C22CA8800D00056594 /* CredentialsMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsMocks.swift; sourceTree = "<group>"; };
 		2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStructMocks.swift; sourceTree = "<group>"; };
 		2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInUserMock.swift; sourceTree = "<group>"; };
-		2755A9C92CA8877000056594 /* CheckSumDataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumDataMocks.swift; sourceTree = "<group>"; };
 		2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGameDataMocks.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -1111,7 +1109,6 @@
 			isa = PBXGroup;
 			children = (
 				2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */,
-				2755A9C92CA8877000056594 /* CheckSumDataMocks.swift */,
 				2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */,
 			);
 			path = UserData;
@@ -1720,7 +1717,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */,
-				2755A9CA2CA8877300056594 /* CheckSumDataMocks.swift in Sources */,
 				2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */,
 				2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */,
 				2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */,

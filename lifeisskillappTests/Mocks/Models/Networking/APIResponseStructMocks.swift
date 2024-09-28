@@ -104,7 +104,7 @@ public extension UserPointData {
             .mock(id: "point1", pointName: "Sport Point", pointType: .sport, codeSource: .qr),
             .mock(id: "point2", pointName: "Environment Point", pointType: .environment, codeSource: .nfc),
             .mock(id: "point3", pointName: "Culture Point", pointType: .culture, codeSource: .virtual),
-            .mock(id: "point4", pointName: "Tourist Point", pointType: .tourist, codeSource: .text), 
+            .mock(id: "point4", pointName: "Tourist Point", pointType: .tourist, codeSource: .text),
             .mock(id: "point5", pointName: "Energy Sponsor Point", pointType: .energySponsor, codeSource: .qr),
             .mock(id: "point6", pointName: "Virtual Point", pointType: .virtual, codeSource: .virtual),
             .mock(id: "point7", pointName: "Gastro Point", pointType: .gastro, codeSource: .nfc)
@@ -197,6 +197,86 @@ public extension UserRankData {
         return UserRankData(
             checkSum: checkSum,
             data: data
+        )
+    }
+}
+
+public extension SignatureAPIResponse {
+    static func mock(
+        signature: String = "mockSignature"
+    ) -> SignatureAPIResponse {
+        return SignatureAPIResponse(signature: signature)
+    }
+}
+
+public extension CompleteRegistrationAPIResponse {
+    static func mock(
+        completionStatus: Bool = true,
+        needParentActivation: Bool = false
+    ) -> CompleteRegistrationAPIResponse {
+        return CompleteRegistrationAPIResponse(
+            completionStatus: completionStatus,
+            needParentActivation: needParentActivation
+        )
+    }
+}
+
+public extension ParentEmailActivationReponse {
+    static func mock(
+        status: Bool = true
+    ) -> ParentEmailActivationReponse {
+        return ParentEmailActivationReponse(status: status)
+    }
+}
+
+public extension CheckSumUserPointsData {
+    static func mock(
+        pointsProtect: String = "mockPointsProtect"
+    ) -> CheckSumUserPointsData {
+        return CheckSumUserPointsData(
+            pointsProtect: pointsProtect
+        )
+    }
+}
+
+public extension CheckSumRankData {
+    static func mock(
+        rankProtect: String = "mockRankProtect"
+    ) -> CheckSumRankData {
+        return CheckSumRankData(
+            rankProtect: rankProtect
+        )
+    }
+}
+
+public extension CheckSumMessagesData {
+    static func mock(
+        msgProtect: String = "mockMessageProtect"
+    ) -> CheckSumMessagesData {
+        return CheckSumMessagesData(
+            msgProtect: msgProtect
+        )
+    }
+}
+
+public extension CheckSumEventsData {
+    static func mock(
+        eventsProtect: String = "mockEventsProtect"
+    ) -> CheckSumEventsData {
+        return CheckSumEventsData(
+            eventsProtect: eventsProtect
+        )
+    }
+}
+
+public extension CheckSumPointsData {
+    static func mock(
+        pointsProtect: String = "mockPointsProtect",
+        clusterProtect: String? = "mockClusterProtect"
+    ) -> CheckSumPointsData {
+        return CheckSumPointsData(
+            pointsProtect: pointsProtect,
+            clusterProtect: clusterProtect
         )
     }
 }
