@@ -7,8 +7,8 @@
 import Foundation
 import CoreLocation
 
-struct UserPoint: UserData {
-    let id: String
+public struct UserPoint: UserData {
+    public let id: String
     let recordKey: String
     let pointTime: Date
     let pointName: String
@@ -51,10 +51,44 @@ struct UserPoint: UserData {
             timestamp: pointTime
         )
     }
+    
+    public init(
+        id: String,
+        recordKey: String,
+        pointTime: Date,
+        pointName: String,
+        pointValue: Int,
+        pointType: PointType,
+        pointSpec: Int,
+        pointLat: Double,
+        pointLng: Double,
+        pointAlt: Double,
+        accuracy: Double,
+        codeSource: CodeSource,
+        pointCategory: [String],
+        duration: TimeInterval? = nil,
+        doesPointCount: Bool
+    ) {
+        self.id = id
+        self.recordKey = recordKey
+        self.pointTime = pointTime
+        self.pointName = pointName
+        self.pointValue = pointValue
+        self.pointType = pointType
+        self.pointSpec = pointSpec
+        self.pointLat = pointLat
+        self.pointLng = pointLng
+        self.pointAlt = pointAlt
+        self.accuracy = accuracy
+        self.codeSource = codeSource
+        self.pointCategory = pointCategory
+        self.duration = duration
+        self.doesPointCount = doesPointCount
+    }
 }
 
 extension UserPoint {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         recordKey = try container.decode(String.self, forKey: .recordKey)
         id = try container.decode(String.self, forKey: .id)
@@ -86,7 +120,7 @@ extension UserPoint {
         }
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(recordKey, forKey: .recordKey)
         try container.encode(id, forKey: .id) // Correctly map id to pointId for encoding
@@ -107,8 +141,8 @@ extension UserPoint {
     }
 }
 
-struct Point: Identifiable {
-    let id: String
+public struct Point: Identifiable {
+    public let id: String
     let pointId: String
     let name: String
     let value: Int
@@ -117,7 +151,7 @@ struct Point: Identifiable {
     let location: UserLocation
     let doesPointCount: Bool
 
-    internal init(from userPoint: UserPoint) {
+    public init(from userPoint: UserPoint) {
         /*
          Note that id is record key in this case, since one specific point can be scanned multiple times (across multiple days).
          Record key is the "id" of the scanned point instance, hence is unique for the user point.

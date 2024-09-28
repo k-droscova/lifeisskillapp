@@ -116,6 +116,15 @@
 		2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B02CA831E000056594 /* URLSessionWrapperMock.swift */; };
 		2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B22CA833F600056594 /* NetworkTests.swift */; };
 		2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B42CA83C4B00056594 /* EndpointMock.swift */; };
+		2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B62CA87A2000056594 /* NetworkingMock.swift */; };
+		2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */; };
+		2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */; };
+		2755A9C12CA87E1400056594 /* UserLocationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C02CA87E1000056594 /* UserLocationMock.swift */; };
+		2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C22CA8800D00056594 /* CredentialsMocks.swift */; };
+		2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */; };
+		2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */; };
+		2755A9CA2CA8877300056594 /* CheckSumDataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C92CA8877000056594 /* CheckSumDataMocks.swift */; };
+		2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
 		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
@@ -351,6 +360,15 @@
 		2755A9B02CA831E000056594 /* URLSessionWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionWrapperMock.swift; sourceTree = "<group>"; };
 		2755A9B22CA833F600056594 /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		2755A9B42CA83C4B00056594 /* EndpointMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointMock.swift; sourceTree = "<group>"; };
+		2755A9B62CA87A2000056594 /* NetworkingMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingMock.swift; sourceTree = "<group>"; };
+		2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAppServiceTests.swift; sourceTree = "<group>"; };
+		2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIServiceTests.swift; sourceTree = "<group>"; };
+		2755A9C02CA87E1000056594 /* UserLocationMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationMock.swift; sourceTree = "<group>"; };
+		2755A9C22CA8800D00056594 /* CredentialsMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsMocks.swift; sourceTree = "<group>"; };
+		2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStructMocks.swift; sourceTree = "<group>"; };
+		2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInUserMock.swift; sourceTree = "<group>"; };
+		2755A9C92CA8877000056594 /* CheckSumDataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumDataMocks.swift; sourceTree = "<group>"; };
+		2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGameDataMocks.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
@@ -1008,6 +1026,7 @@
 		2755A99C2CA808B800056594 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				2755A9B82CA87AB100056594 /* Models */,
 				2755A99D2CA808EE00056594 /* Services */,
 			);
 			path = Mocks;
@@ -1033,6 +1052,7 @@
 		2755A9A12CA809FB00056594 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2755A9BB2CA87B8F00056594 /* APIServiceTests */,
 				2755A9B22CA833F600056594 /* NetworkTests.swift */,
 				2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */,
 			);
@@ -1042,6 +1062,7 @@
 		2755A9A42CA80D5D00056594 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				2755A9B62CA87A2000056594 /* NetworkingMock.swift */,
 				2755A9B42CA83C4B00056594 /* EndpointMock.swift */,
 				2755A9B02CA831E000056594 /* URLSessionWrapperMock.swift */,
 				2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */,
@@ -1056,6 +1077,44 @@
 				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
 			);
 			path = NetworkMonitoring;
+			sourceTree = "<group>";
+		};
+		2755A9B82CA87AB100056594 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9C62CA8833600056594 /* UserData */,
+				2755A9C22CA8800D00056594 /* CredentialsMocks.swift */,
+				2755A9C02CA87E1000056594 /* UserLocationMock.swift */,
+				2755A9B92CA87AB800056594 /* Networking */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2755A9B92CA87AB800056594 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2755A9BB2CA87B8F00056594 /* APIServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */,
+				2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */,
+			);
+			path = APIServiceTests;
+			sourceTree = "<group>";
+		};
+		2755A9C62CA8833600056594 /* UserData */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */,
+				2755A9C92CA8877000056594 /* CheckSumDataMocks.swift */,
+				2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */,
+			);
+			path = UserData;
 			sourceTree = "<group>";
 		};
 		275EA0912C81E8E200F07BB8 /* GeneralNetworking */ = {
@@ -1661,12 +1720,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */,
+				2755A9CA2CA8877300056594 /* CheckSumDataMocks.swift in Sources */,
+				2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */,
+				2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */,
+				2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */,
+				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
 				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
 				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
+				2755A9C12CA87E1400056594 /* UserLocationMock.swift in Sources */,
+				2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */,
 				2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */,
 				2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */,
+				2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */,
 				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
 				2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */,
+				2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

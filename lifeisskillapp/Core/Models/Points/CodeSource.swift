@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CodeSource: String, Codable {
+public enum CodeSource: String, Codable {
     /// Loaded from tag with QR code
     case qr = "QR"
 

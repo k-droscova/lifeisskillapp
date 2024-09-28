@@ -7,14 +7,14 @@
 import Foundation
 import CoreLocation
 
-struct GenericPoint: UserData {
+public struct GenericPoint: UserData {
     let pointLat: Double
     let pointLng: Double
     let pointAlt: Double
     let pointName: String
     let pointValue: Int
     let pointType: PointType
-    let id: String
+    public let id: String
     let cluster: String
     let pointSpec: Int
     let sponsorId: String
@@ -48,7 +48,37 @@ struct GenericPoint: UserData {
         )
     }
     
-    init(from decoder: Decoder) throws {
+    public init(
+        pointLat: Double,
+        pointLng: Double,
+        pointAlt: Double,
+        pointName: String,
+        pointValue: Int,
+        pointType: PointType,
+        id: String,
+        cluster: String,
+        pointSpec: Int,
+        sponsorId: String,
+        hasDetail: Bool,
+        active: Bool,
+        param: PointParam? = nil
+    ) {
+        self.pointLat = pointLat
+        self.pointLng = pointLng
+        self.pointAlt = pointAlt
+        self.pointName = pointName
+        self.pointValue = pointValue
+        self.pointType = pointType
+        self.id = id
+        self.cluster = cluster
+        self.pointSpec = pointSpec
+        self.sponsorId = sponsorId
+        self.hasDetail = hasDetail
+        self.active = active
+        self.param = param
+    }
+    
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         pointLat = try container.decode(Double.self, forKey: .pointLat)
@@ -106,7 +136,7 @@ struct GenericPoint: UserData {
     }
 }
 
-struct PointParam: Codable {
+public struct PointParam: Codable {
     let timer: TimerParam?
     let status: StatusParam?
     
@@ -114,22 +144,40 @@ struct PointParam: Codable {
         case timer = "TIMER"
         case status = "STATUS"
     }
+    
+    public init(timer: TimerParam?, status: StatusParam?) {
+        self.timer = timer
+        self.status = status
+    }
 }
 
-struct TimerParam: Codable {
+public struct TimerParam: Codable {
     let base: Int
     let done: Int
     let maxTime: Int
     let minTime: Int
     let distance: Int
+    
+    public init(base: Int, done: Int, maxTime: Int, minTime: Int, distance: Int) {
+        self.base = base
+        self.done = done
+        self.maxTime = maxTime
+        self.minTime = minTime
+        self.distance = distance
+    }
 }
 
-struct StatusParam: Codable {
+public struct StatusParam: Codable {
     let color: String
     let isValid: Bool
     
     enum CodingKeys: String, CodingKey {
         case color = "COLOR"
         case isValid = "IS_VALID"
+    }
+    
+    public init(color: String, isValid: Bool) {
+        self.color = color
+        self.isValid = isValid
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-enum PointType: Int, Codable {
+public enum PointType: Int, Codable {
     case sport = 1
     case environment = 3
     case culture = 2

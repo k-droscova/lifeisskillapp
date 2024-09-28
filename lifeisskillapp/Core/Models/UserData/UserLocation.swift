@@ -7,12 +7,27 @@
 
 import CoreLocation
 
-struct UserLocation: Codable {
+public struct UserLocation: Codable {
     let latitude: Double
     let longitude: Double
     let altitude: Double
     let accuracy: Double
     let timestamp: Date
+    
+    // for mocks in testing
+    public init(
+        latitude: Double,
+        longitude: Double,
+        altitude: Double,
+        accuracy: Double,
+        timestamp: Date
+    ) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.altitude = altitude
+        self.accuracy = accuracy
+        self.timestamp = timestamp
+    }
     
     func toCLLocation() -> CLLocation {
         return CLLocation(
