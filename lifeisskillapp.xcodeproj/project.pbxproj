@@ -109,6 +109,10 @@
 		275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DC2C5D6AED00F5578F /* roboto_black.ttf */; };
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
+		2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */; };
+		2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */; };
+		2755A9AD2CA8289D00056594 /* NWPathMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9AC2CA8289900056594 /* NWPathMonitor.swift */; };
+		2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
 		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
@@ -337,6 +341,10 @@
 		275472DC2C5D6AED00F5578F /* roboto_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_black.ttf; sourceTree = "<group>"; };
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
+		2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingServiceMock.swift; sourceTree = "<group>"; };
+		2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorTests.swift; sourceTree = "<group>"; };
+		2755A9AC2CA8289900056594 /* NWPathMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWPathMonitor.swift; sourceTree = "<group>"; };
+		2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWPathMonitorMock.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
@@ -640,6 +648,8 @@
 		27274F932C3320F3003453E2 /* lifeisskillappTests */ = {
 			isa = PBXGroup;
 			children = (
+				2755A9A02CA809F100056594 /* Services */,
+				2755A99C2CA808B800056594 /* Mocks */,
 				27274F942C3320F3003453E2 /* lifeisskillappTests.swift */,
 			);
 			path = lifeisskillappTests;
@@ -778,10 +788,10 @@
 		27274FB82C3322B7003453E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2755A9A72CA81A4300056594 /* NetworkMonitoring */,
 				275EA0912C81E8E200F07BB8 /* GeneralNetworking */,
 				2754571B2C33303B00F3B55A /* NetworkStructs */,
 				27C619842C3A9D760067498F /* APIServices */,
-				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -987,6 +997,56 @@
 				275472CF2C5D110400F5578F /* CategorySelectorView.swift */,
 			);
 			path = CategorySelector;
+			sourceTree = "<group>";
+		};
+		2755A99C2CA808B800056594 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				2755A99D2CA808EE00056594 /* Services */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		2755A99D2CA808EE00056594 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9A42CA80D5D00056594 /* Networking */,
+				2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2755A9A02CA809F100056594 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9A12CA809FB00056594 /* Network */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2755A9A12CA809FB00056594 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		2755A9A42CA80D5D00056594 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2755A9A72CA81A4300056594 /* NetworkMonitoring */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9AC2CA8289900056594 /* NWPathMonitor.swift */,
+				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
+			);
+			path = NetworkMonitoring;
 			sourceTree = "<group>";
 		};
 		275EA0912C81E8E200F07BB8 /* GeneralNetworking */ = {
@@ -1455,6 +1515,7 @@
 				27D569282C6B7074003EF5D9 /* KeychainStorage.swift in Sources */,
 				27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */,
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
+				2755A9AD2CA8289D00056594 /* NWPathMonitor.swift in Sources */,
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
@@ -1591,6 +1652,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
+				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
+				2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */,
+				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
