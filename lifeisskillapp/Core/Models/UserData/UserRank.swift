@@ -12,6 +12,12 @@ struct UserRank: UserData {
     let catId: String          // Category ID
     let catUserRank: Int       // User's rank in this category
     let listUserRank: [RankedUser] // List of users ranked in this category
+    
+    init(catId: String, catUserRank: Int, listUserRank: [RankedUser]) {
+        self.catId = catId
+        self.catUserRank = catUserRank
+        self.listUserRank = listUserRank
+    }
 }
 
 /// Model for user data from the Rank endpoint
@@ -48,6 +54,20 @@ struct RankedUser: UserProtocol, Codable {
     
     /// Secondary mobile phone number
     let mobilr: String
+    
+    init(userId: String, email: String, nick: String, sex: UserGender, order: String, points: String, lastTime: String, psc: String, emailr: String, mobil: String, mobilr: String) {
+        self.userId = userId
+        self.email = email
+        self.nick = nick
+        self.sex = sex
+        self.order = order
+        self.points = points
+        self.lastTime = lastTime
+        self.psc = psc
+        self.emailr = emailr
+        self.mobil = mobil
+        self.mobilr = mobilr
+    }
 }
 
 struct Ranking: Identifiable {
@@ -81,8 +101,7 @@ struct Ranking: Identifiable {
         }
     }
     
-    // Internal initializer
-    internal init(id: String, rank: Int, username: String, points: Int, gender: UserGender, trophyImage: String? = nil) {
+    init(id: String, rank: Int, username: String, points: Int, gender: UserGender, trophyImage: String? = nil) {
         self.id = id
         self.rank = rank
         self.username = username

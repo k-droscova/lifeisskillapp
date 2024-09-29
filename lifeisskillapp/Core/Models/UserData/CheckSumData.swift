@@ -31,7 +31,7 @@ struct CheckSumData: Codable, Equatable {
         self.points = realmCheckSum.points
     }
     
-    internal init(userPoints: String, rank: String, messages: String, events: String, points: String) {
+    init(userPoints: String, rank: String, messages: String, events: String, points: String) {
         self.userPoints = userPoints
         self.events = events
         self.messages = messages

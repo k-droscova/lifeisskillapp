@@ -18,7 +18,7 @@ public class RealmUserCategoryRepository: BaseClass, RealmUserCategoryRepositori
     typealias Entity = RealmUserCategoryData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    public let logger: LoggerServicing
+    let logger: LoggerServicing
     var realmStorage: RealmStoraging
     
     init(dependencies: Dependencies) {

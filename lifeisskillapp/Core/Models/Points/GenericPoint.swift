@@ -48,6 +48,36 @@ struct GenericPoint: UserData {
         )
     }
     
+    init(
+        pointLat: Double,
+        pointLng: Double,
+        pointAlt: Double,
+        pointName: String,
+        pointValue: Int,
+        pointType: PointType,
+        id: String,
+        cluster: String,
+        pointSpec: Int,
+        sponsorId: String,
+        hasDetail: Bool,
+        active: Bool,
+        param: PointParam? = nil
+    ) {
+        self.pointLat = pointLat
+        self.pointLng = pointLng
+        self.pointAlt = pointAlt
+        self.pointName = pointName
+        self.pointValue = pointValue
+        self.pointType = pointType
+        self.id = id
+        self.cluster = cluster
+        self.pointSpec = pointSpec
+        self.sponsorId = sponsorId
+        self.hasDetail = hasDetail
+        self.active = active
+        self.param = param
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -114,6 +144,11 @@ struct PointParam: Codable {
         case timer = "TIMER"
         case status = "STATUS"
     }
+    
+    init(timer: TimerParam?, status: StatusParam?) {
+        self.timer = timer
+        self.status = status
+    }
 }
 
 struct TimerParam: Codable {
@@ -122,6 +157,14 @@ struct TimerParam: Codable {
     let maxTime: Int
     let minTime: Int
     let distance: Int
+    
+    init(base: Int, done: Int, maxTime: Int, minTime: Int, distance: Int) {
+        self.base = base
+        self.done = done
+        self.maxTime = maxTime
+        self.minTime = minTime
+        self.distance = distance
+    }
 }
 
 struct StatusParam: Codable {
@@ -131,5 +174,10 @@ struct StatusParam: Codable {
     enum CodingKeys: String, CodingKey {
         case color = "COLOR"
         case isValid = "IS_VALID"
+    }
+    
+    init(color: String, isValid: Bool) {
+        self.color = color
+        self.isValid = isValid
     }
 }

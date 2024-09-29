@@ -16,7 +16,7 @@ protocol ForgotPasswordAPIServicing {
     func setNewPassword(credentials: ForgotPasswordCredentials) async throws -> APIResponse<ForgotPasswordConfirmation>
 }
 
-public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServicing {
+final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var network: Networking

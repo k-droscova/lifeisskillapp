@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LogSource: Codable {
+struct LogSource: Codable {
     var fileID: String
     var fun: String
     var line: Int

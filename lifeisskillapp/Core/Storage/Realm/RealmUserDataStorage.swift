@@ -22,7 +22,7 @@ protocol PersistentUserDataStoraging: UserDataStoraging {
     func loadFromRepository(for data: PersistentDataType) async throws
 }
 
-public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
+final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     typealias Dependencies = HasLoggers & HasRealmRepositories
     
     // MARK: - Private Properties

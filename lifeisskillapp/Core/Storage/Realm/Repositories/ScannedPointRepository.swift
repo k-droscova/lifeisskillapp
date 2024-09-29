@@ -20,7 +20,7 @@ public class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositori
     typealias Entity = RealmScannedPoint
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    public let logger: LoggerServicing
+    let logger: LoggerServicing
     var realmStorage: RealmStoraging
     
     init(dependencies: Dependencies) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LogContext: String, Codable {
+enum LogContext: String, Codable {
     case network
     case api
     case ui

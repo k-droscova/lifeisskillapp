@@ -7,15 +7,15 @@
 
 import Foundation
 
-public protocol HasLoggerServicing {
+protocol HasLoggerServicing {
     var logger: LoggerServicing { get }
 }
 
-public protocol LoggerServicing {
+protocol LoggerServicing {
     func _log(message: String?, event: Loggable?)
 }
 
-public extension LoggerServicing {
+extension LoggerServicing {
     func log(message: String? = nil, event: Loggable? = nil, file: String = #file, function: String = #function, line: Int = #line) {
         let filename = (file as NSString).lastPathComponent
         let prefixedMessage = "[\(filename):\(function):\(line)] \(message ?? "")"

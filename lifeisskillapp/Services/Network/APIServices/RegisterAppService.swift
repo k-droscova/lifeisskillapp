@@ -15,7 +15,7 @@ protocol RegisterAppAPIServicing {
     func registerApp() async throws -> APIResponse<RegisterAppAPIResponse>
 }
 
-public final class RegisterAppAPIService: BaseClass, RegisterAppAPIServicing {
+final class RegisterAppAPIService: BaseClass, RegisterAppAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var network: Networking

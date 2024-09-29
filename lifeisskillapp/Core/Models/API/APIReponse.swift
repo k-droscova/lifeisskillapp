@@ -8,10 +8,13 @@
 import Foundation
 
 // Define a protocol for common data properties
-protocol DataProtocol: Codable {}
+public protocol DataProtocol: Codable {}
 
 // Define the main response structure
 struct APIResponse<T: DataProtocol>: Decodable {
     let data: T
+    
+    init(data: T) {
+        self.data = data
+    }
 }
-

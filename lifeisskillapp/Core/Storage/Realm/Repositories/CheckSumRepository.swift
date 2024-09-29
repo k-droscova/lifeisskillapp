@@ -20,7 +20,7 @@ public class RealmCheckSumRepository: BaseClass, RealmCheckSumRepositoring, HasR
     typealias Entity = RealmCheckSumData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    public let logger: LoggerServicing
+    let logger: LoggerServicing
     var realmStorage: RealmStoraging
     
     init(dependencies: Dependencies) {
