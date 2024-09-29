@@ -18,7 +18,7 @@ final class LoginAPIServiceTests: XCTestCase {
     
     var logger: LoggerServicing!
     var networkMock: NetworkingMock!
-    var service: LoginAPIService!
+    var service: LoginAPIServicing!
     
     // Setup runs before each test
     override func setUpWithError() throws {

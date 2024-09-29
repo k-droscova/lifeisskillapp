@@ -19,7 +19,7 @@ final class CheckSumAPIServiceTests: XCTestCase {
     var networkMock: NetworkingMock!
     var loggerMock: LoggerServicing!
     var storageMock: PersistentUserDataStorageMock!
-    var service: CheckSumAPIService!
+    var service: CheckSumAPIServicing!
     
     override func setUpWithError() throws {
         networkMock = NetworkingMock()

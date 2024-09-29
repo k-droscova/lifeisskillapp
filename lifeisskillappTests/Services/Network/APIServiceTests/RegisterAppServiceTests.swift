@@ -18,7 +18,7 @@ final class RegisterAppAPIServiceTests: XCTestCase {
 
     var logger: LoggerServicing!
     var networkMock: NetworkingMock!
-    var service: RegisterAppAPIService!
+    var service: RegisterAppAPIServicing!
 
     // Setup runs before each test
     override func setUpWithError() throws {

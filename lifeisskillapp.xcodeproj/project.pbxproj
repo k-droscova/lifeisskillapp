@@ -91,6 +91,7 @@
 		274B843C2CA978C200B94E14 /* CheckSumAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */; };
 		274B843E2CA97E8A00B94E14 /* UserDataAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B843D2CA97E7C00B94E14 /* UserDataAPITests.swift */; };
 		274B84412CA97F9600B94E14 /* ScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84402CA97F9300B94E14 /* ScannedPoint.swift */; };
+		274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84422CA9834B00B94E14 /* ForgotPasswordAPITests.swift */; };
 		2750A5BA2C9034410086815D /* UserActivationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5B92C9034410086815D /* UserActivationStatus.swift */; };
 		2750A5BC2C904BD80086815D /* MockViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5BB2C904BD80086815D /* MockViewModels.swift */; };
 		2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750BBF92C6A550E00F82A04 /* OnboardingView.swift */; };
@@ -339,6 +340,7 @@
 		274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPITests.swift; sourceTree = "<group>"; };
 		274B843D2CA97E7C00B94E14 /* UserDataAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPITests.swift; sourceTree = "<group>"; };
 		274B84402CA97F9300B94E14 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
+		274B84422CA9834B00B94E14 /* ForgotPasswordAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPITests.swift; sourceTree = "<group>"; };
 		2750A5B92C9034410086815D /* UserActivationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivationStatus.swift; sourceTree = "<group>"; };
 		2750A5BB2C904BD80086815D /* MockViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockViewModels.swift; sourceTree = "<group>"; };
 		2750BBF92C6A550E00F82A04 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -1125,6 +1127,7 @@
 		2755A9BB2CA87B8F00056594 /* APIServiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				274B84422CA9834B00B94E14 /* ForgotPasswordAPITests.swift */,
 				274B843D2CA97E7C00B94E14 /* UserDataAPITests.swift */,
 				274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */,
 				2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */,
@@ -1752,6 +1755,7 @@
 				2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */,
 				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
 				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
+				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
 				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
 				2755A9C12CA87E1400056594 /* UserLocationMock.swift in Sources */,
 				2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */,
