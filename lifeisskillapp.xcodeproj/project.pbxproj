@@ -87,6 +87,8 @@
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
 		27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27497AF72C78ACDB00E7051D /* UserDataStorage.swift */; };
+		274B843A2CA976DA00B94E14 /* PersistentUserDataStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */; };
+		274B843C2CA978C200B94E14 /* CheckSumAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */; };
 		2750A5BA2C9034410086815D /* UserActivationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5B92C9034410086815D /* UserActivationStatus.swift */; };
 		2750A5BC2C904BD80086815D /* MockViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5BB2C904BD80086815D /* MockViewModels.swift */; };
 		2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750BBF92C6A550E00F82A04 /* OnboardingView.swift */; };
@@ -331,6 +333,8 @@
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		27497AF72C78ACDB00E7051D /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
+		274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentUserDataStorageMock.swift; sourceTree = "<group>"; };
+		274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPITests.swift; sourceTree = "<group>"; };
 		2750A5B92C9034410086815D /* UserActivationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivationStatus.swift; sourceTree = "<group>"; };
 		2750A5BB2C904BD80086815D /* MockViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockViewModels.swift; sourceTree = "<group>"; };
 		2750BBF92C6A550E00F82A04 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -975,6 +979,14 @@
 			path = OCR;
 			sourceTree = "<group>";
 		};
+		274B84382CA976CC00B94E14 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		2750BBF82C6A4A2400F82A04 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1033,6 +1045,7 @@
 		2755A99D2CA808EE00056594 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				274B84382CA976CC00B94E14 /* Storage */,
 				2755A9A42CA80D5D00056594 /* Networking */,
 				2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */,
 			);
@@ -1099,6 +1112,7 @@
 		2755A9BB2CA87B8F00056594 /* APIServiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */,
 				2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */,
 				2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */,
 			);
@@ -1731,6 +1745,8 @@
 				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
 				2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */,
 				2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */,
+				274B843C2CA978C200B94E14 /* CheckSumAPITests.swift in Sources */,
+				274B843A2CA976DA00B94E14 /* PersistentUserDataStorageMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,7 @@ public struct RegisterAppAPIResponse: DataProtocol {
     }
 }
 
-typealias LoginUserData = LoginAPIResponse
+public typealias LoginUserData = LoginAPIResponse
 
 public struct LoginAPIResponse: DataProtocol {
     let user: LoggedInUser

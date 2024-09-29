@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CheckSumData: Codable, Equatable {
+public struct CheckSumData: Codable, Equatable {
     var userPoints: String
     var rank: String
     var messages: String
@@ -31,7 +31,7 @@ struct CheckSumData: Codable, Equatable {
         self.points = realmCheckSum.points
     }
     
-    internal init(userPoints: String, rank: String, messages: String, events: String, points: String) {
+    public init(userPoints: String, rank: String, messages: String, events: String, points: String) {
         self.userPoints = userPoints
         self.events = events
         self.messages = messages

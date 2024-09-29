@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-enum PersistentDataType {
+public enum PersistentDataType {
     case categories, userPoints, genericPoints, rankings, checkSum, scannedPoints
 }
 
@@ -17,7 +17,7 @@ protocol HasPersistentUserDataStoraging {
     var storage: PersistentUserDataStoraging { get }
 }
 
-protocol PersistentUserDataStoraging: UserDataStoraging {
+public protocol PersistentUserDataStoraging: UserDataStoraging {
     func loadAllDataFromRepositories() async throws
     func loadFromRepository(for data: PersistentDataType) async throws
 }
@@ -46,8 +46,8 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     // MARK: - Public Properties
     
-    var token: String?
-    var isLoggedIn: Bool = false
+    public var token: String?
+    public var isLoggedIn: Bool = false
     
     // MARK: - Initialization
     
@@ -65,7 +65,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     // MARK: - Public Interface
     
-    func onLogin() async throws {
+    public func onLogin() async throws {
         try await withThrowingTaskGroup(of: Void.self) {  [weak self] group in
             guard let self = self else { return }
             group.addTask { try await self.loadCategories() }
@@ -79,14 +79,14 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         logger.log(message: "All data loaded concurrently on login.")
     }
     
-    func onLogout() async throws {
+    public func onLogout() async throws {
         try loginRepo.markUserAsLoggedOut()
         await clearInMemoryData()
         self.isLoggedIn = false
         logger.log(message: "User logged out successfully.")
     }
     
-    func clearUserRelatedData() async throws {
+    public func clearUserRelatedData() async throws {
         try await withThrowingTaskGroup(of: Void.self) { [weak self] group in
             guard let self = self else { return }
             group.addTask { try self.loginRepo.deleteAll() }
@@ -100,12 +100,12 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         logger.log(message: "All related user data has been cleared.")
     }
     
-    func clearScannedPointData() async throws {
+    public func clearScannedPointData() async throws {
         try scannedPointRepo.deleteAll()
         logger.log(message: "Saved scanned points deleted")
     }
     
-    func loadFromRepository(for data: PersistentDataType) async throws {
+    public func loadFromRepository(for data: PersistentDataType) async throws {
         switch data {
         case .userPoints:
             try await loadUserPoints()
@@ -122,7 +122,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         }
     }
     
-    func loadAllDataFromRepositories() async throws {
+    public func loadAllDataFromRepositories() async throws {
         try await withThrowingTaskGroup(of: Void.self) {  [weak self] group in
             guard let self = self else { return }
             group.addTask { try await self.loadCategories() }
@@ -138,7 +138,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     // MARK: - Public Interface Saving Methods
     
-    func saveUserCategoryData(_ data: UserCategoryData?) async throws {
+    public func saveUserCategoryData(_ data: UserCategoryData?) async throws {
         if let data = data {
             let realmCategoryData = RealmUserCategoryData(from: data)
             try categoryRepo.save(realmCategoryData)
@@ -150,7 +150,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         _userCategoryData = data
     }
     
-    func saveUserPointData(_ data: UserPointData?) async throws {
+    public func saveUserPointData(_ data: UserPointData?) async throws {
         if let data = data {
             let realmUserPointData = RealmUserPointData(from: data)
             try userPointRepo.save(realmUserPointData)
@@ -162,7 +162,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         _userPointData = data
     }
     
-    func saveGenericPointData(_ data: GenericPointData?) async throws {
+    public func saveGenericPointData(_ data: GenericPointData?) async throws {
         if let data = data {
             let realmGenericPointData = RealmGenericPointData(from: data)
             try genericPointRepo.save(realmGenericPointData)
@@ -174,7 +174,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         _genericPointData = data
     }
     
-    func saveUserRankData(_ data: UserRankData?) async throws{
+    public func saveUserRankData(_ data: UserRankData?) async throws{
         if let data = data {
             let realmUserRankData = RealmUserRankData(from: data)
             try rankingRepo.save(realmUserRankData)
@@ -186,7 +186,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         _userRankData = data
     }
     
-    func saveCheckSumData(_ data: CheckSumData?) async throws {
+    public func saveCheckSumData(_ data: CheckSumData?) async throws {
         if let data = data {
             let realmCheckSumData = RealmCheckSumData(from: data)
             try checkSumRepo.save(realmCheckSumData)
@@ -198,74 +198,74 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
         _checkSumData = data
     }
     
-    func saveScannedPoint(_ point: ScannedPoint) async throws {
+    public func saveScannedPoint(_ point: ScannedPoint) async throws {
         try scannedPointRepo.save(RealmScannedPoint(from: point))
     }
     
-    func saveSponsorImage(for sponsorId: String, imageData: Data) async throws {
+    public func saveSponsorImage(for sponsorId: String, imageData: Data) async throws {
         let sponsorData = RealmSponsorData(sponsorID: sponsorId, imageData: imageData)
         try sponsorRepo.save(sponsorData)
     }
     
     // MARK: - Public Interface Getting Methods
     
-    func userCategoryData() async throws -> UserCategoryData? {
+    public func userCategoryData() async throws -> UserCategoryData? {
         try await loadCategories()
         return _userCategoryData
     }
     
-    func userPointData() async throws -> UserPointData? {
+    public func userPointData() async throws -> UserPointData? {
         try await loadUserPoints()
         return _userPointData
     }
     
-    func userRankData() async throws -> UserRankData? {
+    public func userRankData() async throws -> UserRankData? {
         try await loadUserRanks()
         return _userRankData
     }
     
-    func genericPointData() async throws -> GenericPointData? {
+    public func genericPointData() async throws -> GenericPointData? {
         try await loadGenericPoints()
         return _genericPointData
     }
     
-    func checkSumData() async throws -> CheckSumData? {
+    public func checkSumData() async throws -> CheckSumData? {
         try await loadCheckSumData()
         return _checkSumData
     }
     
-    func scannedPoints() async throws -> [ScannedPoint] {
+    public func scannedPoints() async throws -> [ScannedPoint] {
         try await loadScannedPoints()
         return _scannedPoints
     }
     
-    func sponsorImage(for sponsorId: String) async throws -> Data? {
+    public func sponsorImage(for sponsorId: String) async throws -> Data? {
         return try sponsorRepo.getById(sponsorId)?.imageData
     }
     
     // MARK: - Public Interface For Logged In User
     
-    func savedLoginDetails() async throws -> LoginUserData? {
+    public func savedLoginDetails() async throws -> LoginUserData? {
         guard let user = try loginRepo.getSavedLoginDetails() else { return nil }
         return user.loginUserData()
     }
     
-    func loggedInUserDetails() async throws -> LoginUserData? {
+    public func loggedInUserDetails() async throws -> LoginUserData? {
         guard let user = try loginRepo.getSavedLoginDetails(), user.isLoggedIn else { return nil }
         return user.loginUserData()
     }
     
-    func login(_ user: LoggedInUser) async throws {
+    public func login(_ user: LoggedInUser) async throws {
         try loginRepo.saveLoginUser(user)
         self.token = user.token
     }
     
-    func markUserAsLoggedOut() async throws {
+    public func markUserAsLoggedOut() async throws {
         try loginRepo.markUserAsLoggedOut()
         self.token = nil
     }
     
-    func markUserAsLoggedIn() async throws {
+    public func markUserAsLoggedIn() async throws {
         guard let user = try loginRepo.getSavedLoginDetails() else { return }
         try loginRepo.markUserAsLoggedOut()
         self.token = user.token
