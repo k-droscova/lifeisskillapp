@@ -5,10 +5,10 @@
 //  Created by Karolína Droscová on 28.09.2024.
 //
 
-import lifeisskillapp
+@testable import lifeisskillapp
 import Foundation
 
-public extension LoggedInUser {
+extension LoggedInUser {
     static func mock(
         userId: String = "mockUserId",
         email: String = "mockEmail@example.com",

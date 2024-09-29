@@ -5,10 +5,9 @@
 //  Created by Karolína Droscová on 28.09.2024.
 //
 
-import lifeisskillapp
+@testable import lifeisskillapp
 import Foundation
 
-// Mock for LoginCredentials
 extension LoginCredentials {
     static func mock(
         username: String = "testUser",
@@ -21,7 +20,6 @@ extension LoginCredentials {
     }
 }
 
-// Mock for NewRegistrationCredentials
 extension NewRegistrationCredentials {
     static func mock(
         username: String = "testUser",
@@ -38,7 +36,6 @@ extension NewRegistrationCredentials {
     }
 }
 
-// Mock for ForgotPasswordCredentials
 extension ForgotPasswordCredentials {
     static func mock(
         email: String = "test@example.com",
@@ -53,7 +50,6 @@ extension ForgotPasswordCredentials {
     }
 }
 
-// Mock for GuardianInfo
 extension GuardianInfo {
     static func mock(
         firstName: String = "ParentFirstName",
@@ -72,7 +68,6 @@ extension GuardianInfo {
     }
 }
 
-// Mock for FullRegistrationCredentials
 extension FullRegistrationCredentials {
     static func mock(
         firstName: String = "TestFirstName",

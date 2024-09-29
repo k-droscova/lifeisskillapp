@@ -5,9 +5,9 @@
 //  Created by Karolína Droscová on 28.09.2024.
 //
 
-import lifeisskillapp
+@testable import lifeisskillapp
 
-public extension RegisterAppAPIResponse {
+extension RegisterAppAPIResponse {
     static func mock(
         appId: String = "mockAppId",
         versionCode: Int = 1
@@ -19,7 +19,7 @@ public extension RegisterAppAPIResponse {
     }
 }
 
-public extension LoginAPIResponse {
+extension LoginAPIResponse {
     static func mock(
         user: LoggedInUser = .mock()
     ) -> LoginAPIResponse {
@@ -27,7 +27,7 @@ public extension LoginAPIResponse {
     }
 }
 
-public extension ForgotPasswordData {
+extension ForgotPasswordData {
     static func mock(
         pin: String = "mockPin",
         message: String = "mockMessage",
@@ -41,7 +41,7 @@ public extension ForgotPasswordData {
     }
 }
 
-public extension ForgotPasswordConfirmation {
+extension ForgotPasswordConfirmation {
     static func mock(
         message: Bool = true
     ) -> ForgotPasswordConfirmation {
@@ -51,7 +51,7 @@ public extension ForgotPasswordConfirmation {
     }
 }
 
-public extension UsernameAvailabilityResponse {
+extension UsernameAvailabilityResponse {
     static func mock(
         isAvailable: Bool = true
     ) -> UsernameAvailabilityResponse {
@@ -61,7 +61,7 @@ public extension UsernameAvailabilityResponse {
     }
 }
 
-public extension EmailAvailabilityResponse {
+extension EmailAvailabilityResponse {
     static func mock(
         isAvailable: Bool = true
     ) -> EmailAvailabilityResponse {
@@ -71,7 +71,7 @@ public extension EmailAvailabilityResponse {
     }
 }
 
-public extension RegistrationResponse {
+extension RegistrationResponse {
     static func mock(
         message: String = "mockNewUser"
     ) -> RegistrationResponse {
@@ -81,7 +81,7 @@ public extension RegistrationResponse {
     }
 }
 
-public extension UserCategoryData {
+extension UserCategoryData {
     static func mock(
         main: UserCategory = .mock(id: "mainCategory", name: "Main"),
         data: [UserCategory] = [
@@ -97,7 +97,7 @@ public extension UserCategoryData {
     }
 }
 
-public extension UserPointData {
+extension UserPointData {
     static func mock(
         checkSum: String = "mockCheckSum",
         data: [UserPoint] = [
@@ -117,7 +117,7 @@ public extension UserPointData {
     }
 }
 
-public extension GenericPointData {
+extension GenericPointData {
     static func mock(
         checkSum: String = "mockCheckSum",
         data: [GenericPoint] = [
@@ -179,7 +179,7 @@ public extension GenericPointData {
     }
 }
 
-public extension UserRankData {
+extension UserRankData {
     static func mock(
         checkSum: String = "mockCheckSum",
         data: [UserRank] = [
@@ -201,7 +201,7 @@ public extension UserRankData {
     }
 }
 
-public extension SignatureAPIResponse {
+extension SignatureAPIResponse {
     static func mock(
         signature: String = "mockSignature"
     ) -> SignatureAPIResponse {
@@ -209,7 +209,7 @@ public extension SignatureAPIResponse {
     }
 }
 
-public extension CompleteRegistrationAPIResponse {
+extension CompleteRegistrationAPIResponse {
     static func mock(
         completionStatus: Bool = true,
         needParentActivation: Bool = false
@@ -221,7 +221,7 @@ public extension CompleteRegistrationAPIResponse {
     }
 }
 
-public extension ParentEmailActivationReponse {
+extension ParentEmailActivationReponse {
     static func mock(
         status: Bool = true
     ) -> ParentEmailActivationReponse {
@@ -229,7 +229,7 @@ public extension ParentEmailActivationReponse {
     }
 }
 
-public extension CheckSumUserPointsData {
+extension CheckSumUserPointsData {
     static func mock(
         pointsProtect: String = "mockPointsProtect"
     ) -> CheckSumUserPointsData {
@@ -239,7 +239,7 @@ public extension CheckSumUserPointsData {
     }
 }
 
-public extension CheckSumRankData {
+extension CheckSumRankData {
     static func mock(
         rankProtect: String = "mockRankProtect"
     ) -> CheckSumRankData {
@@ -249,7 +249,7 @@ public extension CheckSumRankData {
     }
 }
 
-public extension CheckSumMessagesData {
+extension CheckSumMessagesData {
     static func mock(
         msgProtect: String = "mockMessageProtect"
     ) -> CheckSumMessagesData {
@@ -259,7 +259,7 @@ public extension CheckSumMessagesData {
     }
 }
 
-public extension CheckSumEventsData {
+extension CheckSumEventsData {
     static func mock(
         eventsProtect: String = "mockEventsProtect"
     ) -> CheckSumEventsData {
@@ -269,7 +269,7 @@ public extension CheckSumEventsData {
     }
 }
 
-public extension CheckSumPointsData {
+extension CheckSumPointsData {
     static func mock(
         pointsProtect: String = "mockPointsProtect",
         clusterProtect: String? = "mockClusterProtect"

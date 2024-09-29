@@ -5,12 +5,12 @@
 //  Created by Karolína Droscová on 28.09.2024.
 //
 
-import lifeisskillapp
+@testable import lifeisskillapp
 import Foundation
 
 // MARK: - Models
 
-public extension UserCategory {
+extension UserCategory {
     static func mock(
         id: String = "mockCategoryID",
         name: String = "mockCategoryName",
@@ -26,7 +26,7 @@ public extension UserCategory {
     }
 }
 
-public extension RankedUser {
+extension RankedUser {
     static func mock(
         userId: String = "mockUserID",
         email: String = "mockEmail@example.com",
@@ -56,7 +56,7 @@ public extension RankedUser {
     }
 }
 
-public extension UserRank {
+extension UserRank {
     static func mock(
         catId: String = "mockCategoryID",
         catUserRank: Int = 1,
@@ -70,7 +70,7 @@ public extension UserRank {
     }
 }
 
-public extension GenericPoint {
+extension GenericPoint {
     static func mock(
         id: String = "mockPointID",
         pointName: String = "mockPointName",
@@ -104,7 +104,7 @@ public extension GenericPoint {
     }
 }
 
-public extension UserPoint {
+extension UserPoint {
     static func mock(
         id: String = "mockPointID",
         recordKey: String = "mockRecordKey",

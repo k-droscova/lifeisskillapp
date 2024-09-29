@@ -5,7 +5,7 @@
 //  Created by Karolína Droscová on 29.09.2024.
 //
 
-import lifeisskillapp
+@testable import lifeisskillapp
 import Foundation
 
 extension ScannedPoint {
