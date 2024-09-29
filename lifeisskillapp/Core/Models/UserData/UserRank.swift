@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct UserRank: UserData {
-    public var id: String { catId }   // Implement id to correspond to catId
+struct UserRank: UserData {
+    var id: String { catId }   // Implement id to correspond to catId
     let catId: String          // Category ID
     let catUserRank: Int       // User's rank in this category
     let listUserRank: [RankedUser] // List of users ranked in this category
     
-    public init(catId: String, catUserRank: Int, listUserRank: [RankedUser]) {
+    init(catId: String, catUserRank: Int, listUserRank: [RankedUser]) {
         self.catId = catId
         self.catUserRank = catUserRank
         self.listUserRank = listUserRank
@@ -21,7 +21,7 @@ public struct UserRank: UserData {
 }
 
 /// Model for user data from the Rank endpoint
-public struct RankedUser: UserProtocol, Codable {
+struct RankedUser: UserProtocol, Codable {
     /// Unique identifier for the user
     let userId: String
     
@@ -55,7 +55,7 @@ public struct RankedUser: UserProtocol, Codable {
     /// Secondary mobile phone number
     let mobilr: String
     
-    public init(userId: String, email: String, nick: String, sex: UserGender, order: String, points: String, lastTime: String, psc: String, emailr: String, mobil: String, mobilr: String) {
+    init(userId: String, email: String, nick: String, sex: UserGender, order: String, points: String, lastTime: String, psc: String, emailr: String, mobil: String, mobilr: String) {
         self.userId = userId
         self.email = email
         self.nick = nick
@@ -70,8 +70,8 @@ public struct RankedUser: UserProtocol, Codable {
     }
 }
 
-public struct Ranking: Identifiable {
-    public let id: String
+struct Ranking: Identifiable {
+    let id: String
     let rank: Int
     let username: String
     let points: Int
@@ -101,7 +101,7 @@ public struct Ranking: Identifiable {
         }
     }
     
-    public init(id: String, rank: Int, username: String, points: Int, gender: UserGender, trophyImage: String? = nil) {
+    init(id: String, rank: Int, username: String, points: Int, gender: UserGender, trophyImage: String? = nil) {
         self.id = id
         self.rank = rank
         self.username = username

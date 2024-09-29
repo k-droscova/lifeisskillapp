@@ -19,7 +19,7 @@ protocol CheckSumAPIServicing {
     func genericPoints() async throws -> APIResponse<CheckSumPointsData>
 }
 
-public final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
+final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
     
     private let network: Networking

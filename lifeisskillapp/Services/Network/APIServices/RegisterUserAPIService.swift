@@ -19,7 +19,7 @@ protocol RegisterUserAPIServicing {
     func requestParentEmailActivationLink(email: String) async throws -> APIResponse<ParentEmailActivationReponse>
 }
 
-public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
+final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
     
     private var network: Networking

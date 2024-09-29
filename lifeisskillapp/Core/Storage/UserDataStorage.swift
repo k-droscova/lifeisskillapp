@@ -11,7 +11,7 @@ protocol HasUserDataStorage {
     var userDataStorage: UserDataStoraging { get set }
 }
 
-public protocol UserDataStoraging {
+protocol UserDataStoraging {
     // Storage Interface Based On Different Scenarios
     func onLogin() async throws
     func onLogout() async throws

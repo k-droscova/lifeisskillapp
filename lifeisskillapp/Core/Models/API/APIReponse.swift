@@ -11,10 +11,10 @@ import Foundation
 public protocol DataProtocol: Codable {}
 
 // Define the main response structure
-public struct APIResponse<T: DataProtocol>: Decodable {
+struct APIResponse<T: DataProtocol>: Decodable {
     let data: T
     
-    public init(data: T) {
+    init(data: T) {
         self.data = data
     }
 }

@@ -7,19 +7,19 @@
 
 import Foundation
 
-public struct RegisterAppAPIResponse: DataProtocol {
+struct RegisterAppAPIResponse: DataProtocol {
     let appId: String
     let versionCode: Int
     
-    public init(appId: String, versionCode: Int) {
+    init(appId: String, versionCode: Int) {
         self.appId = appId
         self.versionCode = versionCode
     }
 }
 
-public typealias LoginUserData = LoginAPIResponse
+typealias LoginUserData = LoginAPIResponse
 
-public struct LoginAPIResponse: DataProtocol {
+struct LoginAPIResponse: DataProtocol {
     let user: LoggedInUser
     
     enum CodingKeys: String, CodingKey {
@@ -27,11 +27,11 @@ public struct LoginAPIResponse: DataProtocol {
         case name, surname, mobil, zip, birthday, nameParent, surnameParent, emailParent, mobilParent, relation
     }
     
-    public init(user: LoggedInUser) {
+    init(user: LoggedInUser) {
         self.user = user
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let userId = try container.decode(String.self, forKey: .userId)
@@ -91,7 +91,7 @@ public struct LoginAPIResponse: DataProtocol {
     }
     
     // MARK: - Encoder
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(user.userId, forKey: .userId)
@@ -128,49 +128,49 @@ public struct LoginAPIResponse: DataProtocol {
     }
 }
 
-public struct CheckSumUserPointsData: DataProtocol {
+struct CheckSumUserPointsData: DataProtocol {
     let pointsProtect: String
     
-    public init(pointsProtect: String) {
+    init(pointsProtect: String) {
         self.pointsProtect = pointsProtect
     }
 }
 
-public struct CheckSumRankData: DataProtocol {
+struct CheckSumRankData: DataProtocol {
     let rankProtect: String
     
-    public init(rankProtect: String) {
+    init(rankProtect: String) {
         self.rankProtect = rankProtect
     }
 }
 
-public struct CheckSumMessagesData: DataProtocol {
+struct CheckSumMessagesData: DataProtocol {
     let msgProtect: String
     
-    public init(msgProtect: String) {
+    init(msgProtect: String) {
         self.msgProtect = msgProtect
     }
 }
 
-public struct CheckSumEventsData: DataProtocol {
+struct CheckSumEventsData: DataProtocol {
     let eventsProtect: String
     
-    public init(eventsProtect: String) {
+    init(eventsProtect: String) {
         self.eventsProtect = eventsProtect
     }
 }
 
-public struct CheckSumPointsData: DataProtocol {
+struct CheckSumPointsData: DataProtocol {
     let pointsProtect: String
     let clusterProtect: String?
     
-    public init(pointsProtect: String, clusterProtect: String?) {
+    init(pointsProtect: String, clusterProtect: String?) {
         self.pointsProtect = pointsProtect
         self.clusterProtect = clusterProtect
     }
 }
 
-public struct UserCategoryData: DataProtocol {
+struct UserCategoryData: DataProtocol {
     let main: UserCategory
     let data: [UserCategory]
     
@@ -179,7 +179,7 @@ public struct UserCategoryData: DataProtocol {
         case data = "allUserCategoryList"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Decode the main category ID
         let mainCategoryID = try container.decode(String.self, forKey: .main)
@@ -194,13 +194,13 @@ public struct UserCategoryData: DataProtocol {
         self.data = allUserCategories
     }
     
-    public init(main: UserCategory, data: [UserCategory]) {
+    init(main: UserCategory, data: [UserCategory]) {
         self.main = main
         self.data = data
     }
 }
 
-public struct UserPointData: DataProtocol {
+struct UserPointData: DataProtocol {
     let checkSum: String
     let data: [UserPoint]
     
@@ -209,19 +209,19 @@ public struct UserPointData: DataProtocol {
         case checkSum = "userPointsProtect"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserPoint].self, forKey: .data)
     }
     
-    public init(checkSum: String, data: [UserPoint]) {
+    init(checkSum: String, data: [UserPoint]) {
         self.checkSum = checkSum
         self.data = data
     }
 }
 
-public struct GenericPointData: DataProtocol {
+struct GenericPointData: DataProtocol {
     let checkSum: String
     let data: [GenericPoint]
     
@@ -230,19 +230,19 @@ public struct GenericPointData: DataProtocol {
         case checkSum = "pointsProtect"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([GenericPoint].self, forKey: .data)
     }
     
-    public init(checkSum: String, data: [GenericPoint]) {
+    init(checkSum: String, data: [GenericPoint]) {
         self.checkSum = checkSum
         self.data = data
     }
 }
 
-public struct UserRankData: DataProtocol {
+struct UserRankData: DataProtocol {
     let checkSum: String
     let data: [UserRank]
     
@@ -251,19 +251,19 @@ public struct UserRankData: DataProtocol {
         case data = "catData"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         checkSum = try container.decode(String.self, forKey: .checkSum)
         data = try container.decode([UserRank].self, forKey: .data)
     }
     
-    public init(checkSum: String, data: [UserRank]) {
+    init(checkSum: String, data: [UserRank]) {
         self.checkSum = checkSum
         self.data = data
     }
 }
 
-public struct ForgotPasswordData: DataProtocol {
+struct ForgotPasswordData: DataProtocol {
     let pin: String
     let message: String
     let userEmail: String
@@ -274,13 +274,13 @@ public struct ForgotPasswordData: DataProtocol {
         case userEmail = "email"
     }
     
-    public init(pin: String, message: String, userEmail: String) {
+    init(pin: String, message: String, userEmail: String) {
         self.pin = pin
         self.message = message
         self.userEmail = userEmail
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode the base64-encoded pin
@@ -297,92 +297,92 @@ public struct ForgotPasswordData: DataProtocol {
     }
 }
 
-public struct ForgotPasswordConfirmation: DataProtocol {
+struct ForgotPasswordConfirmation: DataProtocol {
     let message: Bool
     
     enum CodingKeys: String, CodingKey {
         case message = "Was Changed"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         message = try container.decode(Bool.self, forKey: .message)
     }
     
-    public init(message: Bool) {
+    init(message: Bool) {
         self.message = message
     }
 }
 
-public struct UsernameAvailabilityResponse: DataProtocol {
+struct UsernameAvailabilityResponse: DataProtocol {
     let isAvailable: Bool
     
     enum CodingKeys: String, CodingKey {
         case isAvailable = "isNickAvailable"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
     }
     
-    public init(isAvailable: Bool) {
+    init(isAvailable: Bool) {
         self.isAvailable = isAvailable
     }
 }
 
-public struct EmailAvailabilityResponse: DataProtocol {
+struct EmailAvailabilityResponse: DataProtocol {
     let isAvailable: Bool
     
     enum CodingKeys: String, CodingKey {
         case isAvailable = "isEmailAvailable"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
     }
     
-    public init(isAvailable: Bool) {
+    init(isAvailable: Bool) {
         self.isAvailable = isAvailable
     }
 }
 
-public struct RegistrationResponse: DataProtocol {
+struct RegistrationResponse: DataProtocol {
     let message: String
     
     enum CodingKeys: String, CodingKey {
         case message = "newUser"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         message = try container.decode(String.self, forKey: .message)
     }
     
-    public init(message: String) {
+    init(message: String) {
         self.message = message
     }
 }
 
-public struct SignatureAPIResponse: DataProtocol {
+struct SignatureAPIResponse: DataProtocol {
     let signature: String
     
     enum CodingKeys: String, CodingKey {
         case signature = "token"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         signature = try container.decode(String.self, forKey: .signature)
     }
     
-    public init(signature: String) {
+    init(signature: String) {
         self.signature = signature
     }
 }
 
-public struct CompleteRegistrationAPIResponse: DataProtocol {
+struct CompleteRegistrationAPIResponse: DataProtocol {
     let completionStatus: Bool
     let needParentActivation: Bool
     
@@ -391,31 +391,31 @@ public struct CompleteRegistrationAPIResponse: DataProtocol {
         case needParentActivation = "needParentActivation"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         completionStatus = try container.decode(Bool.self, forKey: .completionStatus)
         needParentActivation = try container.decode(Bool.self, forKey: .needParentActivation)
     }
     
-    public init(completionStatus: Bool, needParentActivation: Bool) {
+    init(completionStatus: Bool, needParentActivation: Bool) {
         self.completionStatus = completionStatus
         self.needParentActivation = needParentActivation
     }
 }
 
-public struct ParentEmailActivationReponse: DataProtocol {
+struct ParentEmailActivationReponse: DataProtocol {
     let status: Bool
     
     enum CodingKeys: String, CodingKey {
         case status = "parentLinkSent"
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         status = try container.decode(Bool.self, forKey: .status)
     }
     
-    public init(status: Bool) {
+    init(status: Bool) {
         self.status = status
     }
 }

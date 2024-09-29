@@ -7,7 +7,7 @@
 import Foundation
 import CoreLocation
 
-public struct UserPoint: UserData {
+struct UserPoint: UserData {
     public let id: String
     let recordKey: String
     let pointTime: Date
@@ -52,7 +52,7 @@ public struct UserPoint: UserData {
         )
     }
     
-    public init(
+    init(
         id: String,
         recordKey: String,
         pointTime: Date,
@@ -88,7 +88,7 @@ public struct UserPoint: UserData {
 }
 
 extension UserPoint {
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         recordKey = try container.decode(String.self, forKey: .recordKey)
         id = try container.decode(String.self, forKey: .id)
@@ -120,7 +120,7 @@ extension UserPoint {
         }
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(recordKey, forKey: .recordKey)
         try container.encode(id, forKey: .id) // Correctly map id to pointId for encoding
@@ -141,7 +141,7 @@ extension UserPoint {
     }
 }
 
-public struct Point: Identifiable {
+struct Point: Identifiable {
     public let id: String
     let pointId: String
     let name: String
@@ -151,7 +151,7 @@ public struct Point: Identifiable {
     let location: UserLocation
     let doesPointCount: Bool
 
-    public init(from userPoint: UserPoint) {
+    init(from userPoint: UserPoint) {
         /*
          Note that id is record key in this case, since one specific point can be scanned multiple times (across multiple days).
          Record key is the "id" of the scanned point instance, hence is unique for the user point.

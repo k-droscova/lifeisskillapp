@@ -7,12 +7,12 @@
 
 import Foundation
 
-public struct ScannedPoint: UserData {
+struct ScannedPoint: UserData {
     let code: String
     let codeSource: CodeSource
     let location: UserLocation?
     
-    public init(code: String, codeSource: CodeSource, location: UserLocation?) {
+    init(code: String, codeSource: CodeSource, location: UserLocation?) {
         self.code = code
         self.codeSource = codeSource
         self.location = location
@@ -20,5 +20,5 @@ public struct ScannedPoint: UserData {
 }
 
 extension ScannedPoint {
-    public var id: String { code }
+    var id: String { code }
 }

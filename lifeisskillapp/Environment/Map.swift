@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-public struct MapConstants {
+struct MapConstants {
     static let mapDetailViewSheetHeight: CGFloat = 200
     static let mapDetailImageHeight: CGFloat = 100
     static let latitudeDelta = 0.05

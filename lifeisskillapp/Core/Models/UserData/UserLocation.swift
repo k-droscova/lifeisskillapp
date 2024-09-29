@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-public struct UserLocation: Codable {
+struct UserLocation: Codable {
     let latitude: Double
     let longitude: Double
     let altitude: Double
@@ -15,7 +15,7 @@ public struct UserLocation: Codable {
     let timestamp: Date
     
     // for mocks in testing
-    public init(
+    init(
         latitude: Double,
         longitude: Double,
         altitude: Double,

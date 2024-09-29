@@ -8,7 +8,7 @@
 import Foundation
 import OSLog
 
-public enum LogSeverity: String, Codable {
+enum LogSeverity: String, Codable {
     case debug, info, warning, error, fatal
     
     // Method to convert LogSeverity to OSLogType

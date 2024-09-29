@@ -19,7 +19,7 @@ protocol UserProtocol: UserData {
 extension UserProtocol where Self: Codable {}
 
 /// Model for user data from the login endpoint. Saved using UserLoginDataManager, this data is retrieved throughout App UI
-public struct LoggedInUser: UserProtocol, Codable {
+struct LoggedInUser: UserProtocol, Codable {
     /// Unique identifier for the user
     let userId: String
     
@@ -78,7 +78,7 @@ public struct LoggedInUser: UserProtocol, Codable {
     let mobilParent: String?
     let relation: String?
     
-    public init(
+    init(
         userId: String,
         email: String,
         nick: String,
@@ -131,7 +131,7 @@ public struct LoggedInUser: UserProtocol, Codable {
 
 // Extend the UserProtocol to provide a default implementation for the id property
 extension UserProtocol {
-    public var id: String {
+    var id: String {
         userId
     }
 }

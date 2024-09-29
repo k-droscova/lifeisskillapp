@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct UserCategory: UserData, CustomStringConvertible {
-    public let id: String
+struct UserCategory: UserData, CustomStringConvertible {
+    let id: String
     let name: String
     let detail: String
     let isPublic: Bool
@@ -20,11 +20,11 @@ public struct UserCategory: UserData, CustomStringConvertible {
         case isPublic = "public"
     }
     
-    public var description: String {
+    var description: String {
         name
     }
     
-    public init(id: String, name: String, detail: String, isPublic: Bool) {
+    init(id: String, name: String, detail: String, isPublic: Bool) {
         self.id = id
         self.name = name
         self.detail = detail

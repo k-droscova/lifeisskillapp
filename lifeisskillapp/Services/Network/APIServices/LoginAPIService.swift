@@ -16,7 +16,7 @@ protocol LoginAPIServicing {
     func signature(userToken: String) async throws -> APIResponse<SignatureAPIResponse>
 }
 
-public final class LoginAPIService: BaseClass, LoginAPIServicing {
+final class LoginAPIService: BaseClass, LoginAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var network: Networking

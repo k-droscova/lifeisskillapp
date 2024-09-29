@@ -7,14 +7,14 @@
 import Foundation
 import CoreLocation
 
-public struct GenericPoint: UserData {
+struct GenericPoint: UserData {
     let pointLat: Double
     let pointLng: Double
     let pointAlt: Double
     let pointName: String
     let pointValue: Int
     let pointType: PointType
-    public let id: String
+    let id: String
     let cluster: String
     let pointSpec: Int
     let sponsorId: String
@@ -48,7 +48,7 @@ public struct GenericPoint: UserData {
         )
     }
     
-    public init(
+    init(
         pointLat: Double,
         pointLng: Double,
         pointAlt: Double,
@@ -78,7 +78,7 @@ public struct GenericPoint: UserData {
         self.param = param
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         pointLat = try container.decode(Double.self, forKey: .pointLat)
@@ -136,7 +136,7 @@ public struct GenericPoint: UserData {
     }
 }
 
-public struct PointParam: Codable {
+struct PointParam: Codable {
     let timer: TimerParam?
     let status: StatusParam?
     
@@ -145,20 +145,20 @@ public struct PointParam: Codable {
         case status = "STATUS"
     }
     
-    public init(timer: TimerParam?, status: StatusParam?) {
+    init(timer: TimerParam?, status: StatusParam?) {
         self.timer = timer
         self.status = status
     }
 }
 
-public struct TimerParam: Codable {
+struct TimerParam: Codable {
     let base: Int
     let done: Int
     let maxTime: Int
     let minTime: Int
     let distance: Int
     
-    public init(base: Int, done: Int, maxTime: Int, minTime: Int, distance: Int) {
+    init(base: Int, done: Int, maxTime: Int, minTime: Int, distance: Int) {
         self.base = base
         self.done = done
         self.maxTime = maxTime
@@ -167,7 +167,7 @@ public struct TimerParam: Codable {
     }
 }
 
-public struct StatusParam: Codable {
+struct StatusParam: Codable {
     let color: String
     let isValid: Bool
     
@@ -176,7 +176,7 @@ public struct StatusParam: Codable {
         case isValid = "IS_VALID"
     }
     
-    public init(color: String, isValid: Bool) {
+    init(color: String, isValid: Bool) {
         self.color = color
         self.isValid = isValid
     }

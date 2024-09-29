@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Loggable: CustomStringConvertible, Codable {
+protocol Loggable: CustomStringConvertible, Codable {
     var id: String { get }
     var message: String { get }
     var dateString: String { get }
@@ -17,7 +17,7 @@ public protocol Loggable: CustomStringConvertible, Codable {
     var context: LogContext { get }
 }
 
-public class LogEvent: Loggable {
+class LogEvent: Loggable {
     
     public var id: String
     public var message: String

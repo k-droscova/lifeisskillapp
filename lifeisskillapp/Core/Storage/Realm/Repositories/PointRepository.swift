@@ -18,7 +18,7 @@ public class RealmGenericPointRepository: BaseClass, RealmGenericPointRepositori
     typealias Entity = RealmGenericPointData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    public let logger: LoggerServicing
+    let logger: LoggerServicing
     var realmStorage: RealmStoraging
     
     init(dependencies: Dependencies) {

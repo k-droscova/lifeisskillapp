@@ -20,7 +20,7 @@ protocol UserDataAPIServicing {
     func sponsorImage(userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data
 }
 
-public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
+final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private let network: Networking

@@ -7,12 +7,12 @@
 
 import Foundation
 
-public enum UserGender: String, Codable, Hashable {
+enum UserGender: String, Codable, Hashable {
     case male = "M"
     case female = "F"
     case unspecified = ""
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         case .male:
@@ -24,7 +24,7 @@ public enum UserGender: String, Codable, Hashable {
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let gender = try container.decode(String.self)
         switch gender {

@@ -24,7 +24,7 @@ public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmSt
     typealias Entity = RealmLoginDetails
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    public let logger: LoggerServicing
+    let logger: LoggerServicing
     var realmStorage: RealmStoraging
     var token: String? { getLoggedInUserToken() }
     
