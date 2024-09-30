@@ -34,8 +34,7 @@ final class KeychainStorage: BaseClass, KeychainStoraging {
     
     func save(credentials: LoginCredentials) throws {
         guard let usernameData = credentials.username.data(using: .utf8),
-              let passwordData = credentials.password.data(using: .utf8)
-        else {
+              let passwordData = credentials.password.data(using: .utf8) else {
             throw BaseError(
                 context: .database,
                 message: "Failed to convert credentials to Data",
@@ -43,20 +42,22 @@ final class KeychainStorage: BaseClass, KeychainStoraging {
             )
         }
         
-        // Load the original values (if any) for rollback purposes
-        let usernameOriginal = loadUsername()?.data(using: .utf8)
+        let usernameOriginal = loadUsername()?.data(using: .utf8) // for rollback
+        var passwordSaveError: Error? = nil
         
         do {
             // Try saving the username first
             try keychainHelper.save(key: KeychainConstants.usernameKey, data: usernameData)
             
-            // Try saving the password second
             do {
+                // Try saving the password
                 try keychainHelper.save(key: KeychainConstants.passwordKey, data: passwordData)
             } catch {
                 // Rollback in case saving the password fails
                 rollbackUsername(originalData: usernameOriginal)
-                throw BaseError(
+                
+                // Store the password error and continue execution
+                passwordSaveError = BaseError(
                     context: .database,
                     message: "Failed to save password. Username has been rolled back.",
                     logger: logger
@@ -70,20 +71,31 @@ final class KeychainStorage: BaseClass, KeychainStoraging {
                 logger: logger
             )
         }
+        
+        // If password saving failed, throw the password-specific error
+        if let passwordSaveError = passwordSaveError {
+            throw passwordSaveError
+        }
     }
     
     func delete() throws {
         let usernameOriginal = loadUsername()?.data(using: .utf8)
         
+        var passwordDeleteError: Error? = nil
+        
         do {
+            // Try deleting the username first
             try keychainHelper.delete(key: KeychainConstants.usernameKey)
             
             do {
+                // Try deleting the password
                 try keychainHelper.delete(key: KeychainConstants.passwordKey)
             } catch {
                 // Rollback in case deleting the password fails
                 rollbackUsername(originalData: usernameOriginal)
-                throw BaseError(
+                
+                // Store the password error and continue execution
+                passwordDeleteError = BaseError(
                     context: .database,
                     message: "Failed to delete password. Username has been rolled back.",
                     logger: logger
@@ -95,6 +107,11 @@ final class KeychainStorage: BaseClass, KeychainStoraging {
                 message: "Failed to delete username.",
                 logger: logger
             )
+        }
+        
+        // If password deletion failed, throw the password-specific error
+        if let passwordDeleteError = passwordDeleteError {
+            throw passwordDeleteError
         }
     }
     
