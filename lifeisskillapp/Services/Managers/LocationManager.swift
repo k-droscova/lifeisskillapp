@@ -32,7 +32,7 @@ protocol LocationManaging {
 }
 
 /// A class responsible for managing location services and handling location updates.
-public final class LocationManager: BaseClass, LocationManaging {
+final class LocationManager: BaseClass, LocationManaging {
     typealias Dependencies = HasLoggerServicing
     
     // MARK: - Private Properties
@@ -72,7 +72,7 @@ public final class LocationManager: BaseClass, LocationManaging {
     // MARK: - Public Interface
     
     /// Checks the location authorization status and requests permission if needed.
-    public func checkLocationAuthorization() {
+    func checkLocationAuthorization() {
         switch locationManager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager.startUpdatingLocation()

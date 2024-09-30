@@ -8,7 +8,7 @@
 import Foundation
 import os.log
 
-public final class OSLoggerService: LoggerServicing {
+final class OSLoggerService: LoggerServicing {
     func _log(message: String?, event: (any Loggable)?) {
         if let logEvent = event {
             let log = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "-", category: logEvent.context.rawValue)

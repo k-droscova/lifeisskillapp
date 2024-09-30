@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import ACKategories
 
-public protocol BaseFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
+protocol BaseFlowCoordinator: Base.FlowCoordinatorNoDeepLink {
     func present(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?)
     func dismiss()
     func showAlert(titleKey: String, messageKey: String, completion: (() -> Void)?)

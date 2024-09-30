@@ -18,7 +18,7 @@ protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, 
     func sponsorImage(for sponsorId: String, width: Int, height: Int) async throws -> Data?
 }
 
-public final class GenericPointManager: BaseClass, GenericPointManaging {
+final class GenericPointManager: BaseClass, GenericPointManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor & HasLocationManager
     
     // MARK: - Private Properties
@@ -31,8 +31,6 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     private var cancellables = Set<AnyCancellable>()
     private let closestVirtualPointSubject = CurrentValueSubject<GenericPoint?, Never>(nil)
     
-    internal let networkMonitor: NetworkMonitoring
-    
     // MARK: - Public Properties
     
     var token: String? { storage.token }
@@ -40,6 +38,7 @@ public final class GenericPointManager: BaseClass, GenericPointManaging {
     var closestVirtualPointPublisher: AnyPublisher<GenericPoint?, Never> {
         closestVirtualPointSubject.eraseToAnyPublisher()
     }
+    let networkMonitor: NetworkMonitoring
     
     // MARK: - Initialization
     

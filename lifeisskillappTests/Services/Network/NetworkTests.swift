@@ -11,7 +11,6 @@ import Network
 
 final class NetworkTests: XCTestCase {
     
-    // Dependencies struct for the Network class
     private struct Dependencies: Network.Dependencies {
         let logger: LoggerServicing
         let urlSession: URLSessionWrapping

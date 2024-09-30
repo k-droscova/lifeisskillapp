@@ -22,7 +22,7 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
     private let gameDataManager: GameDataManaging
     private var session: NFCReaderSession?
     
-    public var isNfcAvailable: Bool { NFCNDEFReaderSession.readingAvailable }
+    var isNfcAvailable: Bool { NFCNDEFReaderSession.readingAvailable }
     
     init(dependencies: Dependencies, delegate: HomeFlowDelegate?) {
         self.delegate = delegate

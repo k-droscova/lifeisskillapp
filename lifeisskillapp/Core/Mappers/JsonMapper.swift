@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class JsonMapper {
-    public static func jsonString<T: Encodable>(from object: T) throws -> String {
+class JsonMapper {
+    static func jsonString<T: Encodable>(from object: T) throws -> String {
         let encoded: Data
         do {
             let encoder = JSONEncoder()

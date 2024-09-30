@@ -8,6 +8,7 @@
 import XCTest
 @testable import lifeisskillapp
 
+/*
 final class lifeisskillappTests: XCTestCase {
 
     override func setUpWithError() throws {
@@ -34,3 +35,4 @@ final class lifeisskillappTests: XCTestCase {
     }
 
 }
+*/

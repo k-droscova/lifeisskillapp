@@ -7,18 +7,18 @@
 
 import Foundation
 
-public protocol HasUrlSessionWrapper {
+protocol HasUrlSessionWrapper {
     var urlSession: URLSessionWrapping { get }
 }
 
-public protocol URLSessionWrapping {
+protocol URLSessionWrapping {
     func data(
         for request: URLRequest
     ) async throws -> (Data, URLResponse)
 }
 
-public final class URLSessionWrapper: BaseClass, URLSessionWrapping {
-    public func data(
+final class URLSessionWrapper: BaseClass, URLSessionWrapping {
+    func data(
         for request: URLRequest
     ) async throws -> (Data, URLResponse) {
         try await URLSession.shared.data(for: request)

@@ -18,7 +18,7 @@ protocol UserCategoryManaging: UserDataManaging where DataType == UserCategory, 
     var selectedCategoryPublisher: AnyPublisher<UserCategory?, Never> { get }
 }
 
-public final class UserCategoryManager: BaseClass, UserCategoryManaging {
+final class UserCategoryManager: BaseClass, UserCategoryManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor
     
     // MARK: - Private Properties

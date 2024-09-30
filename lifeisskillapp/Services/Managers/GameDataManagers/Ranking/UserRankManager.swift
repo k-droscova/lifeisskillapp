@@ -15,7 +15,7 @@ protocol HasUserRankManager {
 protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataContainer == UserRankData {
 }
 
-public final class UserRankManager: BaseClass, UserRankManaging {
+final class UserRankManager: BaseClass, UserRankManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
@@ -25,12 +25,10 @@ public final class UserRankManager: BaseClass, UserRankManaging {
     private let userDataAPIService: UserDataAPIServicing
     private var _data: UserRankData?
     
-    internal let networkMonitor: NetworkMonitoring
-
-    
     // MARK: - Public Properties
     
     var token: String? { storage.token }
+    let networkMonitor: NetworkMonitoring
     
     // MARK: - Initialization
     

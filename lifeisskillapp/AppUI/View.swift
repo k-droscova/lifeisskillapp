@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-import SwiftUI
-
-public extension View {
+extension View {
     
     // MARK: - Fonts
     

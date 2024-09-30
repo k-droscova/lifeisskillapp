@@ -18,7 +18,7 @@ protocol KeychainHelping {
     func delete(key: String) throws
 }
 
-public final class KeychainHelper: BaseClass, KeychainHelping {
+final class KeychainHelper: BaseClass, KeychainHelping {
     typealias Dependencies = HasLoggers
     
     private let logger: LoggerServicing
