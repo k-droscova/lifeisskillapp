@@ -134,6 +134,9 @@
 		275D016D2CAA995000785E7C /* KeychainHelperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */; };
 		275D016F2CAA9BAC00785E7C /* KeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D016E2CAA9BA800785E7C /* KeychainStorageTests.swift */; };
 		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
+		276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */; };
+		276618D92CAB2058004D13F7 /* LoginRespositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */; };
+		276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
 		276ADDBD2C6E7E2000DA2301 /* ScannedPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */; };
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
@@ -385,6 +388,9 @@
 		275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelperMock.swift; sourceTree = "<group>"; };
 		275D016E2CAA9BA800785E7C /* KeychainStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorageTests.swift; sourceTree = "<group>"; };
 		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageMock.swift; sourceTree = "<group>"; };
+		276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRespositoryTests.swift; sourceTree = "<group>"; };
+		276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumRepositoryTests.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
 		276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepository.swift; sourceTree = "<group>"; };
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
@@ -1165,6 +1171,7 @@
 		275D01692CAA986600785E7C /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				276618D62CAB2044004D13F7 /* Realm */,
 				275D016A2CAA986C00785E7C /* Other */,
 			);
 			path = Storage;
@@ -1181,6 +1188,7 @@
 		275D016B2CAA994600785E7C /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */,
 				275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */,
 			);
 			path = Storage;
@@ -1195,6 +1203,23 @@
 				272399B72CA48C4B00DC8848 /* ResponseType.swift */,
 			);
 			path = GeneralNetworking;
+			sourceTree = "<group>";
+		};
+		276618D62CAB2044004D13F7 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				276618D72CAB2049004D13F7 /* Repositories */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		276618D72CAB2049004D13F7 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */,
+				276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		276CA9CC2C5E5FAF001D6394 /* Rank */ = {
@@ -1795,9 +1820,12 @@
 				2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */,
 				2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */,
 				2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */,
+				276618D92CAB2058004D13F7 /* LoginRespositoryTests.swift in Sources */,
 				275D016F2CAA9BAC00785E7C /* KeychainStorageTests.swift in Sources */,
 				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
+				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
 				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
+				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
 				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
 				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
 				274B84452CA987AB00B94E14 /* RegisterUserAPITests.swift in Sources */,
