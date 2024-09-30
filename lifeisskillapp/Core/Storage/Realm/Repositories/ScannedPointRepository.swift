@@ -16,7 +16,7 @@ protocol RealmScannedPointRepositoring: RealmRepositoring where Entity == RealmS
     func getScannedPoints() async throws -> [ScannedPoint]
 }
 
-public class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositoring, HasRealmStoraging, HasLoggers {
+class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmScannedPoint
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

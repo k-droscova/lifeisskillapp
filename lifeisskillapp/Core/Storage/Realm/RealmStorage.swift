@@ -17,7 +17,7 @@ protocol RealmStoraging {
     func getRealm() -> Realm?
 }
 
-public final class RealmStorage: BaseClass, RealmStoraging {
+final class RealmStorage: BaseClass, RealmStoraging {
     typealias Dependencies = HasLoggers
     
     // MARK: - Private Properties

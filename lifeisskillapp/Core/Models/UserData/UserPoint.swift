@@ -8,7 +8,7 @@ import Foundation
 import CoreLocation
 
 struct UserPoint: UserData {
-    public let id: String
+    let id: String
     let recordKey: String
     let pointTime: Date
     let pointName: String
@@ -142,7 +142,7 @@ extension UserPoint {
 }
 
 struct Point: Identifiable {
-    public let id: String
+    let id: String
     let pointId: String
     let name: String
     let value: Int

@@ -25,7 +25,7 @@ protocol NetworkMonitoring: AnyObject {
     func stopMonitoring()
 }
 
-public final class NetworkMonitor: BaseClass, NetworkMonitoring {
+final class NetworkMonitor: BaseClass, NetworkMonitoring {
     typealias Dependencies = HasLoggerServicing
     
     // MARK: - Private Properties

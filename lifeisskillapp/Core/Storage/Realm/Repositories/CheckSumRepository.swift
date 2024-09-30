@@ -16,7 +16,7 @@ protocol RealmCheckSumRepositoring: RealmRepositoring where Entity == RealmCheck
     func deleteUserSpecificCheckSums() throws
 }
 
-public class RealmCheckSumRepository: BaseClass, RealmCheckSumRepositoring, HasRealmStoraging, HasLoggers {
+class RealmCheckSumRepository: BaseClass, RealmCheckSumRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmCheckSumData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

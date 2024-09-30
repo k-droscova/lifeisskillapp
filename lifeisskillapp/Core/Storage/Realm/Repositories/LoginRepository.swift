@@ -20,7 +20,7 @@ protocol RealmLoginRepositoring: RealmRepositoring where Entity == RealmLoginDet
     func markUserAsLoggedIn() throws
 }
 
-public class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmStoraging, HasLoggers {
+class RealmLoginRepository: BaseClass, RealmLoginRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmLoginDetails
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

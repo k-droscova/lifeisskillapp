@@ -12,7 +12,7 @@ struct LogSource: Codable {
     var fun: String
     var line: Int
     
-    public init(fileID: String, fun: String, line: Int) {
+    init(fileID: String, fun: String, line: Int) {
         self.fileID = fileID
         self.fun = fun
         self.line = line

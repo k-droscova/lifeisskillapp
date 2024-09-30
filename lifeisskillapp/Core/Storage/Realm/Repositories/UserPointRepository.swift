@@ -14,7 +14,7 @@ protocol HasRealmUserPointRepository {
 
 protocol RealmUserPointRepositoring: RealmRepositoring where Entity == RealmUserPointData {}
 
-public class RealmUserPointRepository: BaseClass, RealmUserPointRepositoring, HasRealmStoraging, HasLoggers {
+class RealmUserPointRepository: BaseClass, RealmUserPointRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmUserPointData
     typealias Dependencies = HasRealmStoraging & HasLoggers
     

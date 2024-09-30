@@ -19,17 +19,17 @@ protocol Loggable: CustomStringConvertible, Codable {
 
 class LogEvent: Loggable {
     
-    public var id: String
-    public var message: String
-    public var dateString: String
-    public var source: LogSource
-    public var severity: LogSeverity
-    public var context: LogContext
-    public var description: String {
+    var id: String
+    var message: String
+    var dateString: String
+    var source: LogSource
+    var severity: LogSeverity
+    var context: LogContext
+    var description: String {
         (try? JsonMapper.jsonString(from: self)) ?? "Mapping Failed"
     }
     
-    public init(
+    init(
         fileID: String = #fileID,
         fun: String = #function,
         line: Int = #line,

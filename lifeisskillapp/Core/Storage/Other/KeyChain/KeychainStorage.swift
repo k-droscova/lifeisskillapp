@@ -18,7 +18,7 @@ protocol KeychainStoraging {
     func delete() throws
 }
 
-public final class KeychainStorage: BaseClass, KeychainStoraging {
+final class KeychainStorage: BaseClass, KeychainStoraging {
     typealias Dependencies = HasLoggers & HasKeychainHelper
     
     private let logger: LoggerServicing
