@@ -7,24 +7,25 @@
 
 import RealmSwift
 @testable import lifeisskillapp
+import Foundation
 
 final class RealmStorageMock: RealmStoraging {
     
     private var inMemoryRealm: Realm?
+    var shouldThrowError: Bool = false
     
-    // can simulate specific configurations (e.g., schema versions).
-    var configurations: Realm.Configuration = Realm.Configuration(inMemoryIdentifier: "RealmStorageMock")
+    var configurations: Realm.Configuration {
+        return Realm.Configuration(inMemoryIdentifier: "\(UUID().uuidString)")
+    }
     
     init() {
         setupInMemoryRealm()
     }
     
-    // This function returns the in-memory Realm instance for testing.
     func getRealm() -> Realm? {
-        inMemoryRealm
+        return shouldThrowError ? nil : inMemoryRealm
     }
     
-    // For teardown after each test
     func clearRealm() {
         guard let realm = inMemoryRealm else { return }
         try? realm.write {
@@ -32,7 +33,6 @@ final class RealmStorageMock: RealmStoraging {
         }
     }
     
-    // Set up an in-memory Realm instance with the provided configuration
     private func setupInMemoryRealm() {
         do {
             inMemoryRealm = try Realm(configuration: configurations)

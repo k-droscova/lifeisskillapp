@@ -17,6 +17,9 @@
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
 		2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144C2C720B4A00A0ECF2 /* Map.swift */; };
 		2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */; };
+		271297B92CAC33B0004175C9 /* CategoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297B82CAC33A2004175C9 /* CategoryRepositoryTests.swift */; };
+		271297BB2CAC35DD004175C9 /* RankingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297BA2CAC35D4004175C9 /* RankingRepositoryTests.swift */; };
+		271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297BC2CAC36E1004175C9 /* UserPointRepositoryTests.swift */; };
 		271303402C7C8D3B0005FC46 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2713033F2C7C8D3B0005FC46 /* Constants.swift */; };
 		271303432C7C8D680005FC46 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */; };
 		271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303452C7C8DA40005FC46 /* EnterPasswordView.swift */; };
@@ -268,6 +271,9 @@
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
 		2712144C2C720B4A00A0ECF2 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotations.swift; sourceTree = "<group>"; };
+		271297B82CAC33A2004175C9 /* CategoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepositoryTests.swift; sourceTree = "<group>"; };
+		271297BA2CAC35D4004175C9 /* RankingRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepositoryTests.swift; sourceTree = "<group>"; };
+		271297BC2CAC36E1004175C9 /* UserPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointRepositoryTests.swift; sourceTree = "<group>"; };
 		2713033F2C7C8D3B0005FC46 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		271303452C7C8DA40005FC46 /* EnterPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordView.swift; sourceTree = "<group>"; };
@@ -1216,6 +1222,9 @@
 		276618D72CAB2049004D13F7 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				271297BC2CAC36E1004175C9 /* UserPointRepositoryTests.swift */,
+				271297BA2CAC35D4004175C9 /* RankingRepositoryTests.swift */,
+				271297B82CAC33A2004175C9 /* CategoryRepositoryTests.swift */,
 				276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */,
 				276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */,
 			);
@@ -1813,6 +1822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271297BB2CAC35DD004175C9 /* RankingRepositoryTests.swift in Sources */,
 				274B84412CA97F9600B94E14 /* ScannedPoint.swift in Sources */,
 				275D016D2CAA995000785E7C /* KeychainHelperMock.swift in Sources */,
 				2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */,
@@ -1826,6 +1836,7 @@
 				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
 				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
 				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
+				271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */,
 				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
 				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
 				274B84452CA987AB00B94E14 /* RegisterUserAPITests.swift in Sources */,
@@ -1834,6 +1845,7 @@
 				2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */,
 				2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */,
 				2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */,
+				271297B92CAC33B0004175C9 /* CategoryRepositoryTests.swift in Sources */,
 				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
 				2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */,
 				2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */,
