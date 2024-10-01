@@ -339,7 +339,7 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     }
     
     private func loadScannedPoints() async throws {
-        let scannedPoints = try await scannedPointRepo.getScannedPoints()
+        let scannedPoints = try scannedPointRepo.getScannedPoints()
         _scannedPoints = scannedPoints
     }
 }
