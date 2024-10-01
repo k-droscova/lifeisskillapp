@@ -559,7 +559,7 @@ class MockRealmSponsorRepository: RealmSponsorRepositoring {
         if shouldThrowError {
             throw MockRepositoryError.forcedError
         }
-        savedSponsorData.append(contentsOf: entities) 
+        savedSponsorData.append(contentsOf: entities)
     }
     
     func delete(_ entity: RealmSponsorData) throws {

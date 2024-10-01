@@ -66,7 +66,6 @@
 		272399BB2CA4949600DC8848 /* URLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272399BA2CA4948C00DC8848 /* URLError.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
-		27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F942C3320F3003453E2 /* lifeisskillappTests.swift */; };
 		27274F9F2C3320F3003453E2 /* lifeisskillappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F9E2C3320F3003453E2 /* lifeisskillappUITests.swift */; };
 		27274FA12C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274FA02C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift */; };
 		273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730222F2C624C6B00F9D572 /* SettingsBarViewModel.swift */; };
@@ -328,7 +327,6 @@
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27274F902C3320F3003453E2 /* lifeisskillappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		27274F942C3320F3003453E2 /* lifeisskillappTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappTests.swift; sourceTree = "<group>"; };
 		27274F9A2C3320F3003453E2 /* lifeisskillappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F9E2C3320F3003453E2 /* lifeisskillappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappUITests.swift; sourceTree = "<group>"; };
 		27274FA02C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -535,6 +533,15 @@
 			path = Points;
 			sourceTree = "<group>";
 		};
+		271297C82CAC54B3004175C9 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				275D01682CAA986100785E7C /* Core */,
+				2755A9A02CA809F100056594 /* Services */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		271303412C7C8D550005FC46 /* ForgotPassword */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,10 +715,8 @@
 		27274F932C3320F3003453E2 /* lifeisskillappTests */ = {
 			isa = PBXGroup;
 			children = (
-				275D01682CAA986100785E7C /* Core */,
-				2755A9A02CA809F100056594 /* Services */,
+				271297C82CAC54B3004175C9 /* Tests */,
 				2755A99C2CA808B800056594 /* Mocks */,
-				27274F942C3320F3003453E2 /* lifeisskillappTests.swift */,
 			);
 			path = lifeisskillappTests;
 			sourceTree = "<group>";
@@ -1852,7 +1857,6 @@
 				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
 				271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */,
 				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
-				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
 				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
 				271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */,
 				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
