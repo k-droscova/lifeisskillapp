@@ -267,7 +267,7 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     
     func markUserAsLoggedIn() async throws {
         guard let user = try loginRepo.getSavedLoginDetails() else { return }
-        try loginRepo.markUserAsLoggedOut()
+        try loginRepo.markUserAsLoggedIn()
         self.token = user.token
     }
     
