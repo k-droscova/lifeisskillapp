@@ -96,7 +96,6 @@ extension RealmUserDataStorageTests {
         XCTAssertNil(savedData, "Expected nil when there are no saved login details.")
     }
     
-    // Test loggedInUserDetails functionality
     func testLoggedInUserDetails_UserIsLoggedIn_ReturnsUserData() async throws {
         // Arrange
         let user = LoggedInUser.mock(userId: "mockUser")
@@ -135,7 +134,6 @@ extension RealmUserDataStorageTests {
         XCTAssertNil(loggedInData, "Expected nil when there are no saved login details.")
     }
     
-    // Test login functionality
     func testLogin_Success() async throws {
         // Arrange
         let user = LoggedInUser.mock(userId: "mockUser")
@@ -148,7 +146,6 @@ extension RealmUserDataStorageTests {
         XCTAssertEqual(userDataStorage.token, user.token, "Expected token to be set.")
     }
     
-    // Test markUserAsLoggedOut functionality
     func testMarkUserAsLoggedOut_Success() async throws {
         // Arrange
         let user = LoggedInUser.mock(userId: "mockUser")
@@ -163,7 +160,6 @@ extension RealmUserDataStorageTests {
         XCTAssertNil(userDataStorage.token, "Expected token to be nil after logout.")
     }
     
-    // Test markUserAsLoggedIn functionality
     func testMarkUserAsLoggedIn_Success() async throws {
         // Arrange
         let user = LoggedInUser.mock(userId: "mockUser")
