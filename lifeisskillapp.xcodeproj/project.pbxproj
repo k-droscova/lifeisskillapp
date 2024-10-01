@@ -23,6 +23,7 @@
 		271297BF2CAC3A78004175C9 /* PointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297BE2CAC3A71004175C9 /* PointRepositoryTests.swift */; };
 		271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C02CAC3BEE004175C9 /* SponsorRepositoryTests.swift */; };
 		271297C32CAC3CE2004175C9 /* ScannedPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C22CAC3CDB004175C9 /* ScannedPointRepositoryTests.swift */; };
+		271297C52CAC40CF004175C9 /* RepositoryMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C42CAC40CC004175C9 /* RepositoryMocks.swift */; };
 		271303402C7C8D3B0005FC46 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2713033F2C7C8D3B0005FC46 /* Constants.swift */; };
 		271303432C7C8D680005FC46 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */; };
 		271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303452C7C8DA40005FC46 /* EnterPasswordView.swift */; };
@@ -280,6 +281,7 @@
 		271297BE2CAC3A71004175C9 /* PointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRepositoryTests.swift; sourceTree = "<group>"; };
 		271297C02CAC3BEE004175C9 /* SponsorRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorRepositoryTests.swift; sourceTree = "<group>"; };
 		271297C22CAC3CDB004175C9 /* ScannedPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepositoryTests.swift; sourceTree = "<group>"; };
+		271297C42CAC40CC004175C9 /* RepositoryMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryMocks.swift; sourceTree = "<group>"; };
 		2713033F2C7C8D3B0005FC46 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		271303452C7C8DA40005FC46 /* EnterPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordView.swift; sourceTree = "<group>"; };
@@ -1200,6 +1202,7 @@
 		275D016B2CAA994600785E7C /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				271297C42CAC40CC004175C9 /* RepositoryMocks.swift */,
 				276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */,
 				275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */,
 			);
@@ -1840,6 +1843,7 @@
 				2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */,
 				2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */,
 				2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */,
+				271297C52CAC40CF004175C9 /* RepositoryMocks.swift in Sources */,
 				276618D92CAB2058004D13F7 /* LoginRespositoryTests.swift in Sources */,
 				275D016F2CAA9BAC00785E7C /* KeychainStorageTests.swift in Sources */,
 				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
