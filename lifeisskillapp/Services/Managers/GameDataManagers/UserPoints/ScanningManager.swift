@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 protocol HasScanningManager {
     var scanningManager: ScanningManaging { get }

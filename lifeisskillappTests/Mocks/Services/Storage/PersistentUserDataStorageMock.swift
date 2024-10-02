@@ -9,13 +9,13 @@
 import Foundation
 
 final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
-    // Properties to mock values
+    var errorToThrow: Error? = nil
+    
     var mockToken: String? = nil
     var mockIsLoggedIn: Bool = false
     var imageData: Data? = nil
     var mockLoggedInUser: LoggedInUser? = nil
     
-    // MARK: - Token and Login Status
     var token: String? {
         mockToken
     }
@@ -26,19 +26,35 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
 
     // MARK: - UserDataStoraging Conformance
     func onLogin() async throws {
-        print("onLogin() called")
+        guard let error = errorToThrow else {
+            print("onLogin() called")
+            return
+        }
+        throw error
     }
 
     func onLogout() async throws {
-        print("onLogout() called")
+        guard let error = errorToThrow else {
+            print("onLogout() called")
+            return
+        }
+        throw error
     }
 
     func clearUserRelatedData() async throws {
-        print("clearUserRelatedData() called")
+        guard let error = errorToThrow else {
+            print("clearUserRelatedData() called")
+            return
+        }
+        throw error
     }
 
     func clearScannedPointData() async throws {
-        print("clearScannedPointData() called")
+        guard let error = errorToThrow else {
+            print("clearScannedPointData() called")
+            return
+        }
+        throw error
     }
 
     // MARK: - Mock Storage Getters and Setters
@@ -50,60 +66,109 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     var mockScannedPoints: [ScannedPoint] = []
     
     func userCategoryData() async throws -> UserCategoryData? {
-        mockUserCategoryData
+        guard let error = errorToThrow else {
+            return mockUserCategoryData
+        }
+        throw error
     }
 
     func saveUserCategoryData(_ data: UserCategoryData?) async throws {
-        mockUserCategoryData = data
+        guard let error = errorToThrow else {
+            mockUserCategoryData = data
+            return
+        }
+        throw error
     }
 
     func userPointData() async throws -> UserPointData? {
-        mockUserPointData
+        guard let error = errorToThrow else {
+            return mockUserPointData
+        }
+        throw error
     }
 
     func saveUserPointData(_ data: UserPointData?) async throws {
-        mockUserPointData = data
+        guard let error = errorToThrow else {
+            mockUserPointData = data
+            return
+        }
+        throw error
     }
 
     func userRankData() async throws -> UserRankData? {
-        mockUserRankData
+        guard let error = errorToThrow else {
+            return mockUserRankData
+        }
+        throw error
     }
 
     func saveUserRankData(_ data: UserRankData?) async throws {
-        mockUserRankData = data
+        guard let error = errorToThrow else {
+            mockUserRankData = data
+            return
+        }
+        throw error
     }
 
     func genericPointData() async throws -> GenericPointData? {
-        mockGenericPointData
+        guard let error = errorToThrow else {
+            return mockGenericPointData
+        }
+        throw error
     }
 
     func saveGenericPointData(_ data: GenericPointData?) async throws {
-        mockGenericPointData = data
+        guard let error = errorToThrow else {
+            mockGenericPointData = data
+            return
+        }
+        throw error
     }
 
     func checkSumData() async throws -> CheckSumData? {
-        mockCheckSumData
+        guard let error = errorToThrow else {
+            return mockCheckSumData
+        }
+        throw error
     }
 
     func saveCheckSumData(_ data: CheckSumData?) async throws {
-        mockCheckSumData = data
+        guard let error = errorToThrow else {
+            mockCheckSumData = data
+            return
+        }
+        throw error
     }
 
     func scannedPoints() async throws -> [ScannedPoint] {
-        mockScannedPoints
+        guard let error = errorToThrow else {
+            return mockScannedPoints
+        }
+        throw error
     }
 
     func saveScannedPoint(_ point: ScannedPoint) async throws {
-        mockScannedPoints.append(point)
+        guard let error = errorToThrow else {
+            mockScannedPoints.append(point)
+            return
+        }
+        throw error
     }
 
     func saveSponsorImage(for sponsorId: String, imageData: Data) async throws {
-        print("saveSponsorImage() called for sponsorId: \(sponsorId)")
+        guard let error = errorToThrow else {
+            print("saveSponsorImage() called for sponsorId: \(sponsorId)")
+            return
+        }
+        throw error
     }
 
     func sponsorImage(for sponsorId: String) async throws -> Data? {
-        print("sponsorImage() called for sponsorId: \(sponsorId)")
-        return imageData
+        guard let error = errorToThrow else {
+            print("sponsorImage() called for sponsorId: \(sponsorId)")
+            return imageData
+        }
+        throw error
     }
 
     // MARK: - Login User Data Related Interface
@@ -111,35 +176,61 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     var mockLoggedInUserDetails: LoginUserData?
     
     func savedLoginDetails() async throws -> LoginUserData? {
-        mockLoginDetails
+        guard let error = errorToThrow else {
+            return mockLoginDetails
+        }
+        throw error
     }
 
     func loggedInUserDetails() async throws -> LoginUserData? {
-        mockLoggedInUserDetails
+        guard let error = errorToThrow else {
+            return mockLoggedInUserDetails
+        }
+        throw error
     }
 
     func login(_ user: LoggedInUser) async throws {
-        print("login() called with user: \(user)")
-        mockLoggedInUser = user
+        guard let error = errorToThrow else {
+            print("login() called with user: \(user)")
+            mockLoggedInUser = user
+            return
+        }
+        throw error
     }
 
     func markUserAsLoggedOut() async throws {
-        print("markUserAsLoggedOut() called")
-        mockIsLoggedIn = false
-        mockLoggedInUser = nil
+        guard let error = errorToThrow else {
+            print("markUserAsLoggedOut() called")
+            mockIsLoggedIn = false
+            mockLoggedInUser = nil
+            return
+        }
+        throw error
     }
 
     func markUserAsLoggedIn() async throws {
-        print("markUserAsLoggedIn() called")
-        mockIsLoggedIn = true
+        guard let error = errorToThrow else {
+            print("markUserAsLoggedIn() called")
+            mockIsLoggedIn = true
+            return
+        }
+        throw error
     }
 
     // MARK: - PersistentUserDataStoraging Conformance
     func loadAllDataFromRepositories() async throws {
-        print("loadAllDataFromRepositories() called")
+        guard let error = errorToThrow else {
+            print("loadAllDataFromRepositories() called")
+            return
+        }
+        throw error
     }
 
     func loadFromRepository(for data: PersistentDataType) async throws {
-        print("loadFromRepository() called for data type: \(data)")
+        guard let error = errorToThrow else {
+            print("loadFromRepository() called for data type: \(data)")
+            return
+        }
+        throw error
     }
 }
