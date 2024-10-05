@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class BaseClass: NSObject {
-    public override init() {
+class BaseClass: NSObject {
+    override init() {
         super.init()
         appDependencies.logger.log(message: "📱 👶 \(self)")
     }

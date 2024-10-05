@@ -16,7 +16,7 @@ protocol LoginAPIServicing {
     func signature(userToken: String) async throws -> APIResponse<SignatureAPIResponse>
 }
 
-public final class LoginAPIService: BaseClass, LoginAPIServicing {
+final class LoginAPIService: BaseClass, LoginAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var network: Networking
@@ -38,7 +38,7 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
         let task = ApiTask.login(credentials: credentials, location: location)
         let data = try task.encodeParams()
         
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.login,
             method: .POST,
             body: data,
@@ -48,7 +48,7 @@ public final class LoginAPIService: BaseClass, LoginAPIServicing {
     }
     
     func signature(userToken: String) async throws -> APIResponse<SignatureAPIResponse> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.signature,
             sensitiveRequestBodyData: false,
             errorObject: APIResponseError.self,

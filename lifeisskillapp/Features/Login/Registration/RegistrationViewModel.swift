@@ -38,7 +38,7 @@ protocol RegistrationViewModeling: BaseClass, ObservableObject {
     func gdprButtonClicked()
 }
 
-class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeling {
+final class RegistrationViewModel: BaseClass, ObservableObject, RegistrationViewModeling {
     struct Dependencies: HasLoggers & HasUserManager {
         let logger: LoggerServicing
         let userManager: UserManaging

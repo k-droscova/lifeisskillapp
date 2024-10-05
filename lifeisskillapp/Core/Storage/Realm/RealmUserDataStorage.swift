@@ -22,7 +22,7 @@ protocol PersistentUserDataStoraging: UserDataStoraging {
     func loadFromRepository(for data: PersistentDataType) async throws
 }
 
-public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
+final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     typealias Dependencies = HasLoggers & HasRealmRepositories
     
     // MARK: - Private Properties
@@ -267,7 +267,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     
     func markUserAsLoggedIn() async throws {
         guard let user = try loginRepo.getSavedLoginDetails() else { return }
-        try loginRepo.markUserAsLoggedOut()
+        try loginRepo.markUserAsLoggedIn()
         self.token = user.token
     }
     
@@ -339,7 +339,7 @@ public final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging 
     }
     
     private func loadScannedPoints() async throws {
-        let scannedPoints = try await scannedPointRepo.getScannedPoints()
+        let scannedPoints = try scannedPointRepo.getScannedPoints()
         _scannedPoints = scannedPoints
     }
 }

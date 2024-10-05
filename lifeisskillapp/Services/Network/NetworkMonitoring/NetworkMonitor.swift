@@ -25,13 +25,13 @@ protocol NetworkMonitoring: AnyObject {
     func stopMonitoring()
 }
 
-public final class NetworkMonitor: BaseClass, NetworkMonitoring {
+final class NetworkMonitor: BaseClass, NetworkMonitoring {
     typealias Dependencies = HasLoggerServicing
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private var monitor: NWPathMonitor
+    private var monitor: NWPathMonitoring
     private let queue: DispatchQueue
     private var onlineStatusSubject = CurrentValueSubject<Bool, Never>(true)
     
@@ -45,10 +45,14 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
     
     // MARK: - Initialization
     
-    init(dependencies: Dependencies) {
+    init(
+        dependencies: Dependencies,
+        monitor: NWPathMonitoring = NWPathMonitor(),
+        queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")
+    ) {
         self.logger = dependencies.logger
-        self.monitor = NWPathMonitor()
-        self.queue = DispatchQueue(label: "NetworkMonitor")
+        self.monitor = monitor
+        self.queue = queue
         super.init()
         startMonitoring()
     }
@@ -63,11 +67,11 @@ public final class NetworkMonitor: BaseClass, NetworkMonitoring {
         monitor.pathUpdateHandler = { [weak self] path in
             self?.handleNetworkChange(path: path)
         }
-        monitor.start(queue: queue)
+        monitor.listen(queue: queue)
     }
     
     func stopMonitoring() {
-        monitor.cancel()
+        monitor.stop()
     }
     
     // MARK: - Private Helpers

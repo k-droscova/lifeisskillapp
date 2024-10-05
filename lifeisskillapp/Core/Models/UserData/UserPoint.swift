@@ -51,6 +51,40 @@ struct UserPoint: UserData {
             timestamp: pointTime
         )
     }
+    
+    init(
+        id: String,
+        recordKey: String,
+        pointTime: Date,
+        pointName: String,
+        pointValue: Int,
+        pointType: PointType,
+        pointSpec: Int,
+        pointLat: Double,
+        pointLng: Double,
+        pointAlt: Double,
+        accuracy: Double,
+        codeSource: CodeSource,
+        pointCategory: [String],
+        duration: TimeInterval? = nil,
+        doesPointCount: Bool
+    ) {
+        self.id = id
+        self.recordKey = recordKey
+        self.pointTime = pointTime
+        self.pointName = pointName
+        self.pointValue = pointValue
+        self.pointType = pointType
+        self.pointSpec = pointSpec
+        self.pointLat = pointLat
+        self.pointLng = pointLng
+        self.pointAlt = pointAlt
+        self.accuracy = accuracy
+        self.codeSource = codeSource
+        self.pointCategory = pointCategory
+        self.duration = duration
+        self.doesPointCount = doesPointCount
+    }
 }
 
 extension UserPoint {
@@ -117,7 +151,7 @@ struct Point: Identifiable {
     let location: UserLocation
     let doesPointCount: Bool
 
-    internal init(from userPoint: UserPoint) {
+    init(from userPoint: UserPoint) {
         /*
          Note that id is record key in this case, since one specific point can be scanned multiple times (across multiple days).
          Record key is the "id" of the scanned point instance, hence is unique for the user point.

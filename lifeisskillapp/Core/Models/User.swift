@@ -77,6 +77,56 @@ struct LoggedInUser: UserProtocol, Codable {
     let emailParent: String?
     let mobilParent: String?
     let relation: String?
+    
+    init(
+        userId: String,
+        email: String,
+        nick: String,
+        sex: UserGender,
+        rights: Int,
+        rightsCoded: String,
+        token: String,
+        userRank: Int,
+        userPoints: Int,
+        distance: Int,
+        mainCategory: String,
+        fullActivation: Bool,
+        activationStatus: UserActivationStatus = .incomplete,
+        name: String? = nil,
+        surname: String? = nil,
+        mobil: String? = nil,
+        postalCode: String? = nil,
+        birthday: Date? = nil,
+        nameParent: String? = nil,
+        surnameParent: String? = nil,
+        emailParent: String? = nil,
+        mobilParent: String? = nil,
+        relation: String? = nil
+    ) {
+        self.userId = userId
+        self.email = email
+        self.nick = nick
+        self.sex = sex
+        self.rights = rights
+        self.rightsCoded = rightsCoded
+        self.token = token
+        self.userRank = userRank
+        self.userPoints = userPoints
+        self.distance = distance
+        self.mainCategory = mainCategory
+        self.fullActivation = fullActivation
+        self.activationStatus = activationStatus
+        self.name = name
+        self.surname = surname
+        self.mobil = mobil
+        self.postalCode = postalCode
+        self.birthday = birthday
+        self.nameParent = nameParent
+        self.surnameParent = surnameParent
+        self.emailParent = emailParent
+        self.mobilParent = mobilParent
+        self.relation = relation
+    }
 }
 
 // Extend the UserProtocol to provide a default implementation for the id property

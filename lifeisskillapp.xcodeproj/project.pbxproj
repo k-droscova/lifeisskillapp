@@ -17,6 +17,14 @@
 		27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */; };
 		2712144D2C720B4A00A0ECF2 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144C2C720B4A00A0ECF2 /* Map.swift */; };
 		2712144F2C7217C300A0ECF2 /* MapAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */; };
+		271297B92CAC33B0004175C9 /* CategoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297B82CAC33A2004175C9 /* CategoryRepositoryTests.swift */; };
+		271297BB2CAC35DD004175C9 /* RankingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297BA2CAC35D4004175C9 /* RankingRepositoryTests.swift */; };
+		271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297BC2CAC36E1004175C9 /* UserPointRepositoryTests.swift */; };
+		271297BF2CAC3A78004175C9 /* PointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297BE2CAC3A71004175C9 /* PointRepositoryTests.swift */; };
+		271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C02CAC3BEE004175C9 /* SponsorRepositoryTests.swift */; };
+		271297C32CAC3CE2004175C9 /* ScannedPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C22CAC3CDB004175C9 /* ScannedPointRepositoryTests.swift */; };
+		271297C52CAC40CF004175C9 /* RepositoryMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C42CAC40CC004175C9 /* RepositoryMocks.swift */; };
+		271297C72CAC452E004175C9 /* RealmUserDataStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271297C62CAC4528004175C9 /* RealmUserDataStorageTests.swift */; };
 		271303402C7C8D3B0005FC46 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2713033F2C7C8D3B0005FC46 /* Constants.swift */; };
 		271303432C7C8D680005FC46 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */; };
 		271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271303452C7C8DA40005FC46 /* EnterPasswordView.swift */; };
@@ -54,9 +62,23 @@
 		27234C262C8A39A90077CBD8 /* FullRegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C252C8A39A90077CBD8 /* FullRegistrationViewModel.swift */; };
 		27234C282C8A39B40077CBD8 /* FullRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C272C8A39B40077CBD8 /* FullRegistrationView.swift */; };
 		27234C2A2C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27234C292C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift */; };
+		272396102CAD3C9700041277 /* RegisterAppAPIServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723960F2CAD3C9100041277 /* RegisterAppAPIServiceMock.swift */; };
+		272396122CAD3E0E00041277 /* LoginAPIServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396112CAD3E0700041277 /* LoginAPIServiceMock.swift */; };
+		272396142CAD3ECF00041277 /* CheckSumAPIServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396132CAD3EC900041277 /* CheckSumAPIServiceMock.swift */; };
+		272396162CAD3F1700041277 /* ForgotPasswordAPIServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396152CAD3F1000041277 /* ForgotPasswordAPIServiceMock.swift */; };
+		272396182CAD3F5200041277 /* RegisterUserAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396172CAD3F4C00041277 /* RegisterUserAPIServiceTests.swift */; };
+		2723961A2CAD3F9F00041277 /* UserDataAPIServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396192CAD3F9B00041277 /* UserDataAPIServiceMock.swift */; };
+		2723961C2CAD40DA00041277 /* RepositoriesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723961B2CAD40D600041277 /* RepositoriesMock.swift */; };
+		2723961F2CAD43F200041277 /* RealmDependenciesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723961E2CAD43EF00041277 /* RealmDependenciesMock.swift */; };
+		272396212CAD44F200041277 /* NetworkMonitorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396202CAD44EC00041277 /* NetworkMonitorMock.swift */; };
+		272396272CAD482400041277 /* ScanningManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396262CAD482000041277 /* ScanningManagerTests.swift */; };
+		2723962A2CAD501000041277 /* ScanningManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272396292CAD500C00041277 /* ScanningManagerMock.swift */; };
+		2723962D2CAD50B000041277 /* FlowDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723962C2CAD50AD00041277 /* FlowDelegates.swift */; };
+		2723962F2CAD512E00041277 /* UserPointManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723962E2CAD512800041277 /* UserPointManagerTests.swift */; };
+		272399B82CA48C4B00DC8848 /* ResponseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272399B72CA48C4B00DC8848 /* ResponseType.swift */; };
+		272399BB2CA4949600DC8848 /* URLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272399BA2CA4948C00DC8848 /* URLError.swift */; };
 		27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F7D2C3320F2003453E2 /* AppDelegate.swift */; };
 		27274F872C3320F3003453E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27274F862C3320F3003453E2 /* Assets.xcassets */; };
-		27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F942C3320F3003453E2 /* lifeisskillappTests.swift */; };
 		27274F9F2C3320F3003453E2 /* lifeisskillappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274F9E2C3320F3003453E2 /* lifeisskillappUITests.swift */; };
 		27274FA12C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27274FA02C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift */; };
 		273022302C624C6B00F9D572 /* SettingsBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730222F2C624C6B00F9D572 /* SettingsBarViewModel.swift */; };
@@ -85,6 +107,12 @@
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
 		27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27497AF72C78ACDB00E7051D /* UserDataStorage.swift */; };
+		274B843A2CA976DA00B94E14 /* PersistentUserDataStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */; };
+		274B843C2CA978C200B94E14 /* CheckSumAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */; };
+		274B843E2CA97E8A00B94E14 /* UserDataAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B843D2CA97E7C00B94E14 /* UserDataAPITests.swift */; };
+		274B84412CA97F9600B94E14 /* ScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84402CA97F9300B94E14 /* ScannedPoint.swift */; };
+		274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84422CA9834B00B94E14 /* ForgotPasswordAPITests.swift */; };
+		274B84452CA987AB00B94E14 /* RegisterUserAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B84442CA987A300B94E14 /* RegisterUserAPITests.swift */; };
 		2750A5BA2C9034410086815D /* UserActivationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5B92C9034410086815D /* UserActivationStatus.swift */; };
 		2750A5BC2C904BD80086815D /* MockViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750A5BB2C904BD80086815D /* MockViewModels.swift */; };
 		2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750BBF92C6A550E00F82A04 /* OnboardingView.swift */; };
@@ -107,8 +135,28 @@
 		275472DF2C5D6AED00F5578F /* roboto_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275472DC2C5D6AED00F5578F /* roboto_black.ttf */; };
 		2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */; };
 		2754AA622C4137E10011A618 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */; };
+		2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */; };
+		2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */; };
+		2755A9AD2CA8289D00056594 /* NWPathMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9AC2CA8289900056594 /* NWPathMonitor.swift */; };
+		2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */; };
+		2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B02CA831E000056594 /* URLSessionWrapperMock.swift */; };
+		2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B22CA833F600056594 /* NetworkTests.swift */; };
+		2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B42CA83C4B00056594 /* EndpointMock.swift */; };
+		2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9B62CA87A2000056594 /* NetworkingMock.swift */; };
+		2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */; };
+		2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */; };
+		2755A9C12CA87E1400056594 /* UserLocationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C02CA87E1000056594 /* UserLocationMock.swift */; };
+		2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C22CA8800D00056594 /* CredentialsMocks.swift */; };
+		2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */; };
+		2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */; };
+		2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */; };
 		2755D73F2C483D7300491874 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2755D73E2C483D7300491874 /* Localizable.xcstrings */; };
+		275D016D2CAA995000785E7C /* KeychainHelperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */; };
+		275D016F2CAA9BAC00785E7C /* KeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D016E2CAA9BA800785E7C /* KeychainStorageTests.swift */; };
 		275EA0932C81E90600F07BB8 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EA0922C81E90600F07BB8 /* Endpoint.swift */; };
+		276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */; };
+		276618D92CAB2058004D13F7 /* LoginRespositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */; };
+		276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
 		276ADDBD2C6E7E2000DA2301 /* ScannedPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */; };
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
@@ -139,9 +187,7 @@
 		27B5DF042C872938003B9AEE /* RegisterUserAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */; };
 		27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */; };
 		27C0DA462C8C4284005A7750 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C0DA452C8C4284005A7750 /* Optional.swift */; };
-		27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6194D2C36E6000067498F /* HttpStatusCode.swift */; };
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
-		27C619552C36EAEF0067498F /* ModuleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619542C36EAEF0067498F /* ModuleError.swift */; };
 		27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195B2C36F12E0067498F /* OSLoggerService.swift */; };
 		27C6195E2C36F2970067498F /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195D2C36F2970067498F /* LoggingService.swift */; };
 		27C619602C3704F60067498F /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195F2C3704F60067498F /* BaseError.swift */; };
@@ -242,6 +288,14 @@
 		27066A9D2C457F1F0092B499 /* CheckSumAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIService.swift; sourceTree = "<group>"; };
 		2712144C2C720B4A00A0ECF2 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		2712144E2C7217C300A0ECF2 /* MapAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotations.swift; sourceTree = "<group>"; };
+		271297B82CAC33A2004175C9 /* CategoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepositoryTests.swift; sourceTree = "<group>"; };
+		271297BA2CAC35D4004175C9 /* RankingRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepositoryTests.swift; sourceTree = "<group>"; };
+		271297BC2CAC36E1004175C9 /* UserPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointRepositoryTests.swift; sourceTree = "<group>"; };
+		271297BE2CAC3A71004175C9 /* PointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRepositoryTests.swift; sourceTree = "<group>"; };
+		271297C02CAC3BEE004175C9 /* SponsorRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorRepositoryTests.swift; sourceTree = "<group>"; };
+		271297C22CAC3CDB004175C9 /* ScannedPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepositoryTests.swift; sourceTree = "<group>"; };
+		271297C42CAC40CC004175C9 /* RepositoryMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryMocks.swift; sourceTree = "<group>"; };
+		271297C62CAC4528004175C9 /* RealmUserDataStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDataStorageTests.swift; sourceTree = "<group>"; };
 		2713033F2C7C8D3B0005FC46 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		271303422C7C8D680005FC46 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		271303452C7C8DA40005FC46 /* EnterPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordView.swift; sourceTree = "<group>"; };
@@ -279,11 +333,25 @@
 		27234C252C8A39A90077CBD8 /* FullRegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRegistrationViewModel.swift; sourceTree = "<group>"; };
 		27234C272C8A39B40077CBD8 /* FullRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRegistrationView.swift; sourceTree = "<group>"; };
 		27234C292C8A3BBF0077CBD8 /* ProfileFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowCoordinator.swift; sourceTree = "<group>"; };
+		2723960F2CAD3C9100041277 /* RegisterAppAPIServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAppAPIServiceMock.swift; sourceTree = "<group>"; };
+		272396112CAD3E0700041277 /* LoginAPIServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIServiceMock.swift; sourceTree = "<group>"; };
+		272396132CAD3EC900041277 /* CheckSumAPIServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPIServiceMock.swift; sourceTree = "<group>"; };
+		272396152CAD3F1000041277 /* ForgotPasswordAPIServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIServiceMock.swift; sourceTree = "<group>"; };
+		272396172CAD3F4C00041277 /* RegisterUserAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserAPIServiceTests.swift; sourceTree = "<group>"; };
+		272396192CAD3F9B00041277 /* UserDataAPIServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPIServiceMock.swift; sourceTree = "<group>"; };
+		2723961B2CAD40D600041277 /* RepositoriesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesMock.swift; sourceTree = "<group>"; };
+		2723961E2CAD43EF00041277 /* RealmDependenciesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDependenciesMock.swift; sourceTree = "<group>"; };
+		272396202CAD44EC00041277 /* NetworkMonitorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorMock.swift; sourceTree = "<group>"; };
+		272396262CAD482000041277 /* ScanningManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManagerTests.swift; sourceTree = "<group>"; };
+		272396292CAD500C00041277 /* ScanningManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningManagerMock.swift; sourceTree = "<group>"; };
+		2723962C2CAD50AD00041277 /* FlowDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowDelegates.swift; sourceTree = "<group>"; };
+		2723962E2CAD512800041277 /* UserPointManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManagerTests.swift; sourceTree = "<group>"; };
+		272399B72CA48C4B00DC8848 /* ResponseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseType.swift; sourceTree = "<group>"; };
+		272399BA2CA4948C00DC8848 /* URLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLError.swift; sourceTree = "<group>"; };
 		27274F7A2C3320F2003453E2 /* lifeisskillapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeisskillapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F7D2C3320F2003453E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27274F862C3320F3003453E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27274F902C3320F3003453E2 /* lifeisskillappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		27274F942C3320F3003453E2 /* lifeisskillappTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappTests.swift; sourceTree = "<group>"; };
 		27274F9A2C3320F3003453E2 /* lifeisskillappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lifeisskillappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27274F9E2C3320F3003453E2 /* lifeisskillappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappUITests.swift; sourceTree = "<group>"; };
 		27274FA02C3320F3003453E2 /* lifeisskillappUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lifeisskillappUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -305,7 +373,6 @@
 		274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorRepository.swift; sourceTree = "<group>"; };
 		274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFlowCoordinator.swift; sourceTree = "<group>"; };
 		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		27414D7B2C63A08B00C19F8C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".realm-cocoa.version"; sourceTree = "<group>"; };
 		27414D7E2C63A08B00C19F8C /* Realm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Realm.xcframework; sourceTree = "<group>"; };
 		27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RealmSwift.xcframework; sourceTree = "<group>"; };
@@ -314,6 +381,12 @@
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		27497AF72C78ACDB00E7051D /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
+		274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentUserDataStorageMock.swift; sourceTree = "<group>"; };
+		274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumAPITests.swift; sourceTree = "<group>"; };
+		274B843D2CA97E7C00B94E14 /* UserDataAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAPITests.swift; sourceTree = "<group>"; };
+		274B84402CA97F9300B94E14 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
+		274B84422CA9834B00B94E14 /* ForgotPasswordAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPITests.swift; sourceTree = "<group>"; };
+		274B84442CA987A300B94E14 /* RegisterUserAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserAPITests.swift; sourceTree = "<group>"; };
 		2750A5B92C9034410086815D /* UserActivationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivationStatus.swift; sourceTree = "<group>"; };
 		2750A5BB2C904BD80086815D /* MockViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockViewModels.swift; sourceTree = "<group>"; };
 		2750BBF92C6A550E00F82A04 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -335,8 +408,28 @@
 		275472DC2C5D6AED00F5578F /* roboto_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roboto_black.ttf; sourceTree = "<group>"; };
 		2754AA5D2C41351C0011A618 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754AA612C4137E10011A618 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
+		2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingServiceMock.swift; sourceTree = "<group>"; };
+		2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorTests.swift; sourceTree = "<group>"; };
+		2755A9AC2CA8289900056594 /* NWPathMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWPathMonitor.swift; sourceTree = "<group>"; };
+		2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWPathMonitorMock.swift; sourceTree = "<group>"; };
+		2755A9B02CA831E000056594 /* URLSessionWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionWrapperMock.swift; sourceTree = "<group>"; };
+		2755A9B22CA833F600056594 /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
+		2755A9B42CA83C4B00056594 /* EndpointMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointMock.swift; sourceTree = "<group>"; };
+		2755A9B62CA87A2000056594 /* NetworkingMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingMock.swift; sourceTree = "<group>"; };
+		2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAppServiceTests.swift; sourceTree = "<group>"; };
+		2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIServiceTests.swift; sourceTree = "<group>"; };
+		2755A9C02CA87E1000056594 /* UserLocationMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationMock.swift; sourceTree = "<group>"; };
+		2755A9C22CA8800D00056594 /* CredentialsMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsMocks.swift; sourceTree = "<group>"; };
+		2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStructMocks.swift; sourceTree = "<group>"; };
+		2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInUserMock.swift; sourceTree = "<group>"; };
+		2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGameDataMocks.swift; sourceTree = "<group>"; };
 		2755D73E2C483D7300491874 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelperMock.swift; sourceTree = "<group>"; };
+		275D016E2CAA9BA800785E7C /* KeychainStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorageTests.swift; sourceTree = "<group>"; };
 		275EA0922C81E90600F07BB8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageMock.swift; sourceTree = "<group>"; };
+		276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRespositoryTests.swift; sourceTree = "<group>"; };
+		276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumRepositoryTests.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
 		276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepository.swift; sourceTree = "<group>"; };
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
@@ -369,9 +462,7 @@
 		27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserAPIService.swift; sourceTree = "<group>"; };
 		27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIService.swift; sourceTree = "<group>"; };
 		27C0DA452C8C4284005A7750 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
-		27C6194D2C36E6000067498F /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
-		27C619542C36EAEF0067498F /* ModuleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleError.swift; sourceTree = "<group>"; };
 		27C6195B2C36F12E0067498F /* OSLoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLoggerService.swift; sourceTree = "<group>"; };
 		27C6195D2C36F2970067498F /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
 		27C6195F2C3704F60067498F /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
@@ -467,6 +558,15 @@
 				27CBD7822C4E789900612375 /* ScannedPoint.swift */,
 			);
 			path = Points;
+			sourceTree = "<group>";
+		};
+		271297C82CAC54B3004175C9 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				275D01682CAA986100785E7C /* Core */,
+				2755A9A02CA809F100056594 /* Services */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		271303412C7C8D550005FC46 /* ForgotPassword */ = {
@@ -587,6 +687,89 @@
 			path = FullRegistration;
 			sourceTree = "<group>";
 		};
+		2723960A2CAD3BBD00041277 /* APIServices */ = {
+			isa = PBXGroup;
+			children = (
+				272396192CAD3F9B00041277 /* UserDataAPIServiceMock.swift */,
+				272396172CAD3F4C00041277 /* RegisterUserAPIServiceTests.swift */,
+				272396152CAD3F1000041277 /* ForgotPasswordAPIServiceMock.swift */,
+				272396132CAD3EC900041277 /* CheckSumAPIServiceMock.swift */,
+				272396112CAD3E0700041277 /* LoginAPIServiceMock.swift */,
+				2723960F2CAD3C9100041277 /* RegisterAppAPIServiceMock.swift */,
+			);
+			path = APIServices;
+			sourceTree = "<group>";
+		};
+		2723960C2CAD3BD000041277 /* GeneralNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9B02CA831E000056594 /* URLSessionWrapperMock.swift */,
+				2755A9B42CA83C4B00056594 /* EndpointMock.swift */,
+				2755A9B62CA87A2000056594 /* NetworkingMock.swift */,
+			);
+			path = GeneralNetworking;
+			sourceTree = "<group>";
+		};
+		2723960D2CAD3BEB00041277 /* NetworkMonitoring */ = {
+			isa = PBXGroup;
+			children = (
+				272396202CAD44EC00041277 /* NetworkMonitorMock.swift */,
+				2755A9AE2CA82A4200056594 /* NWPathMonitorMock.swift */,
+			);
+			path = NetworkMonitoring;
+			sourceTree = "<group>";
+		};
+		2723960E2CAD3C0700041277 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				2755A99E2CA808FB00056594 /* LoggingServiceMock.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
+		272396222CAD47FD00041277 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				272396232CAD480400041277 /* GameDataManagers */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		272396232CAD480400041277 /* GameDataManagers */ = {
+			isa = PBXGroup;
+			children = (
+				2723962E2CAD512800041277 /* UserPointManagerTests.swift */,
+				272396262CAD482000041277 /* ScanningManagerTests.swift */,
+			);
+			path = GameDataManagers;
+			sourceTree = "<group>";
+		};
+		272396282CAD500600041277 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				272396292CAD500C00041277 /* ScanningManagerMock.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		2723962B2CAD507200041277 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				2723962C2CAD50AD00041277 /* FlowDelegates.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		272399B92CA4947A00DC8848 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				272399BA2CA4948C00DC8848 /* URLError.swift */,
+				27C619712C3822920067498F /* HTTPURLResponse.swift */,
+				27C6196F2C3822720067498F /* URLRequest.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		27274F712C3320F2003453E2 = {
 			isa = PBXGroup;
 			children = (
@@ -633,7 +816,8 @@
 		27274F932C3320F3003453E2 /* lifeisskillappTests */ = {
 			isa = PBXGroup;
 			children = (
-				27274F942C3320F3003453E2 /* lifeisskillappTests.swift */,
+				271297C82CAC54B3004175C9 /* Tests */,
+				2755A99C2CA808B800056594 /* Mocks */,
 			);
 			path = lifeisskillappTests;
 			sourceTree = "<group>";
@@ -771,10 +955,10 @@
 		27274FB82C3322B7003453E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2755A9A72CA81A4300056594 /* NetworkMonitoring */,
 				275EA0912C81E8E200F07BB8 /* GeneralNetworking */,
 				2754571B2C33303B00F3B55A /* NetworkStructs */,
 				27C619842C3A9D760067498F /* APIServices */,
-				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -807,9 +991,8 @@
 		27274FBB2C3322D4003453E2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				272399B92CA4947A00DC8848 /* Networking */,
 				2754571E2C33324900F3B55A /* UIViewController.swift */,
-				27C6196F2C3822720067498F /* URLRequest.swift */,
-				27C619712C3822920067498F /* HTTPURLResponse.swift */,
 				27C619942C3AB0890067498F /* UserDefaults.swift */,
 				27066A962C4573110092B499 /* DateTime.swift */,
 				27CBD78C2C4EC72F00612375 /* CLLocation.swift */,
@@ -867,18 +1050,9 @@
 			path = GameDataManagers;
 			sourceTree = "<group>";
 		};
-		27414D7C2C63A08B00C19F8C /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				27414D7B2C63A08B00C19F8C /* Realm.framework */,
-			);
-			path = iOS;
-			sourceTree = "<group>";
-		};
 		27414D802C63A08B00C19F8C /* Build */ = {
 			isa = PBXGroup;
 			children = (
-				27414D7C2C63A08B00C19F8C /* iOS */,
 				27414D7D2C63A08B00C19F8C /* .realm-cocoa.version */,
 				27414D7E2C63A08B00C19F8C /* Realm.xcframework */,
 				27414D7F2C63A08B00C19F8C /* RealmSwift.xcframework */,
@@ -946,6 +1120,24 @@
 			path = OCR;
 			sourceTree = "<group>";
 		};
+		274B84382CA976CC00B94E14 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				2723961E2CAD43EF00041277 /* RealmDependenciesMock.swift */,
+				2723961B2CAD40D600041277 /* RepositoriesMock.swift */,
+				274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		274B843F2CA97F8F00B94E14 /* Points */ = {
+			isa = PBXGroup;
+			children = (
+				274B84402CA97F9300B94E14 /* ScannedPoint.swift */,
+			);
+			path = Points;
+			sourceTree = "<group>";
+		};
 		2750BBF82C6A4A2400F82A04 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -992,15 +1184,176 @@
 			path = CategorySelector;
 			sourceTree = "<group>";
 		};
+		2755A99C2CA808B800056594 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				2723962B2CAD507200041277 /* Delegates */,
+				275D016B2CAA994600785E7C /* Storage */,
+				2755A9B82CA87AB100056594 /* Models */,
+				2755A99D2CA808EE00056594 /* Services */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		2755A99D2CA808EE00056594 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				272396282CAD500600041277 /* Managers */,
+				2723960E2CAD3C0700041277 /* Logging */,
+				274B84382CA976CC00B94E14 /* Storage */,
+				2755A9A42CA80D5D00056594 /* Networking */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2755A9A02CA809F100056594 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				272396222CAD47FD00041277 /* Managers */,
+				2755A9A12CA809FB00056594 /* Network */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2755A9A12CA809FB00056594 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9BB2CA87B8F00056594 /* APIServiceTests */,
+				2755A9B22CA833F600056594 /* NetworkTests.swift */,
+				2755A9A22CA80A0300056594 /* NetworkMonitorTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		2755A9A42CA80D5D00056594 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2723960D2CAD3BEB00041277 /* NetworkMonitoring */,
+				2723960C2CAD3BD000041277 /* GeneralNetworking */,
+				2723960A2CAD3BBD00041277 /* APIServices */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2755A9A72CA81A4300056594 /* NetworkMonitoring */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9AC2CA8289900056594 /* NWPathMonitor.swift */,
+				27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */,
+			);
+			path = NetworkMonitoring;
+			sourceTree = "<group>";
+		};
+		2755A9B82CA87AB100056594 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				274B843F2CA97F8F00B94E14 /* Points */,
+				2755A9C62CA8833600056594 /* UserData */,
+				2755A9C22CA8800D00056594 /* CredentialsMocks.swift */,
+				2755A9C02CA87E1000056594 /* UserLocationMock.swift */,
+				2755A9B92CA87AB800056594 /* Networking */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2755A9B92CA87AB800056594 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9C42CA8822E00056594 /* APIResponseStructMocks.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2755A9BB2CA87B8F00056594 /* APIServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+				274B84442CA987A300B94E14 /* RegisterUserAPITests.swift */,
+				274B84422CA9834B00B94E14 /* ForgotPasswordAPITests.swift */,
+				274B843D2CA97E7C00B94E14 /* UserDataAPITests.swift */,
+				274B843B2CA978BD00B94E14 /* CheckSumAPITests.swift */,
+				2755A9BE2CA87DC500056594 /* LoginAPIServiceTests.swift */,
+				2755A9BC2CA87B9600056594 /* RegisterAppServiceTests.swift */,
+			);
+			path = APIServiceTests;
+			sourceTree = "<group>";
+		};
+		2755A9C62CA8833600056594 /* UserData */ = {
+			isa = PBXGroup;
+			children = (
+				2755A9CB2CA887B500056594 /* UserGameDataMocks.swift */,
+				2755A9C72CA8833C00056594 /* LoggedInUserMock.swift */,
+			);
+			path = UserData;
+			sourceTree = "<group>";
+		};
+		275D01682CAA986100785E7C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				275D01692CAA986600785E7C /* Storage */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		275D01692CAA986600785E7C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				276618D62CAB2044004D13F7 /* Realm */,
+				275D016A2CAA986C00785E7C /* Other */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		275D016A2CAA986C00785E7C /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				275D016E2CAA9BA800785E7C /* KeychainStorageTests.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		275D016B2CAA994600785E7C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				271297C42CAC40CC004175C9 /* RepositoryMocks.swift */,
+				276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */,
+				275D016C2CAA994C00785E7C /* KeychainHelperMock.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		275EA0912C81E8E200F07BB8 /* GeneralNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				27C6194D2C36E6000067498F /* HttpStatusCode.swift */,
 				2754570A2C33259200F3B55A /* Network.swift */,
 				275EA0922C81E90600F07BB8 /* Endpoint.swift */,
 				27B25C4E2C3AFE4F00864028 /* APITask.swift */,
+				272399B72CA48C4B00DC8848 /* ResponseType.swift */,
 			);
 			path = GeneralNetworking;
+			sourceTree = "<group>";
+		};
+		276618D62CAB2044004D13F7 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				271297C62CAC4528004175C9 /* RealmUserDataStorageTests.swift */,
+				276618D72CAB2049004D13F7 /* Repositories */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		276618D72CAB2049004D13F7 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				271297C22CAC3CDB004175C9 /* ScannedPointRepositoryTests.swift */,
+				271297C02CAC3BEE004175C9 /* SponsorRepositoryTests.swift */,
+				271297BE2CAC3A71004175C9 /* PointRepositoryTests.swift */,
+				271297BC2CAC36E1004175C9 /* UserPointRepositoryTests.swift */,
+				271297BA2CAC35D4004175C9 /* RankingRepositoryTests.swift */,
+				271297B82CAC33A2004175C9 /* CategoryRepositoryTests.swift */,
+				276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */,
+				276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		276CA9CC2C5E5FAF001D6394 /* Rank */ = {
@@ -1071,7 +1424,6 @@
 			children = (
 				27C619862C3A9E040067498F /* GeneralErrors */,
 				27C619852C3A9DB60067498F /* APIErrors */,
-				27C619622C3705FA0067498F /* ErrorCodes.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -1145,7 +1497,7 @@
 		27C619862C3A9E040067498F /* GeneralErrors */ = {
 			isa = PBXGroup;
 			children = (
-				27C619542C36EAEF0067498F /* ModuleError.swift */,
+				27C619622C3705FA0067498F /* ErrorCodes.swift */,
 				27C6195F2C3704F60067498F /* BaseError.swift */,
 			);
 			path = GeneralErrors;
@@ -1336,7 +1688,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					27274F792C3320F2003453E2 = {
 						CreatedOnToolsVersion = 15.4;
@@ -1427,6 +1779,7 @@
 			files = (
 				271F1F142C54124D00DF9DFD /* NFCViewModel.swift in Sources */,
 				27E9D6012C63DFEC0098CB96 /* RealmLoginDetails.swift in Sources */,
+				272399BB2CA4949600DC8848 /* URLError.swift in Sources */,
 				27E9D6152C63F8A10098CB96 /* CheckSumRepository.swift in Sources */,
 				27C6197D2C398BEE0067498F /* LogSource.swift in Sources */,
 				278174882C4BFBB500138376 /* AssetFontFamily.swift in Sources */,
@@ -1453,12 +1806,12 @@
 				27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */,
 				27E9D5FF2C63D9480098CB96 /* RealmCheckSum.swift in Sources */,
 				27187B612C57CE21003D22C6 /* HomeQRViewControllerRepresentable.swift in Sources */,
-				27C6194E2C36E6000067498F /* HttpStatusCode.swift in Sources */,
 				27814F942C94312800545F7E /* Country.swift in Sources */,
 				27C6197F2C398C570067498F /* LogSeverity.swift in Sources */,
 				27D569282C6B7074003EF5D9 /* KeychainStorage.swift in Sources */,
 				27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */,
 				27C619812C398C9A0067498F /* LogContext.swift in Sources */,
+				2755A9AD2CA8289D00056594 /* NWPathMonitor.swift in Sources */,
 				27274F7E2C3320F2003453E2 /* AppDelegate.swift in Sources */,
 				2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */,
 				2720DF2A2C51459B007B4E77 /* HomeFlowCoordinator.swift in Sources */,
@@ -1539,6 +1892,7 @@
 				2734DCB02C46C6E4008030F3 /* UserPointManager.swift in Sources */,
 				271303432C7C8D680005FC46 /* ForgotPasswordViewModel.swift in Sources */,
 				275457232C3332BF00F3B55A /* DebugView.swift in Sources */,
+				272399B82CA48C4B00DC8848 /* ResponseType.swift in Sources */,
 				278DB5222C88989B00FB5B1C /* ReferenceDescriptionView.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
@@ -1547,7 +1901,6 @@
 				27E9D61B2C63F9150098CB96 /* RankingRepository.swift in Sources */,
 				273B00432C8EF0BA00E3755B /* KeyedCodingContainer.swift in Sources */,
 				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
-				27C619552C36EAEF0067498F /* ModuleError.swift in Sources */,
 				27234C282C8A39B40077CBD8 /* FullRegistrationView.swift in Sources */,
 				2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */,
 				2754570B2C33259200F3B55A /* Network.swift in Sources */,
@@ -1594,7 +1947,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27274F952C3320F3003453E2 /* lifeisskillappTests.swift in Sources */,
+				271297BB2CAC35DD004175C9 /* RankingRepositoryTests.swift in Sources */,
+				272396162CAD3F1700041277 /* ForgotPasswordAPIServiceMock.swift in Sources */,
+				274B84412CA97F9600B94E14 /* ScannedPoint.swift in Sources */,
+				2723961C2CAD40DA00041277 /* RepositoriesMock.swift in Sources */,
+				275D016D2CAA995000785E7C /* KeychainHelperMock.swift in Sources */,
+				272396182CAD3F5200041277 /* RegisterUserAPIServiceTests.swift in Sources */,
+				272396142CAD3ECF00041277 /* CheckSumAPIServiceMock.swift in Sources */,
+				2723962D2CAD50B000041277 /* FlowDelegates.swift in Sources */,
+				2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */,
+				271297BF2CAC3A78004175C9 /* PointRepositoryTests.swift in Sources */,
+				274B843E2CA97E8A00B94E14 /* UserDataAPITests.swift in Sources */,
+				2755A9CC2CA887BA00056594 /* UserGameDataMocks.swift in Sources */,
+				2755A9C52CA8823200056594 /* APIResponseStructMocks.swift in Sources */,
+				2755A9B72CA87A2400056594 /* NetworkingMock.swift in Sources */,
+				271297C52CAC40CF004175C9 /* RepositoryMocks.swift in Sources */,
+				276618D92CAB2058004D13F7 /* LoginRespositoryTests.swift in Sources */,
+				275D016F2CAA9BAC00785E7C /* KeychainStorageTests.swift in Sources */,
+				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
+				2723961A2CAD3F9F00041277 /* UserDataAPIServiceMock.swift in Sources */,
+				271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */,
+				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
+				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
+				271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */,
+				272396122CAD3E0E00041277 /* LoginAPIServiceMock.swift in Sources */,
+				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
+				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
+				274B84452CA987AB00B94E14 /* RegisterUserAPITests.swift in Sources */,
+				2723962A2CAD501000041277 /* ScanningManagerMock.swift in Sources */,
+				2755A9C12CA87E1400056594 /* UserLocationMock.swift in Sources */,
+				271297C72CAC452E004175C9 /* RealmUserDataStorageTests.swift in Sources */,
+				2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */,
+				272396102CAD3C9700041277 /* RegisterAppAPIServiceMock.swift in Sources */,
+				2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */,
+				272396212CAD44F200041277 /* NetworkMonitorMock.swift in Sources */,
+				2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */,
+				2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */,
+				272396272CAD482400041277 /* ScanningManagerTests.swift in Sources */,
+				271297B92CAC33B0004175C9 /* CategoryRepositoryTests.swift in Sources */,
+				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
+				2723961F2CAD43F200041277 /* RealmDependenciesMock.swift in Sources */,
+				2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */,
+				2723962F2CAD512E00041277 /* UserPointManagerTests.swift in Sources */,
+				2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */,
+				274B843C2CA978C200B94E14 /* CheckSumAPITests.swift in Sources */,
+				274B843A2CA976DA00B94E14 /* PersistentUserDataStorageMock.swift in Sources */,
+				271297C32CAC3CE2004175C9 /* ScannedPointRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +2082,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1740,6 +2140,8 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1828,7 +2230,6 @@
 		27274FA82C3320F3003453E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1848,7 +2249,6 @@
 		27274FA92C3320F3003453E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1868,7 +2268,6 @@
 		27274FAB2C3320F3003453E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 84HX6FUFDK;
@@ -1886,7 +2285,6 @@
 		27274FAC2C3320F3003453E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 84HX6FUFDK;

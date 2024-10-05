@@ -37,7 +37,7 @@ protocol GameDataManaging {
     func processVirtual(location: UserLocation?) async
 }
 
-public final class GameDataManager: BaseClass, GameDataManaging {
+final class GameDataManager: BaseClass, GameDataManaging {
     typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties

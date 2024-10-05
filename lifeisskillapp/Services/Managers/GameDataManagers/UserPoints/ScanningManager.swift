@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 protocol HasScanningManager {
     var scanningManager: ScanningManaging { get }
@@ -19,7 +18,7 @@ protocol ScanningManaging {
     func checkValidity(_ point: ScannedPoint) -> Bool
 }
 
-public final class ScanningManager: ScanningManaging {
+final class ScanningManager: ScanningManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasRepositoryContainer & HasNetworkMonitor
     
     // MARK: - Private properties

@@ -7,14 +7,19 @@
 
 import Foundation
 
-public struct RegisterAppAPIResponse: DataProtocol {
+struct RegisterAppAPIResponse: DataProtocol {
     let appId: String
     let versionCode: Int
+    
+    init(appId: String, versionCode: Int) {
+        self.appId = appId
+        self.versionCode = versionCode
+    }
 }
 
 typealias LoginUserData = LoginAPIResponse
 
-public struct LoginAPIResponse: DataProtocol {
+struct LoginAPIResponse: DataProtocol {
     let user: LoggedInUser
     
     enum CodingKeys: String, CodingKey {
@@ -22,7 +27,11 @@ public struct LoginAPIResponse: DataProtocol {
         case name, surname, mobil, zip, birthday, nameParent, surnameParent, emailParent, mobilParent, relation
     }
     
-    public init(from decoder: Decoder) throws {
+    init(user: LoggedInUser) {
+        self.user = user
+    }
+    
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let userId = try container.decode(String.self, forKey: .userId)
@@ -82,7 +91,7 @@ public struct LoginAPIResponse: DataProtocol {
     }
     
     // MARK: - Encoder
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(user.userId, forKey: .userId)
@@ -119,25 +128,46 @@ public struct LoginAPIResponse: DataProtocol {
     }
 }
 
-public struct CheckSumUserPointsData: DataProtocol {
+struct CheckSumUserPointsData: DataProtocol {
     let pointsProtect: String
+    
+    init(pointsProtect: String) {
+        self.pointsProtect = pointsProtect
+    }
 }
 
-public struct CheckSumRankData: DataProtocol {
+struct CheckSumRankData: DataProtocol {
     let rankProtect: String
+    
+    init(rankProtect: String) {
+        self.rankProtect = rankProtect
+    }
 }
 
-public struct CheckSumMessagesData: DataProtocol {
+struct CheckSumMessagesData: DataProtocol {
     let msgProtect: String
+    
+    init(msgProtect: String) {
+        self.msgProtect = msgProtect
+    }
 }
 
-public struct CheckSumEventsData: DataProtocol {
+struct CheckSumEventsData: DataProtocol {
     let eventsProtect: String
+    
+    init(eventsProtect: String) {
+        self.eventsProtect = eventsProtect
+    }
 }
 
-public struct CheckSumPointsData: DataProtocol {
+struct CheckSumPointsData: DataProtocol {
     let pointsProtect: String
     let clusterProtect: String?
+    
+    init(pointsProtect: String, clusterProtect: String?) {
+        self.pointsProtect = pointsProtect
+        self.clusterProtect = clusterProtect
+    }
 }
 
 struct UserCategoryData: DataProtocol {
@@ -164,7 +194,7 @@ struct UserCategoryData: DataProtocol {
         self.data = allUserCategories
     }
     
-    internal init(main: UserCategory, data: [UserCategory]) {
+    init(main: UserCategory, data: [UserCategory]) {
         self.main = main
         self.data = data
     }
@@ -185,7 +215,7 @@ struct UserPointData: DataProtocol {
         data = try container.decode([UserPoint].self, forKey: .data)
     }
     
-    internal init(checkSum: String, data: [UserPoint]) {
+    init(checkSum: String, data: [UserPoint]) {
         self.checkSum = checkSum
         self.data = data
     }
@@ -206,7 +236,7 @@ struct GenericPointData: DataProtocol {
         data = try container.decode([GenericPoint].self, forKey: .data)
     }
     
-    internal init(checkSum: String, data: [GenericPoint]) {
+    init(checkSum: String, data: [GenericPoint]) {
         self.checkSum = checkSum
         self.data = data
     }
@@ -227,7 +257,7 @@ struct UserRankData: DataProtocol {
         data = try container.decode([UserRank].self, forKey: .data)
     }
     
-    internal init(checkSum: String, data: [UserRank]) {
+    init(checkSum: String, data: [UserRank]) {
         self.checkSum = checkSum
         self.data = data
     }
@@ -242,6 +272,12 @@ struct ForgotPasswordData: DataProtocol {
         case pin = "pin"
         case message = "msg"
         case userEmail = "email"
+    }
+    
+    init(pin: String, message: String, userEmail: String) {
+        self.pin = pin
+        self.message = message
+        self.userEmail = userEmail
     }
     
     init(from decoder: Decoder) throws {
@@ -272,6 +308,10 @@ struct ForgotPasswordConfirmation: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         message = try container.decode(Bool.self, forKey: .message)
     }
+    
+    init(message: Bool) {
+        self.message = message
+    }
 }
 
 struct UsernameAvailabilityResponse: DataProtocol {
@@ -284,6 +324,10 @@ struct UsernameAvailabilityResponse: DataProtocol {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
+    }
+    
+    init(isAvailable: Bool) {
+        self.isAvailable = isAvailable
     }
 }
 
@@ -298,6 +342,10 @@ struct EmailAvailabilityResponse: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         isAvailable = try container.decode(Bool.self, forKey: .isAvailable)
     }
+    
+    init(isAvailable: Bool) {
+        self.isAvailable = isAvailable
+    }
 }
 
 struct RegistrationResponse: DataProtocol {
@@ -311,6 +359,10 @@ struct RegistrationResponse: DataProtocol {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         message = try container.decode(String.self, forKey: .message)
     }
+    
+    init(message: String) {
+        self.message = message
+    }
 }
 
 struct SignatureAPIResponse: DataProtocol {
@@ -323,6 +375,10 @@ struct SignatureAPIResponse: DataProtocol {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         signature = try container.decode(String.self, forKey: .signature)
+    }
+    
+    init(signature: String) {
+        self.signature = signature
     }
 }
 
@@ -340,6 +396,11 @@ struct CompleteRegistrationAPIResponse: DataProtocol {
         completionStatus = try container.decode(Bool.self, forKey: .completionStatus)
         needParentActivation = try container.decode(Bool.self, forKey: .needParentActivation)
     }
+    
+    init(completionStatus: Bool, needParentActivation: Bool) {
+        self.completionStatus = completionStatus
+        self.needParentActivation = needParentActivation
+    }
 }
 
 struct ParentEmailActivationReponse: DataProtocol {
@@ -352,5 +413,9 @@ struct ParentEmailActivationReponse: DataProtocol {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         status = try container.decode(Bool.self, forKey: .status)
+    }
+    
+    init(status: Bool) {
+        self.status = status
     }
 }

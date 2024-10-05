@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct KeychainConstants {
+struct KeychainConstants {
     static let usernameKey = "cz.lifeisskill.username"
     static let passwordKey = "cz.lifeisskill.password"
 }

@@ -15,7 +15,7 @@ protocol RealmRepositoring {
     func delete(_ entity: Entity) throws
     func delete(_ entities: [Entity]) throws
     func deleteAll() throws
-    func getAll() throws -> Results<Entity>
+    func getAll() throws -> [Entity]
     func getById(_ id: String) throws -> Entity?
 }
 
@@ -87,7 +87,7 @@ extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
         }
     }
     
-    func getAll() throws -> Results<Entity> {
+    func getAll() throws -> [Entity] {
         guard let realm = realmStorage.getRealm() else {
             throw BaseError(
                 context: .database,
@@ -95,7 +95,7 @@ extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
                 logger: self.logger
             )
         }
-        return realm.objects(Entity.self)
+        return Array(realm.objects(Entity.self))
     }
     
     func getById(_ id: String) throws -> Entity? {

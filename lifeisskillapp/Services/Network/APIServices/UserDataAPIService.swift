@@ -20,7 +20,7 @@ protocol UserDataAPIServicing {
     func sponsorImage(userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data
 }
 
-public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
+final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private let network: Networking
@@ -33,7 +33,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     
     func userPoints(userToken: String) async throws -> APIResponse<UserPointData> {
         let endpoint = Endpoint.userpoints
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: endpoint,
             errorObject: APIResponseError.self,
             userToken: userToken
@@ -42,7 +42,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     
     func userCategories(userToken: String) async throws -> APIResponse<UserCategoryData> {
         let endpoint = Endpoint.usercategory
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: endpoint,
             errorObject: APIResponseError.self,
             userToken: userToken
@@ -51,7 +51,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     
     func userRanks(userToken: String) async throws -> APIResponse<UserRankData> {
         let endpoint = Endpoint.rank
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: endpoint,
             errorObject: APIResponseError.self,
             userToken: userToken
@@ -60,7 +60,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     
     func genericPoints(userToken: String) async throws -> APIResponse<GenericPointData> {
         let endpoint = Endpoint.points
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: endpoint,
             errorObject: APIResponseError.self,
             userToken: userToken
@@ -71,7 +71,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
         let endpoint = Endpoint.userpoints
         let task = ApiTask.postScannedPoint(point: point)
         let data = try task.encodeParams()
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: endpoint,
             method: .POST,
             body: data,
@@ -82,7 +82,7 @@ public final class UserDataAPIService: BaseClass, UserDataAPIServicing {
     
     func sponsorImage(userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data {
         let endpoint = Endpoint.sponsorImage(sponsorId: sponsorId, width: width, height: height)
-        return try await network.performAuthorizedRequestWithoutDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: endpoint,
             errorObject: APIResponseError.self,
             userToken: userToken

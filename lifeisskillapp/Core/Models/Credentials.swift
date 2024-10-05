@@ -15,6 +15,11 @@ struct LoginCredentials: Codable, Credentials {
     let username: String
     let password: String
     
+    init(username: String, password: String) {
+        self.username = username
+        self.password = password
+    }
+    
     var params: [String: String] {
         [
             "user": username,
@@ -28,6 +33,13 @@ struct NewRegistrationCredentials: Credentials {
     let email: String
     let password: String
     let referenceUserId: String?
+    
+    init(username: String, email: String, password: String, referenceUserId: String? = nil) {
+        self.username = username
+        self.email = email
+        self.password = password
+        self.referenceUserId = referenceUserId
+    }
     
     var params: [String: String] {
         var params: [String: String] = [
@@ -49,6 +61,12 @@ struct ForgotPasswordCredentials: Codable, Credentials {
     let newPassword: String
     let pin: String
     
+    init(email: String, newPassword: String, pin: String) {
+        self.email = email
+        self.newPassword = newPassword
+        self.pin = pin
+    }
+    
     var params: [String: String] {
         [
             "email": email,
@@ -58,7 +76,6 @@ struct ForgotPasswordCredentials: Codable, Credentials {
     }
 }
 
-
 struct GuardianInfo: Codable, Credentials {
     let firstName: String
     let lastName: String
@@ -66,7 +83,15 @@ struct GuardianInfo: Codable, Credentials {
     let email: String
     let relationship: String
     
-    var params: [String : String] {
+    init(firstName: String, lastName: String, phoneNumber: String, email: String, relationship: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.phoneNumber = phoneNumber
+        self.email = email
+        self.relationship = relationship
+    }
+    
+    var params: [String: String] {
         [
             "nameParent": firstName,
             "surnameParent": lastName,
@@ -85,6 +110,16 @@ struct FullRegistrationCredentials: Codable, Credentials {
     let gender: UserGender
     let postalCode: String
     let guardianInfo: GuardianInfo?
+    
+    init(firstName: String, lastName: String, phoneNumber: String, dateOfBirth: Date, gender: UserGender, postalCode: String, guardianInfo: GuardianInfo? = nil) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.phoneNumber = phoneNumber
+        self.dateOfBirth = dateOfBirth
+        self.gender = gender
+        self.postalCode = postalCode
+        self.guardianInfo = guardianInfo
+    }
     
     var params: [String: String] {
         var params = [

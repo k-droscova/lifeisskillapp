@@ -16,7 +16,7 @@ protocol ForgotPasswordAPIServicing {
     func setNewPassword(credentials: ForgotPasswordCredentials) async throws -> APIResponse<ForgotPasswordConfirmation>
 }
 
-public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServicing {
+final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing
     
     private var network: Networking
@@ -28,7 +28,7 @@ public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServici
     }
     
     func fetchPin(username: String) async throws -> APIResponse<ForgotPasswordData> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.resetPassword(.request(username: username)),
             errorObject: APIResponseError.self
         )
@@ -37,7 +37,7 @@ public final class ForgotPasswordAPIService: BaseClass, ForgotPasswordAPIServici
     func setNewPassword(credentials: ForgotPasswordCredentials) async throws -> APIResponse<ForgotPasswordConfirmation> {
         let task = ApiTask.renewPassword(credentials: credentials)
         let data = try task.encodeParams()
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.resetPassword(.confirm),
             method: .PUT,
             body: data,

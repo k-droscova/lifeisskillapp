@@ -19,7 +19,7 @@ protocol RegisterUserAPIServicing {
     func requestParentEmailActivationLink(email: String) async throws -> APIResponse<ParentEmailActivationReponse>
 }
 
-public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
+final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
     typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
     
     private var network: Networking
@@ -33,14 +33,14 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
     }
     
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.registration(.checkUsernameAvailability(username: username)),
             errorObject: APIResponseError.self
         )
     }
     
     func checkEmailAvailability(_ email: String) async throws -> APIResponse<EmailAvailabilityResponse> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.registration(.checkEmailAvailability(email: email)),
             errorObject: APIResponseError.self
         )
@@ -58,7 +58,7 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
         let task = ApiTask.registerUser(credentials: credentials, location: location)
         let data = try task.encodeParams()
         
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.registration(.registerUser),
             method: .POST,
             body: data,
@@ -71,7 +71,7 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
         let task = ApiTask.completeRegistration(credentials: credentials)
         let data = try task.encodeParams()
         
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.registration(.completeRegistration),
             method: .PUT,
             body: data,
@@ -82,7 +82,7 @@ public final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
     }
     
     func requestParentEmailActivationLink(email: String) async throws -> APIResponse<ParentEmailActivationReponse> {
-        return try await network.performAuthorizedRequestWithDataDecoding(
+        return try await network.performAuthorizedRequest(
             endpoint: Endpoint.parentEmailActivation(email: email),
             method: .PUT,
             sensitiveRequestBodyData: true,

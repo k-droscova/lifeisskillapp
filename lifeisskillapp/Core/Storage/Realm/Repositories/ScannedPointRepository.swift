@@ -13,14 +13,14 @@ protocol HasRealmScannedPointRepository {
 }
 
 protocol RealmScannedPointRepositoring: RealmRepositoring where Entity == RealmScannedPoint {
-    func getScannedPoints() async throws -> [ScannedPoint]
+    func getScannedPoints() throws -> [ScannedPoint]
 }
 
-public class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositoring, HasRealmStoraging, HasLoggers {
+class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositoring, HasRealmStoraging, HasLoggers {
     typealias Entity = RealmScannedPoint
     typealias Dependencies = HasRealmStoraging & HasLoggers
     
-    public let logger: LoggerServicing
+    let logger: LoggerServicing
     var realmStorage: RealmStoraging
     
     init(dependencies: Dependencies) {
@@ -28,23 +28,8 @@ public class RealmScannedPointRepository: BaseClass, RealmScannedPointRepositori
         self.realmStorage = dependencies.realmStorage
     }
     
-    func getScannedPoints() async throws -> [ScannedPoint] {
-        return try await withCheckedThrowingContinuation { continuation in
-            do {
-                guard let realm = realmStorage.getRealm() else {
-                    throw BaseError(
-                        context: .database,
-                        message: "Realm is not initialized",
-                        logger: self.logger
-                    )
-                }
-                
-                let realmPoints = realm.objects(RealmScannedPoint.self)
-                let scannedPoints = realmPoints.map { $0.scannedPoint()}
-                continuation.resume(returning: Array(scannedPoints))
-            } catch {
-                continuation.resume(throwing: error)
-            }
-        }
+    func getScannedPoints() throws -> [ScannedPoint] {
+        let realmPoints = try getAll()
+        return realmPoints.map { $0.scannedPoint() }
     }
 }

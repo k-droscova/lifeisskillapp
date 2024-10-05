@@ -23,4 +23,11 @@ struct UserCategory: UserData, CustomStringConvertible {
     var description: String {
         name
     }
+    
+    init(id: String, name: String, detail: String, isPublic: Bool) {
+        self.id = id
+        self.name = name
+        self.detail = detail
+        self.isPublic = isPublic
+    }
 }

@@ -29,7 +29,7 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
     func handleAllStoredScannedPoints() async throws
 }
 
-public final class UserPointManager: BaseClass, UserPointManaging {
+final class UserPointManager: BaseClass, UserPointManaging {
     typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasScanningManager & HasNetworkMonitor
     
     // MARK: - Private Properties
@@ -41,12 +41,10 @@ public final class UserPointManager: BaseClass, UserPointManaging {
     private var _data: UserPointData?
     private var isOnline: Bool { networkMonitor.onlineStatus }
     
-    internal let networkMonitor: NetworkMonitoring
-    
     // MARK: - Public Properties
     
     weak var scanningDelegate: ScanPointFlowDelegate?
-    
+    let networkMonitor: NetworkMonitoring
     var token: String? { storage.token }
     
     // MARK: - Initialization
@@ -150,7 +148,7 @@ public final class UserPointManager: BaseClass, UserPointManaging {
             try await scanningManager.handleScannedPointOffline(point)
             scanningDelegate?.onScanPointProcessSuccessOffline(point.codeSource)
         } catch {
-            scanningDelegate?.onScanPointOnlineProcessError(point.codeSource)
+            scanningDelegate?.onScanPointOfflineProcessError()
         }
     }
 }
