@@ -87,6 +87,7 @@ final class HomeViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
     func onAppear() {
         Task { @MainActor [weak self] in
             self?.isLoading = true
+            await self?.userManager.loadLoggedInUserData()
             self?.username = (self?.userManager.loggedInUser?.nick).emptyIfNil
             self?.isLoading = false
         }

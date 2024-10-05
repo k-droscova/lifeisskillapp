@@ -20,18 +20,18 @@ protocol CheckSumAPIServicing {
 }
 
 final class CheckSumAPIService: BaseClass, CheckSumAPIServicing {
-    typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
+    typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserDefaultsStorage
     
     private let network: Networking
     private let logger: LoggerServicing
-    private let storage: PersistentUserDataStoraging
+    private let storage: UserDefaultsStoraging
     
     private var token: String? { storage.token }
     
     init(dependencies: Dependencies) {
         self.network = dependencies.network
         self.logger = dependencies.logger
-        self.storage = dependencies.storage
+        self.storage = dependencies.userDefaultsStorage
     }
     
     func userPoints() async throws -> APIResponse<CheckSumUserPointsData> {

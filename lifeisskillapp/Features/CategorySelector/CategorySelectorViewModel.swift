@@ -50,10 +50,11 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     // MARK: - Private Helpers
     
     private func fetchData() async {
+        await userCategoryManager.loadFromRepository()
         let categories = getAllUserCategories()
         await MainActor.run {
             self.userCategories = categories
-            self.selectedCategory = userCategoryManager.selectedCategory ?? userCategoryManager.getAll().first
+            self.selectedCategory = userCategoryManager.selectedCategory ?? categories.first
         }
     }
     

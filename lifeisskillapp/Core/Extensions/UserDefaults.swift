@@ -13,6 +13,8 @@ extension UserDefaults {
     private enum Keys: String {
         case appId = "appId"
         case appVersion = "appVersion"
+        case isLoggedIn = "isLoggedIn"
+        case token = "userToken"
     }
     
     /// Stores or retrieves the API key.
@@ -36,6 +38,24 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: Keys.appVersion.rawValue)
+        }
+    }
+    
+    var isLoggedIn: Bool? {
+        get {
+            object(forKey: Keys.isLoggedIn.rawValue) as? Bool ?? nil
+        }
+        set {
+            set(newValue, forKey: Keys.isLoggedIn.rawValue)
+        }
+    }
+    
+    var token: String? {
+        get {
+            object(forKey: Keys.token.rawValue) as? String ?? nil
+        }
+        set {
+            set(newValue, forKey: Keys.token.rawValue)
         }
     }
 }

@@ -10,7 +10,7 @@ import XCTest
 
 final class UserPointManagerTests: XCTestCase {
 
-    private struct Dependencies: UserPointManager.Dependencies {
+    private struct Dependencies: UserPointManager.Dependencies {        
         var logger: LoggerServicing
         var userDataAPI: UserDataAPIServicing
         var storage: PersistentUserDataStoraging

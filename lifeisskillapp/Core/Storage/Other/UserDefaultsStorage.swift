@@ -15,6 +15,8 @@ protocol HasUserDefaultsStorage {
 
 protocol UserDefaultsStoraging {
     var appId: String? { get set }
+    var isLoggedIn: Bool? { get set }
+    var token: String? { get set }
 }
 
 final class UserDefaultsStorage: UserDefaultsStoraging {
@@ -23,16 +25,33 @@ final class UserDefaultsStorage: UserDefaultsStoraging {
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
-    private let locationSubject = CurrentValueSubject<UserLocation?, Never>(nil)
     
     // MARK: - Public Properties
     
     var appId: String? {
         get {
-            UserDefaults.standard.appId // uses UserDefaults extension for custom key
+            UserDefaults.standard.appId
         }
         set {
             UserDefaults.standard.appId = newValue
+        }
+    }
+    
+    var isLoggedIn: Bool? {
+        get {
+            UserDefaults.standard.isLoggedIn
+        }
+        set {
+            UserDefaults.standard.isLoggedIn = newValue
+        }
+    }
+    
+    var token: String? {
+        get {
+            UserDefaults.standard.token
+        }
+        set {
+            UserDefaults.standard.token = newValue
         }
     }
     

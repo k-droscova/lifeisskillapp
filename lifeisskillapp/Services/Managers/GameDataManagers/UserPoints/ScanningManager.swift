@@ -19,14 +19,15 @@ protocol ScanningManaging {
 }
 
 final class ScanningManager: ScanningManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasRepositoryContainer & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasRepositoryContainer & HasNetworkMonitor & HasUserDefaultsStorage
     
     // MARK: - Private properties
     
     private let logger: LoggerServicing
     private let userDataAPI: UserDataAPIServicing
-    private var token: String? { storage.token }
+    private var token: String? { userDefaultsStorage.token }
     private let storage: PersistentUserDataStoraging
+    private let userDefaultsStorage: UserDefaultsStoraging
     private var scannedPointRepo: any RealmScannedPointRepositoring
     private let networkMonitor: NetworkMonitoring
         
@@ -36,6 +37,7 @@ final class ScanningManager: ScanningManaging {
         self.logger = dependencies.logger
         self.userDataAPI = dependencies.userDataAPI
         self.storage = dependencies.storage
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.scannedPointRepo = dependencies.container.realmScannedPointRepository
         self.networkMonitor = dependencies.networkMonitor
     }

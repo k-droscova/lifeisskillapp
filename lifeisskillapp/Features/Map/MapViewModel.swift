@@ -76,6 +76,7 @@ final class MapViewModel<settingBarVM: SettingsBarViewModeling>
     @MainActor
     private func fetchData() async {
         await gameDataManager.loadData(for: .genericPoints)
+        await genericPointManager.loadFromRepository()
         await setupMapPoints()
     }
     

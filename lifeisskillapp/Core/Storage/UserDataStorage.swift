@@ -40,6 +40,4 @@ protocol UserDataStoraging {
     func login(_ user: LoggedInUser) async throws
     func markUserAsLoggedOut() async throws
     func markUserAsLoggedIn() async throws
-    var token: String? { get }
-    var isLoggedIn: Bool { get }
 }

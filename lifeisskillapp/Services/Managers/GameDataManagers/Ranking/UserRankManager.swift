@@ -16,24 +16,26 @@ protocol UserRankManaging: UserDataManaging where DataType == UserRank, DataCont
 }
 
 final class UserRankManager: BaseClass, UserRankManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasUserDefaultsStorage & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
+    private let userDefaultsStorage: UserDefaultsStoraging
     private let logger: LoggerServicing
     private let userDataAPIService: UserDataAPIServicing
     private var _data: UserRankData?
     
     // MARK: - Public Properties
     
-    var token: String? { storage.token }
+    var token: String? { userDefaultsStorage.token }
     let networkMonitor: NetworkMonitoring
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.logger = dependencies.logger
         self.userDataAPIService = dependencies.userDataAPI
         self.networkMonitor = dependencies.networkMonitor
@@ -41,14 +43,12 @@ final class UserRankManager: BaseClass, UserRankManaging {
     
     // MARK: - Public Interface
     
-    func loadFromRepository() {
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.storage.loadFromRepository(for: .rankings)
-                self?._data = try await self?.storage.userRankData()
-            } catch {
-                self?.logger.log(message: "Unable to load user ranks from storage")
-            }
+    func loadFromRepository() async {
+        do {
+            try await storage.loadFromRepository(for: .rankings)
+            _data = try await storage.userRankData()
+        } catch {
+            logger.log(message: "Unable to load user ranks from storage")
         }
     }
     

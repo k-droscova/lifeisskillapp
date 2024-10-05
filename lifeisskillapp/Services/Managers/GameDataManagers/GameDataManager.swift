@@ -38,12 +38,13 @@ protocol GameDataManaging {
 }
 
 final class GameDataManager: BaseClass, GameDataManaging {
-    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor
+    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor & HasUserDefaultsStorage
     
     // MARK: - Private Properties
     
     private let logger: LoggerServicing
     private var storage: PersistentUserDataStoraging
+    private let userDefaultsStorage: UserDefaultsStoraging
     private let checkSumAPI: CheckSumAPIServicing
     private let userPointManager: any UserPointManaging
     private let genericPointManager: any GenericPointManaging
@@ -52,7 +53,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
     private let networkMonitor: NetworkMonitoring
     private var isOnline: Bool
     private var cancellables = Set<AnyCancellable>()
-    private var isUserLoggedIn: Bool { storage.isLoggedIn }
+    private var isLoggedIn: Bool { userDefaultsStorage.isLoggedIn ?? false }
     private var closestVirtualPoint: GenericPoint?
     private let isVirtualAvailableSubject = CurrentValueSubject<Bool, Never>(false)
     
@@ -68,6 +69,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
     init(dependencies: Dependencies) {
         self.logger = dependencies.logger
         self.storage = dependencies.storage
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.checkSumAPI = dependencies.checkSumAPI
         self.genericPointManager = dependencies.genericPointManager
         self.userPointManager = dependencies.userPointManager
@@ -321,16 +323,6 @@ final class GameDataManager: BaseClass, GameDataManaging {
         try await updateCheckSum(newCheckSum: newCheckSum, for: .genericPoints)
     }
     
-    private func load() {
-        Task { [weak self] in
-            do {
-                try await self?.storage.loadAllDataFromRepositories()
-            } catch {
-                self?.logger.log(message: error.localizedDescription)
-            }
-        }
-    }
-    
     private func setupBindings() {
         networkMonitor.onlineStatusPublisher
             .receive(on: DispatchQueue.main)
@@ -352,7 +344,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
         Task { [weak self] in
             guard let self = self else { return }
             self.isOnline = isOnline
-            if self.storage.isLoggedIn && self.isOnline {
+            if self.isLoggedIn && self.isOnline {
                 await self.handleOfflineToOnlineStatusChange()
             }
         }

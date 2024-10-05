@@ -214,7 +214,11 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     
     @MainActor
     private func fetchData() async {
+        if self.selectedCategory == nil {
+            await userCategoryManager.loadFromRepository()
+        }
         await gameDataManager.loadData(for: .userPoints)
+        await userPointManager.loadFromRepository()
         await getSelectedCategoryPoints()
     }
     
