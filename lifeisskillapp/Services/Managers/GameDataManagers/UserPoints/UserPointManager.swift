@@ -148,7 +148,7 @@ final class UserPointManager: BaseClass, UserPointManaging {
             try await scanningManager.handleScannedPointOffline(point)
             scanningDelegate?.onScanPointProcessSuccessOffline(point.codeSource)
         } catch {
-            scanningDelegate?.onScanPointOnlineProcessError(point.codeSource)
+            scanningDelegate?.onScanPointOfflineProcessError()
         }
     }
 }

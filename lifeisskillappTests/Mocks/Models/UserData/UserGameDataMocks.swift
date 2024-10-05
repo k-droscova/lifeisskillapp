@@ -141,3 +141,21 @@ extension UserPoint {
         )
     }
 }
+
+extension CheckSumData {
+    static func mock(
+        userPoints: String = "mockCheckSum1",
+        rank: String = "mockCheckSum2",
+        messages: String = "mockCheckSum3",
+        events: String = "mockCheckSum4",
+        points: String = "mockCheckSum5"
+    ) -> CheckSumData {
+        return CheckSumData(
+            userPoints: userPoints,
+            rank: rank,
+            messages: messages,
+            events: events,
+            points: points
+        )
+    }
+}
