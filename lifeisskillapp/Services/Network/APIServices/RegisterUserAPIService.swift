@@ -20,16 +20,16 @@ protocol RegisterUserAPIServicing {
 }
 
 final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
-    typealias Dependencies = HasNetwork & HasLoggerServicing & HasPersistentUserDataStoraging
+    typealias Dependencies = HasNetwork & HasLoggerServicing & HasUserDefaultsStorage
     
     private var network: Networking
     private var logger: LoggerServicing
-    private let storage: PersistentUserDataStoraging
+    private let storage: UserDefaultsStoraging
 
     init(dependencies: Dependencies) {
         self.network = dependencies.network
         self.logger = dependencies.logger
-        self.storage = dependencies.storage
+        self.storage = dependencies.userDefaultsStorage
     }
     
     func checkUsernameAvailability(_ username: String) async throws -> APIResponse<UsernameAvailabilityResponse> {

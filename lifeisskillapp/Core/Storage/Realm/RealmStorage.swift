@@ -50,39 +50,13 @@ final class RealmStorage: BaseClass, RealmStoraging {
     // MARK: - Private Helpers
     
     private func setupConfig() {
-#if DEBUG
         // Define the Realm file URL
-        let realmFileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent("LifeIsSkill.realm")
-        
-        // Check if the Realm file exists and delete it
-        if FileManager.default.fileExists(atPath: realmFileURL.path) {
-            do {
-                try FileManager.default.removeItem(at: realmFileURL)
-                print("Existing Realm file deleted in DEBUG mode.")
-            } catch {
-                print("Error deleting Realm file: \(error)")
-            }
-        }
-        
-        // Reset schema version for development
+        let realmFileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent(RealmConstants.storageFile)
         configurations.schemaVersion = 1
-        // No need for a migration block in development mode
         configurations.migrationBlock = nil
         
-#else
-        // Define the schema version for production or other environments
-        configurations.schemaVersion = 1
-        
-        // Set the migration block for production
-        configurations.migrationBlock = { migration, oldSchemaVersion in
-            if oldSchemaVersion < 1 {
-                // do nothing
-            }
-        }
-#endif
-        
         // Common setup
-        configurations.fileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent("LifeIsSkill.realm")
+        configurations.fileURL = realmFileURL
         configurations.objectTypes = [
             RealmCheckSumData.self,
             RealmLoginDetails.self,

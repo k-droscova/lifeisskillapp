@@ -19,11 +19,12 @@ protocol GenericPointManaging: UserDataManaging where DataType == GenericPoint, 
 }
 
 final class GenericPointManager: BaseClass, GenericPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor & HasLocationManager
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasNetworkMonitor & HasLocationManager & HasUserDefaultsStorage
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
+    private let userDefaultsStorage: UserDefaultsStoraging
     private let logger: LoggerServicing
     private let userDataAPIService: UserDataAPIServicing
     private let locationManager: LocationManaging
@@ -33,7 +34,7 @@ final class GenericPointManager: BaseClass, GenericPointManaging {
     
     // MARK: - Public Properties
     
-    var token: String? { storage.token }
+    var token: String? { userDefaultsStorage.token }
     var closestVirtualPoint: GenericPoint? { closestVirtualPointSubject.value }
     var closestVirtualPointPublisher: AnyPublisher<GenericPoint?, Never> {
         closestVirtualPointSubject.eraseToAnyPublisher()
@@ -44,6 +45,7 @@ final class GenericPointManager: BaseClass, GenericPointManaging {
     
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.logger = dependencies.logger
         self.userDataAPIService = dependencies.userDataAPI
         self.locationManager = dependencies.locationManager
@@ -61,14 +63,12 @@ final class GenericPointManager: BaseClass, GenericPointManaging {
     
     // MARK: - Public Interface
     
-    func loadFromRepository() {
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.storage.loadFromRepository(for: .genericPoints)
-                self?._data = try await self?.storage.genericPointData()
-            } catch {
-                self?.logger.log(message: "Unable to load generic points from storage")
-            }
+    func loadFromRepository() async {
+        do {
+            try await storage.loadFromRepository(for: .genericPoints)
+            _data = try await storage.genericPointData()
+        } catch {
+            logger.log(message: "Unable to load generic points from storage")
         }
     }
     

@@ -30,11 +30,12 @@ protocol UserPointManaging: UserDataManaging where DataType == UserPoint, DataCo
 }
 
 final class UserPointManager: BaseClass, UserPointManaging {
-    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasScanningManager & HasNetworkMonitor
+    typealias Dependencies = HasLoggerServicing & HasUserDataAPIService & HasPersistentUserDataStoraging & HasUserDefaultsStorage & HasScanningManager & HasNetworkMonitor
     
     // MARK: - Private Properties
     
     private var storage: PersistentUserDataStoraging
+    private let userDefaultsStorage: UserDefaultsStoraging
     private let logger: LoggerServicing
     private let userDataAPIService: UserDataAPIServicing
     private let scanningManager: ScanningManaging
@@ -45,12 +46,13 @@ final class UserPointManager: BaseClass, UserPointManaging {
     
     weak var scanningDelegate: ScanPointFlowDelegate?
     let networkMonitor: NetworkMonitoring
-    var token: String? { storage.token }
+    var token: String? { userDefaultsStorage.token }
     
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
         self.storage = dependencies.storage
+        self.userDefaultsStorage = dependencies.userDefaultsStorage
         self.logger = dependencies.logger
         self.userDataAPIService = dependencies.userDataAPI
         self.networkMonitor = dependencies.networkMonitor
@@ -59,14 +61,12 @@ final class UserPointManager: BaseClass, UserPointManaging {
     
     // MARK: - Public Interface
     
-    func loadFromRepository() {
-        Task { @MainActor [weak self] in
-            do {
-                try await self?.storage.loadFromRepository(for: .userPoints)
-                self?._data = try await self?.storage.userPointData()
-            } catch {
-                self?.logger.log(message: "Unable to load user points from storage")
-            }
+    func loadFromRepository() async {
+        do {
+            try await storage.loadFromRepository(for: .userPoints)
+            _data = try await storage.userPointData()
+        } catch {
+            logger.log(message: "Unable to load user points from storage")
         }
     }
     

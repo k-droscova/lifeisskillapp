@@ -24,6 +24,7 @@ protocol UserManaging {
     var hasAppId: Bool { get }
     
     // MARK: LOGGED IN USER PROPERTIES FOR VIEWMODELS
+    func loadLoggedInUserData() async
     var loggedInUser: LoggedInUser? { get }
     
     func initializeAppId() async throws
@@ -61,16 +62,15 @@ final class UserManager: BaseClass, UserManaging {
     private let keychainStorage: KeychainStoraging
     private let gameDataManager: GameDataManaging
     
-    private var data: LoginUserData?
     private var isOnline: Bool { networkMonitor.onlineStatus }
     
     
     // MARK: - Public Properties
     
     weak var delegate: UserManagerFlowDelegate?
-    var isLoggedIn: Bool { data != nil }
+    var isLoggedIn: Bool { userDefaultsStorage.isLoggedIn ?? false }
     var hasAppId: Bool { userDefaultsStorage.appId != nil }
-    var loggedInUser: LoggedInUser? { self.data?.user }
+    private(set) var loggedInUser: LoggedInUser?
     
     // MARK: - Initialization
     
@@ -86,12 +86,14 @@ final class UserManager: BaseClass, UserManaging {
         self.locationManager = dependencies.locationManager
         self.keychainStorage = dependencies.keychainStorage
         self.gameDataManager = dependencies.gameDataManager
-        
-        super.init()
-        self.checkIfUserIsLoggedIn() // check if the user is logged in already
     }
     
     // MARK: - Public interface
+    
+    func loadLoggedInUserData() async {
+        guard self.loggedInUser == nil else { return }
+        await loadLoggedInUserFromStorage()
+    }
     
     func initializeAppId() async throws {
         if let appId = userDefaultsStorage.appId {
@@ -194,6 +196,8 @@ final class UserManager: BaseClass, UserManaging {
             try await performOfflineLogin(credentials: credentials)
         }
         await gameDataManager.loadData(for: nil) // load all data for the user upon login
+        await loadLoggedInUserData()
+        userDefaultsStorage.isLoggedIn = true
     }
     
     func logout() {
@@ -203,7 +207,7 @@ final class UserManager: BaseClass, UserManaging {
             } catch {
                 self?.logger.log(message: "Failed to logout: \(error.localizedDescription)")
             }
-            self?.data = nil
+            self?.signalLogout()
             self?.delegate?.onLogout()
         }
     }
@@ -213,7 +217,7 @@ final class UserManager: BaseClass, UserManaging {
             do {
                 try await self?.storage.clearScannedPointData()
                 try await self?.storage.onLogout()
-                self?.data = nil
+                self?.signalLogout()
                 self?.delegate?.onLogout()
             } catch {
                 self?.logger.log(message: "Error: offline logout failed")
@@ -226,7 +230,7 @@ final class UserManager: BaseClass, UserManaging {
             do {
                 try await self?.storage.clearScannedPointData()
                 try await self?.storage.onLogout()
-                self?.data = nil
+                self?.signalLogout()
                 self?.delegate?.onForceLogout()
             } catch {
                 self?.logger.log(message: "Error: force logout failed")
@@ -235,7 +239,7 @@ final class UserManager: BaseClass, UserManaging {
     }
     
     func signature() async -> String? {
-        guard let token = storage.token else {
+        guard let token = userDefaultsStorage.token else {
             logger.log(message: "Unable to fetch signature: Token is nil")
             return nil
         }
@@ -250,38 +254,37 @@ final class UserManager: BaseClass, UserManaging {
     
     // MARK: - Private Helpers
     
+    private func signalLogout() {
+        userDefaultsStorage.isLoggedIn = false
+    }
+    
     private func userChangedParentEmail(_ newEmail: String) -> Bool {
         newEmail != loggedInUser?.emailParent
     }
     
-    private func checkIfUserIsLoggedIn() {
-        Task { @MainActor [weak self] in
-            await self?.checkIfUserIsLoggedIn() // check if the user has logged out before, or is still logged in
-        }
-    }
-    
-    private func checkIfUserIsLoggedIn() async {
+    private func loadLoggedInUserFromStorage() async {
         do {
             if let storedLoginData = try await storage.loggedInUserDetails() {
-                self.data = storedLoginData // gives signal to show main page
+                self.loggedInUser = storedLoginData.user // gives signal to show main page
             } else {
-                self.data = nil // gives signal to show login page
+                self.loggedInUser = nil
             }
         } catch {
             logger.log(message: "Failed to load login data: \(error.localizedDescription)")
-            self.data = nil // gives signal to show login page
+            self.loggedInUser = nil
         }
     }
     
     private func performOnlineLogin(credentials: LoginCredentials) async throws {
         let response = try await loginAPI.login(credentials: credentials, location: locationManager.location)
         let loggedInUser = response.data.user
+        userDefaultsStorage.token = loggedInUser.token
         
         // check if there is existing user in realm
         guard let existingUser = try await storage.savedLoginDetails() else {
             try keychainStorage.save(credentials: credentials) // save new credentials to keychain
             try await storage.login(loggedInUser) // save new data to realm
-            data = response.data // give signal of successfull login
+            self.loggedInUser = response.data.user
             return
         }
         // if there is data in realm and if the newly logged in user is different then we clear all data in realm
@@ -292,7 +295,7 @@ final class UserManager: BaseClass, UserManaging {
         try await storage.login(loggedInUser) // save the new login data
         try keychainStorage.delete() // delete previous credentials
         try keychainStorage.save(credentials: credentials) // save new credentials in keychain
-        data = response.data // indicate to appFC to present Home Screen in TabBar
+        self.loggedInUser = response.data.user
     }
     
     private func performOfflineLogin(credentials: LoginCredentials) async throws {
@@ -325,6 +328,6 @@ final class UserManager: BaseClass, UserManaging {
         }
         try await storage.markUserAsLoggedIn()
         try await storage.onLogin()
-        self.data = storedLoginData // indicate to appFC to present Home Screen in TabBar
+        self.loggedInUser = storedLoginData.user
     }
 }

@@ -23,7 +23,7 @@ class RealmLoginDetails: Object {
     @objc dynamic var mainCategory: String = ""
     @objc dynamic var fullActivation: Bool = false
     @objc dynamic var activationStatus: Int = 0
-    @objc dynamic var isLoggedIn: Bool = false
+    @objc dynamic var isLoggedIn: Bool = true
     
     // New fields from the updated LoggedInUser structure
     @objc dynamic var name: String = ""

@@ -22,7 +22,7 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
     
     override func start() -> UIViewController {
         super.start()
-        
+        loadData()
         let tabBarVC = setupTabBar()
         let navigationController = UINavigationController(rootViewController: tabBarVC)
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -33,6 +33,12 @@ final class MainFlowCoordinator: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordin
     }
     
     // MARK: - Private helpers
+    
+    private func loadData() {
+        Task {
+            try await appDependencies.storage.loadAllDataFromRepositories()
+        }
+    }
     
     private func setupTabBar() -> UITabBarController{
         // MARK: CATEGORY SELECTOR

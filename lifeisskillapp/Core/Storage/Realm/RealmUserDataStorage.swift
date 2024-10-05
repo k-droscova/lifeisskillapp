@@ -44,11 +44,6 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     private var _checkSumData: CheckSumData?
     private var _scannedPoints: [ScannedPoint] = []
     
-    // MARK: - Public Properties
-    
-    var token: String?
-    var isLoggedIn: Bool = false
-    
     // MARK: - Initialization
     
     init(dependencies: Dependencies) {
@@ -75,14 +70,12 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
             group.addTask { try await self.loadCheckSumData() }
             try await group.waitForAll()
         }
-        self.isLoggedIn = true
         logger.log(message: "All data loaded concurrently on login.")
     }
     
     func onLogout() async throws {
         try loginRepo.markUserAsLoggedOut()
         await clearInMemoryData()
-        self.isLoggedIn = false
         logger.log(message: "User logged out successfully.")
     }
     
@@ -257,35 +250,26 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     
     func login(_ user: LoggedInUser) async throws {
         try loginRepo.saveLoginUser(user)
-        self.token = user.token
     }
     
     func markUserAsLoggedOut() async throws {
         try loginRepo.markUserAsLoggedOut()
-        self.token = nil
     }
     
     func markUserAsLoggedIn() async throws {
-        guard let user = try loginRepo.getSavedLoginDetails() else { return }
+        guard (try loginRepo.getSavedLoginDetails()) != nil else { return }
         try loginRepo.markUserAsLoggedIn()
-        self.token = user.token
     }
     
     // MARK: - Private Helpers
     
-    private func clearInMemoryData() async {
-        Task { [weak self] in
-            guard let self = self else { return }
-            await withTaskGroup(of: Void.self) { group in
-                group.addTask { self._userCategoryData = nil }
-                group.addTask { self._userPointData = nil }
-                group.addTask { self._userRankData = nil }
-                group.addTask { self._genericPointData = nil }
-                group.addTask { self._checkSumData = nil }
-                group.addTask { self.token = nil }
-            }
-            self.logger.log(message: "All data nullified on logout.")
-        }
+    private func clearInMemoryData() {
+        _userCategoryData = nil
+        _userPointData = nil
+        _userRankData = nil
+        _genericPointData = nil
+        _checkSumData = nil
+        logger.log(message: "All data nullified on logout.")
     }
     
     private func loadCategories() async throws {
