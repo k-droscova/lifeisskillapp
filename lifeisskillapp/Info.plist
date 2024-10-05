@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
- 	<string>We use camera to read data from tourist signs.</string>
- 	<key>NFCReaderUsageDescription</key>
- 	<string>We use NFC to read data from NFC tags.</string>
- 	<key>NSLocationWhenInUseUsageDescription</key>
- 	<string>Location is required.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.otf</string>
