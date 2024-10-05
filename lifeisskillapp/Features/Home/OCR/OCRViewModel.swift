@@ -56,10 +56,10 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
     }
     
     func extractCode(from text: String) -> String? {
-        if let newCode = extractNewCode(from: text) {
-            return newCode
+        guard let newCode = extractNewCode(from: text) else {
+            return nil
         }
-        return extractOldCode(from: text)
+        return newCode
     }
     
     private func delegatePointScanningToGameDataManager(_ code: String) {
@@ -78,6 +78,7 @@ final class OcrViewModel: BaseClass, OcrViewModeling {
         return String(code.prefix(5))
     }
     
+    // MARK: - Old Codes are not supported
     private func extractOldCode(from text: String) -> String? {
         let oldCodeRegex = "\\b\\d{4}/\\d+[a-z]*\\b"
         guard let range = text.range(of: oldCodeRegex, options: .regularExpression) else {
