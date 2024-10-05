@@ -51,13 +51,9 @@ final class RealmStorage: BaseClass, RealmStoraging {
     
     private func setupConfig() {
         // Define the Realm file URL
-        let realmFileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent("LifeIsSkill.realm")
+        let realmFileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent(RealmConstants.storageFile)
         configurations.schemaVersion = 1
-        configurations.migrationBlock = { migration, oldSchemaVersion in
-            if oldSchemaVersion < 1 {
-                // do nothing
-            }
-        }
+        configurations.migrationBlock = nil
         
         // Common setup
         configurations.fileURL = realmFileURL
