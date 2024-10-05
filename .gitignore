@@ -57,6 +57,7 @@ Environment/Current
 Environment/.current
 Environment/.environment_preprocess.h
 Environment/Generated/*
+*.xcconfig
 #generated files
 */Model/Generated/*
 !*/Model/Generated/.gitkeep
