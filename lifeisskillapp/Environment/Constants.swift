@@ -9,11 +9,13 @@ import Foundation
 
 enum Password {
     static let minLenght = 6
-    #if DEBUG
-    static let pinValidityTime = 0.5 // in minutes
-    #else
-    static let pinValidityTime = 15.0 // in minutes
-    #endif
+    static let pinValidityTime: Double = {
+            if let value = Bundle.main.infoDictionary?["PIN_VALIDITY_TIME"] as? String,
+               let doubleValue = Double(value) {
+                return doubleValue
+            }
+        return 15.0 // Fallback in case of missing value
+        }()
 }
 
 enum Username {

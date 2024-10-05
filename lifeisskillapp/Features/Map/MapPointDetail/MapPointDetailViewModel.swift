@@ -38,11 +38,7 @@ final class MapPointDetailViewModel: ObservableObject, MapPointDetailViewModelin
     @Published var sponsorImage: Image?
     var sponsorText: String { NSLocalizedString("map.detail.sponsor", comment: "") }
     var detailURL: URL? {
-        #if DEBUG
-        let urlString = APIUrl.detailUrlDebug + "\(point.id)"
-        #else
         let urlString = APIUrl.detailUrl + "\(point.id)"
-        #endif
         return URL(string: urlString)
     }
     var hasDetail: Bool { point.hasDetail }

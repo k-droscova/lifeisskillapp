@@ -8,10 +8,10 @@
 import Foundation
 
 struct KeychainConstants {
-    static let usernameKey = (Bundle.main.bundleIdentifier ?? "eu.cz.lifeisskill.app") + "username"
-    static let passwordKey = (Bundle.main.bundleIdentifier ?? "eu.cz.lifeisskill.app") + "password"
+    static let usernameKey = (Bundle.main.infoDictionary?["KEYCHAIN_USERNAME_KEY"] as? String) ?? "default.username"
+    static let passwordKey = (Bundle.main.infoDictionary?["KEYCHAIN_PASSWORD_KEY"] as? String) ?? "default.password"
 }
 
 struct RealmConstants {
-    static let storageFile = (Bundle.main.bundleIdentifier ?? "eu.cz.lifeisskill.app") + ".realm"
+    static let storageFile = (Bundle.main.infoDictionary?["REALM_FILE"] as? String) ?? "default.realm"
 }

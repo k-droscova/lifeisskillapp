@@ -13,11 +13,13 @@ struct MapConstants {
     static let mapDetailImageHeight: CGFloat = 100
     static let latitudeDelta = 0.05
     static let longitudeDelta = 0.05
-#if DEBUG
-static let virtualPointDistance = 500.0
-#else
-static let virtualPointDistance = 100.0
-#endif
+    static let virtualPointDistance: Double = {
+            if let value = Bundle.main.infoDictionary?["MAP_VIRTUAL_POINT"] as? String,
+               let doubleValue = Double(value) {
+                return doubleValue
+            }
+            return 100.0 // Fallback in case of missing value
+        }()
     static let defaultCoordinate = CLLocation(
         coordinate: CLLocationCoordinate2D(
             latitude: Prague.latitude,
