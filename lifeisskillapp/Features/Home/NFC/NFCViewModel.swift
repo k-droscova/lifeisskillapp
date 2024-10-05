@@ -67,9 +67,16 @@ final class NfcViewModel: BaseClass, NfcViewModeling {
 
 extension NfcViewModel: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
-        logger.log(message: "ERROR: NFC Readed Failed with \(error.localizedDescription)")
+        if let nfcError = error as? NFCReaderError {
+            switch nfcError.code {
+            case .readerSessionInvalidationErrorUserCanceled:
+                logger.log(message: "NFC session canceled by user.")
+                break
+            default:
+                logger.log(message: "NFC session ended with error: \(nfcError.localizedDescription)")
+            }
+        }
         self.stopScanning()
-        delegate?.onFailure(source: .nfc)
     }
     
     func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
