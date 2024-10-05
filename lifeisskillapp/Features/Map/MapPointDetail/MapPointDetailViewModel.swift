@@ -39,7 +39,7 @@ final class MapPointDetailViewModel: ObservableObject, MapPointDetailViewModelin
     var sponsorText: String { NSLocalizedString("map.detail.sponsor", comment: "") }
     var detailURL: URL? {
         #if DEBUG
-        let urlString = APIUrl.detailUrlDebug + "\(point.id)"
+        let urlString = APIUrl.detailUrl + "\(point.id)"
         #else
         let urlString = APIUrl.detailUrl + "\(point.id)"
         #endif
