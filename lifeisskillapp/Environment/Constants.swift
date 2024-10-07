@@ -46,3 +46,7 @@ enum RankConstants {
     static let belowUser = 2
     static let bottomSection = 5
 }
+
+enum OcrConstants {
+    static let minThreshold = 5
+}
