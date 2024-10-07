@@ -57,6 +57,7 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
         weak var dataScannerVC: DataScannerViewController?
         
         private var codeOccurrences: [String: Int] = [:]
+        private var recognizedCode: String? = nil
         private let recognitionThreshold: Int = OcrConstants.minThreshold
         
         init(viewModel: OcrViewModeling) {
@@ -73,12 +74,25 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
             }
         }
         
+        func dataScanner(_ dataScanner: DataScannerViewController, didUpdate updatedItems: [RecognizedItem], allItems: [RecognizedItem]) {
+            for item in updatedItems {
+                if case .text(let text) = item {
+                    if let code = viewModel.extractCode(from: text.transcript) {
+                        handleCodeRecognition(code)
+                    }
+                }
+            }
+        }
+        
         func dataScanner(_ dataScanner: DataScannerViewController, didStopWithError error: Error) {
             stopScanning()
             viewModel.scanningFailed()
         }
         
         private func handleCodeRecognition(_ code: String) {
+            guard recognizedCode == nil else {
+                return // prevention from quick updates causing multiple codes being sent off for processing
+            }
             guard let count = codeOccurrences[code] else {
                 codeOccurrences[code] = 1
                 return // threshold is definitely above 1
@@ -86,20 +100,20 @@ struct HomeCameraSignOCRViewControllerRepresentable: UIViewControllerRepresentab
             let newCount = count + 1 // increase occurence num by one
             codeOccurrences[code] = newCount // set new val
             guard newCount >= recognitionThreshold else {
-                // if below threwshold then return
                 return
             }
-            processRecognizedCode(code)
+            recognizedCode = code
             stopScanning()
+            processRecognizedCode(code)
         }
         
         private func processRecognizedCode(_ code: String) {
             viewModel.handleProcessedCode(code)
-            codeOccurrences.removeAll()
         }
         
         private func stopScanning() {
             dataScannerVC?.stopScanning()
+            codeOccurrences.removeAll()
         }
     }
 }
