@@ -45,52 +45,11 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let cluster = annotation as? MKClusterAnnotation {
-                // Customize the cluster annotation view
-                let identifier = "ClusterAnnotationView"
-                var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-                
-                if clusterView == nil {
-                    clusterView = MKMarkerAnnotationView(annotation: cluster, reuseIdentifier: identifier)
-                }
-                
-                // Determine the cluster color based on the first annotation type
-                if let firstAnnotation = cluster.memberAnnotations.first as? CustomMapAnnotation {
-                    clusterView?.markerTintColor = firstAnnotation.clusterColor
-                } else {
-                    clusterView?.markerTintColor = .gray // Default color if no annotations are found
-                }
-                
-                // Hide the title and subtitle by setting them to nil
-                clusterView?.canShowCallout = false
-                clusterView?.glyphText = "\(cluster.memberAnnotations.count)"
-                clusterView?.titleVisibility = .hidden
-                clusterView?.subtitleVisibility = .hidden
-                return clusterView
+                return configureClusterView(for: cluster, in: mapView)
+            } else if let customAnnotation = annotation as? CustomMapAnnotation {
+                return configureCustomAnnotationView(for: customAnnotation, in: mapView)
             }
-            
-            guard let customAnnotation = annotation as? CustomMapAnnotation else {
-                return nil
-            }
-            
-            let identifier = "CustomAnnotationView"
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-            
-            if annotationView == nil {
-                annotationView = MKAnnotationView(annotation: customAnnotation, reuseIdentifier: identifier)
-            } else {
-                annotationView?.annotation = customAnnotation
-            }
-            
-            if let icon = customAnnotation.icon {
-                annotationView?.image = icon
-                annotationView?.bounds.size = icon.size
-                annotationView?.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0) // Pin from the bottom center
-            }
-            
-            // Enable clustering, cluster is identified by pointType (so points with same types are clustered together)
-            annotationView?.clusteringIdentifier = customAnnotation.clusterIdentifier
-            
-            return annotationView
+            return nil
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -124,6 +83,50 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, didFailToLocateUserWithError error: Error) {
             print("DEBUG: Failed to locate user: \(error.localizedDescription)")
+        }
+        
+        // MARK: - Private Helpers
+        
+        private func configureClusterView(for cluster: MKClusterAnnotation, in mapView: MKMapView) -> MKAnnotationView? {
+            let identifier = "ClusterAnnotationView"
+            var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+
+            if clusterView == nil {
+                clusterView = MKMarkerAnnotationView(annotation: cluster, reuseIdentifier: identifier)
+            }
+
+            if let firstAnnotation = cluster.memberAnnotations.first as? CustomMapAnnotation {
+                clusterView?.markerTintColor = firstAnnotation.clusterColor
+            } else {
+                clusterView?.markerTintColor = .gray
+            }
+
+            clusterView?.canShowCallout = false
+            clusterView?.glyphText = "\(cluster.memberAnnotations.count)"
+            clusterView?.titleVisibility = .hidden
+            clusterView?.subtitleVisibility = .hidden
+
+            return clusterView
+        }
+        
+        private func configureCustomAnnotationView(for annotation: CustomMapAnnotation, in mapView: MKMapView) -> MKAnnotationView? {
+            let identifier = "CustomAnnotationView"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            } else {
+                annotationView?.annotation = annotation
+            }
+
+            if let icon = annotation.icon {
+                annotationView?.image = icon
+                annotationView?.bounds.size = icon.size
+                annotationView?.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+            }
+
+            annotationView?.clusteringIdentifier = annotation.clusterIdentifier
+            return annotationView
         }
         
         private func calculateRegionAfterClusterTapped(for cluster: MKClusterAnnotation) -> MKCoordinateRegion {
