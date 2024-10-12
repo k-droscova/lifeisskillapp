@@ -57,8 +57,7 @@ Environment/Current
 Environment/.current
 Environment/.environment_preprocess.h
 Environment/Generated/*
-lifeisskillapp/configDebug.xcconfig
-lifeisskillapp/configRelease.xcconfig
+lifeisskillapp/*.xcconfig
 #generated files
 */Model/Generated/*
 !*/Model/Generated/.gitkeep

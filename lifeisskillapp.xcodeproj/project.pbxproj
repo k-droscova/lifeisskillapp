@@ -189,6 +189,7 @@
 		27B5DF042C872938003B9AEE /* RegisterUserAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */; };
 		27B734AE2C7CA6990007BB56 /* ForgotPasswordAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */; };
 		27C0DA462C8C4284005A7750 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C0DA452C8C4284005A7750 /* Optional.swift */; };
+		27C373332CBAB0C000E284BB /* configPreprod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 27C373322CBAB0C000E284BB /* configPreprod.xcconfig */; };
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
 		27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195B2C36F12E0067498F /* OSLoggerService.swift */; };
 		27C6195E2C36F2970067498F /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195D2C36F2970067498F /* LoggingService.swift */; };
@@ -210,7 +211,6 @@
 		27C619902C3AAC1F0067498F /* APIResponseStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6198F2C3AAC1F0067498F /* APIResponseStructs.swift */; };
 		27C619932C3AAD260067498F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619922C3AAD260067498F /* User.swift */; };
 		27C619952C3AB0890067498F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619942C3AB0890067498F /* UserDefaults.swift */; };
-		27C6E2792CB67A990053532D /* configPreprod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 27C6E2782CB67A990053532D /* configPreprod.xcconfig */; };
 		27CBD7832C4E789900612375 /* ScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* ScannedPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
@@ -468,6 +468,7 @@
 		27B5DF032C872938003B9AEE /* RegisterUserAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserAPIService.swift; sourceTree = "<group>"; };
 		27B734AD2C7CA6990007BB56 /* ForgotPasswordAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPIService.swift; sourceTree = "<group>"; };
 		27C0DA452C8C4284005A7750 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		27C373322CBAB0C000E284BB /* configPreprod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = configPreprod.xcconfig; sourceTree = "<group>"; };
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
 		27C6195B2C36F12E0067498F /* OSLoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLoggerService.swift; sourceTree = "<group>"; };
 		27C6195D2C36F2970067498F /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
@@ -489,7 +490,6 @@
 		27C6198F2C3AAC1F0067498F /* APIResponseStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStructs.swift; sourceTree = "<group>"; };
 		27C619922C3AAD260067498F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27C619942C3AB0890067498F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		27C6E2782CB67A990053532D /* configPreprod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = configPreprod.xcconfig; sourceTree = "<group>"; };
 		27C6E27A2CB67AD90053532D /* lifeisskillappPreprod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lifeisskillappPreprod.entitlements; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
@@ -804,8 +804,11 @@
 		27274F7C2C3320F2003453E2 /* lifeisskillapp */ = {
 			isa = PBXGroup;
 			children = (
-				27C6E27A2CB67AD90053532D /* lifeisskillappPreprod.entitlements */,
+				279E05862CB1D327004DF998 /* configDebug.xcconfig */,
+				27C373322CBAB0C000E284BB /* configPreprod.xcconfig */,
+				279E058A2CB1D353004DF998 /* configRelease.xcconfig */,
 				27AB99C62C9AD05300DEE46A /* lifeisskillappDebug.entitlements */,
+				27C6E27A2CB67AD90053532D /* lifeisskillappPreprod.entitlements */,
 				27AB99C52C9ACFCB00DEE46A /* lifeisskillappRelease.entitlements */,
 				27C619872C3AA3950067498F /* Environment */,
 				27274FB12C3321D6003453E2 /* AppUI */,
@@ -818,9 +821,6 @@
 				27274F862C3320F3003453E2 /* Assets.xcassets */,
 				27F612602C7F534F001D1F1A /* LaunchScreen.storyboard */,
 				27E32DF02C4955F200E69C58 /* Info.plist */,
-				279E05862CB1D327004DF998 /* configDebug.xcconfig */,
-				279E058A2CB1D353004DF998 /* configRelease.xcconfig */,
-				27C6E2782CB67A990053532D /* configPreprod.xcconfig */,
 			);
 			path = lifeisskillapp;
 			sourceTree = "<group>";
@@ -1754,7 +1754,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27C6E2792CB67A990053532D /* configPreprod.xcconfig in Resources */,
+				27C373332CBAB0C000E284BB /* configPreprod.xcconfig in Resources */,
 				27414D7A2C639ED800C19F8C /* Cartfile in Resources */,
 				2717AF152C42ADB800A23F06 /* Montserrat-Light.otf in Resources */,
 				279E058B2CB1D353004DF998 /* configRelease.xcconfig in Resources */,
@@ -2335,7 +2335,7 @@
 		};
 		27AB99C72C9AD18300DEE46A /* Preprod */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27C6E2782CB67A990053532D /* configPreprod.xcconfig */;
+			baseConfigurationReference = 27C373322CBAB0C000E284BB /* configPreprod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2395,12 +2395,13 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "PREPROD $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Preprod;
 		};
 		27AB99C82C9AD18300DEE46A /* Preprod */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27C6E2782CB67A990053532D /* configPreprod.xcconfig */;
+			baseConfigurationReference = 27C373322CBAB0C000E284BB /* configPreprod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2442,7 +2443,7 @@
 		};
 		27AB99C92C9AD18300DEE46A /* Preprod */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27C6E2782CB67A990053532D /* configPreprod.xcconfig */;
+			baseConfigurationReference = 27C373322CBAB0C000E284BB /* configPreprod.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2463,7 +2464,7 @@
 		};
 		27AB99CA2C9AD18300DEE46A /* Preprod */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27C6E2782CB67A990053532D /* configPreprod.xcconfig */;
+			baseConfigurationReference = 27C373322CBAB0C000E284BB /* configPreprod.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
