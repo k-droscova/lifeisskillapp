@@ -68,11 +68,10 @@ private extension RankView {
     }
     
     private var rankImageView: some View {
-        Image(CustomImages.Screens.rank.fullPath)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(height: RankViewConstants.imageHeight)
-            .padding(.bottom, RankViewConstants.imageBottomPadding)
+        ScreenResizingImage(
+            Image: Image(CustomImages.Screens.rank.fullPath)
+        )
+        .padding(.bottom, RankViewConstants.imageBottomPadding)
     }
     
     private var rankingsList: some View {

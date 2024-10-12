@@ -53,10 +53,9 @@ private extension LoginView {
     }
     
     private var loginImageView: some View {
-        Image(CustomImages.Screens.login.fullPath)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(height: LoginViewConstants.imageHeight)
+        ScreenResizingImage(
+            Image: Image(CustomImages.Screens.login.fullPath)
+        )
             .padding(.bottom, LoginViewConstants.imageBottomPadding)
     }
     
@@ -72,6 +71,7 @@ private extension LoginView {
                 isSecure: true
             )
         }
+        .frame(maxWidth: LoginViewConstants.textFieldMaxWidth)
         .padding(.horizontal, LoginViewConstants.horizontalPadding)
     }
     
@@ -105,6 +105,6 @@ enum LoginViewConstants {
     static let horizontalPadding: CGFloat = 30
     static let topPadding: CGFloat = 20
     static let bottomPadding: CGFloat = 30
-    static let imageHeight: CGFloat = 200
+    static let textFieldMaxWidth: CGFloat = 600
     static let imageBottomPadding: CGFloat = 20
 }

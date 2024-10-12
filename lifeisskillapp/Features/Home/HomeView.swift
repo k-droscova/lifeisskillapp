@@ -46,6 +46,7 @@ private extension HomeView {
             VStack(spacing: HomeViewConstants.vStackSpacing) {
                 imageView
                 instructionsView
+                Spacer(minLength: UIScreen.main.bounds.height / 24)
                 buttonsView
             }
         }
@@ -57,11 +58,11 @@ private extension HomeView {
     }
     
     private var imageView: some View {
-        Image(CustomImages.Screens.home.fullPath)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .squareFrame(size: HomeViewConstants.imageSize)
-            .padding()
+        ScreenResizingImage(
+            Image: Image(CustomImages.Screens.home.fullPath),
+            heightScreenRatio: 0.3
+        )
+        .padding(.bottom)
     }
     
     private var instructionsView: some View {

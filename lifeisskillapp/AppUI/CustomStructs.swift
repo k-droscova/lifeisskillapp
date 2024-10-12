@@ -567,3 +567,23 @@ struct PhoneTextField: View {
         .frame(height: CustomSizes.TextFieldView.validationMessageFrame.size)  // Reserve space for validation message, should equal lineHeight of .caption
     }
 }
+
+struct ScreenResizingImage: View {
+    let Image: Image
+    let screenHeight = UIScreen.main.bounds.height
+    let heightScreenRatio: CGFloat
+    
+    init(Image: Image,
+         heightScreenRatio: CGFloat = 0.25
+         
+    ) {
+        self.Image = Image
+        self.heightScreenRatio = heightScreenRatio
+    }
+    var body: some View {
+        Image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: screenHeight * heightScreenRatio)
+    }
+}

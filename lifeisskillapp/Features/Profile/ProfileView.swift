@@ -211,7 +211,7 @@ enum ProfileViewConstants {
     static let userDetailsVerticalSpacing: CGFloat = 12
     static let userInfoHorizontalPadding: CGFloat = 32
     static let emailActivationHorizontalPadding: CGFloat = 12
-    static let iconSize: CGFloat = 200
+    static let iconSize: CGFloat = UIScreen.main.bounds.height * 0.25
     
     enum Colors {
         static let backButtonForeground = Color.colorLisBlue
