@@ -782,8 +782,8 @@
 			isa = PBXGroup;
 			children = (
 				279E05712CB188B6004DF998 /* Cartfile.resolved */,
-				279E057A2CB188B6004DF998 /* Carthage */,
 				27414D792C639ED800C19F8C /* Cartfile */,
+				279E057A2CB188B6004DF998 /* Carthage */,
 				27274F7C2C3320F2003453E2 /* lifeisskillapp */,
 				27274F932C3320F3003453E2 /* lifeisskillappTests */,
 				27274F9D2C3320F3003453E2 /* lifeisskillappUITests */,
