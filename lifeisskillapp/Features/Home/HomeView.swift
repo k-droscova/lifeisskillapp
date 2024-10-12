@@ -46,7 +46,6 @@ private extension HomeView {
             VStack(spacing: HomeViewConstants.vStackSpacing) {
                 imageView
                 instructionsView
-                Spacer(minLength: UIScreen.main.bounds.height / 24)
                 buttonsView
             }
         }
@@ -68,6 +67,7 @@ private extension HomeView {
     private var instructionsView: some View {
         Text("home.description")
             .body1Regular
+            .frame(maxWidth: HomeViewConstants.maxDetailFrameWidth)
             .padding(.horizontal, HomeViewConstants.horizontalPadding)
             .multilineTextAlignment(.center)
     }
@@ -134,6 +134,7 @@ private extension HomeView {
 }
 
 enum HomeViewConstants {
+    static let maxDetailFrameWidth: CGFloat = 600
     static let vStackSpacing: CGFloat = 16
     static let buttonTopPadding: CGFloat = 16
     static let imageSize: CGFloat = 200

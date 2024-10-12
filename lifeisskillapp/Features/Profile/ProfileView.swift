@@ -135,6 +135,7 @@ private extension ProfileView {
                     .padding(.horizontal, ProfileViewConstants.emailActivationHorizontalPadding)
             }
             userDetailInfo
+                .frame(maxWidth: ProfileViewConstants.maxDetailFrameWidth)
                 .padding(.horizontal, ProfileViewConstants.userInfoHorizontalPadding)
         }
     }
@@ -201,6 +202,7 @@ private extension ProfileView {
 }
 
 enum ProfileViewConstants {
+    static let maxDetailFrameWidth: CGFloat = 600
     static let contentViewVerticalSpacing: CGFloat = 16
     static let minSpaceAboveRegisterButton: CGFloat = 64
     static let minSpaceAboveInviteButton: CGFloat = 32
