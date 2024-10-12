@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import MapKit
+import Algorithms
 
 protocol PointsViewModeling: BaseClass, ObservableObject, MapViewModeling where settingBarVM: SettingsBarViewModeling {
     associatedtype CategorySelectorVM: CategorySelectorViewModeling
@@ -135,8 +136,9 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         logger.log(message: "map button pressed")
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            await self.setupMapPoints(self.categoryPoints)
-            self.configureMapRegion(points: self.categoryPoints)
+            let mapPoints = self.categoryPoints.uniqued(on: \.pointId) // remove points with same location
+            await self.setupMapPoints(mapPoints)
+            self.configureMapRegion(points: mapPoints)
             self.isMapButtonPressed = true
         }
     }
