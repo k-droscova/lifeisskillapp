@@ -22,6 +22,7 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
+        context.coordinator.mapView = mapView
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .followWithHeading
         mapView.setRegion(viewModel.region, animated: true)
@@ -37,17 +38,58 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
+        
+        // MARK: - Private Properties
+        
+        /// Maximum zoom level to trigger clustering behavior.
+        /// Credit: Adapted from StackOverflow - https://stackoverflow.com/questions/46827353/mkmap-ios11-clusters-doesnt-split-up-after-max-zoom-how-to-set-it-up
+        private let maxZoomLevel = MapConstants.maxClusterZoomLevel
+        private var previousZoomLevel: Double?
+        private var currentZoomLevel: Double? {
+            willSet {
+                self.previousZoomLevel = self.currentZoomLevel
+            }
+            didSet {
+                /// Updates annotations if the zoom level crosses the max zoom threshold.
+                /// Removes and re-adds annotations to enable/disable clustering as needed.
+                guard let currentZoomLevel = self.currentZoomLevel,
+                      let previousZoomLevel = self.previousZoomLevel else { return }
+                if (currentZoomLevel > maxZoomLevel && previousZoomLevel <= maxZoomLevel) ||
+                    (currentZoomLevel <= maxZoomLevel && previousZoomLevel > maxZoomLevel) {
+                    // Refresh annotations
+                    guard let annotations = mapView?.annotations else { return }
+                    mapView?.removeAnnotations(annotations)
+                    mapView?.addAnnotations(annotations)
+                }
+            }
+        }
+        
+        // MARK: - Interface
+        
         var viewModel: ViewModel
+        weak var mapView: MKMapView?
+        
+        // MARK: - Initialization
         
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
         }
         
+        // MARK: - Delegate Methods
+        
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            if let cluster = annotation as? MKClusterAnnotation {
+            if let customAnnotation = annotation as? CustomMapAnnotation {
+                let annotationView = configureCustomAnnotationView(for: customAnnotation, in: mapView)
+                
+                if let currentZoomLevel = currentZoomLevel, currentZoomLevel <= maxZoomLevel {
+                    annotationView?.clusteringIdentifier = nil
+                } else {
+                    annotationView?.clusteringIdentifier = "clusterIdentifier"
+                }
+                
+                return annotationView
+            } else if let cluster = annotation as? MKClusterAnnotation {
                 return configureClusterView(for: cluster, in: mapView)
-            } else if let customAnnotation = annotation as? CustomMapAnnotation {
-                return configureCustomAnnotationView(for: customAnnotation, in: mapView)
             }
             return nil
         }
@@ -85,46 +127,52 @@ struct MapViewComponent<ViewModel: MapViewModeling>: UIViewRepresentable {
             print("DEBUG: Failed to locate user: \(error.localizedDescription)")
         }
         
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            let zoomWidth = mapView.visibleMapRect.size.width
+            let zoomLevel = Double(log2(zoomWidth))
+            currentZoomLevel = zoomLevel
+        }
+        
         // MARK: - Private Helpers
         
         private func configureClusterView(for cluster: MKClusterAnnotation, in mapView: MKMapView) -> MKAnnotationView? {
             let identifier = "ClusterAnnotationView"
             var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-
+            
             if clusterView == nil {
                 clusterView = MKMarkerAnnotationView(annotation: cluster, reuseIdentifier: identifier)
             }
-
+            
             if let firstAnnotation = cluster.memberAnnotations.first as? CustomMapAnnotation {
                 clusterView?.markerTintColor = firstAnnotation.clusterColor
             } else {
                 clusterView?.markerTintColor = .gray
             }
-
+            
             clusterView?.canShowCallout = false
             clusterView?.glyphText = "\(cluster.memberAnnotations.count)"
             clusterView?.titleVisibility = .hidden
             clusterView?.subtitleVisibility = .hidden
-
+            
             return clusterView
         }
         
         private func configureCustomAnnotationView(for annotation: CustomMapAnnotation, in mapView: MKMapView) -> MKAnnotationView? {
             let identifier = "CustomAnnotationView"
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-
+            
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             } else {
                 annotationView?.annotation = annotation
             }
-
+            
             if let icon = annotation.icon {
                 annotationView?.image = icon
                 annotationView?.bounds.size = icon.size
                 annotationView?.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
             }
-
+            
             annotationView?.clusteringIdentifier = annotation.clusterIdentifier
             return annotationView
         }

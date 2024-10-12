@@ -11,6 +11,7 @@ import CoreLocation
 struct MapConstants {
     static let mapDetailViewSheetHeight: CGFloat = 200
     static let mapDetailImageHeight: CGFloat = 100
+    static let maxClusterZoomLevel: Double = 12.0
     static let latitudeDelta = 0.05
     static let longitudeDelta = 0.05
     static let virtualPointDistance: Double = {
