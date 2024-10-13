@@ -171,6 +171,7 @@
 		278DB5272C88A6B000FB5B1C /* QRReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
+		279DEF282CBC060C003F0D4D /* CascadeDeleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */; };
 		279E057C2CB188B6004DF998 /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 279E05712CB188B6004DF998 /* Cartfile.resolved */; };
 		279E05802CB189C5004DF998 /* Realm.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279E05752CB188B6004DF998 /* Realm.xcframework */; };
 		279E05812CB189C5004DF998 /* Realm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 279E05752CB188B6004DF998 /* Realm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -449,6 +450,7 @@
 		278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReferenceView.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
+		279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadeDeleting.swift; sourceTree = "<group>"; };
 		279E05712CB188B6004DF998 /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		279E05722CB188B6004DF998 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		279E05742CB188B6004DF998 /* .realm-cocoa.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".realm-cocoa.version"; sourceTree = "<group>"; };
@@ -1578,6 +1580,7 @@
 		27E9D5FC2C63D9020098CB96 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */,
 				2739787C2C67A5890078BDEF /* RealmUserDataStorage.swift */,
 				27E9D6122C63F3B60098CB96 /* RealmStorage.swift */,
 				27E9D60D2C63EB720098CB96 /* Repositories */,
@@ -1949,6 +1952,7 @@
 				2720DF2C2C514A0A007B4E77 /* HomeView.swift in Sources */,
 				278DB5272C88A6B000FB5B1C /* QRReferenceView.swift in Sources */,
 				27066A8F2C45623F0092B499 /* PointType.swift in Sources */,
+				279DEF282CBC060C003F0D4D /* CascadeDeleting.swift in Sources */,
 				27066A9E2C457F1F0092B499 /* CheckSumAPIService.swift in Sources */,
 				27B5DF022C871C85003B9AEE /* Alert.swift in Sources */,
 				27F528FE2C5A6FB50042F537 /* UIAssetEnums.swift in Sources */,
@@ -2185,7 +2189,7 @@
 				CODE_SIGN_ENTITLEMENTS = lifeisskillapp/lifeisskillappDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 35FLSX88SA;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2227,7 +2231,7 @@
 				CODE_SIGN_ENTITLEMENTS = lifeisskillapp/lifeisskillappRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 35FLSX88SA;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2412,7 +2416,7 @@
 				CODE_SIGN_ENTITLEMENTS = lifeisskillapp/lifeisskillappDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 35FLSX88SA;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -15,11 +15,6 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     private let logger: LoggerServicing
     private var internalStore: [String: Any] = [:]
     
-    // MARK: - Public Properties
-    
-    private(set) var token: String?
-    private(set) var isLoggedIn: Bool = false
-    
     // MARK: - Keys
     
     private enum StorageKey: String {
@@ -41,14 +36,6 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     
     // MARK: - Public Interface
     
-    func onLogin() async throws {
-        logger.log(message: "User logged in. Current internal store contents:")
-        for (key, value) in internalStore {
-            print("\(key): \(value)")
-        }
-        isLoggedIn = true
-    }
-    
     func savedLoginDetails() async throws -> LoginUserData? {
         guard let loggedInUser = internalStore[StorageKey.loginUserData.rawValue] as? LoggedInUser else { return nil }
         return LoginUserData(from: loggedInUser)
@@ -61,7 +48,6 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     
     func login(_ user: LoggedInUser) async throws {
         internalStore[StorageKey.loginUserData.rawValue] = user
-        isLoggedIn = true
     }
     
     func markUserAsLoggedOut() async throws {
@@ -73,8 +59,6 @@ final class InMemoryUserDataStorage: UserDataStoraging {
     }
     
     func onLogout() async {
-        token = nil
-        isLoggedIn = false
         internalStore.removeAll()
     }
     

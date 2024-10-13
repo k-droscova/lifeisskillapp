@@ -40,7 +40,9 @@ final class RealmStorage: BaseClass, RealmStoraging {
     
     func getRealm() -> Realm? {
         do {
-            return try Realm(configuration: configurations)
+            let realm = try Realm(configuration: configurations)
+            print("Realm initialized successfully at \(realm.configuration.fileURL?.absoluteString ?? "")")
+            return realm
         } catch {
             logger.log(message: "REALM INIT ERROR: \(error.localizedDescription)")
             return nil
@@ -52,10 +54,29 @@ final class RealmStorage: BaseClass, RealmStoraging {
     private func setupConfig() {
         // Define the Realm file URL
         let realmFileURL = configurations.fileURL!.deletingLastPathComponent().appendingPathComponent(RealmConstants.storageFile)
-        configurations.schemaVersion = 1
-        configurations.migrationBlock = nil
+        configurations.schemaVersion = 2
+        configurations.migrationBlock = { migration, oldSchemaVersion in
+            if oldSchemaVersion < 2 {
+                migration.deleteData(forType: RealmCheckSumData.className())
+                migration.deleteData(forType: RealmLoginDetails.className())
+                migration.deleteData(forType: RealmCategory.className())
+                migration.deleteData(forType: RealmUserCategoryData.className())
+                migration.deleteData(forType: RealmUserRankData.className())
+                migration.deleteData(forType: RealmUserRank.className())
+                migration.deleteData(forType: RealmRankedUser.className())
+                migration.deleteData(forType: RealmGenericPointData.className())
+                migration.deleteData(forType: RealmGenericPoint.className())
+                migration.deleteData(forType: RealmPointParam.className())
+                migration.deleteData(forType: RealmTimerParam.className())
+                migration.deleteData(forType: RealmStatusParam.className())
+                migration.deleteData(forType: RealmUserPointData.className())
+                migration.deleteData(forType: RealmUserPoint.className())
+                migration.deleteData(forType: RealmScannedPoint.className())
+                migration.deleteData(forType: RealmUserLocation.className())
+                migration.deleteData(forType: RealmSponsorData.className())
+            }
+        }
         
-        // Common setup
         configurations.fileURL = realmFileURL
         configurations.objectTypes = [
             RealmCheckSumData.self,

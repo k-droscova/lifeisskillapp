@@ -72,7 +72,12 @@ class RealmGenericPoint: Object {
         hasDetail = genericPoint.hasDetail
         active = genericPoint.active
         if let param = genericPoint.param {
-            self.param = RealmPointParam(from: param)
+            let realmParam = RealmPointParam(from: param)
+            if realmParam.timer != nil || realmParam.status != nil {
+                self.param = realmParam
+            } else {
+                self.param = nil
+            }
         }
     }
     

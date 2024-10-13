@@ -56,7 +56,7 @@ extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
             )
         }
         try realm.write {
-            realm.delete(entity)
+            realm.delete(entity, cascading: true)
         }
     }
     
@@ -69,7 +69,7 @@ extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
             )
         }
         try realm.write {
-            realm.delete(entities)
+            realm.delete(entities, cascading: true)
         }
     }
     
@@ -83,7 +83,7 @@ extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
         }
         try realm.write {
             let allEntities = realm.objects(Entity.self)
-            realm.delete(allEntities)
+            realm.delete(allEntities, cascading: true)
         }
     }
     

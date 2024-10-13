@@ -21,4 +21,6 @@ enum CodeSource: String, Codable {
     case text = "TEXT"
     
     case unknown = "UNKNOWN"
+    
+    case welcome = ""
 }

@@ -51,10 +51,6 @@ class RealmUserPoint: Object {
     @objc dynamic var duration: TimeInterval = 0.0
     @objc dynamic var doesPointCount: Bool = true
     
-    override static func primaryKey() -> String? {
-        "recordKey"
-    }
-    
     override required init() {
         super.init()
     }

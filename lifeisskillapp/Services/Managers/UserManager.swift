@@ -195,7 +195,6 @@ final class UserManager: BaseClass, UserManaging {
         } else {
             try await performOfflineLogin(credentials: credentials)
         }
-        await gameDataManager.loadData(for: nil) // load all data for the user upon login
         await loadLoggedInUserData()
         userDefaultsStorage.isLoggedIn = true
     }
@@ -285,12 +284,14 @@ final class UserManager: BaseClass, UserManaging {
             try keychainStorage.save(credentials: credentials) // save new credentials to keychain
             try await storage.login(loggedInUser) // save new data to realm
             self.loggedInUser = response.data.user
+            try await gameDataManager.performOnlineLogin()
             return
         }
         // if there is data in realm and if the newly logged in user is different then we clear all data in realm
         if loggedInUser.userId != existingUser.user.userId {
             logger.log(message: "Different user detected. Clearing all related data.")
             try await storage.clearUserRelatedData() // clear all data
+            try await gameDataManager.performOnlineLogin()
         }
         try await storage.login(loggedInUser) // save the new login data
         try keychainStorage.delete() // delete previous credentials
@@ -327,7 +328,7 @@ final class UserManager: BaseClass, UserManaging {
             )
         }
         try await storage.markUserAsLoggedIn()
-        try await storage.onLogin()
+        try await gameDataManager.performOfflineLogin()
         self.loggedInUser = storedLoginData.user
     }
 }

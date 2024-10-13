@@ -68,7 +68,7 @@ final class ScanningManager: ScanningManaging {
     }
     
     func checkValidity(_ point: ScannedPoint) -> Bool {
-        // TODO: handle preprocessing for validity in the app
+        // TODO: handle preprocessing for validity in the app (not implemented yet)
         guard (point.location != nil) else { return false }
         return true
     }
@@ -86,7 +86,7 @@ final class ScanningManager: ScanningManaging {
     // MARK: - Private Helpers
     
     private func checkValidity(_ response: APIResponse<UserPointData>) -> Bool {
-        // TODO: handle logic from response
+        // TODO: handle logic from response (not implemented yet)
         true
     }
 }

@@ -60,22 +60,9 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
     
     // MARK: - Public Interface
     
-    func onLogin() async throws {
-        try await withThrowingTaskGroup(of: Void.self) {  [weak self] group in
-            guard let self = self else { return }
-            group.addTask { try await self.loadCategories() }
-            group.addTask { try await self.loadUserPoints() }
-            group.addTask { try await self.loadGenericPoints() }
-            group.addTask { try await self.loadUserRanks() }
-            group.addTask { try await self.loadCheckSumData() }
-            try await group.waitForAll()
-        }
-        logger.log(message: "All data loaded concurrently on login.")
-    }
-    
     func onLogout() async throws {
         try loginRepo.markUserAsLoggedOut()
-        await clearInMemoryData()
+        clearInMemoryData()
         logger.log(message: "User logged out successfully.")
     }
     
@@ -87,9 +74,9 @@ final class RealmUserDataStorage: BaseClass, PersistentUserDataStoraging {
             group.addTask { try self.rankingRepo.deleteAll() }
             group.addTask { try self.userPointRepo.deleteAll() }
             group.addTask { try self.checkSumRepo.deleteUserSpecificCheckSums() }
-            group.addTask { await self.clearInMemoryData() }
             try await group.waitForAll()
         }
+        clearInMemoryData()
         logger.log(message: "All related user data has been cleared.")
     }
     

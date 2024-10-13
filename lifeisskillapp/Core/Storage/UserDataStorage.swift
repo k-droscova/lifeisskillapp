@@ -13,7 +13,6 @@ protocol HasUserDataStorage {
 
 protocol UserDataStoraging {
     // Storage Interface Based On Different Scenarios
-    func onLogin() async throws
     func onLogout() async throws
     func clearUserRelatedData() async throws
     func clearScannedPointData() async throws

@@ -152,7 +152,7 @@ extension HomeFlowCoordinator {
             showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.virtual.message")
         case .text:
             showAlert(titleKey: "home.scan_error.title", messageKey: "home.scan_error.text.message")
-        case .unknown:
+        case .unknown, .welcome:
             showAlert(titleKey: "alert.general_error.title", messageKey: "alert.general_error.message")
         }
     }

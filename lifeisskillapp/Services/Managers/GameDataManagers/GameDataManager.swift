@@ -32,9 +32,11 @@ protocol GameDataManaging {
     var delegate: GameDataManagerFlowDelegate? { get set }
     var isVirtualAvailablePublisher: AnyPublisher<Bool, Never> { get }
     func reloadAfterRegistration() async throws
-    func loadData(for dataType: DataType?) async
+    func loadData(for dataType: DataType) async
     func onPointScanned(_ point: ScannedPoint) async
     func processVirtual(location: UserLocation?) async
+    func performOnlineLogin() async throws
+    func performOfflineLogin() async throws
 }
 
 final class GameDataManager: BaseClass, GameDataManaging {
@@ -90,17 +92,49 @@ final class GameDataManager: BaseClass, GameDataManaging {
     
     // MARK: - Public Interface
     
+    /// Perform online login, fetch all data (categories, user points, events, ranks, messages) and save to Realm
+    func performOnlineLogin() async throws {
+        logger.log(message: "Performing online login, fetching all data...")
+        
+        do {
+            async let categories: () = fetchNewUserCategories()
+            async let userPoints: () = fetchNewUserPoints()
+            async let userRanks: () = fetchNewUserRank()
+            async let userEvents: () = fetchNewUserEvents()
+            async let userMessages: () = fetchNewUserMessages()
+            async let genericPoints: () = fetchNewData(for: .genericPoints)
+            
+            try await (categories, userPoints, userRanks, userEvents, userMessages, genericPoints)
+            
+            logger.log(message: "Successfully fetched and saved all data during online login")
+        } catch let error as BaseError {
+            if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
+                delegate?.onInvalidToken()
+                return
+            }
+            delegate?.onError(error)
+        } catch {
+            delegate?.onError(error)
+        }
+    }
+    
+    /// Perform offline login, load all data from the repository
+    func performOfflineLogin() async throws {
+        logger.log(message: "Performing offline login, loading all data from repository...")
+        await loadAllDataFromRepository()
+        logger.log(message: "Successfully loaded all data during offline login")
+    }
+    
+    /// Fetches new data that is neccessary once user completes registration
     func reloadAfterRegistration() async throws {
         try await fetchNewUserCategories()
     }
     
-    func loadData(for dataType: DataType? = nil) async {
+    /// For loading data for specific ViewModels (Screens)
+    /// Handles both online and offline loading
+    func loadData(for dataType: DataType) async {
         guard !isOnline else {
-            await fetchNewDataIfNecessary(for: dataType)
-            return
-        }
-        guard let dataType else {
-            await loadAllDataFromRepository()
+            await fetchNewData(for: dataType)
             return
         }
         await loadFromRepository(for: dataType)
@@ -140,15 +174,11 @@ final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    // MARK: - Private Helpers
+    // MARK: - Private Helpers For Online Fetching
     
-    private func fetchNewDataIfNecessary(for dataType: DataType? = nil) async {
+    private func fetchNewData(for dataType: DataType) async {
         do {
-            guard let dataType else {
-                try await fetchAllDataIfNecessary()
-                return
-            }
-            try await fetchData(for: dataType)
+            try await fetchDataIfNeccessary(for: dataType)
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 delegate?.onInvalidToken()
@@ -159,43 +189,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
         }
     }
     
-    private func loadFromRepository(for dataType: DataType) async {
-        switch dataType {
-        case .categories:
-            await userCategoryManager.loadFromRepository()
-        case .userPoints:
-            await userPointManager.loadFromRepository()
-        case .ranks:
-            await userRankManager.loadFromRepository()
-        case .genericPoints:
-            await genericPointManager.loadFromRepository()
-        default:
-            logger.log(message: "Loading data for \(dataType) not yet implemented")
-        }
-    }
-    
-    private func loadAllDataFromRepository() async {
-        await withTaskGroup(of: Void.self) { group in
-            for dataType in DataType.allCases {
-                group.addTask { [weak self] in
-                    await self?.loadFromRepository(for: dataType)
-                }
-            }
-        }
-    }
-    
-    private func fetchAllDataIfNecessary() async throws {
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            for dataType in DataType.allCases {
-                group.addTask { [weak self] in
-                    try await self?.fetchData(for: dataType)
-                }
-            }
-            try await group.waitForAll()
-        }
-    }
-    
-    private func fetchData(for dataType: DataType) async throws {
+    private func fetchDataIfNeccessary(for dataType: DataType) async throws {
         logger.log(message: "Fetching data for \(dataType)")
         guard dataType.hasCheckSumEndpoint else {
             try await fetchNewUserCategories()
@@ -243,19 +237,19 @@ final class GameDataManager: BaseClass, GameDataManaging {
     }
     
     private func shouldFetchData(for dataType: DataType, newCheckSum: String) async throws -> Bool {
-        let currentData = try await storage.checkSumData() ?? CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
+        let currentChecksum = try await storage.checkSumData() ?? CheckSumData(userPoints: "", rank: "", messages: "", events: "", points: "")
         
         switch dataType {
         case .userPoints:
-            return currentData.userPoints != newCheckSum
+            return currentChecksum.userPoints != newCheckSum
         case .ranks:
-            return currentData.rank != newCheckSum
+            return currentChecksum.rank != newCheckSum
         case .events:
-            return currentData.events != newCheckSum
+            return currentChecksum.events != newCheckSum
         case .messages:
-            return currentData.messages != newCheckSum
+            return currentChecksum.messages != newCheckSum
         case .genericPoints:
-            return currentData.points != newCheckSum
+            return currentChecksum.points != newCheckSum
         default:
             return false
         }
@@ -306,12 +300,12 @@ final class GameDataManager: BaseClass, GameDataManaging {
     
     private func fetchNewUserMessages() async throws {
         logger.log(message: "Updating user messages data")
-        // Add implementation for fetching messages data and updating checksum
+        // Not implemented in current version
     }
     
     private func fetchNewUserEvents() async throws {
         logger.log(message: "Updating user events data")
-        // Add implementation for fetching events data and updating checksum
+        // Not implemented in current version
     }
     
     private func fetchNewPoints() async throws {
@@ -322,6 +316,35 @@ final class GameDataManager: BaseClass, GameDataManaging {
         }
         try await updateCheckSum(newCheckSum: newCheckSum, for: .genericPoints)
     }
+    
+    // MARK: - Private Helpers for Repository Loading
+    
+    private func loadFromRepository(for dataType: DataType) async {
+        switch dataType {
+        case .categories:
+            await userCategoryManager.loadFromRepository()
+        case .userPoints:
+            await userPointManager.loadFromRepository()
+        case .ranks:
+            await userRankManager.loadFromRepository()
+        case .genericPoints:
+            await genericPointManager.loadFromRepository()
+        default:
+            logger.log(message: "Loading data for \(dataType) not yet implemented")
+        }
+    }
+    
+    private func loadAllDataFromRepository() async {
+        await withTaskGroup(of: Void.self) { group in
+            for dataType in DataType.allCases {
+                group.addTask { [weak self] in
+                    await self?.loadFromRepository(for: dataType)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Private Helpers Miscellaneous
     
     private func setupBindings() {
         networkMonitor.onlineStatusPublisher
@@ -353,7 +376,15 @@ final class GameDataManager: BaseClass, GameDataManaging {
     private func handleOfflineToOnlineStatusChange() async {
         do {
             try await userPointManager.handleAllStoredScannedPoints()
-            await self.fetchNewDataIfNecessary()
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                group.addTask { [weak self] in
+                    await self?.fetchNewData(for: .userPoints)
+                }
+                group.addTask { [weak self] in
+                    await self?.fetchNewData(for: .ranks)
+                }
+                try await group.waitForAll()
+            }
         } catch let error as BaseError {
             if error.code == ErrorCodes.specificStatusCode(.invalidToken).code {
                 delegate?.onInvalidToken()

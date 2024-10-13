@@ -50,7 +50,6 @@ final class CategorySelectorViewModel: BaseClass, ObservableObject, CategorySele
     // MARK: - Private Helpers
     
     private func fetchData() async {
-        await userCategoryManager.loadFromRepository()
         let categories = getAllUserCategories()
         await MainActor.run {
             self.userCategories = categories

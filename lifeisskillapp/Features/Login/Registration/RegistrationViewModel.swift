@@ -103,17 +103,6 @@ final class RegistrationViewModel: BaseClass, ObservableObject, RegistrationView
         self.emailValidationState = EmailValidationState.valid
         self.passwordValidationState = PasswordValidationState.valid
         self.confirmPasswordValidationState = ConfirmPasswordValidationState.valid
-#elseif PREPROD
-        self.username = "apple.test"
-        self.email = "apple.test@example.com"
-        self.password = "password"
-        self.passwordConfirm = "password"
-        self.isGdprConfirmed = true
-        self.isRulesConfirmed = true
-        self.usernameValidationState = UsernameValidationState.valid
-        self.emailValidationState = EmailValidationState.valid
-        self.passwordValidationState = PasswordValidationState.valid
-        self.confirmPasswordValidationState = ConfirmPasswordValidationState.valid
 #endif
     }
     
@@ -216,9 +205,6 @@ final class RegistrationViewModel: BaseClass, ObservableObject, RegistrationView
     }
     
     private func isUsernameAvailable(_ username: String) async -> Bool {
-#if PREPROD
-        return username == "apple.test"
-#endif
         do {
             return try await userManager.checkUsernameAvailability(username)
         } catch {
@@ -228,9 +214,7 @@ final class RegistrationViewModel: BaseClass, ObservableObject, RegistrationView
     }
     
     private func isEmailAvailable(_ email: String) async -> Bool {
-#if PREPROD
-        return email == "apple.test@example.com"
-#elseif DEBUG
+#if DEBUG
         return true
 #else
         do {
