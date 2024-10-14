@@ -195,8 +195,6 @@
 		27C619522C36E6AA0067498F /* JsonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619512C36E6AA0067498F /* JsonMapper.swift */; };
 		27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195B2C36F12E0067498F /* OSLoggerService.swift */; };
 		27C6195E2C36F2970067498F /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195D2C36F2970067498F /* LoggingService.swift */; };
-		27C619602C3704F60067498F /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6195F2C3704F60067498F /* BaseError.swift */; };
-		27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619622C3705FA0067498F /* ErrorCodes.swift */; };
 		27C619672C37069E0067498F /* APIResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619662C37069E0067498F /* APIResponseError.swift */; };
 		27C619692C381F340067498F /* RequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619682C381F340067498F /* RequestResponse.swift */; };
 		27C6196C2C3820090067498F /* URLSessionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C6196B2C3820090067498F /* URLSessionWrapper.swift */; };
@@ -248,6 +246,8 @@
 		27F67E992C615EAA00F1C63E /* PointsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E982C615EAA00F1C63E /* PointsListView.swift */; };
 		27F67E9B2C61690800F1C63E /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9A2C61690800F1C63E /* PointsView.swift */; };
 		27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */; };
+		27F7FF622CBD08A800018E4C /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7FF5F2CBD08A800018E4C /* BaseError.swift */; };
+		27F7FF632CBD08A800018E4C /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7FF602CBD08A800018E4C /* ErrorCodes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -475,8 +475,6 @@
 		27C619512C36E6AA0067498F /* JsonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMapper.swift; sourceTree = "<group>"; };
 		27C6195B2C36F12E0067498F /* OSLoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLoggerService.swift; sourceTree = "<group>"; };
 		27C6195D2C36F2970067498F /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
-		27C6195F2C3704F60067498F /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
-		27C619622C3705FA0067498F /* ErrorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
 		27C619662C37069E0067498F /* APIResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseError.swift; sourceTree = "<group>"; };
 		27C619682C381F340067498F /* RequestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestResponse.swift; sourceTree = "<group>"; };
 		27C6196B2C3820090067498F /* URLSessionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionWrapper.swift; sourceTree = "<group>"; };
@@ -530,6 +528,8 @@
 		27F67E982C615EAA00F1C63E /* PointsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsListView.swift; sourceTree = "<group>"; };
 		27F67E9A2C61690800F1C63E /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsFlowCoordinator.swift; sourceTree = "<group>"; };
+		27F7FF5F2CBD08A800018E4C /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
+		27F7FF602CBD08A800018E4C /* ErrorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1447,7 +1447,7 @@
 		27C619572C36EB4B0067498F /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				27C619862C3A9E040067498F /* GeneralErrors */,
+				27F7FF612CBD08A800018E4C /* GeneralErrors */,
 				27C619852C3A9DB60067498F /* APIErrors */,
 			);
 			path = Errors;
@@ -1517,15 +1517,6 @@
 				27C619662C37069E0067498F /* APIResponseError.swift */,
 			);
 			path = APIErrors;
-			sourceTree = "<group>";
-		};
-		27C619862C3A9E040067498F /* GeneralErrors */ = {
-			isa = PBXGroup;
-			children = (
-				27C619622C3705FA0067498F /* ErrorCodes.swift */,
-				27C6195F2C3704F60067498F /* BaseError.swift */,
-			);
-			path = GeneralErrors;
 			sourceTree = "<group>";
 		};
 		27C619872C3AA3950067498F /* Environment */ = {
@@ -1644,6 +1635,15 @@
 				27F67E9A2C61690800F1C63E /* PointsView.swift */,
 			);
 			path = Points;
+			sourceTree = "<group>";
+		};
+		27F7FF612CBD08A800018E4C /* GeneralErrors */ = {
+			isa = PBXGroup;
+			children = (
+				27F7FF5F2CBD08A800018E4C /* BaseError.swift */,
+				27F7FF602CBD08A800018E4C /* ErrorCodes.swift */,
+			);
+			path = GeneralErrors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1906,7 +1906,6 @@
 				2734DCAB2C46A62F008030F3 /* UserDataAPIService.swift in Sources */,
 				273022352C62577800F9D572 /* LocationStatusBarView.swift in Sources */,
 				27C619702C3822720067498F /* URLRequest.swift in Sources */,
-				27C619602C3704F60067498F /* BaseError.swift in Sources */,
 				2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */,
 				2713034A2C7C8E160005FC46 /* EnterEmailView.swift in Sources */,
 				275457262C3332CE00F3B55A /* DebugViewModel.swift in Sources */,
@@ -1925,6 +1924,8 @@
 				275457232C3332BF00F3B55A /* DebugView.swift in Sources */,
 				272399B82CA48C4B00DC8848 /* ResponseType.swift in Sources */,
 				278DB5222C88989B00FB5B1C /* ReferenceDescriptionView.swift in Sources */,
+				27F7FF622CBD08A800018E4C /* BaseError.swift in Sources */,
+				27F7FF632CBD08A800018E4C /* ErrorCodes.swift in Sources */,
 				27C6195C2C36F12E0067498F /* OSLoggerService.swift in Sources */,
 				27066A992C45755C0092B499 /* CheckSumData.swift in Sources */,
 				27E32DEA2C49504100E69C58 /* GenericPointManager.swift in Sources */,
@@ -1965,7 +1966,6 @@
 				27E9D60C2C63E8B90098CB96 /* RealmUserPoint.swift in Sources */,
 				27F67E9B2C61690800F1C63E /* PointsView.swift in Sources */,
 				27C619892C3AA3A00067498F /* API.swift in Sources */,
-				27C619632C3705FA0067498F /* ErrorCodes.swift in Sources */,
 				27E9D6062C63E35E0098CB96 /* RealmCategory.swift in Sources */,
 				27D5692D2C6B728A003EF5D9 /* KeychainHelper.swift in Sources */,
 				2739E2802C5B5A8E002D82E3 /* CustomStructs.swift in Sources */,
