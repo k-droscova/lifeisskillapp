@@ -113,7 +113,6 @@
 		2750BBFA2C6A550E00F82A04 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750BBF92C6A550E00F82A04 /* OnboardingView.swift */; };
 		27540E4D2C70CE96005A0B49 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540E4C2C70CE96005A0B49 /* MapViewModel.swift */; };
 		27540E4F2C70D943005A0B49 /* MapViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540E4E2C70D943005A0B49 /* MapViewComponent.swift */; };
-		2754570B2C33259200F3B55A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754570A2C33259200F3B55A /* Network.swift */; };
 		2754570D2C3328B300F3B55A /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754570C2C3328B300F3B55A /* AppFlowCoordinator.swift */; };
 		2754570F2C33299300F3B55A /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754570E2C33299300F3B55A /* UserManager.swift */; };
 		275457112C332CFD00F3B55A /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275457102C332CFD00F3B55A /* AppDependencies.swift */; };
@@ -248,6 +247,7 @@
 		27F67E9D2C6176D500F1C63E /* PointsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */; };
 		27F7FF622CBD08A800018E4C /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7FF5F2CBD08A800018E4C /* BaseError.swift */; };
 		27F7FF632CBD08A800018E4C /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7FF602CBD08A800018E4C /* ErrorCodes.swift */; };
+		27F7FF652CBD0A4700018E4C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7FF642CBD0A4700018E4C /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,7 +392,6 @@
 		2750BBF92C6A550E00F82A04 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		27540E4C2C70CE96005A0B49 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		27540E4E2C70D943005A0B49 /* MapViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewComponent.swift; sourceTree = "<group>"; };
-		2754570A2C33259200F3B55A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2754570C2C3328B300F3B55A /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		2754570E2C33299300F3B55A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		275457102C332CFD00F3B55A /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
@@ -530,6 +529,7 @@
 		27F67E9C2C6176D500F1C63E /* PointsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsFlowCoordinator.swift; sourceTree = "<group>"; };
 		27F7FF5F2CBD08A800018E4C /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
 		27F7FF602CBD08A800018E4C /* ErrorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
+		27F7FF642CBD0A4700018E4C /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1313,7 +1313,7 @@
 		275EA0912C81E8E200F07BB8 /* GeneralNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				2754570A2C33259200F3B55A /* Network.swift */,
+				27F7FF642CBD0A4700018E4C /* Network.swift */,
 				275EA0922C81E90600F07BB8 /* Endpoint.swift */,
 				27B25C4E2C3AFE4F00864028 /* APITask.swift */,
 				272399B72CA48C4B00DC8848 /* ResponseType.swift */,
@@ -1878,6 +1878,7 @@
 				278DB5202C88785300FB5B1C /* RegistrationFlowCoordinator.swift in Sources */,
 				27E9D60F2C63EB8E0098CB96 /* LoginRepository.swift in Sources */,
 				2754570F2C33299300F3B55A /* UserManager.swift in Sources */,
+				27F7FF652CBD0A4700018E4C /* Network.swift in Sources */,
 				2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */,
 				27C619782C3989EF0067498F /* Loggable.swift in Sources */,
 				271303462C7C8DA40005FC46 /* EnterPasswordView.swift in Sources */,
@@ -1935,7 +1936,6 @@
 				2754AA5E2C41351C0011A618 /* MainFlowCoordinator.swift in Sources */,
 				27234C282C8A39B40077CBD8 /* FullRegistrationView.swift in Sources */,
 				2717AEB72C429C2A00A23F06 /* LocationManager.swift in Sources */,
-				2754570B2C33259200F3B55A /* Network.swift in Sources */,
 				275457162C332DB400F3B55A /* LoginViewModel.swift in Sources */,
 				27C619932C3AAD260067498F /* User.swift in Sources */,
 				2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */,
