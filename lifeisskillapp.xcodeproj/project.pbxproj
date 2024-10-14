@@ -451,7 +451,6 @@
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadeDeleting.swift; sourceTree = "<group>"; };
 		279E05712CB188B6004DF998 /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
-		279E05722CB188B6004DF998 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		279E05742CB188B6004DF998 /* .realm-cocoa.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".realm-cocoa.version"; sourceTree = "<group>"; };
 		279E05752CB188B6004DF998 /* Realm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Realm.xcframework; sourceTree = "<group>"; };
 		279E05762CB188B6004DF998 /* RealmSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RealmSwift.xcframework; sourceTree = "<group>"; };
@@ -1381,18 +1380,9 @@
 			path = QRScanner;
 			sourceTree = "<group>";
 		};
-		279E05732CB188B6004DF998 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				279E05722CB188B6004DF998 /* Realm.framework */,
-			);
-			path = iOS;
-			sourceTree = "<group>";
-		};
 		279E05772CB188B6004DF998 /* Build */ = {
 			isa = PBXGroup;
 			children = (
-				279E05732CB188B6004DF998 /* iOS */,
 				279E05742CB188B6004DF998 /* .realm-cocoa.version */,
 				279E05752CB188B6004DF998 /* Realm.xcframework */,
 				279E05762CB188B6004DF998 /* RealmSwift.xcframework */,
