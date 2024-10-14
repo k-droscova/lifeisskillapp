@@ -27,7 +27,7 @@ We are excited that you're interested in contributing to the Life is Skill iOS a
 4. **Make your changes**: Implement your feature, bug fix, or documentation improvements.
 5. **Commit your changes**: Ensure your commit messages follow good practices and are concise:
    ```bash
-   git commit -m "Add feature to enable QR scanning for competitions"
+   git commit -m "Add feature to enable this amazing thing"
    ```
 6. **Push your changes**: Push your changes to your forked repository:
    ```bash
@@ -82,7 +82,7 @@ Make sure all tests pass before submitting your pull request.
 - Follow the **Swift best practices** and **Apple Human Interface Guidelines**.
 - Keep your code clean, modular, and easy to understand.
 - Write descriptive commit messages.
-- Ensure any UI changes match the design and are responsive across different devices.
+- Ensure any UI changes match the design and are responsive across different devices (we support both iPhones and iPads with iOS version 16.0 and above)
 
 ---
 
