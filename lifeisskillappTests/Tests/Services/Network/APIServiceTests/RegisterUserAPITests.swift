@@ -11,28 +11,31 @@ import XCTest
 final class RegisterUserAPIServiceTests: XCTestCase {
     
     private struct Dependencies: RegisterUserAPIService.Dependencies {
+        var userDefaultsStorage: UserDefaultsStoraging
         let network: Networking
         let logger: LoggerServicing
-        let storage: PersistentUserDataStoraging
     }
     
+    var userDefaultStorageMock: UserDefaultsStorageMock!
     var networkMock: NetworkingMock!
     var loggerMock: LoggerServicing!
-    var storageMock: PersistentUserDataStorageMock!
     var service: RegisterUserAPIServicing!
     
     override func setUpWithError() throws {
+        userDefaultStorageMock = UserDefaultsStorageMock()
         networkMock = NetworkingMock()
         loggerMock = LoggingServiceMock()
-        storageMock = PersistentUserDataStorageMock()
-        let dependencies = Dependencies(network: networkMock, logger: loggerMock, storage: storageMock)
+        let dependencies = Dependencies(
+            userDefaultsStorage: userDefaultStorageMock,
+            network: networkMock,
+            logger: loggerMock
+        )
         service = RegisterUserAPIService(dependencies: dependencies)
     }
     
     override func tearDownWithError() throws {
         networkMock = nil
         loggerMock = nil
-        storageMock = nil
         service = nil
     }
 }
@@ -182,7 +185,7 @@ extension RegisterUserAPIServiceTests {
     func testCompleteRegistrationCallsAPIWithCorrectRequestHeaders() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let credentials = FullRegistrationCredentials.mock()
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/users")!
             let mockResponse = APIResponse(data: CompleteRegistrationAPIResponse.mock())
@@ -202,7 +205,7 @@ extension RegisterUserAPIServiceTests {
     func testCompleteRegistrationCallsAPIWithCorrectRequestBodyWithGuardianInfo() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let guardianInfo = GuardianInfo(
                 firstName: "GuardianFirstName",
                 lastName: "GuardianLastName",
@@ -257,7 +260,7 @@ extension RegisterUserAPIServiceTests {
     func testCompleteRegistrationCallsAPIWithCorrectRequestBodyWithoutGuardianInfo() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let credentials = FullRegistrationCredentials(
                 firstName: "John",
                 lastName: "Doe",
@@ -303,7 +306,7 @@ extension RegisterUserAPIServiceTests {
     func testRequestParentEmailActivationLinkCallsAPIWithCorrectRequest() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let email = "parent@example.com"
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/parentLink/parent@example.com/users")!
             let mockResponse = APIResponse(data: ParentEmailActivationReponse.mock())

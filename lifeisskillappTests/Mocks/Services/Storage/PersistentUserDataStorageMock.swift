@@ -11,27 +11,15 @@ import Foundation
 final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     var errorToThrow: Error? = nil
     
-    var mockToken: String? = nil
     var mockIsLoggedIn: Bool = false
     var imageData: Data? = nil
     var mockLoggedInUser: LoggedInUser? = nil
-    
-    var token: String? {
-        mockToken
-    }
     
     var isLoggedIn: Bool {
         mockIsLoggedIn
     }
 
     // MARK: - UserDataStoraging Conformance
-    func onLogin() async throws {
-        guard let error = errorToThrow else {
-            print("onLogin() called")
-            return
-        }
-        throw error
-    }
 
     func onLogout() async throws {
         guard let error = errorToThrow else {

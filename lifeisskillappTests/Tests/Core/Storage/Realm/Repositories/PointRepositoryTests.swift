@@ -36,7 +36,7 @@ final class RealmGenericPointRepositoryTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        realmStorage.clearRealm()
+        try realmStorage.clearRealm()
         realm = nil
         pointRepository = nil
         try super.tearDownWithError()

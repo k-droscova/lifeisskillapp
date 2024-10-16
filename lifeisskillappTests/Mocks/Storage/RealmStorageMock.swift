@@ -26,9 +26,9 @@ final class RealmStorageMock: RealmStoraging {
         return shouldThrowError ? nil : inMemoryRealm
     }
     
-    func clearRealm() {
+    func clearRealm() throws {
         guard let realm = inMemoryRealm else { return }
-        try? realm.write {
+        try realm.write {
             realm.deleteAll()
         }
     }

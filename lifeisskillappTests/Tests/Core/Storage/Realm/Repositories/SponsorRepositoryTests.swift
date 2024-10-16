@@ -36,7 +36,7 @@ final class RealmSponsorRepositoryTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        realmStorage.clearRealm()
+        try realmStorage.clearRealm()
         realm = nil
         sponsorRepository = nil
         try super.tearDownWithError()

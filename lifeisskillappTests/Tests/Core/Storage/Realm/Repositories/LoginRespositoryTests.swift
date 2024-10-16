@@ -32,7 +32,7 @@ final class RealmLoginRepositoryTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        realmStorage.clearRealm()
+        try realmStorage.clearRealm()
         realm = nil
         realmStorage = nil
         loginRepository = nil
@@ -223,39 +223,6 @@ final class RealmLoginRepositoryTests: XCTestCase {
 
         // Act & Assert
         XCTAssertThrowsError(try loginRepository.delete(loginDetails)) { error in
-            XCTAssertEqual((error as? BaseError)?.message, "Realm is not initialized")
-        }
-    }
-    
-    func testDeleteMultipleEntities_Success() throws {
-        // Arrange
-        let user1 = LoggedInUser.mock(userId: "123")
-        let user2 = LoggedInUser.mock(userId: "124")
-        let loginDetails1 = RealmLoginDetails(from: user1)
-        let loginDetails2 = RealmLoginDetails(from: user2)
-
-        try realm.write {
-            realm.add([loginDetails1, loginDetails2], update: .modified)
-        }
-
-        // Act
-        try loginRepository.delete([loginDetails1, loginDetails2])
-
-        // Assert
-        let users = realm.objects(RealmLoginDetails.self)
-        XCTAssertEqual(users.count, 0, "Expected all users to be deleted from Realm.")
-    }
-
-    func testDeleteMultipleEntities_RealmNotInitialized_ShouldThrowError() throws {
-        // Arrange
-        realmStorage.shouldThrowError = true
-        let user1 = LoggedInUser.mock(userId: "123")
-        let user2 = LoggedInUser.mock(userId: "124")
-        let loginDetails1 = RealmLoginDetails(from: user1)
-        let loginDetails2 = RealmLoginDetails(from: user2)
-
-        // Act & Assert
-        XCTAssertThrowsError(try loginRepository.delete([loginDetails1, loginDetails2])) { error in
             XCTAssertEqual((error as? BaseError)?.message, "Realm is not initialized")
         }
     }

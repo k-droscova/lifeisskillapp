@@ -13,7 +13,6 @@ protocol RealmRepositoring {
     func save(_ entity: Entity) throws
     func save(_ entities: [Entity]) throws
     func delete(_ entity: Entity) throws
-    func delete(_ entities: [Entity]) throws
     func deleteAll() throws
     func getAll() throws -> [Entity]
     func getById(_ id: String) throws -> Entity?
@@ -57,19 +56,6 @@ extension RealmRepositoring where Self: HasRealmStoraging & HasLoggers {
         }
         try realm.write {
             realm.delete(entity, cascading: true)
-        }
-    }
-    
-    func delete(_ entities: [Entity]) throws {
-        guard let realm = realmStorage.getRealm() else {
-            throw BaseError(
-                context: .database,
-                message: "Realm is not initialized",
-                logger: self.logger
-            )
-        }
-        try realm.write {
-            realm.delete(entities, cascading: true)
         }
     }
     

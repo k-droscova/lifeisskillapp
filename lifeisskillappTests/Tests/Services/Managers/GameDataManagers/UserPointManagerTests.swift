@@ -10,7 +10,8 @@ import XCTest
 
 final class UserPointManagerTests: XCTestCase {
 
-    private struct Dependencies: UserPointManager.Dependencies {        
+    private struct Dependencies: UserPointManager.Dependencies {
+        var userDefaultsStorage: UserDefaultsStoraging
         var logger: LoggerServicing
         var userDataAPI: UserDataAPIServicing
         var storage: PersistentUserDataStoraging
@@ -19,6 +20,7 @@ final class UserPointManagerTests: XCTestCase {
     }
     
     var logger: LoggerServicing!
+    var userDefaultStorageMock: UserDefaultsStorageMock!
     var userDataAPIMock: UserDataAPIServiceMock!
     var persistentStorageMock: PersistentUserDataStorageMock!
     var scanningManagerMock: ScanningManagerMock!
@@ -30,6 +32,7 @@ final class UserPointManagerTests: XCTestCase {
         try super.setUpWithError()
         
         logger = LoggingServiceMock()
+        userDefaultStorageMock = UserDefaultsStorageMock()
         userDataAPIMock = UserDataAPIServiceMock()
         persistentStorageMock = PersistentUserDataStorageMock()
         scanningManagerMock = ScanningManagerMock()
@@ -37,6 +40,7 @@ final class UserPointManagerTests: XCTestCase {
         scanPointFlowDelegateMock = ScanPointFlowDelegateMock()
         
         let dependencies = Dependencies(
+            userDefaultsStorage: userDefaultStorageMock,
             logger: logger,
             userDataAPI: userDataAPIMock,
             storage: persistentStorageMock,

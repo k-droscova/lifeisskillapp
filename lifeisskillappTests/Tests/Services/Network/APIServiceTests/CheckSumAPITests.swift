@@ -11,29 +11,32 @@ import XCTest
 final class CheckSumAPIServiceTests: XCTestCase {
     
     private struct Dependencies: CheckSumAPIService.Dependencies {
+        var userDefaultsStorage: UserDefaultsStoraging
         let network: Networking
         let logger: LoggerServicing
-        let storage: PersistentUserDataStoraging
     }
     
+    var userDefaultStorageMock: UserDefaultsStorageMock!
     var networkMock: NetworkingMock!
     var loggerMock: LoggerServicing!
-    var storageMock: PersistentUserDataStorageMock!
     var service: CheckSumAPIServicing!
     
     override func setUpWithError() throws {
+        userDefaultStorageMock = UserDefaultsStorageMock()
         networkMock = NetworkingMock()
         loggerMock = LoggingServiceMock()
-        storageMock = PersistentUserDataStorageMock()
         
-        let dependencies = Dependencies(network: networkMock, logger: loggerMock, storage: storageMock)
+        let dependencies = Dependencies(
+            userDefaultsStorage: userDefaultStorageMock,
+            network: networkMock,
+            logger: loggerMock
+        )
         service = CheckSumAPIService(dependencies: dependencies)
     }
     
     override func tearDownWithError() throws {
         networkMock = nil
         loggerMock = nil
-        storageMock = nil
         service = nil
     }
 }
@@ -45,7 +48,7 @@ extension CheckSumAPIServiceTests {
     func testUserPointsCallsAPIWithCorrectRequest() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/userpoints")!
             let mockAPIResponse = CheckSumUserPointsData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
@@ -69,7 +72,7 @@ extension CheckSumAPIServiceTests {
     func testUserRankCallsAPIWithCorrectRequest() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/rank")!
             let mockAPIResponse = CheckSumRankData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
@@ -93,7 +96,7 @@ extension CheckSumAPIServiceTests {
     func testUserMessagesCallsAPIWithCorrectRequest() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/messages")!
             let mockAPIResponse = CheckSumMessagesData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
@@ -117,7 +120,7 @@ extension CheckSumAPIServiceTests {
     func testUserEventsCallsAPIWithCorrectRequest() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/events")!
             let mockAPIResponse = CheckSumEventsData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
@@ -141,7 +144,7 @@ extension CheckSumAPIServiceTests {
     func testGenericPointsCallsAPIWithCorrectRequest() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let expectedURL = URL(string: "https://api-test.lifeisskill.cz/v1.0/points")!
             let mockAPIResponse = CheckSumPointsData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
@@ -170,7 +173,7 @@ extension CheckSumAPIServiceTests {
     func testUserPointsReturnsExpectedData() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let mockAPIResponse = CheckSumUserPointsData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
             networkMock.responseToReturn = mockResponse
@@ -188,7 +191,7 @@ extension CheckSumAPIServiceTests {
     func testUserRankReturnsExpectedData() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let mockAPIResponse = CheckSumRankData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
             networkMock.responseToReturn = mockResponse
@@ -207,7 +210,7 @@ extension CheckSumAPIServiceTests {
     func testUserMessagesReturnsExpectedData() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let mockAPIResponse = CheckSumMessagesData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
             networkMock.responseToReturn = mockResponse
@@ -225,7 +228,7 @@ extension CheckSumAPIServiceTests {
     func testUserEventsReturnsExpectedData() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let mockAPIResponse = CheckSumEventsData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
             networkMock.responseToReturn = mockResponse
@@ -243,7 +246,7 @@ extension CheckSumAPIServiceTests {
     func testGenericPointsReturnsExpectedData() async throws {
         do {
             // Arrange
-            storageMock.mockToken = "mockToken"
+            userDefaultStorageMock.mockToken = "mockToken"
             let mockAPIResponse = CheckSumPointsData.mock()
             let mockResponse = APIResponse(data: mockAPIResponse)
             networkMock.responseToReturn = mockResponse

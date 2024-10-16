@@ -163,6 +163,7 @@
 		2781748A2C4BFD6500138376 /* ButtonStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278174892C4BFD6500138376 /* ButtonStyleModifier.swift */; };
 		2784F9382C7769330041E72E /* MapPointDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */; };
 		2784F93C2C776B2A0041E72E /* MapPointDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */; };
+		278603672CBFE91600FF935F /* UserDefaultsStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278603662CBFE90F00FF935F /* UserDefaultsStorageMock.swift */; };
 		278D99FB2C4D7C5100B17083 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D99FA2C4D7C5100B17083 /* UserLocation.swift */; };
 		278DB5202C88785300FB5B1C /* RegistrationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */; };
 		278DB5222C88989B00FB5B1C /* ReferenceDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */; };
@@ -442,6 +443,7 @@
 		278174892C4BFD6500138376 /* ButtonStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleModifier.swift; sourceTree = "<group>"; };
 		2784F9372C7769330041E72E /* MapPointDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailViewModel.swift; sourceTree = "<group>"; };
 		2784F93B2C776B2A0041E72E /* MapPointDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailView.swift; sourceTree = "<group>"; };
+		278603662CBFE90F00FF935F /* UserDefaultsStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageMock.swift; sourceTree = "<group>"; };
 		278D99FA2C4D7C5100B17083 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		278DB51F2C88785200FB5B1C /* RegistrationFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFlowCoordinator.swift; sourceTree = "<group>"; };
 		278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceDescriptionView.swift; sourceTree = "<group>"; };
@@ -1111,6 +1113,7 @@
 		274B84382CA976CC00B94E14 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				278603662CBFE90F00FF935F /* UserDefaultsStorageMock.swift */,
 				2723961E2CAD43EF00041277 /* RealmDependenciesMock.swift */,
 				2723961B2CAD40D600041277 /* RepositoriesMock.swift */,
 				274B84392CA976D000B94E14 /* PersistentUserDataStorageMock.swift */,
@@ -1995,6 +1998,7 @@
 				272396122CAD3E0E00041277 /* LoginAPIServiceMock.swift in Sources */,
 				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
 				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,
+				278603672CBFE91600FF935F /* UserDefaultsStorageMock.swift in Sources */,
 				274B84452CA987AB00B94E14 /* RegisterUserAPITests.swift in Sources */,
 				2723962A2CAD501000041277 /* ScanningManagerMock.swift in Sources */,
 				2755A9C12CA87E1400056594 /* UserLocationMock.swift in Sources */,

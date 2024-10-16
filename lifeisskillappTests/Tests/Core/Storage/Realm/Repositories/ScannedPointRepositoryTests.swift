@@ -36,7 +36,7 @@ final class RealmScannedPointRepositoryTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        realmStorage.clearRealm()
+        try realmStorage.clearRealm()
         realm = nil
         scannedPointRepository = nil
         try super.tearDownWithError()

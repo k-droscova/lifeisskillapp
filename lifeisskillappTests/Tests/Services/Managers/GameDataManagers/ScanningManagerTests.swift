@@ -11,6 +11,7 @@ import XCTest
 final class ScanningManagerTests: XCTestCase {
     
     private struct Dependencies: ScanningManager.Dependencies {
+        var userDefaultsStorage: UserDefaultsStoraging
         var logger: LoggerServicing
         var userDataAPI: UserDataAPIServicing
         var storage: PersistentUserDataStoraging
@@ -18,6 +19,7 @@ final class ScanningManagerTests: XCTestCase {
         var networkMonitor: NetworkMonitoring
     }
     
+    var userDefaultStorageMock: UserDefaultsStorageMock!
     var logger: LoggerServicing!
     var userDataAPIMock: UserDataAPIServiceMock!
     var persistentStorageMock: PersistentUserDataStorageMock!
@@ -28,6 +30,7 @@ final class ScanningManagerTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         
+        userDefaultStorageMock = UserDefaultsStorageMock()
         logger = LoggingServiceMock()
         userDataAPIMock = UserDataAPIServiceMock()
         persistentStorageMock = PersistentUserDataStorageMock()
@@ -38,6 +41,7 @@ final class ScanningManagerTests: XCTestCase {
         containerMock.realmScannedPointRepository = scannedPointRepoMock
         
         let dependencies = Dependencies(
+            userDefaultsStorage: userDefaultStorageMock,
             logger: logger,
             userDataAPI: userDataAPIMock,
             storage: persistentStorageMock,
@@ -60,7 +64,7 @@ final class ScanningManagerTests: XCTestCase {
     
     func testHandleScannedPointOnlineThrowsErrorWhenTokenIsNil() async throws {
         // Arrange
-        persistentStorageMock.mockToken = nil
+        userDefaultStorageMock.mockToken = nil
         let mockScannedPoint = ScannedPoint.mock()
         
         // Act & Assert
@@ -77,7 +81,7 @@ final class ScanningManagerTests: XCTestCase {
     
     func testHandleScannedPointOnlineSuccess() async throws {
         // Arrange
-        persistentStorageMock.mockToken = "mockToken"
+        userDefaultStorageMock.mockToken = "mockToken"
         let mockScannedPoint = ScannedPoint.mock(code: "testCode", location: UserLocation.mock())
         
         // Act
@@ -91,7 +95,7 @@ final class ScanningManagerTests: XCTestCase {
     
     func testHandleScannedPointOnlineThrowsWhenUserDataAPIFails() async throws {
         // Arrange
-        persistentStorageMock.mockToken = "mockToken"
+        userDefaultStorageMock.mockToken = "mockToken"
         let mockScannedPoint = ScannedPoint.mock(code: "testCode", location: UserLocation.mock())
         let mockError = BaseError(context: .api, message: "API failure", logger: logger)
         userDataAPIMock.errorToThrow = mockError
@@ -171,7 +175,7 @@ final class ScanningManagerTests: XCTestCase {
             ScannedPoint.mock(code: "testCode1", location: UserLocation.mock()),
             ScannedPoint.mock(code: "testCode2", location: UserLocation.mock())
         ]
-        persistentStorageMock.mockToken = "mockToken"
+        userDefaultStorageMock.mockToken = "mockToken"
         persistentStorageMock.mockScannedPoints = mockScannedPoints
         
         do {
@@ -193,7 +197,7 @@ final class ScanningManagerTests: XCTestCase {
             ScannedPoint.mock(code: "testCode1", location: UserLocation.mock()),
             ScannedPoint.mock(code: "testCode2", location: UserLocation.mock())
         ]
-        persistentStorageMock.mockToken = "mockToken"
+        userDefaultStorageMock.mockToken = "mockToken"
         persistentStorageMock.mockScannedPoints = mockScannedPoints
 
         // Simulate API failure for one of the scanned points

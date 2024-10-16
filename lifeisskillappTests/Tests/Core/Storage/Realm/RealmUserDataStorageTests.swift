@@ -143,7 +143,6 @@ extension RealmUserDataStorageTests {
         
         // Assert
         XCTAssertEqual(mockLoginRepo.savedLoginDetails?.userID, user.userId, "Expected user to be saved.")
-        XCTAssertEqual(userDataStorage.token, user.token, "Expected token to be set.")
     }
     
     func testMarkUserAsLoggedOut_Success() async throws {
@@ -157,7 +156,6 @@ extension RealmUserDataStorageTests {
         
         // Assert
         XCTAssertFalse(mockLoginRepo.savedLoginDetails?.isLoggedIn ?? true, "Expected user to be marked as logged out.")
-        XCTAssertNil(userDataStorage.token, "Expected token to be nil after logout.")
     }
     
     func testMarkUserAsLoggedIn_Success() async throws {
@@ -171,7 +169,6 @@ extension RealmUserDataStorageTests {
         
         // Assert
         XCTAssertTrue(mockLoginRepo.savedLoginDetails?.isLoggedIn ?? false, "Expected user to be marked as logged in.")
-        XCTAssertEqual(userDataStorage.token, user.token, "Expected token to be set after login.")
     }
     
     func testMarkUserAsLoggedIn_NoData_DoesNothing() async throws {
@@ -182,7 +179,7 @@ extension RealmUserDataStorageTests {
         try await userDataStorage.markUserAsLoggedIn()
         
         // Assert
-        XCTAssertNil(userDataStorage.token, "Expected token to still be nil.")
+        XCTAssertNil(mockLoginRepo.savedLoginDetails, "Expected logged in data to still be nil.")
     }
 }
 
@@ -544,69 +541,6 @@ extension RealmUserDataStorageTests {
     }
 }
 
-// MARK: - Testing onLogin Method
-
-extension RealmUserDataStorageTests {
-    
-    func testOnLogin_Success() async throws {
-        // Arrange
-        let expectedCategoryData = UserCategoryData.mock()
-        let expectedPointData = UserPointData.mock()
-        let expectedRankData = UserRankData.mock()
-        let expectedGenericPointData = GenericPointData.mock()
-        let expectedCheckSumData = CheckSumData.mock()
-        
-        // Mock repository responses
-        mockCategoryRepo.savedCategoryData = RealmUserCategoryData(from: expectedCategoryData)
-        mockUserPointRepo.savedUserPointData = RealmUserPointData(from: expectedPointData)
-        mockRankingRepo.savedRankData = RealmUserRankData(from: expectedRankData)
-        mockGenericPointRepo.savedGenericPointData = RealmGenericPointData(from: expectedGenericPointData)
-        mockCheckSumRepo.savedCheckSumData = RealmCheckSumData(from: expectedCheckSumData)
-        
-        // Act
-        try await userDataStorage.onLogin()
-        
-        // Assert
-        XCTAssertTrue(userDataStorage.isLoggedIn, "Expected isLoggedIn to be true after login.")
-    }
-}
-
-// MARK: - Testing onLogin Method Error Scenarios
-
-extension RealmUserDataStorageTests {
-    
-    func testOnLogin_Error() async throws {
-        // Arrange
-        mockCategoryRepo.shouldThrowError = true // Simulate an error in category loading
-        
-        // Act & Assert
-        do {
-            try await userDataStorage.onLogin()
-            XCTFail("Expected an error to be thrown.")
-        } catch let error as MockRepositoryError {
-            XCTAssertEqual(error, .forcedError, "Expected forcedError from mock repository.")
-        } catch {
-            XCTFail("Expected a MockRepositoryError to be thrown.")
-        }
-    }
-    
-    func testOnLogin_MultipleErrors() async throws {
-        // Arrange
-        mockCategoryRepo.shouldThrowError = true
-        mockUserPointRepo.shouldThrowError = true // Simulate another error
-        
-        // Act & Assert
-        do {
-            try await userDataStorage.onLogin()
-            XCTFail("Expected an error to be thrown.")
-        } catch let error as MockRepositoryError {
-            XCTAssertEqual(error, .forcedError, "Expected forcedError from mock repository.")
-        } catch {
-            XCTFail("Expected a MockRepositoryError to be thrown.")
-        }
-    }
-}
-
 // MARK: - Testing onLogout Method
 
 extension RealmUserDataStorageTests {
@@ -622,7 +556,6 @@ extension RealmUserDataStorageTests {
         
         // Assert
         XCTAssertFalse(mockLoginRepo.savedLoginDetails?.isLoggedIn ?? true, "Expected user to be marked as logged out.")
-        XCTAssertFalse(userDataStorage.isLoggedIn, "Expected userDataStorage to be logged out.")
     }
 }
 
@@ -636,7 +569,6 @@ extension RealmUserDataStorageTests {
         mockLoginRepo.savedLoginDetails = RealmLoginDetails(from: user)
         mockLoginRepo.savedLoginDetails?.isLoggedIn = true
         mockLoginRepo.shouldThrowError = true
-        userDataStorage.isLoggedIn = true
         
         // Act & Assert
         do {
@@ -645,7 +577,6 @@ extension RealmUserDataStorageTests {
         } catch {
             // Assert that the user is still logged in after the error
             XCTAssertTrue(mockLoginRepo.savedLoginDetails?.isLoggedIn ?? false, "Expected user to still be logged in after an error.")
-            XCTAssertTrue(userDataStorage.isLoggedIn, "Expected userDataStorage to still indicate the user is logged in after an error.")
         }
     }
     

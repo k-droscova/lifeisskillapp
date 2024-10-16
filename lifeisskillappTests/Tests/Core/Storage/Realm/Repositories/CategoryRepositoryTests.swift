@@ -35,7 +35,7 @@ final class RealmUserCategoryRepositoryTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        realmStorage.clearRealm()
+        try realmStorage.clearRealm()
         realm = nil
         categoryRepository = nil
         try super.tearDownWithError()
