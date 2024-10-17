@@ -176,6 +176,7 @@
 		278E6D6E2CC12E210057010F /* GameDataManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D6D2CC12E1D0057010F /* GameDataManagerMock.swift */; };
 		278E6D702CC12EC50057010F /* UserManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D6F2CC12EC20057010F /* UserManagerMock.swift */; };
 		278E6D722CC12FB60057010F /* LocationManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D712CC12FB30057010F /* LocationManagerMock.swift */; };
+		278E6D762CC130F40057010F /* LocationStatusBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D752CC130ED0057010F /* LocationStatusBarViewModel.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
 		279DEF282CBC060C003F0D4D /* CascadeDeleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */; };
@@ -463,6 +464,7 @@
 		278E6D6D2CC12E1D0057010F /* GameDataManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManagerMock.swift; sourceTree = "<group>"; };
 		278E6D6F2CC12EC20057010F /* UserManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerMock.swift; sourceTree = "<group>"; };
 		278E6D712CC12FB30057010F /* LocationManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerMock.swift; sourceTree = "<group>"; };
+		278E6D752CC130ED0057010F /* LocationStatusBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatusBarViewModel.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadeDeleting.swift; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 		271297C82CAC54B3004175C9 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				278E6D732CC130DA0057010F /* Features */,
 				275D01682CAA986100785E7C /* Core */,
 				2755A9A02CA809F100056594 /* Services */,
 			);
@@ -1404,6 +1407,22 @@
 			path = QRScanner;
 			sourceTree = "<group>";
 		};
+		278E6D732CC130DA0057010F /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				278E6D742CC130E70057010F /* ViewModels */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		278E6D742CC130E70057010F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				278E6D752CC130ED0057010F /* LocationStatusBarViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		279E05772CB188B6004DF998 /* Build */ = {
 			isa = PBXGroup;
 			children = (
@@ -2018,6 +2037,7 @@
 				271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */,
 				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
 				278E6D722CC12FB60057010F /* LocationManagerMock.swift in Sources */,
+				278E6D762CC130F40057010F /* LocationStatusBarViewModel.swift in Sources */,
 				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
 				271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */,
 				272396122CAD3E0E00041277 /* LoginAPIServiceMock.swift in Sources */,
