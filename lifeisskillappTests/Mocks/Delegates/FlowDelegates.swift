@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 @testable import lifeisskillapp
 
 final class ScanPointFlowDelegateMock: NSObject, ScanPointFlowDelegate {
@@ -44,5 +45,84 @@ final class ScanPointFlowDelegateMock: NSObject, ScanPointFlowDelegate {
 
     func onScanPointOfflineProcessError() {
         onScanPointOfflineProcessErrorCalled = true
+    }
+}
+
+final class SettingsBarFlowDelegateMock: NSObject, SettingsBarFlowDelegate {
+    
+    // Flags to track method calls
+    var logoutPressedWhileOfflineCalled = false
+    var onboardingPressedCalled = false
+    var profilePressedCalled = false
+    
+    var userManager: UserManagerMock?
+    var shouldLogout: Bool = true
+    
+    // MARK: - SettingsBarFlowDelegate Methods
+    
+    func logoutPressedWhileOffline() {
+        logoutPressedWhileOfflineCalled = true
+        if shouldLogout {
+            userManager?.logout()
+        }
+    }
+    
+    func onboardingPressed() {
+        onboardingPressedCalled = true
+    }
+    
+    func profilePressed() {
+        profilePressedCalled = true
+    }
+}
+
+final class ProfileFlowDelegateMock: NSObject, ProfileFlowDelegate {
+    
+    // Flags to track method calls
+    var generateQRCalled = false
+    var generateQRDidFailCalled = false
+    var returnToHomeScreenCalled = false
+    var startRegistrationCalled = false
+    var loadUserDataDidFailCalled = false
+    var emailRequestNotSentCalled = false
+    var emailRequestDidSucceedCalled = false
+    var emailRequestDidFailCalled = false
+    
+    // Arguments to capture the passed data
+    var qrImage: UIImage?
+
+    // MARK: - ProfileFlowDelegate Methods
+    
+    func generateQR(content: UIImage) {
+        generateQRCalled = true
+        qrImage = content
+    }
+    
+    func generateQRDidFail() {
+        generateQRDidFailCalled = true
+    }
+    
+    func returnToHomeScreen() {
+        returnToHomeScreenCalled = true
+    }
+    
+    func startRegistration() {
+        startRegistrationCalled = true
+    }
+    
+    func loadUserDataDidFail() {
+        loadUserDataDidFailCalled = true
+    }
+    
+    func emailRequestNotSent() {
+        emailRequestNotSentCalled = true
+    }
+    
+    func emailRequestDidSucceed() {
+        emailRequestDidSucceedCalled = true
+    }
+    
+    func emailRequestDidFail() {
+        emailRequestDidFailCalled = true
     }
 }

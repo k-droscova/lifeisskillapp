@@ -43,7 +43,7 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
 }
 
 final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, ProfileViewModeling {
-    typealias Dependencies = HasLoggers & HasNetworkMonitor & HasRealm & SettingsBarViewModel.Dependencies & HasUserCategoryManager
+    typealias Dependencies = HasLoggers & HasNetworkMonitor & SettingsBarViewModel.Dependencies & HasUserCategoryManager
     
     // MARK: - Private properties
     
