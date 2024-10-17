@@ -169,6 +169,13 @@
 		278DB5222C88989B00FB5B1C /* ReferenceDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */; };
 		278DB5252C88A52900FB5B1C /* QRReferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5242C88A52900FB5B1C /* QRReferenceViewModel.swift */; };
 		278DB5272C88A6B000FB5B1C /* QRReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */; };
+		278E6D662CC12B080057010F /* UserPointManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D652CC12B000057010F /* UserPointManagerMock.swift */; };
+		278E6D682CC12CB50057010F /* GenericPointManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D672CC12CB00057010F /* GenericPointManagerMock.swift */; };
+		278E6D6A2CC12D2B0057010F /* UserRankManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D692CC12D200057010F /* UserRankManagerMock.swift */; };
+		278E6D6C2CC12D8A0057010F /* UserCategoryManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D6B2CC12D850057010F /* UserCategoryManagerMock.swift */; };
+		278E6D6E2CC12E210057010F /* GameDataManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D6D2CC12E1D0057010F /* GameDataManagerMock.swift */; };
+		278E6D702CC12EC50057010F /* UserManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D6F2CC12EC20057010F /* UserManagerMock.swift */; };
+		278E6D722CC12FB60057010F /* LocationManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D712CC12FB30057010F /* LocationManagerMock.swift */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
 		279DEF282CBC060C003F0D4D /* CascadeDeleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */; };
@@ -449,6 +456,13 @@
 		278DB5212C88989B00FB5B1C /* ReferenceDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceDescriptionView.swift; sourceTree = "<group>"; };
 		278DB5242C88A52900FB5B1C /* QRReferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReferenceViewModel.swift; sourceTree = "<group>"; };
 		278DB5262C88A6B000FB5B1C /* QRReferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReferenceView.swift; sourceTree = "<group>"; };
+		278E6D652CC12B000057010F /* UserPointManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointManagerMock.swift; sourceTree = "<group>"; };
+		278E6D672CC12CB00057010F /* GenericPointManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManagerMock.swift; sourceTree = "<group>"; };
+		278E6D692CC12D200057010F /* UserRankManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManagerMock.swift; sourceTree = "<group>"; };
+		278E6D6B2CC12D850057010F /* UserCategoryManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryManagerMock.swift; sourceTree = "<group>"; };
+		278E6D6D2CC12E1D0057010F /* GameDataManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManagerMock.swift; sourceTree = "<group>"; };
+		278E6D6F2CC12EC20057010F /* UserManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerMock.swift; sourceTree = "<group>"; };
+		278E6D712CC12FB30057010F /* LocationManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerMock.swift; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadeDeleting.swift; sourceTree = "<group>"; };
@@ -760,6 +774,13 @@
 		272396282CAD500600041277 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				278E6D712CC12FB30057010F /* LocationManagerMock.swift */,
+				278E6D6F2CC12EC20057010F /* UserManagerMock.swift */,
+				278E6D6D2CC12E1D0057010F /* GameDataManagerMock.swift */,
+				278E6D6B2CC12D850057010F /* UserCategoryManagerMock.swift */,
+				278E6D692CC12D200057010F /* UserRankManagerMock.swift */,
+				278E6D672CC12CB00057010F /* GenericPointManagerMock.swift */,
+				278E6D652CC12B000057010F /* UserPointManagerMock.swift */,
 				272396292CAD500C00041277 /* ScanningManagerMock.swift */,
 			);
 			path = Managers;
@@ -1978,8 +1999,10 @@
 				2723961C2CAD40DA00041277 /* RepositoriesMock.swift in Sources */,
 				275D016D2CAA995000785E7C /* KeychainHelperMock.swift in Sources */,
 				272396182CAD3F5200041277 /* RegisterUserAPIServiceTests.swift in Sources */,
+				278E6D6A2CC12D2B0057010F /* UserRankManagerMock.swift in Sources */,
 				272396142CAD3ECF00041277 /* CheckSumAPIServiceMock.swift in Sources */,
 				2723962D2CAD50B000041277 /* FlowDelegates.swift in Sources */,
+				278E6D682CC12CB50057010F /* GenericPointManagerMock.swift in Sources */,
 				2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */,
 				271297BF2CAC3A78004175C9 /* PointRepositoryTests.swift in Sources */,
 				274B843E2CA97E8A00B94E14 /* UserDataAPITests.swift in Sources */,
@@ -1991,8 +2014,10 @@
 				275D016F2CAA9BAC00785E7C /* KeychainStorageTests.swift in Sources */,
 				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
 				2723961A2CAD3F9F00041277 /* UserDataAPIServiceMock.swift in Sources */,
+				278E6D662CC12B080057010F /* UserPointManagerMock.swift in Sources */,
 				271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */,
 				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
+				278E6D722CC12FB60057010F /* LocationManagerMock.swift in Sources */,
 				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
 				271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */,
 				272396122CAD3E0E00041277 /* LoginAPIServiceMock.swift in Sources */,
@@ -2006,15 +2031,18 @@
 				2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */,
 				272396102CAD3C9700041277 /* RegisterAppAPIServiceMock.swift in Sources */,
 				2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */,
+				278E6D6E2CC12E210057010F /* GameDataManagerMock.swift in Sources */,
 				272396212CAD44F200041277 /* NetworkMonitorMock.swift in Sources */,
 				2755A9AF2CA82A4700056594 /* NWPathMonitorMock.swift in Sources */,
 				2755A9C32CA8801100056594 /* CredentialsMocks.swift in Sources */,
+				278E6D702CC12EC50057010F /* UserManagerMock.swift in Sources */,
 				272396272CAD482400041277 /* ScanningManagerTests.swift in Sources */,
 				271297B92CAC33B0004175C9 /* CategoryRepositoryTests.swift in Sources */,
 				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
 				2723961F2CAD43F200041277 /* RealmDependenciesMock.swift in Sources */,
 				2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */,
 				2723962F2CAD512E00041277 /* UserPointManagerTests.swift in Sources */,
+				278E6D6C2CC12D8A0057010F /* UserCategoryManagerMock.swift in Sources */,
 				2755A9BD2CA87B9E00056594 /* RegisterAppServiceTests.swift in Sources */,
 				274B843C2CA978C200B94E14 /* CheckSumAPITests.swift in Sources */,
 				274B843A2CA976DA00B94E14 /* PersistentUserDataStorageMock.swift in Sources */,
