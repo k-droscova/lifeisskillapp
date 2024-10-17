@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-struct UserLocation: Codable {
+struct UserLocation: Codable, Equatable {
     let latitude: Double
     let longitude: Double
     let altitude: Double
@@ -51,5 +51,14 @@ extension UserLocation {
         let currentLocation = self.toCLLocation()
         let targetLocation = location.toCLLocation()
         return currentLocation.distance(from: targetLocation)
+    }
+}
+
+/// Equatable protocol for testing purposes only!
+extension UserLocation {
+    static func ==(lhs: UserLocation, rhs: UserLocation) -> Bool {
+        return abs(lhs.latitude - rhs.latitude) < 0.00001 &&
+               abs(lhs.longitude - rhs.longitude) < 0.00001 &&
+               abs(lhs.altitude - rhs.altitude) < 0.00001
     }
 }
