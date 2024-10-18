@@ -151,6 +151,7 @@
 		276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */; };
 		276618D92CAB2058004D13F7 /* LoginRespositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */; };
 		276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */; };
+		2769CE582CC25FE400AE420E /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2769CE572CC25FDF00AE420E /* LoginViewModelTests.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
 		276ADDBD2C6E7E2000DA2301 /* ScannedPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */; };
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
@@ -444,6 +445,7 @@
 		276618D42CAB1EA3004D13F7 /* RealmStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageMock.swift; sourceTree = "<group>"; };
 		276618D82CAB2052004D13F7 /* LoginRespositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRespositoryTests.swift; sourceTree = "<group>"; };
 		276618DA2CAB2462004D13F7 /* CheckSumRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSumRepositoryTests.swift; sourceTree = "<group>"; };
+		2769CE572CC25FDF00AE420E /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
 		276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepository.swift; sourceTree = "<group>"; };
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
@@ -1429,6 +1431,7 @@
 		278E6D742CC130E70057010F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				2769CE572CC25FDF00AE420E /* LoginViewModelTests.swift */,
 				2743A5672CC2435400834886 /* FullProfileViewModelTests.swift */,
 				277186D12CC14AA3007A8762 /* ProfileViewModelTests.swift */,
 				278E6D772CC1327B0057010F /* SettingsBarViewModelTests.swift */,
@@ -2058,6 +2061,7 @@
 				277186D22CC14AA9007A8762 /* ProfileViewModelTests.swift in Sources */,
 				2755A9C82CA8833F00056594 /* LoggedInUserMock.swift in Sources */,
 				2723961A2CAD3F9F00041277 /* UserDataAPIServiceMock.swift in Sources */,
+				2769CE582CC25FE400AE420E /* LoginViewModelTests.swift in Sources */,
 				278E6D662CC12B080057010F /* UserPointManagerMock.swift in Sources */,
 				271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */,
 				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
