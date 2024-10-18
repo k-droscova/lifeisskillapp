@@ -99,6 +99,7 @@
 		274001672C7A29D100AD5D7D /* RealmSponsorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */; };
 		274001692C7A41E500AD5D7D /* BaseFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */; };
 		27414D7A2C639ED800C19F8C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27414D792C639ED800C19F8C /* Cartfile */; };
+		2743A5682CC2435A00834886 /* FullProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2743A5672CC2435400834886 /* FullProfileViewModelTests.swift */; };
 		2748632A2C5262B9008D8A3E /* HomeCameraOCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */; };
 		2748632C2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */; };
 		27497AF82C78ACDB00E7051D /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27497AF72C78ACDB00E7051D /* UserDataStorage.swift */; };
@@ -391,6 +392,7 @@
 		274001662C7A29D100AD5D7D /* RealmSponsorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSponsorRepository.swift; sourceTree = "<group>"; };
 		274001682C7A41E500AD5D7D /* BaseFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFlowCoordinator.swift; sourceTree = "<group>"; };
 		27414D792C639ED800C19F8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		2743A5672CC2435400834886 /* FullProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullProfileViewModelTests.swift; sourceTree = "<group>"; };
 		274863292C5262B9008D8A3E /* HomeCameraOCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraOCRView.swift; sourceTree = "<group>"; };
 		2748632B2C5263C3008D8A3E /* HomeCameraSignOCRViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraSignOCRViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		27497AF72C78ACDB00E7051D /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
@@ -1427,6 +1429,7 @@
 		278E6D742CC130E70057010F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				2743A5672CC2435400834886 /* FullProfileViewModelTests.swift */,
 				277186D12CC14AA3007A8762 /* ProfileViewModelTests.swift */,
 				278E6D772CC1327B0057010F /* SettingsBarViewModelTests.swift */,
 				278E6D752CC130ED0057010F /* LocationStatusBarViewModel.swift */,
@@ -2072,6 +2075,7 @@
 				271297C72CAC452E004175C9 /* RealmUserDataStorageTests.swift in Sources */,
 				2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */,
 				272396102CAD3C9700041277 /* RegisterAppAPIServiceMock.swift in Sources */,
+				2743A5682CC2435A00834886 /* FullProfileViewModelTests.swift in Sources */,
 				2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */,
 				278E6D6E2CC12E210057010F /* GameDataManagerMock.swift in Sources */,
 				278E6D7D2CC135F20057010F /* SettingsBarViewModelMock.swift in Sources */,

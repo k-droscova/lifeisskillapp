@@ -59,7 +59,7 @@ enum PhoneLength: Codable, Hashable {
 }
 
 extension Country {
-    static let czechia = Country(label: "Czechia", phone: "420", code: "CZ", phoneLength: .single(9))
+    static let czechia = Country(label: "Czech Republic", phone: "420", code: "CZ", phoneLength: .single(9))
 
     static var countries: [Country] {
         guard let url = Bundle.main.url(forResource: "CountryCodes", withExtension: "json") else {

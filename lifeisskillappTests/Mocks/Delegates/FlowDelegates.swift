@@ -126,3 +126,65 @@ final class ProfileFlowDelegateMock: NSObject, ProfileFlowDelegate {
         emailRequestDidFailCalled = true
     }
 }
+
+final class FullRegistrationFlowDelegateMock: NSObject, FullRegistrationFlowDelegate {
+    var registrationDidSucceedAdultCalled = false
+    var registrationDidSucceedMinorCalled = false
+    var registrationDidFailCalled = false
+    
+    func registrationDidSucceedAdult() {
+        registrationDidSucceedAdultCalled = true
+    }
+    
+    func registrationDidSucceedMinor() {
+        registrationDidSucceedMinorCalled = true
+    }
+    
+    func registrationDidFail() {
+        registrationDidFailCalled = true
+    }
+}
+
+final class LoginFlowDelegateMock: NSObject, LoginFlowDelegate {
+    
+    var loginSuccessfulCalled = false
+    var loginFailedCalled = false
+    var promptToCompleteRegistrationCalled = false
+    var promptParentToActivateAccountCalled = false
+    var userNotActivatedCalled = false
+    var offlineLoginFailedCalled = false
+    var registerTappedCalled = false
+    var forgotPasswordTappedCalled = false
+    
+    func loginSuccessful() {
+        loginSuccessfulCalled = true
+    }
+
+    func loginFailed() {
+        loginFailedCalled = true
+    }
+
+    func promptToCompleteRegistration() {
+        promptToCompleteRegistrationCalled = true
+    }
+
+    func promptParentToActivateAccount() {
+        promptParentToActivateAccountCalled = true
+    }
+
+    func userNotActivated() {
+        userNotActivatedCalled = true
+    }
+
+    func offlineLoginFailed() {
+        offlineLoginFailedCalled = true
+    }
+
+    func registerTapped() {
+        registerTappedCalled = true
+    }
+
+    func forgotPasswordTapped() {
+        forgotPasswordTappedCalled = true
+    }
+}

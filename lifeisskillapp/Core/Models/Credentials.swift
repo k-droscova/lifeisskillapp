@@ -11,7 +11,8 @@ protocol Credentials {
     var params: [String: String] { get }
 }
 
-struct LoginCredentials: Codable, Credentials {
+// MARK: - LoginCredentials
+struct LoginCredentials: Codable, Equatable, Credentials {
     let username: String
     let password: String
     
@@ -28,7 +29,8 @@ struct LoginCredentials: Codable, Credentials {
     }
 }
 
-struct NewRegistrationCredentials: Credentials {
+// MARK: - NewRegistrationCredentials
+struct NewRegistrationCredentials: Equatable, Credentials {
     let username: String
     let email: String
     let password: String
@@ -56,7 +58,8 @@ struct NewRegistrationCredentials: Credentials {
     }
 }
 
-struct ForgotPasswordCredentials: Codable, Credentials {
+// MARK: - ForgotPasswordCredentials
+struct ForgotPasswordCredentials: Codable, Equatable, Credentials {
     let email: String
     let newPassword: String
     let pin: String
@@ -76,7 +79,8 @@ struct ForgotPasswordCredentials: Codable, Credentials {
     }
 }
 
-struct GuardianInfo: Codable, Credentials {
+// MARK: - GuardianInfo
+struct GuardianInfo: Codable, Equatable, Credentials {
     let firstName: String
     let lastName: String
     let phoneNumber: String
@@ -102,7 +106,8 @@ struct GuardianInfo: Codable, Credentials {
     }
 }
 
-struct FullRegistrationCredentials: Codable, Credentials {
+// MARK: - FullRegistrationCredentials
+struct FullRegistrationCredentials: Codable, Equatable, Credentials {
     let firstName: String
     let lastName: String
     let phoneNumber: String

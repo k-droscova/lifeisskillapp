@@ -45,6 +45,16 @@ final class UserManagerMock: UserManaging {
     var requestParentEmailActivationLinkReturnValue: Bool = true
     var signatureReturnValue: String? = "mocked-signature"
     
+    // To track arguments
+    var loginCredentialsPassed: LoginCredentials?
+    var passwordResetUsernamePassed: String?
+    var validatePasswordCredentialsPassed: ForgotPasswordCredentials?
+    var usernameAvailabilityPassed: String?
+    var emailAvailabilityPassed: String?
+    var newUserRegistrationCredentialsPassed: NewRegistrationCredentials?
+    var fullRegistrationCredentialsPassed: FullRegistrationCredentials?
+    var parentEmailPassed: String?
+    
     // MARK: - Mock Methods for UserManaging
     
     func loadLoggedInUserData() async {
@@ -61,6 +71,7 @@ final class UserManagerMock: UserManaging {
     
     func login(credentials: LoginCredentials) async throws {
         loginCalled = true
+        loginCredentialsPassed = credentials
         if let error = errorToThrow {
             throw error
         }
@@ -88,6 +99,7 @@ final class UserManagerMock: UserManaging {
     
     func requestPinForPasswordRenewal(username: String) async throws -> ForgotPasswordData {
         requestPinForPasswordRenewalCalled = true
+        passwordResetUsernamePassed = username
         if let error = errorToThrow {
             throw error
         }
@@ -96,6 +108,7 @@ final class UserManagerMock: UserManaging {
     
     func validateNewPassword(credentials: ForgotPasswordCredentials) async throws -> Bool {
         validateNewPasswordCalled = true
+        validatePasswordCredentialsPassed = credentials
         if let error = errorToThrow {
             throw error
         }
@@ -104,6 +117,7 @@ final class UserManagerMock: UserManaging {
     
     func checkUsernameAvailability(_ username: String) async throws -> Bool {
         checkUsernameAvailabilityCalled = true
+        usernameAvailabilityPassed = username
         if let error = errorToThrow {
             throw error
         }
@@ -112,6 +126,7 @@ final class UserManagerMock: UserManaging {
     
     func checkEmailAvailability(_ email: String) async throws -> Bool {
         checkEmailAvailabilityCalled = true
+        emailAvailabilityPassed = email
         if let error = errorToThrow {
             throw error
         }
@@ -120,6 +135,7 @@ final class UserManagerMock: UserManaging {
     
     func registerUser(credentials: NewRegistrationCredentials) async throws {
         registerUserCalled = true
+        newUserRegistrationCredentialsPassed = credentials
         if let error = errorToThrow {
             throw error
         }
@@ -127,6 +143,7 @@ final class UserManagerMock: UserManaging {
     
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> CompleteRegistrationAPIResponse {
         completeUserRegistrationCalled = true
+        fullRegistrationCredentialsPassed = credentials
         if let error = errorToThrow {
             throw error
         }
@@ -135,6 +152,7 @@ final class UserManagerMock: UserManaging {
     
     func requestParentEmailActivationLink(email: String) async throws -> Bool {
         requestParentEmailActivationLinkCalled = true
+        parentEmailPassed = email
         if let error = errorToThrow {
             throw error
         }
