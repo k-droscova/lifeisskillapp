@@ -18,6 +18,7 @@ final class GenericPointManagerMock: GenericPointManaging {
     var points: [GenericPoint] = []
     var totalPoints: Int = 0
     var errorToThrow: Error?
+    var checkSumReturnValue: String? = "mock-checksum"
     
     var closestVirtualPoint: GenericPoint?
     private let closestVirtualPointSubject = CurrentValueSubject<GenericPoint?, Never>(nil)
@@ -79,7 +80,7 @@ final class GenericPointManagerMock: GenericPointManaging {
     
     func checkSum() -> String? {
         checkSumCalled = true
-        return "mocked-checksum"
+        return checkSumReturnValue
     }
     
     func onLogout() {

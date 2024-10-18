@@ -13,8 +13,8 @@ typealias HasBaseNetwork = HasNetwork & HasUrlSessionWrapper & HasNetworkMonitor
 typealias HasAPIDependencies = HasRegisterAppAPIService & HasRegisterUserAPIService & HasLoginAPIService & HasCheckSumAPIService & HasUserDataAPIService & HasForgotPasswordAPIService
 typealias HasKeychain = HasKeychainHelper & HasKeychainStorage
 typealias HasStorage = HasUserDefaultsStorage & HasUserDataStorage & HasKeychainHelper & HasKeychain
-typealias HasUserDataManagers = HasGameDataManager & HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager
-typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager
+typealias HasUserDataManagers = HasUserCategoryManager & HasUserPointManager & HasGenericPointManager & HasUserRankManager
+typealias HasManagers = HasUserManager & HasLocationManager & HasUserDataManagers & HasScanningManager & HasGameDataManager
 typealias HasLoggers = HasLoggerServicing
 typealias HasRealm = HasRealmStoraging & HasRepositoryContainer & HasPersistentUserDataStoraging
 

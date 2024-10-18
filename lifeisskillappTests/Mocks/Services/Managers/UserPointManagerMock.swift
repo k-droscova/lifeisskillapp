@@ -18,6 +18,7 @@ final class UserPointManagerMock: UserPointManaging {
     var totalPoints: Int = 0
     var errorToThrow: Error?
     var scannedPointToHandle: ScannedPoint?
+    var checkSumReturnValue: String? = "mock-checksum"
     var handleScannedPointCalled = false
     var handleAllStoredScannedPointsCalled = false
     var loadFromRepositoryCalled = false
@@ -100,7 +101,7 @@ final class UserPointManagerMock: UserPointManaging {
     
     func checkSum() -> String? {
         checkSumCalled = true
-        return "mocked-checksum"
+        return checkSumReturnValue
     }
     
     func onLogout() {

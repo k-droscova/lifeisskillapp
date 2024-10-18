@@ -46,7 +46,7 @@ protocol UserManaging {
 }
 
 final class UserManager: BaseClass, UserManaging {
-    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasUserDataManagers & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage & HasGameDataManager & HasLocationManager
+    typealias Dependencies = HasNetwork & HasAPIDependencies & HasLoggerServicing & HasUserDefaultsStorage & HasGameDataManager & HasRepositoryContainer & HasPersistentUserDataStoraging & HasNetworkMonitor & HasKeychainStorage & HasGameDataManager & HasLocationManager
     
     // MARK: - Private Properties
     

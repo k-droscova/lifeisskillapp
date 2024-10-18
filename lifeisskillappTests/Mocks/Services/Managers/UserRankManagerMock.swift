@@ -15,6 +15,7 @@ final class UserRankManagerMock: UserRankManaging {
     // MARK: - Mock Data and State Tracking
     var ranks: [UserRank] = []
     var errorToThrow: Error?
+    var checkSumReturnValue: String? = "mock-checksum"
     
     // Flags to track method calls
     var loadFromRepositoryCalled = false
@@ -59,7 +60,7 @@ final class UserRankManagerMock: UserRankManaging {
     
     func checkSum() -> String? {
         checkSumCalled = true
-        return "mocked-checksum"
+        return checkSumReturnValue
     }
     
     func onLogout() {

@@ -188,3 +188,29 @@ final class LoginFlowDelegateMock: NSObject, LoginFlowDelegate {
         forgotPasswordTappedCalled = true
     }
 }
+
+final class GameDataManagerFlowDelegateMock: NSObject, GameDataManagerFlowDelegate {
+
+    // MARK: - Properties to track method calls
+    var onErrorCalled = false
+    var onInvalidTokenCalled = false
+    var storedScannedPointsFailedToSendCalled = false
+
+    // MARK: - Properties to store the arguments
+    var errorArgument: Error?
+
+    // MARK: - GameDataManagerFlowDelegate Conformance
+
+    func onError(_ error: Error) {
+        onErrorCalled = true
+        errorArgument = error
+    }
+
+    func onInvalidToken() {
+        onInvalidTokenCalled = true
+    }
+
+    func storedScannedPointsFailedToSend() {
+        storedScannedPointsFailedToSendCalled = true
+    }
+}

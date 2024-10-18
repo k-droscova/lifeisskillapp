@@ -40,7 +40,7 @@ protocol GameDataManaging {
 }
 
 final class GameDataManager: BaseClass, GameDataManaging {
-    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasUserManager & HasNetworkMonitor & HasUserDefaultsStorage
+    typealias Dependencies = HasUserDataManagers & HasCheckSumAPIService & HasLoggers & HasPersistentUserDataStoraging & HasNetworkMonitor & HasUserDefaultsStorage
     
     // MARK: - Private Properties
     
@@ -53,7 +53,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
     private let userRankManager: any UserRankManaging
     private let userCategoryManager: any UserCategoryManaging
     private let networkMonitor: NetworkMonitoring
-    private var isOnline: Bool
+    private var isOnline: Bool { networkMonitor.onlineStatus }
     private var cancellables = Set<AnyCancellable>()
     private var isLoggedIn: Bool { userDefaultsStorage.isLoggedIn ?? false }
     private var closestVirtualPoint: GenericPoint?
@@ -78,7 +78,6 @@ final class GameDataManager: BaseClass, GameDataManaging {
         self.userRankManager = dependencies.userRankManager
         self.userCategoryManager = dependencies.userCategoryManager
         self.networkMonitor = dependencies.networkMonitor
-        self.isOnline = dependencies.networkMonitor.onlineStatus
         
         super.init()
         self.setupBindings()
@@ -366,7 +365,6 @@ final class GameDataManager: BaseClass, GameDataManaging {
     private func handleNetworkStatusChange(isOnline: Bool) {
         Task { [weak self] in
             guard let self = self else { return }
-            self.isOnline = isOnline
             if self.isLoggedIn && self.isOnline {
                 await self.handleOfflineToOnlineStatusChange()
             }

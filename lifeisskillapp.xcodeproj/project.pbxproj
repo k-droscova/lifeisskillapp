@@ -155,6 +155,7 @@
 		2769CE5A2CC277B300AE420E /* GenericPointManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2769CE592CC277AE00AE420E /* GenericPointManagerTests.swift */; };
 		2769CE5C2CC27B0100AE420E /* UserRankManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2769CE5B2CC27AFB00AE420E /* UserRankManagerTests.swift */; };
 		2769CE5E2CC2812700AE420E /* UserCategoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2769CE5D2CC2812000AE420E /* UserCategoryManagerTests.swift */; };
+		2769CE602CC2860900AE420E /* GameDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2769CE5F2CC2860400AE420E /* GameDataManagerTests.swift */; };
 		276ADDBB2C6E7D0000DA2301 /* RealmScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */; };
 		276ADDBD2C6E7E2000DA2301 /* ScannedPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */; };
 		276CA9CE2C5E5FBA001D6394 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */; };
@@ -452,6 +453,7 @@
 		2769CE592CC277AE00AE420E /* GenericPointManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPointManagerTests.swift; sourceTree = "<group>"; };
 		2769CE5B2CC27AFB00AE420E /* UserRankManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankManagerTests.swift; sourceTree = "<group>"; };
 		2769CE5D2CC2812000AE420E /* UserCategoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryManagerTests.swift; sourceTree = "<group>"; };
+		2769CE5F2CC2860400AE420E /* GameDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManagerTests.swift; sourceTree = "<group>"; };
 		276ADDBA2C6E7D0000DA2301 /* RealmScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScannedPoint.swift; sourceTree = "<group>"; };
 		276ADDBC2C6E7E2000DA2301 /* ScannedPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPointRepository.swift; sourceTree = "<group>"; };
 		276CA9CD2C5E5FBA001D6394 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 		272396232CAD480400041277 /* GameDataManagers */ = {
 			isa = PBXGroup;
 			children = (
+				2769CE5F2CC2860400AE420E /* GameDataManagerTests.swift */,
 				2769CE5D2CC2812000AE420E /* UserCategoryManagerTests.swift */,
 				2769CE5B2CC27AFB00AE420E /* UserRankManagerTests.swift */,
 				2769CE592CC277AE00AE420E /* GenericPointManagerTests.swift */,
@@ -2103,6 +2106,7 @@
 				271297B92CAC33B0004175C9 /* CategoryRepositoryTests.swift in Sources */,
 				2755A9A32CA80A0C00056594 /* NetworkMonitorTests.swift in Sources */,
 				2723961F2CAD43F200041277 /* RealmDependenciesMock.swift in Sources */,
+				2769CE602CC2860900AE420E /* GameDataManagerTests.swift in Sources */,
 				278E6D7B2CC133010057010F /* LocationStatusBarViewModelMock.swift in Sources */,
 				2755A9B12CA831E600056594 /* URLSessionWrapperMock.swift in Sources */,
 				2723962F2CAD512E00041277 /* UserPointManagerTests.swift in Sources */,
