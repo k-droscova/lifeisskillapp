@@ -105,4 +105,9 @@ final class GenericPointManagerMock: GenericPointManaging {
             try await fetch(withToken: token)
         }
     }
+    
+    func simulateClosestVirtualPointUpdate(to newPoint: GenericPoint?) {
+        closestVirtualPoint = newPoint
+        closestVirtualPointSubject.send(newPoint)
+    }
 }

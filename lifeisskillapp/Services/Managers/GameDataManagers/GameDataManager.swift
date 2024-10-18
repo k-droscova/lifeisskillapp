@@ -147,6 +147,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
                 delegate?.onInvalidToken()
                 return
             }
+            delegate?.onError(error)
         } catch {
             delegate?.onError(error)
         }
@@ -168,6 +169,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
                 delegate?.onInvalidToken()
                 return
             }
+            delegate?.onError(error)
         } catch {
             delegate?.onError(error)
         }
@@ -183,6 +185,7 @@ final class GameDataManager: BaseClass, GameDataManaging {
                 delegate?.onInvalidToken()
                 return
             }
+            delegate?.onError(error)
         } catch {
             delegate?.onError(error)
         }
