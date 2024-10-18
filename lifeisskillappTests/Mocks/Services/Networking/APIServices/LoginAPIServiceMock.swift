@@ -22,6 +22,7 @@ final class LoginAPIServiceMock: LoginAPIServicing {
             throw BaseError(
                 context: .location,
                 message: "User Location Required for login",
+                code: ErrorCodes.login(.missingLocation),
                 logger: LoggingServiceMock()
             )
         }

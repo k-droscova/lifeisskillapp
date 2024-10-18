@@ -49,6 +49,7 @@ enum ErrorCodes {
     enum LoginCodes: Int {
         case onlineInvalidCredentials = 2000  // Invalid credentials for online login
         case offlineInvalidCredentials = 2001 // Invalid credentials for offline login
+        case missingLocation = 2002 // Missing location, gps data required for login
     }
     
     // MARK: - Network Error Codes (Range: 3000-3999)
