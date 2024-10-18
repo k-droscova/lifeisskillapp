@@ -10,11 +10,52 @@ import Foundation
 
 final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     var errorToThrow: Error? = nil
-    
+
+    // MARK: - Call Tracking Variables
+    var onLogoutCalled = false
+    var clearUserRelatedDataCalled = false
+    var clearScannedPointDataCalled = false
+    var saveUserCategoryDataCalled = false
+    var saveUserPointDataCalled = false
+    var saveUserRankDataCalled = false
+    var saveGenericPointDataCalled = false
+    var saveCheckSumDataCalled = false
+    var saveScannedPointCalled = false
+    var saveSponsorImageCalled = false
+    var sponsorImageCalled = false
+    var savedLoginDetailsCalled = false
+    var loggedInUserDetailsCalled = false
+    var loginCalled = false
+    var markUserAsLoggedOutCalled = false
+    var markUserAsLoggedInCalled = false
+    var loadAllDataFromRepositoriesCalled = false
+    var loadFromRepositoryCalled = false
+
+    // MARK: - Argument Tracking Variables
+    var userCategoryDataArgument: UserCategoryData? = nil
+    var userPointDataArgument: UserPointData? = nil
+    var userRankDataArgument: UserRankData? = nil
+    var genericPointDataArgument: GenericPointData? = nil
+    var checkSumDataArgument: CheckSumData? = nil
+    var scannedPointArgument: ScannedPoint? = nil
+    var sponsorIdArgument: String? = nil
+    var sponsorImageDataArgument: Data? = nil
+    var loginUserArgument: LoggedInUser? = nil
+    var persistentDataTypeArgument: PersistentDataType? = nil
+
+    // MARK: - Mock Data
     var mockIsLoggedIn: Bool = false
+    var mockUserCategoryData: UserCategoryData?
+    var mockUserPointData: UserPointData?
+    var mockUserRankData: UserRankData?
+    var mockGenericPointData: GenericPointData?
+    var mockCheckSumData: CheckSumData?
+    var mockScannedPoints: [ScannedPoint] = []
     var imageData: Data? = nil
+    var mockLoginDetails: LoginUserData?
+    var mockLoggedInUserDetails: LoginUserData?
     var mockLoggedInUser: LoggedInUser? = nil
-    
+
     var isLoggedIn: Bool {
         mockIsLoggedIn
     }
@@ -22,37 +63,25 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     // MARK: - UserDataStoraging Conformance
 
     func onLogout() async throws {
-        guard let error = errorToThrow else {
-            print("onLogout() called")
-            return
-        }
+        onLogoutCalled = true
+        guard let error = errorToThrow else { return }
         throw error
     }
 
     func clearUserRelatedData() async throws {
-        guard let error = errorToThrow else {
-            print("clearUserRelatedData() called")
-            return
-        }
+        clearUserRelatedDataCalled = true
+        guard let error = errorToThrow else { return }
         throw error
     }
 
     func clearScannedPointData() async throws {
-        guard let error = errorToThrow else {
-            print("clearScannedPointData() called")
-            return
-        }
+        clearScannedPointDataCalled = true
+        guard let error = errorToThrow else { return }
         throw error
     }
 
     // MARK: - Mock Storage Getters and Setters
-    var mockUserCategoryData: UserCategoryData?
-    var mockUserPointData: UserPointData?
-    var mockUserRankData: UserRankData?
-    var mockGenericPointData: GenericPointData?
-    var mockCheckSumData: CheckSumData?
-    var mockScannedPoints: [ScannedPoint] = []
-    
+
     func userCategoryData() async throws -> UserCategoryData? {
         guard let error = errorToThrow else {
             return mockUserCategoryData
@@ -61,6 +90,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func saveUserCategoryData(_ data: UserCategoryData?) async throws {
+        saveUserCategoryDataCalled = true
+        userCategoryDataArgument = data
         guard let error = errorToThrow else {
             mockUserCategoryData = data
             return
@@ -76,6 +107,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func saveUserPointData(_ data: UserPointData?) async throws {
+        saveUserPointDataCalled = true
+        userPointDataArgument = data
         guard let error = errorToThrow else {
             mockUserPointData = data
             return
@@ -91,6 +124,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func saveUserRankData(_ data: UserRankData?) async throws {
+        saveUserRankDataCalled = true
+        userRankDataArgument = data
         guard let error = errorToThrow else {
             mockUserRankData = data
             return
@@ -106,6 +141,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func saveGenericPointData(_ data: GenericPointData?) async throws {
+        saveGenericPointDataCalled = true
+        genericPointDataArgument = data
         guard let error = errorToThrow else {
             mockGenericPointData = data
             return
@@ -121,6 +158,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func saveCheckSumData(_ data: CheckSumData?) async throws {
+        saveCheckSumDataCalled = true
+        checkSumDataArgument = data
         guard let error = errorToThrow else {
             mockCheckSumData = data
             return
@@ -136,6 +175,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func saveScannedPoint(_ point: ScannedPoint) async throws {
+        saveScannedPointCalled = true
+        scannedPointArgument = point
         guard let error = errorToThrow else {
             mockScannedPoints.append(point)
             return
@@ -143,27 +184,32 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
         throw error
     }
 
+    // MARK: - Sponsor Image Methods
+
     func saveSponsorImage(for sponsorId: String, imageData: Data) async throws {
+        saveSponsorImageCalled = true
+        sponsorIdArgument = sponsorId
+        sponsorImageDataArgument = imageData
         guard let error = errorToThrow else {
-            print("saveSponsorImage() called for sponsorId: \(sponsorId)")
+            self.imageData = imageData
             return
         }
         throw error
     }
 
     func sponsorImage(for sponsorId: String) async throws -> Data? {
+        sponsorImageCalled = true
+        sponsorIdArgument = sponsorId
         guard let error = errorToThrow else {
-            print("sponsorImage() called for sponsorId: \(sponsorId)")
             return imageData
         }
         throw error
     }
 
     // MARK: - Login User Data Related Interface
-    var mockLoginDetails: LoginUserData?
-    var mockLoggedInUserDetails: LoginUserData?
-    
+
     func savedLoginDetails() async throws -> LoginUserData? {
+        savedLoginDetailsCalled = true
         guard let error = errorToThrow else {
             return mockLoginDetails
         }
@@ -171,6 +217,7 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func loggedInUserDetails() async throws -> LoginUserData? {
+        loggedInUserDetailsCalled = true
         guard let error = errorToThrow else {
             return mockLoggedInUserDetails
         }
@@ -178,8 +225,9 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func login(_ user: LoggedInUser) async throws {
+        loginCalled = true
+        loginUserArgument = user
         guard let error = errorToThrow else {
-            print("login() called with user: \(user)")
             mockLoggedInUser = user
             return
         }
@@ -187,8 +235,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func markUserAsLoggedOut() async throws {
+        markUserAsLoggedOutCalled = true
         guard let error = errorToThrow else {
-            print("markUserAsLoggedOut() called")
             mockIsLoggedIn = false
             mockLoggedInUser = nil
             return
@@ -197,8 +245,8 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     func markUserAsLoggedIn() async throws {
+        markUserAsLoggedInCalled = true
         guard let error = errorToThrow else {
-            print("markUserAsLoggedIn() called")
             mockIsLoggedIn = true
             return
         }
@@ -206,17 +254,19 @@ final class PersistentUserDataStorageMock: PersistentUserDataStoraging {
     }
 
     // MARK: - PersistentUserDataStoraging Conformance
+
     func loadAllDataFromRepositories() async throws {
+        loadAllDataFromRepositoriesCalled = true
         guard let error = errorToThrow else {
-            print("loadAllDataFromRepositories() called")
             return
         }
         throw error
     }
 
     func loadFromRepository(for data: PersistentDataType) async throws {
+        loadFromRepositoryCalled = true
+        persistentDataTypeArgument = data
         guard let error = errorToThrow else {
-            print("loadFromRepository() called for data type: \(data)")
             return
         }
         throw error

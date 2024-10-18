@@ -197,7 +197,7 @@ final class UserPointManagerTests: XCTestCase {
         XCTAssertTrue(scanPointFlowDelegateMock.onScanPointOfflineProcessErrorCalled, "Expected delegate's onScanPointOfflineProcessError to be called")
     }
     
-    func testFetchWithToken_SuccessfulFetch() async throws {
+    func testFetch_SuccessfulFetch() async throws {
         // Arrange
         userDefaultStorageMock.mockToken = "mockToken"
         
@@ -212,8 +212,31 @@ final class UserPointManagerTests: XCTestCase {
             XCTFail("Expected fetch to succeed, but it threw an error: \(error)")
         }
     }
+    
+    func testFetch_CallsAPIAndSavesToStorage() async throws {
+        // Arrange
+        let mockToken = "mockToken"
+        userDefaultStorageMock.mockToken = mockToken
+        let mockResponseData = GenericPointData.mock()
+        
+        // Set up mock API response
+        userDataAPIMock.genericPointsResponseToReturn = APIResponse(data: mockResponseData)
 
-    func testFetchWithToken_TokenIsMissing_ThrowsError() async throws {
+        // Act
+        try await userPointManager.fetch()
+
+        // Assert
+        // Check that userDataAPIService was called with the correct token
+        XCTAssertTrue(userDataAPIMock.userPointsCalled, "user points API should be called")
+        XCTAssertEqual(userDataAPIMock.userTokenArgument, mockToken, "Correct token should be passed to userpoints API")
+
+        // Check that storage.saveGenericPointData was called with the data returned by userDataAPIService
+        XCTAssertTrue(persistentStorageMock.saveUserPointDataCalled, "saveUserPointData should be called on the storage")
+        XCTAssertEqual(persistentStorageMock.userPointDataArgument?.checkSum, mockResponseData.checkSum, "The same data returned by the API should be passed to saveUserPointData")
+        XCTAssertEqual(persistentStorageMock.userPointDataArgument?.data.count, mockResponseData.data.count, "The same data returned by the API should be passed to saveUserPointData")
+    }
+
+    func testFetch_TokenIsMissing_ThrowsError() async throws {
         // Arrange
         userDefaultStorageMock.token = nil // No token
 
@@ -228,7 +251,7 @@ final class UserPointManagerTests: XCTestCase {
         }
     }
 
-    func testFetchWithToken_ApiFailure_ThrowsError() async throws {
+    func testFetch_ApiFailure_ThrowsError() async throws {
         // Arrange
         let mockToken = "mockToken"
         userDefaultStorageMock.token = mockToken
