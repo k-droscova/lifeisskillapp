@@ -214,3 +214,20 @@ final class GameDataManagerFlowDelegateMock: NSObject, GameDataManagerFlowDelega
         storedScannedPointsFailedToSendCalled = true
     }
 }
+
+final class UserManagerFlowDelegateMock: NSObject, UserManagerFlowDelegate {
+    
+    // MARK: - Flags for Method Calls
+    var onLogoutCalled = false
+    var onForceLogoutCalled = false
+    
+    // MARK: - UserManagerFlowDelegate Conformance
+    
+    func onLogout() {
+        onLogoutCalled = true
+    }
+    
+    func onForceLogout() {
+        onForceLogoutCalled = true
+    }
+}
