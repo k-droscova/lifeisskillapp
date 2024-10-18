@@ -38,7 +38,7 @@ final class UserCategoryManager: BaseClass, UserCategoryManaging {
     @Published var selectedCategory: UserCategory? {
         didSet {
             if oldValue?.id != selectedCategory?.id {
-                publishSelectedCategory()
+                publishSelectedCategory(selectedCategory)
             }
         }
     }
@@ -99,9 +99,9 @@ final class UserCategoryManager: BaseClass, UserCategoryManaging {
     
     // MARK: - Private Helpers
     
-    private func publishSelectedCategory() {
+    private func publishSelectedCategory(_ category: UserCategory?) {
         DispatchQueue.main.async {
-            self.selectedCategorySubject.send(self.selectedCategory)
+            self.selectedCategorySubject.send(category)
         }
     }
 }
