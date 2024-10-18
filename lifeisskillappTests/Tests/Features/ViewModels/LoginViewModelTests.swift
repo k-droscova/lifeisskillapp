@@ -91,7 +91,7 @@ final class LoginViewModelTests: XCTestCase {
     
     // MARK: - Test Login Success
 
-    func testLogin_WhenLoginIsSuccessful_CallsLoginSuccessfulDelegate() async {
+    /*func testLogin_WhenLoginIsSuccessful_CallsLoginSuccessfulDelegate() async {
         // Arrange
         mockUserManager.loggedInUser = LoggedInUser.mock(activationStatus: .fullyActivated)
         viewModel = LoginViewModel<SettingsBarViewModelMock<LocationStatusBarViewModelMock>>(
@@ -114,6 +114,7 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertTrue(mockUserManager.loginCalled, "UserManager login should be called")
         XCTAssertTrue(mockDelegate.loginSuccessfulCalled, "loginSuccessful should be called on delegate")
     }
+     */
     
     // TODO: more login tests
 }

@@ -31,6 +31,7 @@ extension UserDataManaging {
         guard let token else {
             throw BaseError(context: .api,
                             message: "Needs User Token To Fetch Data",
+                            code: ErrorCodes.general(.missingToken),
                             logger: appDependencies.logger)
         }
         try await fetch(withToken: token) // Call the method with the token

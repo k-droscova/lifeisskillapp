@@ -9,8 +9,11 @@ import Foundation
 @testable import lifeisskillapp
 
 final class UserDataAPIServiceMock: UserDataAPIServicing {
-    var errorToThrow: Error? = nil
     
+    // MARK: - Properties for Error Simulation
+    var errorToThrow: Error? = nil
+
+    // MARK: - Mocked API Responses
     var userCategoriesResponseToReturn: APIResponse<UserCategoryData> = APIResponse(data: UserCategoryData.mock())
     var userPointsResponseToReturn: APIResponse<UserPointData> = APIResponse(data: UserPointData.mock())
     var userRanksResponseToReturn: APIResponse<UserRankData> = APIResponse(data: UserRankData.mock())
@@ -18,19 +21,28 @@ final class UserDataAPIServiceMock: UserDataAPIServicing {
     var updateUserPointsResponseToReturn: APIResponse<UserPointData> = APIResponse(data: UserPointData.mock())
     var sponsorImageResponseToReturn: Data = Data()
 
-    // Properties to track method calls and arguments
+    // MARK: - Tracking Call Flags and Arguments
+    var userCategoriesCalled = false
+    var userPointsCalled = false
+    var userRanksCalled = false
+    var genericPointsCalled = false
     var updateUserPointsCalled = false
+    var sponsorImageCalled = false
+
+    // Arguments to track the tokens and other parameters passed to the methods
     var userTokenArgument: String? = nil
     var scannedPointArgument: ScannedPoint? = nil
-    
-    // Properties to track sponsorImage method calls and arguments
-    var sponsorImageCalled = false
     var sponsorImageUserTokenArgument: String? = nil
     var sponsorIdArgument: String? = nil
     var widthArgument: Int? = nil
     var heightArgument: Int? = nil
     
+    // MARK: - Mock Methods for UserDataAPIServicing
+
     func userCategories(userToken: String) async throws -> APIResponse<UserCategoryData> {
+        userCategoriesCalled = true
+        userTokenArgument = userToken
+        
         guard let error = errorToThrow else {
             return userCategoriesResponseToReturn
         }
@@ -38,6 +50,9 @@ final class UserDataAPIServiceMock: UserDataAPIServicing {
     }
     
     func userPoints(userToken: String) async throws -> APIResponse<UserPointData> {
+        userPointsCalled = true
+        userTokenArgument = userToken
+        
         guard let error = errorToThrow else {
             return userPointsResponseToReturn
         }
@@ -45,6 +60,9 @@ final class UserDataAPIServiceMock: UserDataAPIServicing {
     }
     
     func userRanks(userToken: String) async throws -> APIResponse<UserRankData> {
+        userRanksCalled = true
+        userTokenArgument = userToken
+        
         guard let error = errorToThrow else {
             return userRanksResponseToReturn
         }
@@ -52,6 +70,9 @@ final class UserDataAPIServiceMock: UserDataAPIServicing {
     }
     
     func genericPoints(userToken: String) async throws -> APIResponse<GenericPointData> {
+        genericPointsCalled = true
+        userTokenArgument = userToken
+        
         guard let error = errorToThrow else {
             return genericPointsResponseToReturn
         }
@@ -59,7 +80,6 @@ final class UserDataAPIServiceMock: UserDataAPIServicing {
     }
     
     func updateUserPoints(userToken: String, point: ScannedPoint) async throws -> APIResponse<UserPointData> {
-        // Track method call and arguments
         updateUserPointsCalled = true
         userTokenArgument = userToken
         scannedPointArgument = point
@@ -71,7 +91,6 @@ final class UserDataAPIServiceMock: UserDataAPIServicing {
     }
     
     func sponsorImage(userToken: String, sponsorId: String, width: Int, height: Int) async throws -> Data {
-        // Track method call and arguments
         sponsorImageCalled = true
         sponsorImageUserTokenArgument = userToken
         sponsorIdArgument = sponsorId
