@@ -383,3 +383,58 @@ final class RankFlowDelegateMock: NSObject, RankFlowDelegate {
         selectCategoryPromptCalled = true
     }
 }
+
+final class RegistrationFlowDelegateMock: NSObject, RegistrationFlowDelegate {
+    
+    // MARK: - Flags to Track Method Calls
+    var loadQRCalled = false
+    var dismissQRCalled = false
+    var showReferenceInstructionsCalled = false
+    var scanningQRDidSucceedCalled = false
+    var scanningQRDidFailCalled = false
+    var registrationDidSucceedCalled = false
+    var registrationDidFailCalled = false
+    var openLinkCalled = false
+    
+    // MARK: - Captured Values
+    var capturedViewModel: QRViewModeling?
+    var capturedReferenceInfo: ReferenceInfo?
+    var capturedLink: String?
+    
+    // MARK: - Delegate Methods
+    
+    func loadQR(viewModel: QRViewModeling) {
+        loadQRCalled = true
+        capturedViewModel = viewModel
+    }
+    
+    func dismissQR() {
+        dismissQRCalled = true
+    }
+    
+    func showReferenceInstructions() {
+        showReferenceInstructionsCalled = true
+    }
+    
+    func scanningQRDidSucceed(_ reference: ReferenceInfo) {
+        scanningQRDidSucceedCalled = true
+        capturedReferenceInfo = reference
+    }
+    
+    func scanningQRDidFail() {
+        scanningQRDidFailCalled = true
+    }
+    
+    func registrationDidSucceed() {
+        registrationDidSucceedCalled = true
+    }
+    
+    func registrationDidFail() {
+        registrationDidFailCalled = true
+    }
+    
+    func openLink(link: String) {
+        openLinkCalled = true
+        capturedLink = link
+    }
+}

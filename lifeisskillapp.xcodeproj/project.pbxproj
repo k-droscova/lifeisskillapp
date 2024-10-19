@@ -235,6 +235,7 @@
 		27C619952C3AB0890067498F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C619942C3AB0890067498F /* UserDefaults.swift */; };
 		27C842852CC41806001EEE04 /* RankViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C842842CC41802001EEE04 /* RankViewModelTests.swift */; };
 		27C842872CC42FCB001EEE04 /* MapPointDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C842862CC42FBF001EEE04 /* MapPointDetailViewModelTests.swift */; };
+		27C842892CC43688001EEE04 /* RegistrationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C842882CC43683001EEE04 /* RegistrationViewModelTests.swift */; };
 		27CBD7832C4E789900612375 /* ScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* ScannedPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
@@ -541,6 +542,7 @@
 		27C6E27A2CB67AD90053532D /* lifeisskillappPreprod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lifeisskillappPreprod.entitlements; sourceTree = "<group>"; };
 		27C842842CC41802001EEE04 /* RankViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModelTests.swift; sourceTree = "<group>"; };
 		27C842862CC42FBF001EEE04 /* MapPointDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailViewModelTests.swift; sourceTree = "<group>"; };
+		27C842882CC43683001EEE04 /* RegistrationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModelTests.swift; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
@@ -1459,6 +1461,7 @@
 		278E6D742CC130E70057010F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				27C842882CC43683001EEE04 /* RegistrationViewModelTests.swift */,
 				27C842862CC42FBF001EEE04 /* MapPointDetailViewModelTests.swift */,
 				27C842842CC41802001EEE04 /* RankViewModelTests.swift */,
 				27ADCB572CC3D63D0020CC2F /* PointsViewModelTests.swift */,
@@ -2082,6 +2085,7 @@
 				278E6D782CC132820057010F /* SettingsBarViewModelTests.swift in Sources */,
 				272396142CAD3ECF00041277 /* CheckSumAPIServiceMock.swift in Sources */,
 				2723962D2CAD50B000041277 /* FlowDelegates.swift in Sources */,
+				27C842892CC43688001EEE04 /* RegistrationViewModelTests.swift in Sources */,
 				278E6D682CC12CB50057010F /* GenericPointManagerMock.swift in Sources */,
 				2755A9B32CA833FA00056594 /* NetworkTests.swift in Sources */,
 				271297BF2CAC3A78004175C9 /* PointRepositoryTests.swift in Sources */,

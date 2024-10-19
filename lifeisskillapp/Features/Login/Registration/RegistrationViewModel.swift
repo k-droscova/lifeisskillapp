@@ -194,6 +194,7 @@ final class RegistrationViewModel: BaseClass, ObservableObject, RegistrationView
         } else {
             passwordValidationState = PasswordValidationState.valid
         }
+        validateConfirmPassword()
     }
     
     private func validateConfirmPassword() {
