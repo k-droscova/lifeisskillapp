@@ -357,3 +357,29 @@ final class PointsFlowDelegateMock: NSObject, PointsFlowDelegate {
         selectCategoryPromptCalled = true
     }
 }
+
+final class RankFlowDelegateMock: NSObject, RankFlowDelegate {
+    
+    // MARK: - Flags to Track Method Calls
+    var onErrorCalled = false
+    var onNoDataAvailableCalled = false
+    var selectCategoryPromptCalled = false
+    
+    // MARK: - Captured Values
+    var capturedError: Error?
+
+    // MARK: - Delegate Methods
+    
+    func onError(_ error: Error) {
+        onErrorCalled = true
+        capturedError = error
+    }
+    
+    func onNoDataAvailable() {
+        onNoDataAvailableCalled = true
+    }
+    
+    func selectCategoryPrompt() {
+        selectCategoryPromptCalled = true
+    }
+}

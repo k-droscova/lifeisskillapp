@@ -114,7 +114,7 @@ final class PointsViewModelTests: XCTestCase {
         try super.tearDownWithError()
     }
     
-    func testOnAppear_LoadsUserDataAndUpdatesUsername() async {
+    func testOnAppear_LoadsUsername() async {
         // Arrange
         let mockUser = LoggedInUser.mock(nick: "TestUser")
         userManagerMock.loggedInUser = mockUser
@@ -146,7 +146,7 @@ final class PointsViewModelTests: XCTestCase {
         isLoadingCancellable.cancel()
     }
     
-    func testOnAppear_UpdatesUsernameAndLoadsPoints() async {
+    func testOnAppear_LoadsPoints() async {
         // Arrange
         let mockUser = LoggedInUser.mock(nick: "TestUser")
         userManagerMock.loggedInUser = mockUser

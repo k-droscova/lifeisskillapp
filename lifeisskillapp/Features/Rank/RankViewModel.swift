@@ -188,6 +188,50 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
             isListComplete = false
             return
         }
+        
+        // Case 1: User is in the top 20 -> No middle section
+        if userInd < RankConstants.topSection {
+            topRankings = Array(rankings.prefix(RankConstants.topSection))
+            middleRankings = nil
+            bottomRankings = Array(rankings.suffix(RankConstants.bottomSection))
+            return
+        }
+        // Case 2: User is near the top (21-25), merge with top section
+        if userInd < RankConstants.topSection + (RankConstants.aboveUser + RankConstants.belowUser + 1) {
+            let extendedTopSection = userInd + RankConstants.belowUser
+            topRankings = Array(rankings.prefix(extendedTopSection))
+            middleRankings = nil
+            bottomRankings = Array(rankings.suffix(RankConstants.bottomSection))
+            return
+        }
+        
+        // Case 3: User is in the bottom 10 -> No middle section
+        if userInd >= totalRankings - RankConstants.bottomSection {
+            topRankings = Array(rankings.prefix(RankConstants.topSection))
+            middleRankings = nil
+            bottomRankings = Array(rankings.suffix(RankConstants.bottomSection))
+            return
+        }
+        
+        // Case 4: User is near the bottom (within the range of belowUser + aboveUser + 1 from the bottomSection)
+        if userInd >= totalRankings - RankConstants.bottomSection - (RankConstants.aboveUser + RankConstants.belowUser + 1) {
+            topRankings = Array(rankings.prefix(RankConstants.topSection))
+            middleRankings = nil
+
+            // Start the bottom section from the user and include the `belowUser` users after them
+            let extendedBottomStartIndex = userInd - RankConstants.aboveUser
+            bottomRankings = Array(rankings[extendedBottomStartIndex..<totalRankings])
+            return
+        }
+        
+        // Case 5: User is in the middle section (normal case)
+        let lowerBound = max(RankConstants.topSection, userInd - RankConstants.aboveUser)
+        let upperBound = min(totalRankings - (RankConstants.belowUser + RankConstants.bottomSection + 1), userInd + RankConstants.belowUser)
+        topRankings = Array(rankings.prefix(RankConstants.topSection))
+        middleRankings = Array(rankings[lowerBound...upperBound])
+        bottomRankings = Array(rankings.suffix(RankConstants.bottomSection))
+        
+        /*
         topRankings = Array(rankings.prefix(RankConstants.topSection)) // Top 20
         bottomRankings = Array(rankings.suffix(RankConstants.bottomSection)) // Bottom 10
         
@@ -200,5 +244,6 @@ final class RankViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Sett
         let lowerBound = max(RankConstants.topSection, userInd - RankConstants.aboveUser)
         let upperBound = min(rankings.count - (RankConstants.aboveUser + 1 + RankConstants.belowUser), userInd + RankConstants.belowUser)
         middleRankings = Array(rankings[lowerBound...upperBound])
+         */
     }
 }

@@ -144,4 +144,24 @@ struct MockData {
         }
         return rankings
     }
+    
+    static func generateRankedUsers(count: Int) -> [RankedUser] {
+        var rankedUsers: [RankedUser] = []
+        // Define a base points range
+        let maxPoints = 1500
+        let minPoints = 500
+        
+        // Calculate step decrement for points based on the count
+        let pointsDecrement = (maxPoints - minPoints) / max(count - 1, 1)
+        for i in 1...count {
+            let username = "User\(i)"
+            
+            // Calculate points in decreasing order
+            let points = maxPoints - (i - 1) * pointsDecrement
+            
+            let gender: UserGender = (i % 2 == 0) ? .male : .female
+            rankedUsers.append(RankedUser.init(userId: "Mock\(i)", email: "", nick: "RankedUser\(i)", sex: gender, order: "\(i)", points: "\(points)", lastTime: "", psc: "", emailr: "", mobil: "", mobilr: ""))
+        }
+        return rankedUsers
+    }
 }
