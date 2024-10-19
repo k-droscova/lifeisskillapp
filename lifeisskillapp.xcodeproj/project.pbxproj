@@ -199,6 +199,8 @@
 		279E05832CB189C8004DF998 /* RealmSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 279E05762CB188B6004DF998 /* RealmSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		279E05872CB1D327004DF998 /* configDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 279E05862CB1D327004DF998 /* configDebug.xcconfig */; };
 		279E058B2CB1D353004DF998 /* configRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 279E058A2CB1D353004DF998 /* configRelease.xcconfig */; };
+		27ADCB532CC3C7120020CC2F /* CategorySelectorViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ADCB522CC3C70C0020CC2F /* CategorySelectorViewModelMock.swift */; };
+		27ADCB562CC3C7E60020CC2F /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ADCB552CC3C7E20020CC2F /* HomeViewModelTests.swift */; };
 		27B1E5822C6530BA00250C71 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */; };
 		27B25C4D2C3AF50100864028 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4C2C3AF50100864028 /* LoginAPIService.swift */; };
 		27B25C4F2C3AFE4F00864028 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B25C4E2C3AFE4F00864028 /* APITask.swift */; };
@@ -501,6 +503,8 @@
 		279E058A2CB1D353004DF998 /* configRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = configRelease.xcconfig; sourceTree = "<group>"; };
 		27AB99C52C9ACFCB00DEE46A /* lifeisskillappRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lifeisskillappRelease.entitlements; sourceTree = "<group>"; };
 		27AB99C62C9AD05300DEE46A /* lifeisskillappDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lifeisskillappDebug.entitlements; sourceTree = "<group>"; };
+		27ADCB522CC3C70C0020CC2F /* CategorySelectorViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewModelMock.swift; sourceTree = "<group>"; };
+		27ADCB552CC3C7E20020CC2F /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		27B1E5812C6530BA00250C71 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		27B25C4C2C3AF50100864028 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
 		27B25C4E2C3AFE4F00864028 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
@@ -1449,6 +1453,7 @@
 		278E6D742CC130E70057010F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				27ADCB552CC3C7E20020CC2F /* HomeViewModelTests.swift */,
 				2769CE572CC25FDF00AE420E /* LoginViewModelTests.swift */,
 				2743A5672CC2435400834886 /* FullProfileViewModelTests.swift */,
 				277186D12CC14AA3007A8762 /* ProfileViewModelTests.swift */,
@@ -1461,6 +1466,7 @@
 		278E6D792CC132F10057010F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				27ADCB522CC3C70C0020CC2F /* CategorySelectorViewModelMock.swift */,
 				278E6D7C2CC135EB0057010F /* SettingsBarViewModelMock.swift */,
 				278E6D7A2CC132F70057010F /* LocationStatusBarViewModelMock.swift */,
 			);
@@ -2085,6 +2091,7 @@
 				2769CE582CC25FE400AE420E /* LoginViewModelTests.swift in Sources */,
 				278E6D662CC12B080057010F /* UserPointManagerMock.swift in Sources */,
 				271297C12CAC3BF8004175C9 /* SponsorRepositoryTests.swift in Sources */,
+				27ADCB562CC3C7E60020CC2F /* HomeViewModelTests.swift in Sources */,
 				276618D52CAB1EA8004D13F7 /* RealmStorageMock.swift in Sources */,
 				278E6D722CC12FB60057010F /* LocationManagerMock.swift in Sources */,
 				278E6D762CC130F40057010F /* LocationStatusBarViewModel.swift in Sources */,
@@ -2103,6 +2110,7 @@
 				2755A9BF2CA87DCB00056594 /* LoginAPIServiceTests.swift in Sources */,
 				272396102CAD3C9700041277 /* RegisterAppAPIServiceMock.swift in Sources */,
 				2743A5682CC2435A00834886 /* FullProfileViewModelTests.swift in Sources */,
+				27ADCB532CC3C7120020CC2F /* CategorySelectorViewModelMock.swift in Sources */,
 				2755A9B52CA83C5400056594 /* EndpointMock.swift in Sources */,
 				278E6D6E2CC12E210057010F /* GameDataManagerMock.swift in Sources */,
 				278E6D7D2CC135F20057010F /* SettingsBarViewModelMock.swift in Sources */,

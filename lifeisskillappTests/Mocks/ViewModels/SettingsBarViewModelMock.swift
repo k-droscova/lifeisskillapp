@@ -10,30 +10,27 @@ import SwiftUI
 
 final class SettingsBarViewModelMock<locationVM: LocationStatusBarViewModeling>: BaseClass, SettingsBarViewModeling {
     
-    // MARK: - Published Properties
-    @Published var isOnline: Bool = false
-    @Published var isGpsOk: Bool = false
-    @Published var isLoggedIn: Bool = false
-    @Published var showProfileMenuOption: Bool = true
-    
     // MARK: - Properties
+    var isOnline: Bool = false
+    var isGpsOk: Bool = false
+    var isLoggedIn: Bool = false
+    var showProfileMenuOption: Bool = true
     var userLocation: UserLocation? = nil
     var appVersion: String = "DEBUG"
     var locationVM: locationVM
-
+    
     // Delegate to track actions
     private weak var delegate: SettingsBarFlowDelegate?
 
-    // MARK: - Initialization
+    // Initialization
     required init(dependencies: HasLoggers & HasLocationManager & HasUserManager & HasNetworkMonitor, delegate: SettingsBarFlowDelegate?) {
         self.delegate = delegate
         self.locationVM = .init(dependencies: dependencies)
         super.init()
     }
     
-    // MARK: - Methods
+    // Methods
     func logoutPressed() {
-        // Simulate logout action
         if isOnline {
             // Perform normal logout
         } else {
@@ -42,12 +39,10 @@ final class SettingsBarViewModelMock<locationVM: LocationStatusBarViewModeling>:
     }
     
     func profilePressed() {
-        // Simulate profile button action
         delegate?.profilePressed()
     }
     
     func onboardingPressed() {
-        // Simulate onboarding button action
         delegate?.onboardingPressed()
     }
     
