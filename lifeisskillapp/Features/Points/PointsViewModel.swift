@@ -144,6 +144,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             guard let self = self else { return }
             self.mapSource = .categoryPoints
             await self.setupMap(self.categoryPoints)
+            configureMapRegion(points: mapPoints)
             self.isMapButtonPressed = true
         }
     }
@@ -155,6 +156,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             guard let self = self else { return }
             self.mapSource = .singlePoint
             await self.setupMap([point])
+            configureMapRegion(points: mapPoints)
             self.isMapButtonPressed = true
         }
     }
@@ -236,7 +238,6 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     private func setupMap(_ points: [Point]) async {
         mapPoints = points.uniqued(on: \.pointId)
         await setupMapPoints()
-        configureMapRegion(points: mapPoints)
     }
     
     @MainActor
