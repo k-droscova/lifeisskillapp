@@ -56,6 +56,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     private var cancellables = Set<AnyCancellable>()
     private let locationStorage: LocationManaging
     private var mapPoints: [Point] = []
+    private var mapSource: MapSource = .none
     
     // MARK: - Public Properties
     
@@ -119,7 +120,11 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
             self.username = (self.userManager.loggedInUser?.nick).emptyIfNil
             await self.fetchData()
             if self.isMapButtonPressed {
-                await self.setupMapPoints(self.mapPoints)
+                if self.mapSource == .categoryPoints {
+                    await self.setupMap(self.categoryPoints)
+                } else {
+                    await self.setupMap(self.mapPoints)
+                }
             }
             self.isLoading = false
         }
@@ -128,6 +133,7 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     func onDisappear() {
         Task { @MainActor [weak self] in
             self?.totalPoints = 0
+            self?.selectedPoint = nil
         }
     }
     
@@ -136,9 +142,19 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         logger.log(message: "map button pressed")
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            let mapPoints = self.categoryPoints.uniqued(on: \.pointId) // remove points with same location
-            await self.setupMapPoints(mapPoints)
-            self.configureMapRegion(points: mapPoints)
+            self.mapSource = .categoryPoints
+            await self.setupMap(self.categoryPoints)
+            self.isMapButtonPressed = true
+        }
+    }
+    
+    func showPointOnMap(point: Point) {
+        guard !self.isMapButtonPressed else { return }
+        logger.log(message: "showing map for point: \(point.name)")
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.mapSource = .singlePoint
+            await self.setupMap([point])
             self.isMapButtonPressed = true
         }
     }
@@ -147,19 +163,11 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
         guard self.isMapButtonPressed else { return }
         logger.log(message: "list button pressed")
         Task { @MainActor [weak self] in
-            self?.isMapButtonPressed = false
-            self?.selectedPoint = nil
-            self?.points = []
-        }
-    }
-    
-    func showPointOnMap(point: Point) {
-        guard !self.isMapButtonPressed else { return }
-        logger.log(message: "showing map for point: \(point.name)")
-        Task { @MainActor [weak self] in
-            await self?.setupMapPoints([point])
-            self?.configureMapRegion(points: [point])
-            self?.isMapButtonPressed = true
+            guard let self = self else { return }
+            self.selectedPoint = nil
+            self.points = []
+            self.mapSource = .none
+            self.isMapButtonPressed = false
         }
     }
     
@@ -174,8 +182,8 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
                 Task { [weak self] in
                     guard let self = self else { return }
                     await self.getSelectedCategoryPoints()
-                    if self.isMapButtonPressed {
-                        await self.setupMapPoints(self.categoryPoints)
+                    if self.isMapButtonPressed && self.mapSource == .categoryPoints {
+                        await self.setupMap(self.categoryPoints)
                     }
                 }
             }
@@ -225,11 +233,25 @@ final class PointsViewModel<csVM: CategorySelectorViewModeling, settingBarVM: Se
     }
     
     @MainActor
-    private func setupMapPoints(_ points: [Point]) async {
-        self.mapPoints = points
-        self.points = points.compactMap { point in
+    private func setupMap(_ points: [Point]) async {
+        mapPoints = points.uniqued(on: \.pointId)
+        await setupMapPoints()
+        configureMapRegion(points: mapPoints)
+    }
+    
+    @MainActor
+    private func setupMapPoints() async {
+        self.points = mapPoints.compactMap { point in
             return genericPointManager.getById(id: point.pointId)
         }
         print("MAP: Populated with \(self.points.count) points")
+    }
+}
+
+private extension PointsViewModel {
+    enum MapSource {
+        case categoryPoints
+        case singlePoint
+        case none
     }
 }
