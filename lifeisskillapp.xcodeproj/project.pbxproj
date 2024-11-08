@@ -236,6 +236,7 @@
 		27C842852CC41806001EEE04 /* RankViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C842842CC41802001EEE04 /* RankViewModelTests.swift */; };
 		27C842872CC42FCB001EEE04 /* MapPointDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C842862CC42FBF001EEE04 /* MapPointDetailViewModelTests.swift */; };
 		27C842892CC43688001EEE04 /* RegistrationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C842882CC43683001EEE04 /* RegistrationViewModelTests.swift */; };
+		27C8428B2CC441A4001EEE04 /* ForgotPasswordViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C8428A2CC4419D001EEE04 /* ForgotPasswordViewModelTests.swift */; };
 		27CBD7832C4E789900612375 /* ScannedPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7822C4E789900612375 /* ScannedPoint.swift */; };
 		27CBD7852C4E7DFF00612375 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7842C4E7DFF00612375 /* BaseClass.swift */; };
 		27CBD7892C4E9E0400612375 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBD7882C4E9E0400612375 /* GameDataManager.swift */; };
@@ -543,6 +544,7 @@
 		27C842842CC41802001EEE04 /* RankViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModelTests.swift; sourceTree = "<group>"; };
 		27C842862CC42FBF001EEE04 /* MapPointDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointDetailViewModelTests.swift; sourceTree = "<group>"; };
 		27C842882CC43683001EEE04 /* RegistrationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModelTests.swift; sourceTree = "<group>"; };
+		27C8428A2CC4419D001EEE04 /* ForgotPasswordViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelTests.swift; sourceTree = "<group>"; };
 		27CBD7822C4E789900612375 /* ScannedPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedPoint.swift; sourceTree = "<group>"; };
 		27CBD7842C4E7DFF00612375 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 		27CBD7882C4E9E0400612375 /* GameDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
@@ -1461,6 +1463,7 @@
 		278E6D742CC130E70057010F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				27C8428A2CC4419D001EEE04 /* ForgotPasswordViewModelTests.swift */,
 				27C842882CC43683001EEE04 /* RegistrationViewModelTests.swift */,
 				27C842862CC42FBF001EEE04 /* MapPointDetailViewModelTests.swift */,
 				27C842842CC41802001EEE04 /* RankViewModelTests.swift */,
@@ -2112,6 +2115,7 @@
 				276618DB2CAB2470004D13F7 /* CheckSumRepositoryTests.swift in Sources */,
 				2769CE5A2CC277B300AE420E /* GenericPointManagerTests.swift in Sources */,
 				271297BD2CAC36EB004175C9 /* UserPointRepositoryTests.swift in Sources */,
+				27C8428B2CC441A4001EEE04 /* ForgotPasswordViewModelTests.swift in Sources */,
 				272396122CAD3E0E00041277 /* LoginAPIServiceMock.swift in Sources */,
 				274B84432CA9835300B94E14 /* ForgotPasswordAPITests.swift in Sources */,
 				2755A99F2CA8090300056594 /* LoggingServiceMock.swift in Sources */,

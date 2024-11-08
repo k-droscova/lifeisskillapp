@@ -438,3 +438,45 @@ final class RegistrationFlowDelegateMock: NSObject, RegistrationFlowDelegate {
         capturedLink = link
     }
 }
+
+final class ForgotPasswordFlowDelegateMock: NSObject, ForgotPasswordFlowDelegate {
+
+    // Flags to track method calls
+    var didRequestNewPinCalled = false
+    var failedRequestNewPinCalled = false
+    var didValidatePinCalled = false
+    var failedValidatePinCalled = false
+    var didRenewPasswordCalled = false
+    var failedRenewPasswordCalled = false
+    var timerRanOutCalled = false
+
+    // Implement the protocol methods and set the corresponding flags
+
+    func didRequestNewPin() {
+        didRequestNewPinCalled = true
+    }
+
+    func failedRequestNewPin() {
+        failedRequestNewPinCalled = true
+    }
+
+    func didValidatePin() {
+        didValidatePinCalled = true
+    }
+
+    func failedValidatePin() {
+        failedValidatePinCalled = true
+    }
+
+    func didRenewPassword() {
+        didRenewPasswordCalled = true
+    }
+
+    func failedRenewPassword() {
+        failedRenewPasswordCalled = true
+    }
+
+    func timerRanOut() {
+        timerRanOutCalled = true
+    }
+}
