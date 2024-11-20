@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kdroscova/Library/Caches/org.carthage.CarthageKit/DerivedData/16.1_16B40/realm-cocoa/02860d17d793e0d4f9c08ed937002d80e09fdffd/Build/Products/Release-iphonesimulator/RealmSwift.framework/RealmSwift'
+relocations:     []
+...

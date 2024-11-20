@@ -1314,19 +1314,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Registrace bude dokončena, jakmile tvůj opatrovník potvrdí svůj e-mail kliknutím na aktivační odkaz, který jsme mu právě poslali."
+            "value" : "Registrace bude dokončena, jakmile tvůj rodič potvrdí svůj e-mail kliknutím na aktivační odkaz, který jsme mu právě poslali."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Registrierung wird abgeschlossen, sobald Ihr Erziehungsberechtigter seine E-Mail bestätigt, indem er auf den Aktivierungslink klickt, den wir ihm gerade gesendet haben."
+            "value" : "Die Registrierung wird abgeschlossen, sobald Ihr Elternteil seine E-Mail bestätigt, indem er auf den Aktivierungslink klickt, den wir ihm gerade gesendet haben."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Registration will be complete once your guardian validates their email by clicking activation link we just sent them."
+            "value" : "Registration will be complete once your parent validates their email by clicking activation link we just sent them."
           }
         }
       }
@@ -3370,19 +3370,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyžadována aktivace opatrovníka"
+            "value" : "Vyžadována aktivace od rodiče"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aktivierung des Vormunds erforderlich"
+            "value" : "Aktivierung des Elternteils erforderlich\n"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guardian's Activation Required"
+            "value" : "Parent’s Activation Required"
           }
         }
       }
@@ -3392,19 +3392,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyplň email opatrovníka"
+            "value" : "Vyplň rodičův email"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geben Sie die E-Mail-Adresse des Vormunds ein"
+            "value" : "Geben Sie die E-Mail-Adresse des Elternteils ein"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter guardian's email"
+            "value" : "Enter parent’s email"
           }
         }
       }
@@ -3810,19 +3810,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Informace o zákonném zástupci"
+            "value" : "Informace o rodiči"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Angaben des Erziehungsberechtigten"
+            "value" : "Angaben des Elternteils"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guardian's information"
+            "value" : "Parent’s information"
           }
         }
       }
@@ -4054,19 +4054,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prosím, dokonči registraci vyplněním tohoto formuláře. Pokud je ti méně než 15 let, budeš požádán o poskytnutí informací o zákonném zástupci. V tomto případě bude registrace dokončena, jakmile zákonný zástupce potvrdí svůj e-mail."
+            "value" : "Prosím, dokonči registraci vyplněním tohoto formuláře. Pokud ti je méně než 15 let, budeš požádán o poskytnutí informací o tvém rodiči. V tomto případě bude registrace dokončena, jakmile tvůj rodič potvrdí svůj e-mail."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bitte vervollständigen Sie die Registrierung, indem Sie dieses Formular ausfüllen. Wenn Sie unter 15 Jahre alt sind, werden Sie gebeten, die Informationen eines Erziehungsberechtigten anzugeben. In diesem Fall wird die Registrierung abgeschlossen, sobald der Erziehungsberechtigte seine E-Mail bestätigt."
+            "value" : "Bitte vervollständigen Sie die Registrierung, indem Sie dieses Formular ausfüllen. Wenn Sie unter 15 Jahre alt sind, werden Sie gebeten, die Informationen eines Elternteils anzugeben. In diesem Fall wird die Registrierung abgeschlossen, sobald der Elternteil seine E-Mail bestätigt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please complete the registration by filling out this form. If you are under 15 years old, you will be asked to provide a guardian's information as well. In that case, the registration will be complete once they validate their email."
+            "value" : "Please complete the registration by filling out this form. If you are under 15 years old, you will be asked to provide a parent’s information as well. In that case, the registration will be complete once they validate their email."
           }
         }
       }
