@@ -231,3 +231,252 @@ final class UserManagerFlowDelegateMock: NSObject, UserManagerFlowDelegate {
         onForceLogoutCalled = true
     }
 }
+
+import Foundation
+@testable import lifeisskillapp
+
+final class HomeFlowDelegateMock: NSObject, HomeFlowDelegate {
+
+    // MARK: - Scanning flow flags
+    var loadFromQRCalled = false
+    var dismissQRCalled = false
+    var loadFromCameraCalled = false
+    var dismissCameraCalled = false
+    
+    // MARK: - Message flow flags
+    var featureUnavailableCalled = false
+    var onFailureCalled = false
+    
+    // MARK: - Navigation flow flags
+    var showOnboardingCalled = false
+    
+    // MARK: - Scan Point Flow flags
+    var onScanPointInvalidPointCalled = false
+    var onScanPointNoLocationCalled = false
+    var onScanPointProcessSuccessOnlineCalled = false
+    var onScanPointProcessSuccessOfflineCalled = false
+    var onScanPointOnlineProcessErrorCalled = false
+    var onScanPointOfflineProcessErrorCalled = false
+
+    // MARK: - Captured values
+    var capturedQRViewModel: QRViewModeling?
+    var capturedOcrViewModel: OcrViewModeling?
+    var capturedCodeSourceForFeatureUnavailable: CodeSource?
+    var capturedCodeSourceForOnFailure: CodeSource?
+    var capturedCodeSourceForScanPointSuccessOnline: CodeSource?
+    var capturedCodeSourceForScanPointSuccessOffline: CodeSource?
+    var capturedCodeSourceForScanPointErrorOnline: CodeSource?
+
+    // MARK: - Scanning flow methods
+    func loadFromQR(viewModel: QRViewModeling) {
+        loadFromQRCalled = true
+        capturedQRViewModel = viewModel
+    }
+
+    func dismissQR() {
+        dismissQRCalled = true
+    }
+
+    func loadFromCamera(viewModel: OcrViewModeling) {
+        loadFromCameraCalled = true
+        capturedOcrViewModel = viewModel
+    }
+
+    func dismissCamera() {
+        dismissCameraCalled = true
+    }
+    
+    // MARK: - Message flow methods
+    func featureUnavailable(source: CodeSource) {
+        featureUnavailableCalled = true
+        capturedCodeSourceForFeatureUnavailable = source
+    }
+
+    func onFailure(source: CodeSource) {
+        onFailureCalled = true
+        capturedCodeSourceForOnFailure = source
+    }
+    
+    // MARK: - Navigation flow methods
+    func showOnboarding() {
+        showOnboardingCalled = true
+    }
+    
+    // MARK: - Scan Point Flow Delegate methods
+    
+    func onScanPointInvalidPoint() {
+        onScanPointInvalidPointCalled = true
+    }
+    
+    func onScanPointNoLocation() {
+        onScanPointNoLocationCalled = true
+    }
+    
+    func onScanPointProcessSuccessOnline(_ source: CodeSource) {
+        onScanPointProcessSuccessOnlineCalled = true
+        capturedCodeSourceForScanPointSuccessOnline = source
+    }
+    
+    func onScanPointProcessSuccessOffline(_ source: CodeSource) {
+        onScanPointProcessSuccessOfflineCalled = true
+        capturedCodeSourceForScanPointSuccessOffline = source
+    }
+    
+    func onScanPointOnlineProcessError(_ source: CodeSource) {
+        onScanPointOnlineProcessErrorCalled = true
+        capturedCodeSourceForScanPointErrorOnline = source
+    }
+    
+    func onScanPointOfflineProcessError() {
+        onScanPointOfflineProcessErrorCalled = true
+    }
+}
+
+final class PointsFlowDelegateMock: NSObject, PointsFlowDelegate {
+    
+    // MARK: - Flags to Track Method Calls
+    var onErrorCalled = false
+    var onNoDataAvailableCalled = false
+    var selectCategoryPromptCalled = false
+    
+    // MARK: - Captured Values
+    var capturedError: Error?
+
+    // MARK: - Delegate Methods
+    
+    func onError(_ error: Error) {
+        onErrorCalled = true
+        capturedError = error
+    }
+    
+    func onNoDataAvailable() {
+        onNoDataAvailableCalled = true
+    }
+    
+    func selectCategoryPrompt() {
+        selectCategoryPromptCalled = true
+    }
+}
+
+final class RankFlowDelegateMock: NSObject, RankFlowDelegate {
+    
+    // MARK: - Flags to Track Method Calls
+    var onErrorCalled = false
+    var onNoDataAvailableCalled = false
+    var selectCategoryPromptCalled = false
+    
+    // MARK: - Captured Values
+    var capturedError: Error?
+
+    // MARK: - Delegate Methods
+    
+    func onError(_ error: Error) {
+        onErrorCalled = true
+        capturedError = error
+    }
+    
+    func onNoDataAvailable() {
+        onNoDataAvailableCalled = true
+    }
+    
+    func selectCategoryPrompt() {
+        selectCategoryPromptCalled = true
+    }
+}
+
+final class RegistrationFlowDelegateMock: NSObject, RegistrationFlowDelegate {
+    
+    // MARK: - Flags to Track Method Calls
+    var loadQRCalled = false
+    var dismissQRCalled = false
+    var showReferenceInstructionsCalled = false
+    var scanningQRDidSucceedCalled = false
+    var scanningQRDidFailCalled = false
+    var registrationDidSucceedCalled = false
+    var registrationDidFailCalled = false
+    var openLinkCalled = false
+    
+    // MARK: - Captured Values
+    var capturedViewModel: QRViewModeling?
+    var capturedReferenceInfo: ReferenceInfo?
+    var capturedLink: String?
+    
+    // MARK: - Delegate Methods
+    
+    func loadQR(viewModel: QRViewModeling) {
+        loadQRCalled = true
+        capturedViewModel = viewModel
+    }
+    
+    func dismissQR() {
+        dismissQRCalled = true
+    }
+    
+    func showReferenceInstructions() {
+        showReferenceInstructionsCalled = true
+    }
+    
+    func scanningQRDidSucceed(_ reference: ReferenceInfo) {
+        scanningQRDidSucceedCalled = true
+        capturedReferenceInfo = reference
+    }
+    
+    func scanningQRDidFail() {
+        scanningQRDidFailCalled = true
+    }
+    
+    func registrationDidSucceed() {
+        registrationDidSucceedCalled = true
+    }
+    
+    func registrationDidFail() {
+        registrationDidFailCalled = true
+    }
+    
+    func openLink(link: String) {
+        openLinkCalled = true
+        capturedLink = link
+    }
+}
+
+final class ForgotPasswordFlowDelegateMock: NSObject, ForgotPasswordFlowDelegate {
+
+    // Flags to track method calls
+    var didRequestNewPinCalled = false
+    var failedRequestNewPinCalled = false
+    var didValidatePinCalled = false
+    var failedValidatePinCalled = false
+    var didRenewPasswordCalled = false
+    var failedRenewPasswordCalled = false
+    var timerRanOutCalled = false
+
+    // Implement the protocol methods and set the corresponding flags
+
+    func didRequestNewPin() {
+        didRequestNewPinCalled = true
+    }
+
+    func failedRequestNewPin() {
+        failedRequestNewPinCalled = true
+    }
+
+    func didValidatePin() {
+        didValidatePinCalled = true
+    }
+
+    func failedValidatePin() {
+        failedValidatePinCalled = true
+    }
+
+    func didRenewPassword() {
+        didRenewPasswordCalled = true
+    }
+
+    func failedRenewPassword() {
+        failedRenewPasswordCalled = true
+    }
+
+    func timerRanOut() {
+        timerRanOutCalled = true
+    }
+}

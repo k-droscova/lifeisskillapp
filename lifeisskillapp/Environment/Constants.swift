@@ -40,11 +40,11 @@ enum User {
 }
 
 enum RankConstants {
-    static let minForSeparation = 20
-    static let topSection = 5
+    static let minForSeparation = 50
+    static let topSection = 20
     static let aboveUser = 2
     static let belowUser = 2
-    static let bottomSection = 5
+    static let bottomSection = 10
 }
 
 enum OcrConstants {

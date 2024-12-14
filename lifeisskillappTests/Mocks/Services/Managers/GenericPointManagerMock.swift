@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 @testable import lifeisskillapp
+import UIKit
 
 final class GenericPointManagerMock: GenericPointManaging {
     
@@ -19,6 +20,7 @@ final class GenericPointManagerMock: GenericPointManaging {
     var totalPoints: Int = 0
     var errorToThrow: Error?
     var checkSumReturnValue: String? = "mock-checksum"
+    var sponsorImageReturnValue: Data? = UIImage(named: CustomImages.Map.culture.fullPath)?.pngData()
     
     var closestVirtualPoint: GenericPoint?
     private let closestVirtualPointSubject = CurrentValueSubject<GenericPoint?, Never>(nil)
@@ -34,6 +36,7 @@ final class GenericPointManagerMock: GenericPointManaging {
     var checkSumCalled = false
     var onLogoutCalled = false
     var sponsorImageCalled = false
+    var sponsorIdRequest: String?
     
     // Simulate network status (offline/online)
     var isOnline = true
@@ -45,12 +48,13 @@ final class GenericPointManagerMock: GenericPointManaging {
     
     func sponsorImage(for sponsorId: String, width: Int, height: Int) async throws -> Data? {
         sponsorImageCalled = true
+        sponsorIdRequest = sponsorId
         // Simulate error or success
         if let error = errorToThrow {
             throw error
         }
         // Simulate returning image data or nil
-        return Data()
+        return sponsorImageReturnValue
     }
 
     // MARK: - UserDataManaging Required Methods
