@@ -57,7 +57,6 @@ final class MapPointDetailViewModel: ObservableObject, MapPointDetailViewModelin
     func onAppear() {
         Task { @MainActor [weak self] in
             guard let self = self else { return }
-            guard self.point.hasDetail else { return }
             do {
                 if let imageData = try await self.genericPointManager.sponsorImage(for: self.point.sponsorId, width: 200, height: 150), 
                     let image = UIImage(data: imageData) {

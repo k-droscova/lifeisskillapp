@@ -90,36 +90,4 @@ final class MapPointDetailViewModelTests: XCTestCase {
         XCTAssertNotNil(viewModel.sponsorImage, "Expected sponsorImage to be set when the image fetch is successful.")
         sponsorImageCancellable.cancel()
     }
-    
-    func testOnAppear_NoDetail_NoImageFetch() async {
-        // Arrange: Create a point that has no detail (hasDetail = false)
-        let mockPoint = GenericPoint.mock(pointName: "No Detail Point", pointValue: 50, pointType: .culture, sponsorId: "123", hasDetail: false)
-        
-        // Initialize the ViewModel with the mock point
-        let dependencies: Dependencies = .init(genericPointManager: genericPointManagerMock, logger: loggerMock)
-        viewModel = MapPointDetailViewModel(dependencies: dependencies, point: mockPoint)
-        
-        // Create an expectation for `sponsorImage` not being called
-        let sponsorImageNotCalledExpectation = XCTestExpectation(description: "sponsorImage method should not be called")
-        sponsorImageNotCalledExpectation.isInverted = true // Invert the expectation to check it *doesn't* happen
-        
-        // Set up a cancellable to observe changes to `sponsorImage`
-        let sponsorImageCancellable = viewModel.$sponsorImage
-            .dropFirst() // Skip the initial nil value
-            .sink { image in
-                sponsorImageNotCalledExpectation.fulfill() // If called, fulfill this expectation (we expect this *not* to happen)
-            }
-        
-        // Act: Call `onAppear`
-        viewModel.onAppear()
-        
-        // Wait for a short period to see if `sponsorImage` gets called (it shouldn't)
-        await fulfillment(of: [sponsorImageNotCalledExpectation], timeout: 1.0)
-        
-        // Assert that the sponsorImage method was *not* called
-        XCTAssertFalse(genericPointManagerMock.sponsorImageCalled, "Expected the sponsorImage method not to be called when hasDetail is false.")
-        
-        // Clean up
-        sponsorImageCancellable.cancel()
-    }
 }
