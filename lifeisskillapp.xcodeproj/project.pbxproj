@@ -2330,7 +2330,7 @@
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "We require access to NFC Reader to scan NFC tags with game points.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2374,7 +2374,7 @@
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "We require access to NFC Reader to scan NFC tags with game points.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2562,7 +2562,7 @@
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "We require access to NFC Reader to scan NFC tags with game points.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -27,24 +27,24 @@
     },
     "NFCReaderUsageDescription" : {
       "comment" : "Privacy - NFC Scan Usage Description",
-      "extractionState" : "manual",
+      "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rádi bychom získali přístup k NFC čtečce pro skenování NFC štítků. Bez udělení přístupu není možné skenovat herní body z NFC štítků. NFC čtečka je aktivní pouze po stisknutí růžového tlačítka „Skenovat pomocí NFC“ na domovské obrazovce."
+            "value" : "Potřebujeme přístup k NFC Reader pro skenování bodů z NFC štítků."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wir möchten Zugriff auf Ihren NFC-Reader, um NFC-Tags scannen zu können. Ohne die Erlaubnis für den Zugriff können Sie keine Spielpunkte von NFC-Tags scannen. Der NFC-Reader ist nur aktiv, wenn Sie die pinke Schaltfläche „Mit NFC scannen“ auf dem Startbildschirm drücken."
+            "value" : "Wir benötigen Zugriff auf den NFC-Reader, um NFC-Tags mit Spielpunkten zu scannen."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "We would like to access your NFC reader to scan NFC tags. Without granting access, you will not be able to scan game points from NFC tags. The NFC reader is only active when you press the pink “Scan with NFC” button on home screen."
+            "state" : "new",
+            "value" : "We require access to NFC Reder to scan NFC tags with game points."
           }
         }
       }
