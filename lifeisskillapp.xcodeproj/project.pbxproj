@@ -2331,8 +2331,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "We require access to NFC Reader to scan NFC tags with game points.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to be able to scan game points from QR codes and tourist sign codes. Without granting access you will not be able to scan such points.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to automatically detect nearby virtual points, show you points on map, and verify your location against our point data when you scan points. Access to location services while the app is in use are required in order to be able to use the app. We do not access your location when the app is closed.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -2375,8 +2375,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "We require access to NFC Reader to scan NFC tags with game points.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to be able to scan game points from QR codes and tourist sign codes. Without granting access you will not be able to scan such points.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to automatically detect nearby virtual points, show you points on map, and verify your location against our point data when you scan points. Access to location services while the app is in use are required in order to be able to use the app. We do not access your location when the app is closed.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -2563,8 +2563,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "We require access to NFC Reader to scan NFC tags with game points.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to be able to scan game points from QR codes and tourist sign codes. Without granting access you will not be able to scan such points.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to automatically detect nearby virtual points, show you points on map, and verify your location against our point data when you scan points. Access to location services while the app is in use are required in order to be able to use the app. We do not access your location when the app is closed.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

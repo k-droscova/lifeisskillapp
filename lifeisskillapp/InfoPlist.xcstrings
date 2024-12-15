@@ -44,7 +44,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "We require access to NFC Reder to scan NFC tags with game points."
+            "value" : "We require access to NFC Reader to scan NFC tags with game points."
           }
         }
       }
