@@ -32,6 +32,7 @@ final class UserManagerMock: UserManaging {
     var completeUserRegistrationCalled = false
     var requestParentEmailActivationLinkCalled = false
     var signatureCalled = false
+    var deleteUserCalled = false
     
     // Optional simulated errors for throwing
     var errorToThrow: Error?
@@ -162,5 +163,10 @@ final class UserManagerMock: UserManaging {
     func signature() async -> String? {
         signatureCalled = true
         return signatureReturnValue
+    }
+    
+    func deleteUser() {
+        deleteUserCalled = true
+        delegate?.onLogout()
     }
 }

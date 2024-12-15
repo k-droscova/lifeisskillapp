@@ -17,6 +17,7 @@ protocol RegisterUserAPIServicing {
     func registerUser(credentials: NewRegistrationCredentials, location: UserLocation?) async throws -> APIResponse<RegistrationResponse>
     func completeRegistration(credentials: FullRegistrationCredentials) async throws -> APIResponse<CompleteRegistrationAPIResponse>
     func requestParentEmailActivationLink(email: String) async throws -> APIResponse<ParentEmailActivationReponse>
+    func deleteUser() async throws -> APIResponse<DeleteUserResponse>
 }
 
 final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
@@ -86,6 +87,15 @@ final class RegisterUserAPIService: BaseClass, RegisterUserAPIServicing {
             endpoint: Endpoint.parentEmailActivation(email: email),
             method: .PUT,
             sensitiveRequestBodyData: true,
+            errorObject: APIResponseError.self,
+            userToken: storage.token
+        )
+    }
+    
+    func deleteUser() async throws -> APIResponse<DeleteUserResponse> {
+        return try await network.performAuthorizedRequest(
+            endpoint: Endpoint.registration(.deleteUser),
+            method: .DELETE,
             errorObject: APIResponseError.self,
             userToken: storage.token
         )

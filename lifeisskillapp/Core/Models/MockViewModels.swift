@@ -94,4 +94,8 @@ final class MockProfileViewModel: BaseClass, ProfileViewModeling {
     func sendParentActivationEmail() {
         print("Mock sending parent activation email to \(parentEmail)")
     }
+    
+    func deleteUser() {
+        print("Mock deleting user")
+    }
 }

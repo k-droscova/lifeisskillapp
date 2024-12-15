@@ -24,6 +24,7 @@ protocol ProfileFlowDelegate: NSObject {
     func emailRequestNotSent()
     func emailRequestDidSucceed()
     func emailRequestDidFail()
+    func deleteButtonPressed(action: @escaping () -> Void)
 }
 
 final class ProfileFlowCoordinator<statusBarVM: SettingsBarViewModeling>: Base.FlowCoordinatorNoDeepLink, BaseFlowCoordinator {
@@ -97,6 +98,28 @@ extension ProfileFlowCoordinator: ProfileFlowDelegate {
     
     func loadUserDataDidFail() {
         delegate?.loadUserDataDidFail()
+    }
+    
+    func deleteButtonPressed(action: @escaping () -> Void) {
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.cancel", comment: ""),
+            style: .cancel,
+            handler: nil
+        )
+        
+        let confirmAction = UIAlertAction(
+            title: NSLocalizedString("alert.button.ok", comment: ""),
+            style: .destructive,
+            handler: { _ in
+                action()
+            }
+        )
+        
+        showAlert(
+            titleKey: "profile.delete_account.confirm.title",
+            messageKey: "profile.delete_account.confirm.message",
+            actions: [cancelAction, confirmAction]
+        )
     }
 }
 

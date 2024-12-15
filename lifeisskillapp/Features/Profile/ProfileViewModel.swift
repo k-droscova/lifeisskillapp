@@ -40,6 +40,7 @@ protocol ProfileViewModeling: BaseClass, ObservableObject {
     func navigateBack()
     func sendParentActivationEmail()
     func reloadDataAfterRegistration()
+    func deleteUser()
 }
 
 final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, ObservableObject, ProfileViewModeling {
@@ -156,6 +157,17 @@ final class ProfileViewModel<settingBarVM: SettingsBarViewModeling>: BaseClass, 
     func reloadDataAfterRegistration() {
         Task { @MainActor [weak self] in
             self?.loadData()
+        }
+    }
+    
+    func deleteUser() {
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            delegate?.deleteButtonPressed {
+                self.userManager.deleteUser()
+            }
         }
     }
     

@@ -44,6 +44,7 @@ private extension ProfileView {
                     registerButton
                 }
                 inviteFriendButton
+                deleteProfileButton
             }
         }
     }
@@ -199,6 +200,15 @@ private extension ProfileView {
         .subheadline
         .padding(.vertical, ProfileViewConstants.minSpaceAboveInviteButton)
     }
+    
+    private var deleteProfileButton: some View {
+        Button(action: viewModel.deleteUser) {
+            Text("profile.delete.button")
+        }
+        .foregroundStyle(ProfileViewConstants.Colors.deleteButton)
+        .subheadlineBold
+        .padding(.bottom, ProfileViewConstants.minSpaceAboveInviteButton)
+    }
 }
 
 enum ProfileViewConstants {
@@ -220,6 +230,7 @@ enum ProfileViewConstants {
         static let registerButtonBackground = Color.colorLisRose
         static let registerButtonForeground = Color.white
         static let inviteButton = Color.colorLisBlue
+        static let deleteButton = Color.colorLisRed
     }
 }
 

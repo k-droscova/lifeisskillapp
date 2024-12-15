@@ -77,7 +77,6 @@ final class SettingsBarFlowDelegateMock: NSObject, SettingsBarFlowDelegate {
 }
 
 final class ProfileFlowDelegateMock: NSObject, ProfileFlowDelegate {
-    
     // Flags to track method calls
     var generateQRCalled = false
     var generateQRDidFailCalled = false
@@ -87,6 +86,7 @@ final class ProfileFlowDelegateMock: NSObject, ProfileFlowDelegate {
     var emailRequestNotSentCalled = false
     var emailRequestDidSucceedCalled = false
     var emailRequestDidFailCalled = false
+    var mockDeletePressed = false
     
     // Arguments to capture the passed data
     var qrImage: UIImage?
@@ -124,6 +124,10 @@ final class ProfileFlowDelegateMock: NSObject, ProfileFlowDelegate {
     
     func emailRequestDidFail() {
         emailRequestDidFailCalled = true
+    }
+    
+    func deleteButtonPressed(action: @escaping () -> Void) {
+        mockDeletePressed = true
     }
 }
 
@@ -220,6 +224,7 @@ final class UserManagerFlowDelegateMock: NSObject, UserManagerFlowDelegate {
     // MARK: - Flags for Method Calls
     var onLogoutCalled = false
     var onForceLogoutCalled = false
+    var onDeleteFailedCalled = false
     
     // MARK: - UserManagerFlowDelegate Conformance
     
@@ -229,6 +234,10 @@ final class UserManagerFlowDelegateMock: NSObject, UserManagerFlowDelegate {
     
     func onForceLogout() {
         onForceLogoutCalled = true
+    }
+    
+    func onDeleteFailed() {
+        onDeleteFailedCalled = true
     }
 }
 

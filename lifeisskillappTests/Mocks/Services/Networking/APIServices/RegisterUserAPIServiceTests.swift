@@ -9,7 +9,6 @@ import Foundation
 @testable import lifeisskillapp
 
 final class RegisterUserAPIServiceMock: RegisterUserAPIServicing {
-    
     // MARK: - Properties for capturing arguments
     var registerUserCalled = false
     var receivedCredentials: NewRegistrationCredentials?
@@ -21,6 +20,8 @@ final class RegisterUserAPIServiceMock: RegisterUserAPIServicing {
     var requestParentEmailActivationLinkCalled = false
     var receivedParentEmail: String?
     
+    var deleteUserCalled = false
+    
     // MARK: - Error simulation
     var errorToThrow: Error? = nil
     
@@ -30,6 +31,7 @@ final class RegisterUserAPIServiceMock: RegisterUserAPIServicing {
     var registerUserResponseToReturn: APIResponse<RegistrationResponse> = APIResponse(data: RegistrationResponse.mock())
     var completeRegistrationResponseToReturn: APIResponse<CompleteRegistrationAPIResponse> = APIResponse(data: CompleteRegistrationAPIResponse.mock())
     var requestParentEmailActivationLinkResponseToReturn: APIResponse<ParentEmailActivationReponse> = APIResponse(data: ParentEmailActivationReponse.mock())
+    var deleteUserResponseToReturn: APIResponse<DeleteUserResponse> = APIResponse(data: DeleteUserResponse.mock())
     
     // MARK: - API Method Implementations
     
@@ -84,6 +86,14 @@ final class RegisterUserAPIServiceMock: RegisterUserAPIServicing {
         
         guard let error = errorToThrow else {
             return requestParentEmailActivationLinkResponseToReturn
+        }
+        throw error
+    }
+    
+    func deleteUser() async throws -> APIResponse<DeleteUserResponse> {
+        deleteUserCalled = true
+        guard let error = errorToThrow else {
+            return deleteUserResponseToReturn
         }
         throw error
     }
