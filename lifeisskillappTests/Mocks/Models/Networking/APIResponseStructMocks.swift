@@ -280,3 +280,11 @@ extension CheckSumPointsData {
         )
     }
 }
+
+extension DeleteUserResponse {
+    static func mock(status: Bool = true) -> DeleteUserResponse {
+        return DeleteUserResponse(
+            status: status
+        )
+    }
+}

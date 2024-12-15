@@ -9,6 +9,7 @@ import Foundation
 
 protocol UserManagerFlowDelegate: NSObject {
     func onLogout()
+    func onDeleteFailed()
     func onForceLogout()
 }
 
@@ -43,6 +44,8 @@ protocol UserManaging {
     func completeUserRegistration(credentials: FullRegistrationCredentials) async throws -> CompleteRegistrationAPIResponse
     func requestParentEmailActivationLink(email: String) async throws -> Bool
     func signature() async -> String?
+    // delete user
+    func deleteUser()
 }
 
 final class UserManager: BaseClass, UserManaging {
@@ -249,6 +252,24 @@ final class UserManager: BaseClass, UserManaging {
         } catch {
             logger.log(message: "Unable to fetch signature: \(error.localizedDescription)")
             return nil
+        }
+    }
+    
+    func deleteUser() {
+        Task { @MainActor [weak self] in
+            do {
+                let response = try await self?.registerUserAPI.deleteUser()
+                guard let status = response?.data.status else {
+                    self?.delegate?.onDeleteFailed()
+                    return
+                }
+                try await self?.storage.clearScannedPointData()
+                try await self?.storage.onLogout()
+                self?.signalLogout()
+                self?.delegate?.onLogout()
+            } catch {
+                self?.delegate?.onDeleteFailed()
+            }
         }
     }
     

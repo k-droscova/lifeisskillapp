@@ -419,3 +419,20 @@ struct ParentEmailActivationReponse: DataProtocol {
         self.status = status
     }
 }
+
+struct DeleteUserResponse: DataProtocol {
+    let status: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case status = "removed"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        status = try container.decode(Bool.self, forKey: .status)
+    }
+    
+    init (status: Bool) {
+        self.status = status
+    }
+}

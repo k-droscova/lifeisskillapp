@@ -114,6 +114,10 @@ extension AppFlowCoordinator: UserManagerFlowDelegate {
         reload()
         showAlert(titleKey: "alert.forced_logout.title", messageKey: "alert.forced_logout.message")
     }
+    
+    func onDeleteFailed() {
+        showAlert(titleKey: "alert.delete_failed.title", messageKey: "alert.delete_failed.message")
+    }
 }
 
 extension AppFlowCoordinator: MainFlowCoordinatorDelegate {}

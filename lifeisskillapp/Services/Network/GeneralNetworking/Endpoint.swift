@@ -40,7 +40,7 @@ enum Endpoint: Endpointing {
                 "/nick/\(username)/check"
             case .checkEmailAvailability(let email):
                 "/email/\(email)/check"
-            case .registerUser, .completeRegistration:
+            case .registerUser, .completeRegistration, .deleteUser:
                 "/users"
             }
             
@@ -96,7 +96,8 @@ enum Endpoint: Endpointing {
                 .sponsorImage,
                 .signature,
                 .parentEmailActivation,
-                .registration(.completeRegistration):
+                .registration(.completeRegistration),
+                .registration(.deleteUser):
             return true
         }
     }
@@ -136,5 +137,6 @@ extension Endpoint {
         case checkEmailAvailability(email: String)
         case registerUser
         case completeRegistration
+        case deleteUser
     }
 }

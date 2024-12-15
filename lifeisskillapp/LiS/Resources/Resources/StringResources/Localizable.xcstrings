@@ -250,6 +250,52 @@
         }
       }
     },
+    "alert.delete_failed.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Něco se pokazilo. Prosím, zkus to znovu nebo nás kontaktuj na info@lifeisskill.cz"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Löschen Ihres Kontos ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support unter info@lifeisskill.cz."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong when deleting your account. Please try again or contact our support info@lifeisskill.cz"
+          }
+        }
+      }
+    },
+    "alert.delete_failed.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smazání účtu se nezdařilo"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletion failed"
+          }
+        }
+      }
+    },
     "alert.forced_logout.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3136,6 +3182,75 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date of birth:"
+          }
+        }
+      }
+    },
+    "profile.delete_account.confirm.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento krok je nevratný."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Schritt ist unumkehrbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This action is irreversible."
+          }
+        }
+      }
+    },
+    "profile.delete_account.confirm.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jsi si jistý?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sind Sie sicher?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure?"
+          }
+        }
+      }
+    },
+    "profile.delete.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smazat účet"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete account"
           }
         }
       }
