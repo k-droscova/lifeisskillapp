@@ -189,6 +189,7 @@
 		278E6D782CC132820057010F /* SettingsBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D772CC1327B0057010F /* SettingsBarViewModelTests.swift */; };
 		278E6D7B2CC133010057010F /* LocationStatusBarViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D7A2CC132F70057010F /* LocationStatusBarViewModelMock.swift */; };
 		278E6D7D2CC135F20057010F /* SettingsBarViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E6D7C2CC135EB0057010F /* SettingsBarViewModelMock.swift */; };
+		278E89CA2D0F628B007D1A4A /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 278E89C92D0F628B007D1A4A /* InfoPlist.xcstrings */; };
 		2794CDE42C74F13D007B5C0D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE32C74F13D007B5C0D /* MapView.swift */; };
 		2794CDE62C74F1AD007B5C0D /* MapFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */; };
 		279DEF282CBC060C003F0D4D /* CascadeDeleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */; };
@@ -500,6 +501,7 @@
 		278E6D772CC1327B0057010F /* SettingsBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBarViewModelTests.swift; sourceTree = "<group>"; };
 		278E6D7A2CC132F70057010F /* LocationStatusBarViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatusBarViewModelMock.swift; sourceTree = "<group>"; };
 		278E6D7C2CC135EB0057010F /* SettingsBarViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBarViewModelMock.swift; sourceTree = "<group>"; };
+		278E89C92D0F628B007D1A4A /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		2794CDE32C74F13D007B5C0D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2794CDE52C74F1AD007B5C0D /* MapFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlowCoordinator.swift; sourceTree = "<group>"; };
 		279DEF272CBC060C003F0D4D /* CascadeDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadeDeleting.swift; sourceTree = "<group>"; };
@@ -900,6 +902,7 @@
 				27274F862C3320F3003453E2 /* Assets.xcassets */,
 				27F612602C7F534F001D1F1A /* LaunchScreen.storyboard */,
 				27E32DF02C4955F200E69C58 /* Info.plist */,
+				278E89C92D0F628B007D1A4A /* InfoPlist.xcstrings */,
 			);
 			path = lifeisskillapp;
 			sourceTree = "<group>";
@@ -1863,6 +1866,7 @@
 				279E058B2CB1D353004DF998 /* configRelease.xcconfig in Resources */,
 				2717AF172C42ADB800A23F06 /* Montserrat-Thin.ttf in Resources */,
 				275472DE2C5D6AED00F5578F /* roboto_medium.ttf in Resources */,
+				278E89CA2D0F628B007D1A4A /* InfoPlist.xcstrings in Resources */,
 				2717AF112C42ADB800A23F06 /* Montserrat-ExtraBold.otf in Resources */,
 				27274F872C3320F3003453E2 /* Assets.xcassets in Resources */,
 				27814F992C94394300545F7E /* CountryCodes.json in Resources */,
@@ -2238,6 +2242,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
@@ -2298,6 +2303,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
@@ -2322,10 +2328,11 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "We use NFC to read data from NFC tags.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera Must Be Allowed for Scanning";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location Is Required";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -2365,10 +2372,11 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "We use NFC to read data from NFC tags.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera Must Be Allowed for Scanning";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location Is Required";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -2528,6 +2536,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "PREPROD $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2551,10 +2560,11 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = lifeisskillapp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Life is Skill";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "We use NFC to read data from NFC tags.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera Must Be Allowed for Scanning";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location Is Required";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

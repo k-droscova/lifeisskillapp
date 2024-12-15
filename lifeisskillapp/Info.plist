@@ -6,22 +6,28 @@
 	<string>$(API_BASE_URL)</string>
 	<key>API_DETAIL_URL</key>
 	<string>$(API_DETAIL_URL)</string>
-	<key>API_QR_URL</key>
-	<string>$(API_QR_URL)</string>
 	<key>API_KEY</key>
 	<string>$(API_KEY)</string>
+	<key>API_QR_URL</key>
+	<string>$(API_QR_URL)</string>
 	<key>AUTH_TOKEN</key>
 	<string>$(AUTH_TOKEN)</string>
-	<key>KEYCHAIN_USERNAME_KEY</key>
-	<string>$(PRODUCT_NAME).$(KEYCHAIN_USERNAME_KEY)</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+		<string>Czech</string>
+	</array>
 	<key>KEYCHAIN_PASSWORD_KEY</key>
 	<string>$(PRODUCT_NAME).$(KEYCHAIN_PASSWORD_KEY)</string>
-	<key>REALM_FILE</key>
-	<string>$(PRODUCT_NAME).$(REALM_FILE)</string>
+	<key>KEYCHAIN_USERNAME_KEY</key>
+	<string>$(PRODUCT_NAME).$(KEYCHAIN_USERNAME_KEY)</string>
 	<key>MAP_VIRTUAL_POINT</key>
 	<string>$(MAP_VIRTUAL_POINT)</string>
 	<key>PIN_VALIDITY_TIME</key>
 	<string>$(PIN_VALIDITY_TIME)</string>
+	<key>REALM_FILE</key>
+	<string>$(PRODUCT_NAME).$(REALM_FILE)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.otf</string>

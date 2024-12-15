@@ -1,0 +1,102 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Life is Skill"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "lifeisskillapp"
+          }
+        }
+      }
+    },
+    "NFCReaderUsageDescription" : {
+      "comment" : "Privacy - NFC Scan Usage Description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rádi bychom získali přístup k NFC čtečce pro skenování NFC štítků. Bez udělení přístupu není možné skenovat herní body z NFC štítků. NFC čtečka je aktivní pouze po stisknutí růžového tlačítka „Skenovat pomocí NFC“ na domovské obrazovce."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir möchten Zugriff auf Ihren NFC-Reader, um NFC-Tags scannen zu können. Ohne die Erlaubnis für den Zugriff können Sie keine Spielpunkte von NFC-Tags scannen. Der NFC-Reader ist nur aktiv, wenn Sie die pinke Schaltfläche „Mit NFC scannen“ auf dem Startbildschirm drücken."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We would like to access your NFC reader to scan NFC tags. Without granting access, you will not be able to scan game points from NFC tags. The NFC reader is only active when you press the pink “Scan with NFC” button on home screen."
+          }
+        }
+      }
+    },
+    "NSCameraUsageDescription" : {
+      "comment" : "Privacy - Camera Usage Description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potřebujeme přístup k vaší kameře, abychom mohli skenovat herní body z QR kódů a kódů turistických značek. Bez udělení přístupu nebude možné takové body skenovat."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir benötigen Zugriff auf Ihre Kamera, um Spielpunkte von QR-Codes und Touristenzeichen-Codes scannen zu können. Ohne die Erlaubnis für den Zugriff können Sie solche Punkte nicht scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We need access to your camera to be able to scan game points from QR codes and tourist sign codes. Without granting access you will not be able to scan such points."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location When In Use Usage Description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potřebujeme přístup k vaší poloze, abychom mohli automaticky detekovat blízké virtuální body, zobrazit body na mapě a ověřit tvoji polohu podle našich dat při skenování bodů. Přístup k poloze během používání aplikace je nezbytný pro její funkčnost. K tvojí poloze nemáme přístup, když je aplikace zavřená."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir benötigen Zugriff auf Ihren Standort, um nahegelegene virtuelle Punkte automatisch zu erkennen, Ihnen Punkte auf der Karte anzuzeigen und Ihren Standort mit unseren Punktedaten zu überprüfen, wenn Sie Punkte scannen. Der Zugriff auf Standortdienste während der Nutzung der App ist erforderlich, um die App verwenden zu können. Wir greifen nicht auf Ihren Standort zu, wenn die App geschlossen ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We need access to your location to automatically detect nearby virtual points, show you points on map, and verify your location against our point data when you scan points. Access to location services while the app is in use are required in order to be able to use the app. We do not access your location when the app is closed."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
