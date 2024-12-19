@@ -9,6 +9,7 @@ import Foundation
 import CoreLocation
 
 struct MapConstants {
+    static let pointNoPublic: Int = 0b1_0000_0000
     static let mapDetailViewSheetHeight: CGFloat = 200
     static let mapDetailImageHeight: CGFloat = 100
     static let maxClusterZoomLevel: Double = 12.0

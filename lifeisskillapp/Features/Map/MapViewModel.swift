@@ -82,8 +82,8 @@ final class MapViewModel<settingBarVM: SettingsBarViewModeling>
     
     @MainActor
     private func setupMapPoints() async {
-        self.points = genericPointManager.getAll()
-        print("MAP: Populated with \(self.points.count) points")
+        let allPoints = genericPointManager.getAll()
+        self.points = allPoints.filter { ($0.pointSpec & MapConstants.pointNoPublic) == 0 }
     }
 }
 
