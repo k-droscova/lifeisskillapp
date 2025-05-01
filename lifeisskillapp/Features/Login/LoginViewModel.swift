@@ -1,0 +1,128 @@
+//
+//  LoginViewModel.swift
+//  lifeisskillapp
+//
+//  Created by Karolína Droscová on 01.07.2024.
+//
+
+import Foundation
+import Observation
+
+protocol LoginViewModeling: ObservableObject {
+    associatedtype settingBarVM: SettingsBarViewModeling
+    var settingsViewModel: settingBarVM { get }
+    var username: String { get set }
+    var password: String { get set }
+    var isLoginEnabled: Bool { get set }
+    var isLoading: Bool { get set }
+    func login()
+    func onAppear()
+    func register()
+    func forgotPassword()
+}
+
+final class LoginViewModel<settingBarVM: SettingsBarViewModeling>: LoginViewModeling, ObservableObject {
+    typealias Dependencies = HasUserManager & SettingsBarViewModel.Dependencies
+    
+    // MARK: - Private Properties
+
+    private let userManager: UserManaging
+    weak var delegate: LoginFlowDelegate?
+    
+    // MARK: - Public Properties
+
+    @Published var username: String = "" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var password: String = "" {
+        didSet {
+            shouldEnableLoginButton()
+        }
+    }
+    @Published var isLoginEnabled: Bool = false
+    @Published var isLoading: Bool = false
+    var settingsViewModel: settingBarVM
+
+    // MARK: - Initialization
+    
+    init(
+        dependencies: Dependencies,
+        delegate: LoginFlowDelegate?,
+        settingsDelegate: SettingsBarFlowDelegate?
+    ) {
+        userManager = dependencies.userManager
+        self.delegate = delegate
+        settingsViewModel = settingBarVM.init(
+            dependencies: dependencies,
+            delegate: settingsDelegate
+        )
+    }
+    
+    // MARK: - Public Interface
+    
+    func login() {
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            do {
+                try await self.userManager.login(credentials: .init(username: username, password: password))
+                self.delegate?.loginSuccessful()
+                guard let activationStatus = self.userManager.loggedInUser?.activationStatus else {
+                    self.delegate?.loginFailed()
+                    return
+                }
+                if activationStatus == .incomplete {
+                    self.delegate?.promptToCompleteRegistration()
+                } else if activationStatus == .parentActivationRequired {
+                    self.delegate?.promptParentToActivateAccount()
+                }
+            } catch let error as BaseError {
+                if error.code == ErrorCodes.specificStatusCode(.userNotActivated).code {
+                    delegate?.userNotActivated()
+                    return
+                }
+                if error.code == ErrorCodes.login(.offlineInvalidCredentials).code {
+                    delegate?.offlineLoginFailed()
+                    return
+                }
+                print("Login failed with error: \(error)")
+                self.delegate?.loginFailed()
+                return
+            } catch {
+                print("Login failed with error: \(error)")
+                self.delegate?.loginFailed()
+                return
+            }
+        }
+    }
+    
+    func onAppear() {
+        guard userManager.hasAppId else {
+            fetchData()
+            return
+        }
+    }
+    
+    func register() {
+        delegate?.registerTapped()
+    }
+    
+    func forgotPassword() {
+        delegate?.forgotPasswordTapped()
+    }
+    
+    // MARK: Private Helpers
+    
+    private func fetchData() {
+        Task { [weak self] in
+            try await self?.userManager.initializeAppId()
+        }
+    }
+    
+    private func shouldEnableLoginButton() {
+        isLoginEnabled = username.isNotEmpty && password.isNotEmpty
+    }
+}
