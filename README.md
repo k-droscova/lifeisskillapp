@@ -7,9 +7,9 @@
 
 This app was created as part of Bachelor Thesis "Application Life is Skill for iOS Platform version 2", whose author is Karolína Droscová, completed at the Faculty of Informatics at CTU. 
  
-> This work is an iOS application for organization Life is Skill that mimics the functionalities in their Android app. The purpose is to enable users to participate in the organizations's competitions.
+This work is an iOS application for organization Life is Skill that mimics the functionalities in their Android app. The purpose is to enable users to participate in the organizations's competitions.
 
-> This work builds on the bachelor’s thesis “Life is Skill Application for iOS” by Ing. Rostislav Babáček, which was created in 2020 at CTU FIT ([full text available here](https://dspace.cvut.cz/handle/10467/88721))
+This work builds on the bachelor’s thesis “Life is Skill Application for iOS” by Ing. Rostislav Babáček, which was created in 2020 at CTU FIT ([full text available here](https://dspace.cvut.cz/handle/10467/88721))
 
 ### Life is Skill
 
@@ -36,7 +36,7 @@ For more information, visit Life is Skill’s [official website](https://www.lif
 
 ### Prerequisites
 - **Xcode** (latest stable version recommended, available on the Mac App Store)
-- **Swift** (Swift 5.0)
+- **Swift** (Swift 5.10)
 - **Carthage**:  
   You can install Carthage using Homebrew:
   ```bash
